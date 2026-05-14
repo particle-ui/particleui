@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "glow-button",
+  "type": "registry:ui",
+  "title": "Glow Button",
+  "description": "A button with a pulsing electric glow effect on hover.",
+  "author": "ParticleUI",
+  "categories": ["buttons", "free"],
+  "registryDependencies": [],
+  "dependencies": ["class-variance-authority", "clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/glow-button.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\n\nconst glowButtonVariants = cva(\n  \"relative inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-particle-600 text-white hover:bg-particle-500 shadow-glow-sm hover:shadow-glow-md\",\n        electric:\n          \"bg-electric-500 text-white hover:bg-electric-400 shadow-[0_0_20px_4px_oklch(68%_0.27_205_/_0.4)] hover:shadow-[0_0_30px_6px_oklch(68%_0.27_205_/_0.6)]\",\n        outline:\n          \"border border-particle-600 text-particle-400 hover:bg-particle-950 hover:shadow-glow-sm\",\n      },\n      size: {\n        sm: \"h-8 px-3 text-xs\",\n        default: \"h-10 px-6\",\n        lg: \"h-12 px-8 text-base\",\n      },\n    },\n    defaultVariants: { variant: \"default\", size: \"default\" },\n  }\n)\n\nexport interface GlowButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof glowButtonVariants> {}\n\nconst GlowButton = React.forwardRef<HTMLButtonElement, GlowButtonProps>(\n  ({ className, variant, size, ...props }, ref) => (\n    <button\n      ref={ref}\n      className={cn(glowButtonVariants({ variant, size }), className)}\n      {...props}\n    />\n  )\n)\nGlowButton.displayName = \"GlowButton\"\n\nexport { GlowButton, glowButtonVariants }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

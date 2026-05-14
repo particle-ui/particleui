@@ -1,0 +1,18 @@
+{
+  "name": "registry-builder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "watch": "node --watch build.mjs"
+  },
+  "dependencies": {
+    "zod": "^3.25.30",
+    "glob": "^11.0.2",
+    "chalk": "^5.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

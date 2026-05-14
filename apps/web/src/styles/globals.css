@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "../../node_modules/tokens/dist/tokens.css";
+
+@theme {
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "gradient-card",
+  "type": "registry:ui",
+  "title": "Gradient Card",
+  "description": "Card with animated border gradient and dark glass background.",
+  "author": "ParticleUI",
+  "categories": ["cards", "free"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/gradient-card.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface GradientCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  glowColor?: \"particle\" | \"electric\" | \"none\"\n}\n\nconst GradientCard = React.forwardRef<HTMLDivElement, GradientCardProps>(\n  ({ className, glowColor = \"particle\", children, ...props }, ref) => (\n    <div\n      ref={ref}\n      className={cn(\n        \"relative rounded-xl p-px\",\n        \"bg-gradient-to-br\",\n        glowColor === \"particle\" && \"from-particle-600 via-particle-800 to-particle-950\",\n        glowColor === \"electric\" && \"from-electric-500 via-particle-700 to-particle-950\",\n        glowColor === \"none\" && \"from-neutral-700 to-neutral-900\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"rounded-[11px] bg-particle-950/90 backdrop-blur-sm p-6\">\n        {children}\n      </div>\n    </div>\n  )\n)\nGradientCard.displayName = \"GradientCard\"\n\nexport { GradientCard }\n"
+    }
+  ]
+}

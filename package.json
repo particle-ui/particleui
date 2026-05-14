@@ -1,0 +1,21 @@
+{
+  "name": "particleui",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "registry:build": "pnpm --filter registry-builder build"
+  },
+  "devDependencies": {
+    "turbo": "^2.9.14",
+    "typescript": "^5.8.3",
+    "prettier": "^3.5.3"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@10.29.3"
+}

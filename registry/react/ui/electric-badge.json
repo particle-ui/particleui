@@ -1,0 +1,17 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "electric-badge",
+  "type": "registry:ui",
+  "title": "Electric Badge",
+  "description": "Animated badge with pulsing electric glow. Great for status indicators and labels.",
+  "author": "ParticleUI",
+  "categories": ["badges", "free"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/electric-badge.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface ElectricBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {\n  pulse?: boolean\n}\n\nconst ElectricBadge = React.forwardRef<HTMLSpanElement, ElectricBadgeProps>(\n  ({ className, pulse = true, children, ...props }, ref) => (\n    <span\n      ref={ref}\n      className={cn(\n        \"inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium\",\n        \"bg-electric-500/10 text-electric-400 border border-electric-500/30\",\n        pulse && \"shadow-[0_0_12px_2px_oklch(68%_0.27_205_/_0.25)]\",\n        className\n      )}\n      {...props}\n    >\n      {pulse && (\n        <span className=\"relative flex h-1.5 w-1.5\">\n          <span className=\"animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-400 opacity-75\" />\n          <span className=\"relative inline-flex rounded-full h-1.5 w-1.5 bg-electric-500\" />\n        </span>\n      )}\n      {children}\n    </span>\n  )\n)\nElectricBadge.displayName = \"ElectricBadge\"\n\nexport { ElectricBadge }\n"
+    }
+  ]
+}

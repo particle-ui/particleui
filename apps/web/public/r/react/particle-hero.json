@@ -1,0 +1,34 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "particle-hero",
+  "type": "registry:block",
+  "title": "Particle Hero",
+  "description": "Full-viewport hero section with animated canvas particle system, connect lines, and configurable electric color palette. Pro component.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge",
+    "class-variance-authority"
+  ],
+  "registryDependencies": [
+    "@particleui/glow-button"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/particle-hero.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { useEffect, useRef } from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { GlowButton } from \"@/components/ui/glow-button\"\n\ninterface Particle {\n  x: number\n  y: number\n  vx: number\n  vy: number\n  radius: number\n  opacity: number\n}\n\ninterface CTA {\n  label: string\n  href: string\n  variant?: \"default\" | \"electric\" | \"outline\"\n}\n\ninterface ParticleHeroProps {\n  headline: React.ReactNode\n  subtext?: string\n  cta?: CTA[]\n  particleCount?: number\n  particleColor?: \"electric\" | \"particle\" | string\n  speed?: \"slow\" | \"medium\" | \"fast\"\n  connectLines?: boolean\n  className?: string\n}\n\nconst SPEEDS = { slow: 0.3, medium: 0.6, fast: 1.2 }\nconst CONNECT_DIST = 120\n\nexport function ParticleHero({\n  headline,\n  subtext,\n  cta = [],\n  particleCount = 80,\n  particleColor = \"electric\",\n  speed = \"medium\",\n  connectLines = true,\n  className,\n}: ParticleHeroProps) {\n  const canvasRef = useRef<HTMLCanvasElement>(null)\n  const rafRef = useRef<number>(0)\n\n  const resolveColor = (color: string) => {\n    if (color === \"electric\") return \"oklch(68% 0.27 205)\"\n    if (color === \"particle\") return \"oklch(52% 0.24 265)\"\n    return color\n  }\n\n  useEffect(() => {\n    const canvas = canvasRef.current\n    if (!canvas) return\n    const ctx = canvas.getContext(\"2d\")\n    if (!ctx) return\n\n    const resize = () => {\n      canvas.width = canvas.offsetWidth\n      canvas.height = canvas.offsetHeight\n    }\n    resize()\n    const ro = new ResizeObserver(resize)\n    ro.observe(canvas)\n\n    const spd = SPEEDS[speed]\n    const color = resolveColor(particleColor)\n\n    const particles: Particle[] = Array.from({ length: particleCount }, () => ({\n      x: Math.random() * canvas.width,\n      y: Math.random() * canvas.height,\n      vx: (Math.random() - 0.5) * spd,\n      vy: (Math.random() - 0.5) * spd,\n      radius: Math.random() * 2 + 1,\n      opacity: Math.random() * 0.5 + 0.3,\n    }))\n\n    let paused = false\n    const onVisibility = () => { paused = document.hidden }\n    document.addEventListener(\"visibilitychange\", onVisibility)\n\n    const draw = () => {\n      if (!paused) {\n        ctx.clearRect(0, 0, canvas.width, canvas.height)\n        for (const p of particles) {\n          p.x += p.vx\n          p.y += p.vy\n          if (p.x < 0 || p.x > canvas.width) p.vx *= -1\n          if (p.y < 0 || p.y > canvas.height) p.vy *= -1\n\n          ctx.beginPath()\n          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2)\n          ctx.fillStyle = color.replace(\")\", ` / ${p.opacity})`)\n          ctx.fill()\n        }\n\n        if (connectLines) {\n          for (let i = 0; i < particles.length; i++) {\n            for (let j = i + 1; j < particles.length; j++) {\n              const dx = particles[i].x - particles[j].x\n              const dy = particles[i].y - particles[j].y\n              const dist = Math.sqrt(dx * dx + dy * dy)\n              if (dist < CONNECT_DIST) {\n                ctx.beginPath()\n                ctx.moveTo(particles[i].x, particles[i].y)\n                ctx.lineTo(particles[j].x, particles[j].y)\n                ctx.strokeStyle = color.replace(\")\", ` / ${0.15 * (1 - dist / CONNECT_DIST)})`)\n                ctx.lineWidth = 0.5\n                ctx.stroke()\n              }\n            }\n          }\n        }\n      }\n      rafRef.current = requestAnimationFrame(draw)\n    }\n\n    draw()\n    return () => {\n      cancelAnimationFrame(rafRef.current)\n      ro.disconnect()\n      document.removeEventListener(\"visibilitychange\", onVisibility)\n    }\n  }, [particleCount, particleColor, speed, connectLines])\n\n  return (\n    <section\n      className={cn(\n        \"relative flex min-h-svh items-center justify-center overflow-hidden bg-particle-950\",\n        className\n      )}\n    >\n      <canvas\n        ref={canvasRef}\n        className=\"absolute inset-0 h-full w-full\"\n        aria-hidden\n      />\n      <div className=\"relative z-10 mx-auto max-w-4xl px-6 text-center\">\n        <h1 className=\"text-5xl font-bold tracking-tight text-white sm:text-7xl\">\n          {headline}\n        </h1>\n        {subtext && (\n          <p className=\"mt-6 text-lg text-particle-300 max-w-2xl mx-auto\">\n            {subtext}\n          </p>\n        )}\n        {cta.length > 0 && (\n          <div className=\"mt-10 flex flex-wrap items-center justify-center gap-4\">\n            {cta.map((c) => (\n              <a key={c.href} href={c.href}>\n                <GlowButton variant={c.variant ?? \"default\"} size=\"lg\">\n                  {c.label}\n                </GlowButton>\n              </a>\n            ))}\n          </div>\n        )}\n      </div>\n    </section>\n  )\n}\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "skills/particle-hero/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/particle-hero/SKILL.md"
+    }
+  ],
+  "categories": [
+    "blocks",
+    "hero",
+    "animations",
+    "pro"
+  ]
+}
