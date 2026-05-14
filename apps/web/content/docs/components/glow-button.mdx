@@ -1,0 +1,39 @@
+---
+title: Glow Button
+description: A button with a pulsing electric glow effect on hover.
+---
+
+# Glow Button
+
+A drop-in replacement for `shadcn/ui`'s Button with electric glow variants.
+
+## Install
+
+```bash
+npx shadcn add @particleui/glow-button
+```
+
+## Usage
+
+```tsx
+import { GlowButton } from "@/components/ui/glow-button"
+
+export default function Example() {
+  return (
+    <div className="flex gap-3">
+      <GlowButton>Default</GlowButton>
+      <GlowButton variant="electric">Electric</GlowButton>
+      <GlowButton variant="outline">Outline</GlowButton>
+    </div>
+  )
+}
+```
+
+## Props
+
+| Prop | Type | Default |
+|------|------|---------|
+| `variant` | `"default" \| "electric" \| "outline"` | `"default"` |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` |
+
+All standard `<button>` HTML attributes are forwarded.

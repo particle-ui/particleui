@@ -1,0 +1,52 @@
+---
+title: Introduction
+description: Get started with ParticleUI — premium animated components for shadcn projects.
+---
+
+# Introduction
+
+ParticleUI is a registry of premium animated components built on top of [shadcn/ui](https://ui.shadcn.com).
+You install components directly into your project using the **existing shadcn CLI** — no separate tool needed.
+
+## Installation
+
+### 1. Configure your registry
+
+Add the `@particleui` registry to your `components.json`:
+
+```json title="components.json"
+{
+  "registries": {
+    "@particleui": {
+      "url": "https://particleui.dev/r/react/{name}.json",
+      "headers": {
+        "Authorization": "Bearer ${PARTICLEUI_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+### 2. Add your token
+
+```bash title=".env"
+PARTICLEUI_TOKEN=your-token-here
+```
+
+Get a token from your [dashboard](/dashboard) after signing up.
+
+### 3. Install a component
+
+```bash
+npx shadcn add @particleui/glow-button
+```
+
+Free components work without a token. Pro components require a valid `PARTICLEUI_TOKEN`.
+
+## Frameworks
+
+| Framework | Registry URL |
+|-----------|-------------|
+| React | `https://particleui.dev/r/react/{name}.json` |
+| Vue | `https://particleui.dev/r/vue/{name}.json` *(coming soon)* |
+| Svelte | `https://particleui.dev/r/svelte/{name}.json` *(coming soon)* |

@@ -1,0 +1,52 @@
+---
+title: Particle Hero
+description: Full-viewport hero section with animated canvas particle system.
+---
+
+# Particle Hero
+
+<Callout type="info">This is a **Pro** component. Requires a valid `PARTICLEUI_TOKEN`.</Callout>
+
+A full-viewport hero with a canvas-rendered particle field, connect lines, and configurable colors.
+Installing this component also places a Claude skill at `~/.claude/skills/particle-hero/SKILL.md`.
+
+## Install
+
+```bash
+npx shadcn add @particleui/particle-hero
+```
+
+## Usage
+
+```tsx
+import { ParticleHero } from "@/components/blocks/particle-hero"
+
+export default function Page() {
+  return (
+    <ParticleHero
+      headline="Ship faster with ParticleUI"
+      subtext="Premium animated components for your shadcn project."
+      cta={[
+        { label: "Browse components", href: "/components", variant: "default" },
+        { label: "Read docs", href: "/docs", variant: "outline" },
+      ]}
+    />
+  )
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `headline` | `React.ReactNode` | required | Main heading content |
+| `subtext` | `string` | — | Secondary description |
+| `cta` | `CTA[]` | `[]` | Array of call-to-action buttons |
+| `particleCount` | `number` | `80` | Number of particles rendered |
+| `particleColor` | `"electric" \| "particle" \| string` | `"electric"` | Particle color |
+| `speed` | `"slow" \| "medium" \| "fast"` | `"medium"` | Animation speed |
+| `connectLines` | `boolean` | `true` | Draw connecting lines between nearby particles |
+
+## Performance
+
+The canvas pauses automatically when the tab is hidden. On mobile, reduce `particleCount` to `30–40` and set `connectLines={false}`.
