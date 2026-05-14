@@ -1,0 +1,17 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "noise-texture",
+  "type": "registry:ui",
+  "title": "Noise Texture",
+  "description": "SVG fractal noise overlay that adds depth and premium feel to any surface.",
+  "author": "ParticleUI",
+  "categories": ["backgrounds", "free"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/noise-texture.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface NoiseTextureProps extends React.HTMLAttributes<HTMLDivElement> {\n  opacity?: number\n  children?: React.ReactNode\n}\n\nexport function NoiseTexture({ className, opacity = 0.035, children, ...props }: NoiseTextureProps) {\n  const id = React.useId().replace(/:/g, \"\")\n  return (\n    <div className={cn(\"relative\", className)} {...props}>\n      {children}\n      <div\n        aria-hidden\n        className=\"pointer-events-none absolute inset-0 rounded-[inherit]\"\n        style={{\n          backgroundImage: `url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")`,\n          opacity,\n        }}\n      />\n    </div>\n  )\n}\n"
+    }
+  ]
+}

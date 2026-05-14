@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "bento-grid",
+  "type": "registry:block",
+  "title": "Bento Grid",
+  "description": "Asymmetric bento-style feature grid with spotlight hover effect on each card.",
+  "author": "ParticleUI",
+  "categories": ["blocks", "layouts", "pro"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/blocks/bento-grid.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface BentoItem {\n  title: string\n  description: string\n  icon?: React.ReactNode\n  className?: string\n  children?: React.ReactNode\n}\n\ninterface BentoGridProps {\n  items: BentoItem[]\n  className?: string\n}\n\nfunction BentoCard({ title, description, icon, className, children }: BentoItem) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [pos, setPos] = React.useState({ x: 0, y: 0, opacity: 0 })\n\n  const onMove = (e: React.MouseEvent) => {\n    const rect = ref.current!.getBoundingClientRect()\n    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top, opacity: 1 })\n  }\n\n  return (\n    <div\n      ref={ref}\n      onMouseMove={onMove}\n      onMouseLeave={() => setPos(p => ({ ...p, opacity: 0 }))}\n      className={cn(\"group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0a0a0a] p-6\", className)}\n    >\n      <div\n        className=\"pointer-events-none absolute inset-0 transition-opacity duration-300\"\n        style={{\n          opacity: pos.opacity,\n          background: `radial-gradient(350px circle at ${pos.x}px ${pos.y}px, rgba(0,212,255,0.06), transparent 60%)`,\n        }}\n      />\n      {icon && <div className=\"mb-4\">{icon}</div>}\n      <h3 className=\"text-base font-semibold mb-2\">{title}</h3>\n      <p className=\"text-sm text-[#444] leading-relaxed\">{description}</p>\n      {children}\n    </div>\n  )\n}\n\nexport function BentoGrid({ items, className }: BentoGridProps) {\n  return (\n    <div className={cn(\"grid grid-cols-1 md:grid-cols-3 gap-4\", className)}>\n      {items.map((item, i) => (\n        <BentoCard key={i} {...item} />\n      ))}\n    </div>\n  )\n}\n"
+    },
+    {
+      "path": "skills/bento-grid/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/bento-grid/SKILL.md"
+    }
+  ]
+}

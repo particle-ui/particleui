@@ -1,0 +1,140 @@
+[
+  {
+    "name": "aurora-background",
+    "type": "registry:ui",
+    "title": "Aurora Background",
+    "description": "Slow-moving animated aurora gradient background with configurable colors.",
+    "categories": [
+      "backgrounds",
+      "animations",
+      "pro"
+    ]
+  },
+  {
+    "name": "bento-grid",
+    "type": "registry:block",
+    "title": "Bento Grid",
+    "description": "Asymmetric bento-style feature grid with spotlight hover effect on each card.",
+    "categories": [
+      "blocks",
+      "layouts",
+      "pro"
+    ]
+  },
+  {
+    "name": "cursor-trail",
+    "type": "registry:ui",
+    "title": "Cursor Trail",
+    "description": "Attaches a glowing particle trail that follows the cursor. Drop into any layout.",
+    "categories": [
+      "cursors",
+      "animations",
+      "pro"
+    ]
+  },
+  {
+    "name": "electric-badge",
+    "type": "registry:ui",
+    "title": "Electric Badge",
+    "description": "Animated badge with pulsing electric glow. Great for status indicators and labels.",
+    "categories": [
+      "badges",
+      "free"
+    ]
+  },
+  {
+    "name": "glow-button",
+    "type": "registry:ui",
+    "title": "Glow Button",
+    "description": "A button with a pulsing electric glow effect on hover.",
+    "categories": [
+      "buttons",
+      "free"
+    ]
+  },
+  {
+    "name": "gradient-card",
+    "type": "registry:ui",
+    "title": "Gradient Card",
+    "description": "Card with animated border gradient and dark glass background.",
+    "categories": [
+      "cards",
+      "free"
+    ]
+  },
+  {
+    "name": "kbd",
+    "type": "registry:ui",
+    "title": "Kbd",
+    "description": "Keyboard shortcut display with OS-aware symbols and elegant dark styling.",
+    "categories": [
+      "typography",
+      "free"
+    ]
+  },
+  {
+    "name": "magnetic-button",
+    "type": "registry:ui",
+    "title": "Magnetic Button",
+    "description": "Button that physically tracks the cursor with spring physics and a glowing border.",
+    "categories": [
+      "buttons",
+      "animations",
+      "pro"
+    ]
+  },
+  {
+    "name": "noise-texture",
+    "type": "registry:ui",
+    "title": "Noise Texture",
+    "description": "SVG fractal noise overlay that adds depth and premium feel to any surface.",
+    "categories": [
+      "backgrounds",
+      "free"
+    ]
+  },
+  {
+    "name": "orbit-animation",
+    "type": "registry:ui",
+    "title": "Orbit Animation",
+    "description": "Elements orbit a central node at configurable speeds and radii. Great for tech stack icons.",
+    "categories": [
+      "animations",
+      "pro"
+    ]
+  },
+  {
+    "name": "particle-hero",
+    "type": "registry:block",
+    "title": "Particle Hero",
+    "description": "Full-viewport hero section with animated canvas particle system, connect lines, and configurable electric color palette. Pro component.",
+    "categories": [
+      "blocks",
+      "hero",
+      "animations",
+      "pro"
+    ]
+  },
+  {
+    "name": "shimmer-text",
+    "type": "registry:ui",
+    "title": "Shimmer Text",
+    "description": "Text with a moving shimmer highlight — great for hero headlines and loading states.",
+    "categories": [
+      "text",
+      "free"
+    ]
+  },
+  {
+    "name": "spotlight-hero",
+    "type": "registry:block",
+    "title": "Spotlight Hero",
+    "description": "Hero section where a radial spotlight follows the user's cursor across a grid background.",
+    "categories": [
+      "blocks",
+      "hero",
+      "animations",
+      "pro"
+    ]
+  }
+]

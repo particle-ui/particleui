@@ -3,8 +3,15 @@ import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { apiTokens, users } from "@/db/schema"
 import { eq, isNull } from "drizzle-orm"
-import { createToken, revokeToken } from "@/lib/auth/token"
+import { createToken } from "@/lib/auth/token"
 import { TokenRow } from "./token-row"
+import {
+  Key,
+  Plus,
+  Lightning,
+  ArrowSquareOut,
+} from "@phosphor-icons/react/dist/ssr"
+import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = { title: "Dashboard" }
@@ -13,7 +20,6 @@ export default async function DashboardPage() {
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
 
-  // Upsert user on first visit
   const clerkUser = await currentUser()
   if (clerkUser) {
     await db
@@ -34,31 +40,73 @@ export default async function DashboardPage() {
     .where(eq(apiTokens.userId, userId) && isNull(apiTokens.revokedAt))
     .orderBy(apiTokens.createdAt)
 
+  const isPro = user?.plan === "pro"
+
   return (
-    <main className="min-h-svh bg-particle-950 text-white">
-      <div className="mx-auto max-w-3xl px-6 py-16">
+    <main className="min-h-svh bg-[#090909] text-white">
+      <header className="border-b border-white/[0.06] bg-[#090909]">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
+          <Link href="/" className="flex items-center gap-2 text-sm font-semibold">
+            <Lightning weight="fill" size={16} className="text-[#00d4ff]" />
+            ParticleUI
+          </Link>
+          <Link
+            href="/docs"
+            className="flex items-center gap-1.5 text-xs text-[#555] hover:text-[#888] transition-colors"
+          >
+            Docs <ArrowSquareOut size={12} />
+          </Link>
+        </div>
+      </header>
+
+      <div className="mx-auto max-w-3xl px-6 py-12">
+        {/* Header row */}
         <div className="mb-10 flex items-start justify-between">
           <div>
-            <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
-            <p className="text-particle-400 text-sm">
-              Manage your ParticleUI API tokens
+            <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
+            <p className="text-sm text-[#555]">
+              {clerkUser?.emailAddresses[0]?.emailAddress}
             </p>
           </div>
           <PlanBadge plan={user?.plan ?? "free"} />
         </div>
 
-        <section className="rounded-xl border border-particle-800 bg-particle-900/40 p-6 mb-8">
+        {/* Upgrade nudge */}
+        {!isPro && (
+          <div className="mb-8 rounded-xl border border-[rgba(0,212,255,0.2)] bg-[rgba(0,212,255,0.05)] p-5 flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium mb-0.5">Unlock Pro components</p>
+              <p className="text-xs text-[#555]">
+                Particle Hero, Magnetic Button, Aurora Background, and more.
+              </p>
+            </div>
+            <Link
+              href="/pricing"
+              className="shrink-0 rounded-md bg-[#00d4ff] px-4 py-2 text-xs font-semibold text-black hover:bg-[#22e0ff] transition-colors"
+            >
+              Upgrade — $149
+            </Link>
+          </div>
+        )}
+
+        {/* Tokens card */}
+        <section className="rounded-xl border border-white/[0.07] bg-[#0e0e0e] p-6 mb-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="font-semibold">API Tokens</h2>
+            <div className="flex items-center gap-2">
+              <Key size={18} weight="duotone" className="text-[#00d4ff]" />
+              <h2 className="font-semibold text-sm">API Tokens</h2>
+            </div>
             <CreateTokenForm userId={userId} />
           </div>
 
           {tokens.length === 0 ? (
-            <p className="text-sm text-particle-500 py-4 text-center">
-              No tokens yet. Create one to start installing Pro components.
-            </p>
+            <div className="py-8 text-center">
+              <Key size={28} weight="thin" className="text-[#333] mx-auto mb-3" />
+              <p className="text-sm text-[#444]">No tokens yet.</p>
+              <p className="text-xs text-[#333] mt-1">Create one to start installing Pro components.</p>
+            </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {tokens.map((t) => (
                 <TokenRow key={t.id} token={t} />
               ))}
@@ -66,21 +114,24 @@ export default async function DashboardPage() {
           )}
         </section>
 
-        <section className="rounded-xl border border-particle-800 bg-particle-900/40 p-6">
-          <h2 className="font-semibold mb-4">Quick install setup</h2>
-          <p className="text-sm text-particle-400 mb-4">
-            Add your token to <code className="text-electric-400">.env</code> and configure{" "}
-            <code className="text-electric-400">components.json</code>:
+        {/* Setup snippet */}
+        <section className="rounded-xl border border-white/[0.07] bg-[#0e0e0e] p-6">
+          <h2 className="font-semibold text-sm mb-4">Quick setup</h2>
+          <p className="text-xs text-[#555] mb-4">
+            Add your token to <code className="text-[#00d4ff]">.env</code>, then configure{" "}
+            <code className="text-[#00d4ff]">components.json</code>:
           </p>
-          <pre className="rounded-lg bg-particle-950 border border-particle-800 p-4 text-xs text-particle-300 overflow-x-auto">
-            {`# .env
-PARTICLEUI_TOKEN=your-token-here
+          <pre className="rounded-lg bg-[#090909] border border-white/[0.06] p-4 text-xs text-[#666] overflow-x-auto leading-relaxed">
+{`# .env
+PARTICLEUI_TOKEN=<your-token>
 
-# components.json — add under "registries":
-"@particleui": {
-  "url": "https://particleui.dev/r/react/{name}.json",
-  "headers": {
-    "Authorization": "Bearer \${PARTICLEUI_TOKEN}"
+# components.json
+"registries": {
+  "@particleui": {
+    "url": "https://particleui.dev/r/react/{name}.json",
+    "headers": {
+      "Authorization": "Bearer \${PARTICLEUI_TOKEN}"
+    }
   }
 }`}
           </pre>
@@ -95,8 +146,8 @@ function PlanBadge({ plan }: { plan: string }) {
     <span
       className={`rounded-full px-3 py-1 text-xs font-medium ${
         plan === "pro"
-          ? "bg-electric-500/10 border border-electric-500/30 text-electric-400"
-          : "bg-particle-800 text-particle-400"
+          ? "border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] text-[#00d4ff]"
+          : "border border-white/[0.08] bg-white/[0.04] text-[#555]"
       }`}
     >
       {plan === "pro" ? "Pro" : "Free"}
@@ -116,9 +167,10 @@ async function CreateTokenForm({ userId }: { userId: string }) {
     <form action={create}>
       <button
         type="submit"
-        className="rounded-md bg-electric-500/10 border border-electric-500/30 text-electric-400 px-4 py-1.5 text-sm hover:bg-electric-500/20 transition-colors"
+        className="flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-[#888] hover:border-white/20 hover:text-white transition-colors"
       >
-        + New token
+        <Plus size={12} weight="bold" />
+        New token
       </button>
     </form>
   )

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "kbd",
+  "type": "registry:ui",
+  "title": "Kbd",
+  "description": "Keyboard shortcut display with OS-aware symbols and elegant dark styling.",
+  "author": "ParticleUI",
+  "categories": ["typography", "free"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/kbd.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nconst SYMBOLS: Record<string, string> = {\n  cmd: \"⌘\", ctrl: \"⌃\", alt: \"⌥\", shift: \"⇧\",\n  enter: \"↵\", esc: \"⎋\", tab: \"⇥\", del: \"⌫\",\n  up: \"↑\", down: \"↓\", left: \"←\", right: \"→\",\n}\n\ninterface KbdProps extends React.HTMLAttributes<HTMLElement> {\n  keys: string[]\n}\n\nexport function Kbd({ keys, className }: KbdProps) {\n  return (\n    <span className={cn(\"inline-flex items-center gap-0.5\", className)}>\n      {keys.map((k, i) => (\n        <kbd\n          key={i}\n          className=\"inline-flex items-center justify-center rounded border border-white/[0.1] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[11px] text-[#888] shadow-[inset_0_-1px_0_rgba(255,255,255,0.08)]\"\n        >\n          {SYMBOLS[k.toLowerCase()] ?? k.toUpperCase()}\n        </kbd>\n      ))}\n    </span>\n  )\n}\n"
+    }
+  ]
+}

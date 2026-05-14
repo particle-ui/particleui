@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { CheckCircle, Sparkle, ArrowRight } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = { title: "Pricing" }
@@ -13,6 +14,7 @@ const PLANS = [
       "Glow Button",
       "Gradient Card",
       "Electric Badge",
+      "Noise Texture",
       "Community support",
       "MIT licensed source",
     ],
@@ -58,65 +60,75 @@ const PLANS = [
 
 export default function PricingPage() {
   return (
-    <main className="min-h-svh bg-particle-950 text-white py-24 px-6">
+    <main className="min-h-svh bg-[#090909] text-white py-24 px-6">
       <div className="mx-auto max-w-5xl">
         <div className="text-center mb-16">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[rgba(0,212,255,0.25)] bg-[rgba(0,212,255,0.08)] px-3 py-1 text-xs text-[#00d4ff]">
+            <Sparkle weight="fill" size={12} />
+            No subscriptions · Lifetime updates
+          </div>
           <h1 className="text-5xl font-bold mb-4">Simple pricing</h1>
-          <p className="text-particle-400 text-lg">
-            One-time purchase. No subscriptions. Lifetime updates.
+          <p className="text-[#666] text-lg">
+            One-time purchase. Own it forever.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-5">
           {PLANS.map((plan) => (
             <div
               key={plan.name}
               className={`relative rounded-xl border p-8 flex flex-col ${
                 plan.highlight
-                  ? "border-electric-500/60 bg-particle-900/80 shadow-[0_0_40px_oklch(68%_0.27_205_/_0.15)]"
-                  : "border-particle-800 bg-particle-900/30"
+                  ? "border-[rgba(0,212,255,0.3)] bg-[#111]"
+                  : "border-white/[0.07] bg-[#0e0e0e]"
               }`}
             >
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-electric-500 px-3 py-1 text-xs font-medium text-white">
-                    Most popular
+                  <span className="rounded-full bg-[#00d4ff] px-3 py-1 text-[10px] font-semibold text-black tracking-wide uppercase">
+                    Popular
                   </span>
                 </div>
               )}
+
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-1">{plan.name}</h2>
+                <p className="text-sm text-[#555] font-medium mb-1">{plan.name}</p>
                 <div className="flex items-end gap-1.5 mb-2">
                   <span className="text-4xl font-bold">{plan.price}</span>
-                  <span className="text-particle-400 text-sm mb-1">{plan.period}</span>
+                  <span className="text-[#555] text-sm mb-1.5">{plan.period}</span>
                 </div>
-                <p className="text-sm text-particle-400">{plan.description}</p>
+                <p className="text-sm text-[#555]">{plan.description}</p>
               </div>
 
               <ul className="space-y-2.5 mb-8 flex-1">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm">
-                    <span className="text-electric-400 mt-0.5 shrink-0">✓</span>
-                    <span className="text-particle-300">{f}</span>
+                  <li key={f} className="flex items-start gap-2.5 text-sm">
+                    <CheckCircle
+                      size={16}
+                      weight="fill"
+                      className={`mt-0.5 shrink-0 ${plan.highlight ? "text-[#00d4ff]" : "text-[#444]"}`}
+                    />
+                    <span className="text-[#aaa]">{f}</span>
                   </li>
                 ))}
               </ul>
 
               <Link
                 href={plan.href}
-                className={`block w-full rounded-md py-2.5 text-center text-sm font-medium transition-all ${
+                className={`flex items-center justify-center gap-2 w-full rounded-md py-2.5 text-sm font-medium transition-all ${
                   plan.highlight
-                    ? "bg-electric-500 text-white hover:bg-electric-400 shadow-[0_0_16px_oklch(68%_0.27_205_/_0.3)]"
-                    : "border border-particle-700 text-particle-300 hover:bg-particle-800 hover:text-white"
+                    ? "bg-white text-black hover:bg-[#eee]"
+                    : "border border-white/10 text-[#888] hover:border-white/20 hover:text-white"
                 }`}
               >
                 {plan.cta}
+                <ArrowRight size={14} weight="bold" />
               </Link>
             </div>
           ))}
         </div>
 
-        <p className="mt-8 text-center text-sm text-particle-600">
+        <p className="mt-8 text-center text-sm text-[#444]">
           All prices in USD. VAT may apply. 14-day refund policy.
         </p>
       </div>

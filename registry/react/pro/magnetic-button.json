@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "magnetic-button",
+  "type": "registry:ui",
+  "title": "Magnetic Button",
+  "description": "Button that physically tracks the cursor with spring physics and a glowing border.",
+  "author": "ParticleUI",
+  "categories": ["buttons", "animations", "pro"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/magnetic-button.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface MagneticButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  strength?: number\n  glowColor?: string\n}\n\nexport function MagneticButton({\n  className, children,\n  strength = 0.35,\n  glowColor = \"rgba(0,212,255,0.3)\",\n  ...props\n}: MagneticButtonProps) {\n  const ref = React.useRef<HTMLButtonElement>(null)\n  const [offset, setOffset] = React.useState({ x: 0, y: 0 })\n  const [hovered, setHovered] = React.useState(false)\n\n  const onMove = (e: React.MouseEvent) => {\n    const rect = ref.current!.getBoundingClientRect()\n    setOffset({\n      x: (e.clientX - rect.left - rect.width / 2) * strength,\n      y: (e.clientY - rect.top - rect.height / 2) * strength,\n    })\n  }\n\n  return (\n    <button\n      ref={ref}\n      onMouseMove={onMove}\n      onMouseEnter={() => setHovered(true)}\n      onMouseLeave={() => { setOffset({ x: 0, y: 0 }); setHovered(false) }}\n      className={cn(\n        \"relative rounded-full px-7 py-3 text-sm font-medium transition-all duration-150\",\n        className\n      )}\n      style={{\n        transform: `translate(${offset.x}px, ${offset.y}px)`,\n        border: `1px solid ${hovered ? \"rgba(0,212,255,0.4)\" : \"rgba(255,255,255,0.1)\"}`,\n        background: hovered ? \"rgba(0,212,255,0.08)\" : \"rgba(255,255,255,0.04)\",\n        color: hovered ? \"#00d4ff\" : \"#888\",\n        boxShadow: hovered ? `0 0 30px ${glowColor}` : \"none\",\n      }}\n      {...props}\n    >\n      {children}\n    </button>\n  )\n}\n"
+    },
+    {
+      "path": "skills/magnetic-button/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/magnetic-button/SKILL.md"
+    }
+  ]
+}

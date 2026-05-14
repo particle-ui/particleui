@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "spotlight-hero",
+  "type": "registry:block",
+  "title": "Spotlight Hero",
+  "description": "Hero section where a radial spotlight follows the user's cursor across a grid background.",
+  "author": "ParticleUI",
+  "categories": ["blocks", "hero", "animations", "pro"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/blocks/spotlight-hero.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface SpotlightHeroProps {\n  headline: React.ReactNode\n  subtext?: string\n  cta?: { label: string; href: string; primary?: boolean }[]\n  className?: string\n}\n\nexport function SpotlightHero({ headline, subtext, cta = [], className }: SpotlightHeroProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [pos, setPos] = React.useState({ x: \"50%\", y: \"30%\" })\n\n  const onMove = (e: React.MouseEvent) => {\n    const rect = ref.current!.getBoundingClientRect()\n    setPos({\n      x: `${((e.clientX - rect.left) / rect.width) * 100}%`,\n      y: `${((e.clientY - rect.top) / rect.height) * 100}%`,\n    })\n  }\n\n  return (\n    <section\n      ref={ref}\n      onMouseMove={onMove}\n      className={cn(\"relative flex min-h-svh items-center justify-center overflow-hidden bg-[#030303]\", className)}\n    >\n      {/* Dot grid */}\n      <div\n        className=\"pointer-events-none absolute inset-0\"\n        style={{\n          backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)`,\n          backgroundSize: \"40px 40px\",\n          maskImage: `radial-gradient(ellipse 80% 80% at ${pos.x} ${pos.y}, black 30%, transparent 80%)`,\n          WebkitMaskImage: `radial-gradient(ellipse 80% 80% at ${pos.x} ${pos.y}, black 30%, transparent 80%)`,\n        }}\n      />\n      {/* Glow orb */}\n      <div\n        className=\"pointer-events-none absolute h-96 w-96 rounded-full opacity-20 blur-[80px] transition-all duration-200\"\n        style={{\n          background: \"#00d4ff\",\n          left: `calc(${pos.x} - 12rem)`,\n          top: `calc(${pos.y} - 12rem)`,\n        }}\n      />\n      <div className=\"relative z-10 mx-auto max-w-4xl px-6 text-center\">\n        <h1 className=\"text-5xl font-bold tracking-[-0.04em] sm:text-7xl\">{headline}</h1>\n        {subtext && <p className=\"mt-6 text-lg text-[#555] max-w-xl mx-auto\">{subtext}</p>}\n        {cta.length > 0 && (\n          <div className=\"mt-10 flex flex-wrap justify-center gap-3\">\n            {cta.map(c => (\n              <a\n                key={c.href} href={c.href}\n                className={c.primary\n                  ? \"rounded-full bg-white px-7 py-3 text-sm font-semibold text-black hover:bg-[#e2e2e2] transition-colors\"\n                  : \"rounded-full border border-white/[0.1] px-7 py-3 text-sm font-medium text-[#777] hover:text-white transition-colors\"\n                }\n              >\n                {c.label}\n              </a>\n            ))}\n          </div>\n        )}\n      </div>\n    </section>\n  )\n}\n"
+    },
+    {
+      "path": "skills/spotlight-hero/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/spotlight-hero/SKILL.md"
+    }
+  ]
+}

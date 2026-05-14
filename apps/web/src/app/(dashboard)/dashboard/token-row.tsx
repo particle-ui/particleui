@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { revalidatePath } from "next/cache"
+import { Eye, EyeSlash, Copy, Check, Trash } from "@phosphor-icons/react"
 
 interface Token {
   id: string
@@ -15,7 +15,7 @@ export function TokenRow({ token }: { token: Token }) {
   const [revealed, setRevealed] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const masked = `pui_${"•".repeat(24)}${token.token.slice(-4)}`
+  const masked = `pui_${"•".repeat(20)}${token.token.slice(-4)}`
 
   async function copy() {
     await navigator.clipboard.writeText(token.token)
@@ -24,38 +24,39 @@ export function TokenRow({ token }: { token: Token }) {
   }
 
   return (
-    <div className="flex items-center justify-between gap-4 rounded-lg border border-particle-800 bg-particle-950/50 px-4 py-3">
-      <div className="min-w-0 flex-1">
-        <p className="text-xs text-particle-500 mb-0.5">{token.label}</p>
-        <code className="font-mono text-sm text-particle-300 break-all">
-          {revealed ? token.token : masked}
-        </code>
-        {token.lastUsedAt && (
-          <p className="text-xs text-particle-600 mt-1">
-            Last used {token.lastUsedAt.toLocaleDateString()}
-          </p>
-        )}
-      </div>
-      <div className="flex items-center gap-2 shrink-0">
+    <div className="flex items-center gap-3 rounded-lg border border-white/[0.06] bg-[#090909] px-4 py-3">
+      <code className="flex-1 min-w-0 font-mono text-xs text-[#888] truncate">
+        {revealed ? token.token : masked}
+      </code>
+
+      {token.lastUsedAt && (
+        <span className="hidden sm:block text-[10px] text-[#333] shrink-0">
+          used {token.lastUsedAt.toLocaleDateString()}
+        </span>
+      )}
+
+      <div className="flex items-center gap-1 shrink-0">
         <button
           onClick={() => setRevealed((v) => !v)}
-          className="text-xs text-particle-500 hover:text-particle-300 transition-colors"
+          className="rounded p-1.5 text-[#444] hover:text-[#888] hover:bg-white/[0.04] transition-colors"
+          title={revealed ? "Hide" : "Reveal"}
         >
-          {revealed ? "Hide" : "Reveal"}
+          {revealed ? <EyeSlash size={14} /> : <Eye size={14} />}
         </button>
         <button
           onClick={copy}
-          className="rounded bg-particle-800 px-2.5 py-1 text-xs text-particle-300 hover:bg-particle-700 hover:text-white transition-colors"
+          className="rounded p-1.5 text-[#444] hover:text-[#888] hover:bg-white/[0.04] transition-colors"
+          title="Copy"
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? <Check size={14} className="text-[#00d4ff]" /> : <Copy size={14} />}
         </button>
-        <RevokeForm tokenId={token.id} />
+        <RevokeButton tokenId={token.id} />
       </div>
     </div>
   )
 }
 
-function RevokeForm({ tokenId }: { tokenId: string }) {
+function RevokeButton({ tokenId }: { tokenId: string }) {
   return (
     <form
       action={async () => {
@@ -73,9 +74,10 @@ function RevokeForm({ tokenId }: { tokenId: string }) {
     >
       <button
         type="submit"
-        className="text-xs text-red-500/60 hover:text-red-400 transition-colors"
+        className="rounded p-1.5 text-[#333] hover:text-red-500 hover:bg-red-500/[0.08] transition-colors"
+        title="Revoke token"
       >
-        Revoke
+        <Trash size={14} />
       </button>
     </form>
   )

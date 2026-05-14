@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "aurora-background",
+  "type": "registry:ui",
+  "title": "Aurora Background",
+  "description": "Slow-moving animated aurora gradient background with configurable colors.",
+  "author": "ParticleUI",
+  "categories": ["backgrounds", "animations", "pro"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/aurora-background.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface AuroraBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {\n  colors?: string[]\n  speed?: \"slow\" | \"medium\" | \"fast\"\n  blur?: number\n}\n\nconst DURATIONS = { slow: \"18s\", medium: \"10s\", fast: \"5s\" }\n\nexport function AuroraBackground({\n  className, children,\n  colors = [\"#00d4ff\", \"#7c3aed\", \"#0ea5e9\", \"#10b981\"],\n  speed = \"medium\",\n  blur = 80,\n  ...props\n}: AuroraBackgroundProps) {\n  const dur = DURATIONS[speed]\n  return (\n    <div className={cn(\"relative overflow-hidden\", className)} {...props}>\n      <div className=\"pointer-events-none absolute inset-0\" aria-hidden>\n        {colors.map((color, i) => (\n          <div\n            key={i}\n            className=\"absolute rounded-full opacity-20\"\n            style={{\n              background: color,\n              width: \"60%\",\n              height: \"60%\",\n              top: `${(i * 30) % 60}%`,\n              left: `${(i * 40) % 60}%`,\n              filter: `blur(${blur}px)`,\n              animation: `aurora-${i % 3} ${dur} ease-in-out infinite`,\n              animationDelay: `${i * (parseFloat(dur) / colors.length)}s`,\n            }}\n          />\n        ))}\n        <style>{`\n          @keyframes aurora-0 {\n            0%,100% { transform: translate(0,0) scale(1); }\n            50% { transform: translate(10%, -15%) scale(1.1); }\n          }\n          @keyframes aurora-1 {\n            0%,100% { transform: translate(0,0) scale(1.05); }\n            50% { transform: translate(-12%, 10%) scale(0.95); }\n          }\n          @keyframes aurora-2 {\n            0%,100% { transform: translate(0,0) scale(0.9); }\n            50% { transform: translate(8%, 12%) scale(1.1); }\n          }\n        `}</style>\n      </div>\n      {children}\n    </div>\n  )\n}\n"
+    },
+    {
+      "path": "skills/aurora-background/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/aurora-background/SKILL.md"
+    }
+  ]
+}

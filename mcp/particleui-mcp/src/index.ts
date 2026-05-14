@@ -3,148 +3,157 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
 
-const REGISTRY_BASE = process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev/r"
+const BASE = process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev/r"
+const TOKEN = process.env.PARTICLEUI_TOKEN
 
-const server = new McpServer({
-  name: "particleui",
-  version: "0.1.0",
-})
+function headers(): Record<string, string> {
+  return TOKEN
+    ? { Authorization: `Bearer ${TOKEN}`, Accept: "application/vnd.shadcn.v1+json" }
+    : { Accept: "application/vnd.shadcn.v1+json" }
+}
 
-// Tool: search available components
+type IndexItem = {
+  name: string; type: string; title: string
+  description: string; categories: string[]
+}
+
+async function fetchIndex(fw: string): Promise<IndexItem[]> {
+  const res = await fetch(`${BASE}/${fw}/index.json`)
+  if (!res.ok) return []
+  return res.json()
+}
+
+const server = new McpServer({ name: "particleui", version: "0.1.0" })
+
+/* ── search_components ── */
 server.tool(
   "search_components",
-  "Search ParticleUI components by name, category, or description",
+  "Search ParticleUI components by name, category (buttons, cards, hero, animations, backgrounds, text), or tier (free/pro).",
   {
-    query: z.string().describe("Search term — component name, category (buttons, cards, hero, pro), or keyword"),
+    query: z.string().describe("Search term"),
     framework: z.enum(["react", "vue", "svelte"]).default("react"),
     tier: z.enum(["free", "pro", "all"]).default("all"),
   },
   async ({ query, framework, tier }) => {
-    const indexUrl = `${REGISTRY_BASE}/${framework}/index.json`
-    try {
-      const res = await fetch(indexUrl)
-      if (!res.ok) {
-        return { content: [{ type: "text", text: `Failed to fetch registry: ${res.status}` }] }
-      }
-      const index: Array<{ name: string; title: string; description: string; categories: string[] }> =
-        await res.json()
+    const index = await fetchIndex(framework)
+    const q = query.toLowerCase()
+    const results = index.filter((item) => {
+      const matchesTier =
+        tier === "all" ||
+        (tier === "pro" && item.categories.includes("pro")) ||
+        (tier === "free" && !item.categories.includes("pro"))
+      const matchesQuery =
+        item.name.includes(q) ||
+        item.title.toLowerCase().includes(q) ||
+        item.description.toLowerCase().includes(q) ||
+        item.categories.some((c) => c.includes(q))
+      return matchesTier && matchesQuery
+    })
 
-      const q = query.toLowerCase()
-      const results = index.filter((item) => {
-        const matchesTier =
-          tier === "all" ||
-          (tier === "pro" && item.categories?.includes("pro")) ||
-          (tier === "free" && !item.categories?.includes("pro"))
-        const matchesQuery =
-          item.name.includes(q) ||
-          item.title?.toLowerCase().includes(q) ||
-          item.description?.toLowerCase().includes(q) ||
-          item.categories?.some((c) => c.includes(q))
-        return matchesTier && matchesQuery
-      })
+    if (!results.length)
+      return { content: [{ type: "text", text: `No components matched "${query}".` }] }
 
-      if (results.length === 0) {
-        return { content: [{ type: "text", text: `No components matched "${query}".` }] }
-      }
-
-      const lines = results.map(
-        (r) =>
-          `• **${r.name}**${r.categories?.includes("pro") ? " [PRO]" : ""} — ${r.description ?? r.title}`
-      )
-      return {
-        content: [
-          {
-            type: "text",
-            text: `Found ${results.length} component(s):\n\n${lines.join("\n")}`,
-          },
-        ],
-      }
-    } catch (e) {
-      return { content: [{ type: "text", text: `Error: ${String(e)}` }] }
+    const lines = results.map(
+      (r) =>
+        `• **${r.name}**${r.categories.includes("pro") ? " [PRO]" : " [free]"} — ${r.description}`
+    )
+    return {
+      content: [{ type: "text", text: `Found ${results.length}:\n\n${lines.join("\n")}` }],
     }
   }
 )
 
-// Tool: get install command for a component
+/* ── get_component ── */
 server.tool(
-  "get_install_command",
-  "Get the npx shadcn install command for a ParticleUI component",
+  "get_component",
+  "Fetch full details for a single ParticleUI component including props and source.",
   {
-    name: z.string().describe("Component name, e.g. particle-hero or glow-button"),
+    name: z.string().describe("Component name e.g. particle-hero"),
     framework: z.enum(["react", "vue", "svelte"]).default("react"),
   },
   async ({ name, framework }) => {
-    const isPro = await checkIsPro(name, framework)
-    const namespace = `@particleui/${name}`
-
-    if (isPro) {
+    const res = await fetch(`${BASE}/${framework}/${name}.json`, { headers: headers() })
+    if (res.status === 401)
       return {
-        content: [
-          {
-            type: "text",
-            text: [
-              `**${name}** is a Pro component. To install:`,
-              "",
-              "1. Add to your `.env`:",
-              "   ```",
-              "   PARTICLEUI_TOKEN=your-token-here",
-              "   ```",
-              "",
-              "2. Add to `components.json` under `registries`:",
-              "   ```json",
-              '   "@particleui": {',
-              `     "url": "${REGISTRY_BASE}/${framework}/{name}.json",`,
-              '     "headers": { "Authorization": "Bearer ${PARTICLEUI_TOKEN}" }',
-              "   }",
-              "   ```",
-              "",
-              "3. Install:",
-              `   \`\`\`bash`,
-              `   npx shadcn add ${namespace}`,
-              `   \`\`\``,
-              "",
-              "Get a token at https://particleui.dev/dashboard",
-            ].join("\n"),
-          },
-        ],
+        content: [{
+          type: "text",
+          text: `**${name}** is a Pro component. Add your PARTICLEUI_TOKEN to the MCP environment:\n\`\`\`\nPARTICLEUI_TOKEN=your-token claude mcp add @particleui/mcp\n\`\`\`\nGet a token at https://particleui.dev/dashboard`,
+        }],
       }
+    if (!res.ok)
+      return { content: [{ type: "text", text: `Component "${name}" not found.` }] }
+
+    const item = await res.json()
+    const isPro = item.categories?.includes("pro")
+    const mainFile = item.files?.find((f: { type: string }) => f.type !== "registry:file")
+
+    const lines = [
+      `# ${item.title}${isPro ? " [PRO]" : " [free]"}`,
+      ``,
+      item.description,
+      ``,
+      `## Install`,
+      `\`\`\`bash`,
+      `npx shadcn add @particleui/${item.name}`,
+      `\`\`\``,
+    ]
+
+    if (item.dependencies?.length)
+      lines.push(``, `## npm dependencies`, item.dependencies.map((d: string) => `- ${d}`).join("\n"))
+
+    if (item.registryDependencies?.length)
+      lines.push(``, `## Registry dependencies`, item.registryDependencies.join(", "))
+
+    if (mainFile?.content) {
+      lines.push(``, `## Source`, `\`\`\`tsx`, mainFile.content, `\`\`\``)
     }
 
-    return {
-      content: [
-        {
-          type: "text",
-          text: [
-            `Install **${name}** (free):`,
-            "",
-            "Add to `components.json` under `registries`:",
-            "```json",
-            '"@particleui": {',
-            `  "url": "${REGISTRY_BASE}/${framework}/{name}.json"`,
-            "}",
-            "```",
-            "",
-            "Then install:",
-            "```bash",
-            `npx shadcn add ${namespace}`,
-            "```",
-          ].join("\n"),
-        },
-      ],
-    }
+    return { content: [{ type: "text", text: lines.join("\n") }] }
   }
 )
 
-async function checkIsPro(name: string, framework: string): Promise<boolean> {
-  try {
-    const res = await fetch(`${REGISTRY_BASE}/${framework}/${name}.json`)
-    if (!res.ok) return false
-    const item = await res.json()
-    return item.categories?.includes("pro") ?? false
-  } catch {
-    return false
+/* ── get_install_config ── */
+server.tool(
+  "get_install_config",
+  "Get the components.json registry config snippet to add ParticleUI to a project.",
+  { framework: z.enum(["react", "vue", "svelte"]).default("react") },
+  async ({ framework }) => {
+    const text = [
+      `Add to your **components.json** under \`"registries"\`:`,
+      `\`\`\`json`,
+      `"@particleui": {`,
+      `  "url": "${BASE}/${framework}/{name}.json",`,
+      `  "headers": { "Authorization": "Bearer \${PARTICLEUI_TOKEN}" }`,
+      `}`,
+      `\`\`\``,
+      ``,
+      `Add to your **.env**:`,
+      `\`\`\``,
+      `PARTICLEUI_TOKEN=your-token-here`,
+      `\`\`\``,
+      ``,
+      `Get a token at https://particleui.dev/dashboard`,
+    ].join("\n")
+    return { content: [{ type: "text", text }] }
   }
-}
+)
+
+/* ── list_categories ── */
+server.tool(
+  "list_categories",
+  "List all available component categories.",
+  { framework: z.enum(["react", "vue", "svelte"]).default("react") },
+  async ({ framework }) => {
+    const index = await fetchIndex(framework)
+    const cats = new Set(index.flatMap((i) => i.categories))
+    return {
+      content: [{
+        type: "text",
+        text: `Categories: ${[...cats].sort().join(", ")}`,
+      }],
+    }
+  }
+)
 
 const transport = new StdioServerTransport()
 await server.connect(transport)

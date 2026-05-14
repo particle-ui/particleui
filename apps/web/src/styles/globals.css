@@ -1,7 +1,24 @@
 @import "tailwindcss";
-@import "../../node_modules/tokens/dist/tokens.css";
 
 @theme {
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Neutral dark palette */
+  --color-surface-950: #090909;
+  --color-surface-900: #111111;
+  --color-surface-800: #1a1a1a;
+  --color-surface-700: #242424;
+  --color-surface-600: #333333;
+  --color-surface-500: #555555;
+  --color-surface-400: #888888;
+  --color-surface-300: #bbbbbb;
+  --color-surface-200: #dddddd;
+  --color-surface-100: #f0f0f0;
+  --color-surface-50:  #fafafa;
+
+  /* Single accent — electric cyan */
+  --color-accent: #00d4ff;
+  --color-accent-dim: rgba(0, 212, 255, 0.12);
+  --color-accent-border: rgba(0, 212, 255, 0.25);
 }

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "cursor-trail",
+  "type": "registry:ui",
+  "title": "Cursor Trail",
+  "description": "Attaches a glowing particle trail that follows the cursor. Drop into any layout.",
+  "author": "ParticleUI",
+  "categories": ["cursors", "animations", "pro"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/cursor-trail.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\nimport { useEffect, useRef } from \"react\"\n\ninterface TrailPoint { x: number; y: number; t: number }\n\nexport function CursorTrail({ color = \"#00d4ff\", size = 6, length = 20 }: {\n  color?: string; size?: number; length?: number\n}) {\n  const canvasRef = useRef<HTMLCanvasElement>(null)\n  const trail = useRef<TrailPoint[]>([])\n  const raf = useRef(0)\n\n  useEffect(() => {\n    const canvas = canvasRef.current!\n    const ctx = canvas.getContext(\"2d\")!\n    let W = 0, H = 0\n\n    const resize = () => {\n      W = canvas.width = window.innerWidth\n      H = canvas.height = window.innerHeight\n    }\n    resize()\n    window.addEventListener(\"resize\", resize)\n\n    const onMove = (e: MouseEvent) => {\n      trail.current.push({ x: e.clientX, y: e.clientY, t: Date.now() })\n      if (trail.current.length > length) trail.current.shift()\n    }\n    window.addEventListener(\"mousemove\", onMove)\n\n    const draw = () => {\n      ctx.clearRect(0, 0, W, H)\n      const now = Date.now()\n      trail.current = trail.current.filter(p => now - p.t < 600)\n      for (let i = 0; i < trail.current.length; i++) {\n        const p = trail.current[i]\n        const age = (now - p.t) / 600\n        const alpha = (1 - age) * (i / trail.current.length)\n        const r = size * (1 - age * 0.5)\n        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3)\n        grd.addColorStop(0, color.replace(\")\", `, ${alpha})`))\n        grd.addColorStop(1, \"rgba(0,0,0,0)\")\n        ctx.beginPath()\n        ctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2)\n        ctx.fillStyle = grd\n        ctx.fill()\n      }\n      raf.current = requestAnimationFrame(draw)\n    }\n    draw()\n\n    return () => {\n      cancelAnimationFrame(raf.current)\n      window.removeEventListener(\"resize\", resize)\n      window.removeEventListener(\"mousemove\", onMove)\n    }\n  }, [color, size, length])\n\n  return (\n    <canvas\n      ref={canvasRef}\n      className=\"pointer-events-none fixed inset-0 z-[9999]\"\n      aria-hidden\n    />\n  )\n}\n"
+    },
+    {
+      "path": "skills/cursor-trail/SKILL.md",
+      "type": "registry:file",
+      "target": "~/.claude/skills/cursor-trail/SKILL.md"
+    }
+  ]
+}

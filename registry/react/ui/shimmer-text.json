@@ -1,0 +1,17 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "shimmer-text",
+  "type": "registry:ui",
+  "title": "Shimmer Text",
+  "description": "Text with a moving shimmer highlight — great for hero headlines and loading states.",
+  "author": "ParticleUI",
+  "categories": ["text", "free"],
+  "dependencies": ["clsx", "tailwind-merge"],
+  "files": [
+    {
+      "path": "components/ui/shimmer-text.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface ShimmerTextProps extends React.HTMLAttributes<HTMLSpanElement> {\n  shimmerWidth?: number\n}\n\nexport function ShimmerText({ className, children, shimmerWidth = 100, ...props }: ShimmerTextProps) {\n  return (\n    <span\n      className={cn(\"relative inline-block overflow-hidden\", className)}\n      {...props}\n    >\n      {children}\n      <span\n        className=\"absolute inset-0 pointer-events-none\"\n        style={{\n          background: `linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.6) 50%, transparent 60%)`,\n          backgroundSize: `${shimmerWidth * 3}% 100%`,\n          animation: \"shimmer 2.5s linear infinite\",\n        }}\n      />\n      <style>{`\n        @keyframes shimmer {\n          0%   { background-position: -200% 0; }\n          100% { background-position: 200% 0; }\n        }\n      `}</style>\n    </span>\n  )\n}\n"
+    }
+  ]
+}

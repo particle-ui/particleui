@@ -13,16 +13,15 @@ const ElectricBadge = React.forwardRef<HTMLSpanElement, ElectricBadgeProps>(
       ref={ref}
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium",
-        "bg-electric-500/10 text-electric-400 border border-electric-500/30",
-        pulse && "shadow-[0_0_12px_2px_oklch(68%_0.27_205_/_0.25)]",
+        "border border-[rgba(0,212,255,0.25)] bg-[rgba(0,212,255,0.08)] text-[#00d4ff]",
         className
       )}
       {...props}
     >
       {pulse && (
         <span className="relative flex h-1.5 w-1.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-electric-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-electric-500" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00d4ff] opacity-60" />
+          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#00d4ff]" />
         </span>
       )}
       {children}
