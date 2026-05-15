@@ -23,12 +23,18 @@
     "registry:svelte": "node scripts/gen-svelte.mjs && pnpm registry:build",
     "registry:vue": "node scripts/gen-vue.mjs && pnpm registry:build",
     "registry:templates": "node scripts/gen-templates.mjs && pnpm registry:build",
-    "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build"
+    "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build",
+    "check": "pnpm --filter web typecheck && pnpm --filter particleui-cli build && pnpm registry:all",
+    "prepare": "simple-git-hooks"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm --filter web typecheck && pnpm --filter particleui-cli build"
   },
   "devDependencies": {
+    "prettier": "^3.5.3",
+    "simple-git-hooks": "^2.13.1",
     "turbo": "^2.9.14",
-    "typescript": "^5.8.3",
-    "prettier": "^3.5.3"
+    "typescript": "^5.8.3"
   },
   "engines": {
     "node": ">=20",
