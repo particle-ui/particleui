@@ -20,9 +20,9 @@ export function ComponentTabs({
   }
 
   return (
-    <div className="rounded-xl border border-white/[0.07] overflow-hidden">
+    <div className="rounded-xl border border-border overflow-hidden">
       {/* Tab bar */}
-      <div className="flex items-center justify-between border-b border-white/[0.06] bg-[#0a0a0a] px-1 py-1">
+      <div className="flex items-center justify-between border-b border-border bg-surface-1 px-1 py-1">
         <div className="flex">
           {(["preview", "code"] as const).map((t) => (
             <button
@@ -30,8 +30,8 @@ export function ComponentTabs({
               onClick={() => setTab(t)}
               className={`rounded-md px-4 py-1.5 text-xs font-medium capitalize transition-all ${
                 tab === t
-                  ? "bg-white/[0.07] text-white"
-                  : "text-[#444] hover:text-[#888]"
+                  ? "bg-white/[0.07] text-text-1"
+                  : "text-text-4 hover:text-text-2"
               }`}
             >
               {t}
@@ -41,9 +41,9 @@ export function ComponentTabs({
         {tab === "code" && (
           <button
             onClick={copy}
-            className="mr-2 flex items-center gap-1.5 rounded-md border border-white/[0.07] px-2.5 py-1.5 text-xs text-[#444] hover:text-white transition-colors"
+            className="mr-2 flex items-center gap-1.5 rounded-md border border-border px-2.5 py-1.5 text-xs text-text-4 hover:text-text-1 transition-colors"
           >
-            {copied ? <Check size={11} className="text-[#00d4ff]" /> : <Copy size={11} />}
+            {copied ? <Check size={11} className="text-accent" /> : <Copy size={11} />}
             {copied ? "Copied" : "Copy"}
           </button>
         )}
@@ -51,15 +51,15 @@ export function ComponentTabs({
 
       {/* Preview pane */}
       {tab === "preview" && (
-        <div className="flex min-h-[220px] items-center justify-center bg-[#0a0a0a] p-10">
+        <div className="flex min-h-[240px] items-center justify-center bg-surface-1 p-10">
           {preview}
         </div>
       )}
 
       {/* Code pane */}
       {tab === "code" && (
-        <div className="bg-[#080808]">
-          <pre className="overflow-x-auto p-5 text-xs leading-6 text-[#888] max-h-[480px]">
+        <div className="bg-bg">
+          <pre className="overflow-x-auto p-5 text-xs leading-6 text-text-2 max-h-[480px]">
             <code>{code}</code>
           </pre>
         </div>

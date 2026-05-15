@@ -8,7 +8,7 @@ import { MagneticDemo } from "./_components/magnetic-demo"
 export default function HomePage() {
   return (
     <div
-      className="bg-[#030303] text-white min-h-svh"
+      className="bg-bg text-text-1 min-h-svh"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
       }}
@@ -34,17 +34,17 @@ function Nav() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-sm tracking-tight">
-          <Sparkle weight="fill" size={16} className="text-[#00d4ff]" />
+          <Sparkle weight="fill" size={16} className="text-accent" />
           ParticleUI
         </Link>
 
         {/* Center pill nav */}
-        <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-0.5 rounded-full border border-white/[0.08] bg-[#0a0a0a]/90 px-2 py-2 backdrop-blur-xl">
+        <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-0.5 rounded-full border border-border bg-[#0a0a0a]/90 px-2 py-2 backdrop-blur-xl">
           {["Components", "Docs", "Pricing", "Blog"].map((l) => (
             <Link
               key={l}
               href={`/${l.toLowerCase()}`}
-              className="rounded-full px-4 py-1.5 text-sm text-[#555] hover:text-white hover:bg-white/[0.06] transition-all duration-150"
+              className="rounded-full px-4 py-1.5 text-sm text-text-3 hover:text-text-1 hover:bg-white/[0.06] transition-all duration-150"
             >
               {l}
             </Link>
@@ -53,12 +53,12 @@ function Nav() {
 
         {/* Right actions */}
         <div className="flex items-center gap-4">
-          <Link href="/sign-in" className="text-sm text-[#444] hover:text-white transition-colors">
+          <Link href="/sign-in" className="text-sm text-text-4 hover:text-text-1 transition-colors">
             Sign in
           </Link>
           <Link
             href="/sign-up"
-            className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:bg-[#e2e2e2] transition-colors"
+            className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:bg-gray-200 transition-colors"
           >
             Get started free
           </Link>
@@ -76,17 +76,17 @@ function Hero() {
       <HeroCanvas />
 
       {/* Vignette */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,transparent_30%,#030303_100%)]" />
+      <div className="pointer-events-none absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, var(--color-bg) 100%)" }} />
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center pt-20">
         {/* Eyebrow pill */}
         <Link
           href="/components"
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-[#0a0a0a]/80 px-4 py-2 text-xs text-[#666] hover:text-[#aaa] transition-colors backdrop-blur-sm"
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-[#0a0a0a]/80 px-4 py-2 text-xs text-text-3 hover:text-text-2 transition-colors backdrop-blur-sm"
         >
-          <span className="flex h-1.5 w-1.5 rounded-full bg-[#00d4ff] relative">
-            <span className="animate-ping absolute inset-0 rounded-full bg-[#00d4ff] opacity-60" />
+          <span className="flex h-1.5 w-1.5 rounded-full bg-accent relative">
+            <span className="animate-ping absolute inset-0 rounded-full bg-accent opacity-60" />
           </span>
           50+ components — React · Vue · Svelte
           <ArrowRight size={10} weight="bold" />
@@ -110,7 +110,7 @@ function Hero() {
           </span>
         </h1>
 
-        <p className="mx-auto max-w-lg text-[1.1rem] text-[#444] leading-relaxed mb-10">
+        <p className="mx-auto max-w-lg text-[1.1rem] text-text-4 leading-relaxed mb-10">
           Premium animated components built on shadcn/ui. Particles, magnetic
           interactions, aurora effects. One command to install. Yours forever.
         </p>
@@ -119,14 +119,14 @@ function Hero() {
         <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
           <Link
             href="/components"
-            className="group flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-[#e2e2e2] transition-all shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
+            className="group flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-gray-200 transition-all shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
           >
             Browse components
             <ArrowRight size={13} weight="bold" className="group-hover:translate-x-0.5 transition-transform" />
           </Link>
           <Link
             href="/docs"
-            className="flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.04] px-7 py-3.5 text-sm font-medium text-[#777] hover:text-white hover:border-white/20 transition-all backdrop-blur-sm"
+            className="flex items-center gap-2 rounded-full border border-border bg-white/[0.04] px-7 py-3.5 text-sm font-medium text-text-3 hover:text-text-1 hover:border-border-hover transition-all backdrop-blur-sm"
           >
             Read the docs
           </Link>
@@ -134,33 +134,33 @@ function Hero() {
 
         {/* Terminal */}
         <div
-          className="mx-auto max-w-md overflow-hidden rounded-2xl border border-white/[0.07]"
+          className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border"
           style={{ background: "linear-gradient(145deg, #0f0f0f, #080808)" }}
         >
-          <div className="flex items-center gap-2 border-b border-white/[0.05] px-4 py-3">
+          <div className="flex items-center gap-2 border-b border-border px-4 py-3">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
             <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-            <span className="ml-auto font-mono text-xs text-[#333]">bash</span>
+            <span className="ml-auto font-mono text-xs text-text-4">bash</span>
           </div>
           <div className="px-5 py-4 font-mono text-sm text-left">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[#333]">$</span>
-              <span className="text-[#00d4ff]">npx shadcn</span>
-              <span className="text-white">add @particleui/particle-hero</span>
+              <span className="text-text-4">$</span>
+              <span className="text-accent">npx shadcn</span>
+              <span className="text-text-1">add @particleui/particle-hero</span>
             </div>
-            <div className="text-[#2a5c2a] mt-2 text-xs pl-4">
+            <div className="text-[#2a6c2a] mt-2 text-xs pl-4">
               ✓ Resolved @particleui/particle-hero<br />
               ✓ Installing dependencies...<br />
               ✓ Wrote components/blocks/particle-hero.tsx<br />
-              <span className="text-[#00d4ff]/50">✓ Installed Claude skill → ~/.claude/skills/particle-hero/</span>
+              <span className="text-accent/40">✓ Installed Claude skill → ~/.claude/skills/particle-hero/</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Bottom fade */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#030303] to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40" style={{ background: "linear-gradient(to top, var(--color-bg), transparent)" }} />
     </section>
   )
 }
@@ -171,14 +171,14 @@ function LiveDemo() {
     <section className="py-32 px-6 relative">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#00d4ff]">
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
             Live preview
           </span>
         </div>
         <h2 className="text-center text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-[-0.04em] mb-4">
           See them move
         </h2>
-        <p className="text-center text-[#444] mb-16 max-w-md mx-auto">
+        <p className="text-center text-text-4 mb-16 max-w-md mx-auto">
           These are real components running in the browser. Hover, click, interact.
         </p>
 
@@ -190,11 +190,11 @@ function LiveDemo() {
             <div className="flex-1 flex items-center justify-center">
               <MagneticDemo />
             </div>
-            <div className="mt-6 border-t border-white/[0.05] pt-4">
+            <div className="mt-6 border-t border-border pt-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold">Magnetic Button</p>
-                  <p className="text-xs text-[#444] mt-0.5">Follows your cursor with spring physics</p>
+                  <p className="text-xs text-text-4 mt-0.5">Follows your cursor with spring physics</p>
                 </div>
                 <ProBadge />
               </div>
@@ -207,18 +207,18 @@ function LiveDemo() {
               <button className="rounded-md bg-white px-4 py-2 text-xs font-semibold text-black transition-all hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.15)] hover:scale-105">
                 Default
               </button>
-              <button className="rounded-md px-4 py-2 text-xs font-semibold text-[#00d4ff] transition-all border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] hover:shadow-[0_0_24px_rgba(0,212,255,0.35)] hover:scale-105">
+              <button className="rounded-md px-4 py-2 text-xs font-semibold text-accent transition-all border border-accent-border bg-accent-dim hover:shadow-[0_0_24px_rgba(0,212,255,0.35)] hover:scale-105">
                 Electric
               </button>
-              <button className="rounded-md border border-white/20 px-4 py-2 text-xs font-semibold text-[#666] hover:border-white/40 hover:text-white transition-all hover:scale-105">
+              <button className="rounded-md border border-border px-4 py-2 text-xs font-semibold text-text-3 hover:border-border-hover hover:text-text-1 transition-all hover:scale-105">
                 Ghost
               </button>
             </div>
-            <div className="mt-6 border-t border-white/[0.05] pt-4">
+            <div className="mt-6 border-t border-border pt-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold">Glow Button</p>
-                  <p className="text-xs text-[#444] mt-0.5">Three variants with pulsing light</p>
+                  <p className="text-xs text-text-4 mt-0.5">Three variants with pulsing light</p>
                 </div>
                 <FreeBadge />
               </div>
@@ -229,29 +229,29 @@ function LiveDemo() {
           <SpotlightCard className="p-8 flex flex-col justify-between min-h-[220px]">
             <div className="flex-1 flex items-center justify-center">
               <div className="w-full max-w-[220px] space-y-2">
-                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #222, #00d4ff22, #111)" }}>
-                  <div className="rounded-[11px] bg-[#0d0d0d] p-4">
+                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #222, rgba(0,212,255,0.13), #111)" }}>
+                  <div className="rounded-[11px] bg-surface-2 p-4">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="h-6 w-6 rounded-full bg-[#00d4ff]/20" />
+                      <div className="h-6 w-6 rounded-full bg-accent/20" />
                       <div className="h-2 w-20 rounded bg-white/10" />
                     </div>
                     <div className="h-1.5 w-full rounded bg-white/[0.06] mb-1.5" />
                     <div className="h-1.5 w-3/4 rounded bg-white/[0.06]" />
                   </div>
                 </div>
-                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #111, #ffffff15, #0a0a0a)" }}>
-                  <div className="rounded-[11px] bg-[#0d0d0d] p-4">
+                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #111, rgba(255,255,255,0.08), #0a0a0a)" }}>
+                  <div className="rounded-[11px] bg-surface-2 p-4">
                     <div className="h-1.5 w-full rounded bg-white/[0.06] mb-1.5" />
                     <div className="h-1.5 w-2/3 rounded bg-white/[0.06]" />
                   </div>
                 </div>
               </div>
             </div>
-            <div className="mt-6 border-t border-white/[0.05] pt-4">
+            <div className="mt-6 border-t border-border pt-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold">Gradient Card</p>
-                  <p className="text-xs text-[#444] mt-0.5">Animated border gradients</p>
+                  <p className="text-xs text-text-4 mt-0.5">Animated border gradients</p>
                 </div>
                 <FreeBadge />
               </div>
@@ -260,12 +260,11 @@ function LiveDemo() {
 
           {/* Particle hero preview — spans 2 cols */}
           <SpotlightCard className="md:col-span-2 p-0 overflow-hidden min-h-[240px] relative">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#050d14] to-[#030303]">
-              {/* Static animated dots */}
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, #050d14, var(--color-bg))" }}>
               {Array.from({ length: 24 }, (_, i) => (
                 <div
                   key={i}
-                  className="absolute rounded-full bg-[#00d4ff]"
+                  className="absolute rounded-full bg-accent"
                   style={{
                     left: `${(i * 41 + 7) % 94}%`,
                     top: `${(i * 67 + 11) % 88}%`,
@@ -286,12 +285,12 @@ function LiveDemo() {
             <div className="relative z-10 flex h-full flex-col items-center justify-center p-8 text-center">
               <ProBadge />
               <h3 className="mt-3 text-2xl font-bold tracking-tight">Particle Hero</h3>
-              <p className="mt-2 text-sm text-[#444] max-w-sm">
+              <p className="mt-2 text-sm text-text-4 max-w-sm">
                 Full-viewport canvas particle system. Move your cursor on the live page to see it react.
               </p>
               <Link
                 href="/components/particle-hero"
-                className="mt-5 flex items-center gap-1.5 text-xs text-[#00d4ff] hover:text-white transition-colors"
+                className="mt-5 flex items-center gap-1.5 text-xs text-accent hover:text-text-1 transition-colors"
               >
                 View component <ArrowUpRight size={12} />
               </Link>
@@ -301,15 +300,15 @@ function LiveDemo() {
           {/* Electric badge */}
           <SpotlightCard className="p-8 flex flex-col justify-between min-h-[220px]">
             <div className="flex-1 flex items-center justify-center gap-3 flex-wrap">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] px-3 py-1.5 text-xs text-[#00d4ff]">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-accent-border bg-accent-dim px-3 py-1.5 text-xs text-accent">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute h-full w-full rounded-full bg-[#00d4ff] opacity-60" />
-                  <span className="relative h-1.5 w-1.5 rounded-full bg-[#00d4ff]" />
+                  <span className="animate-ping absolute h-full w-full rounded-full bg-accent opacity-60" />
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-accent" />
                 </span>
                 Live status
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-[#555]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#444]" />
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-white/[0.03] px-3 py-1.5 text-xs text-text-3">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-text-4)]" />
                 Idle
               </span>
               <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-xs text-red-400">
@@ -320,11 +319,11 @@ function LiveDemo() {
                 Offline
               </span>
             </div>
-            <div className="mt-6 border-t border-white/[0.05] pt-4">
+            <div className="mt-6 border-t border-border pt-4">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-semibold">Electric Badge</p>
-                  <p className="text-xs text-[#444] mt-0.5">Animated pulse for status</p>
+                  <p className="text-xs text-text-4 mt-0.5">Animated pulse for status</p>
                 </div>
                 <FreeBadge />
               </div>
@@ -340,10 +339,10 @@ function LiveDemo() {
 /* ─── Bento features ──────────────────────────────────────────────────────── */
 function BentoFeatures() {
   return (
-    <section className="py-24 px-6 border-t border-white/[0.05]">
+    <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#555]">Why ParticleUI</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Why ParticleUI</span>
         </div>
         <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-16">
           Built different
@@ -353,20 +352,20 @@ function BentoFeatures() {
           {/* Shadcn native — large */}
           <SpotlightCard className="md:col-span-7 p-8 min-h-[280px] flex flex-col justify-between">
             <div>
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-[#555]">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.04] px-3 py-1.5 text-xs text-text-3">
                 Zero new tools
               </div>
               <h3 className="text-2xl font-bold tracking-tight mb-3">Works with the shadcn CLI you already know</h3>
-              <p className="text-[#444] text-sm leading-relaxed">
+              <p className="text-text-4 text-sm leading-relaxed">
                 No proprietary CLI, no wrapper package, no runtime imports. Components land
                 directly in your codebase. Modify them, delete them, own them.
               </p>
             </div>
-            <div className="mt-6 rounded-xl border border-white/[0.06] bg-[#030303] p-4 font-mono text-xs">
-              <span className="text-[#333]">$&nbsp;</span>
-              <span className="text-[#00d4ff]">npx shadcn</span>
-              <span className="text-white"> add @particleui/glow-button</span>
-              <div className="mt-2 text-[#2a5c2a]">✓ Wrote src/components/ui/glow-button.tsx</div>
+            <div className="mt-6 rounded-xl border border-border bg-bg p-4 font-mono text-xs">
+              <span className="text-text-4">$&nbsp;</span>
+              <span className="text-accent">npx shadcn</span>
+              <span className="text-text-1"> add @particleui/glow-button</span>
+              <div className="mt-2 text-[#2a6c2a]">✓ Wrote src/components/ui/glow-button.tsx</div>
             </div>
           </SpotlightCard>
 
@@ -374,26 +373,26 @@ function BentoFeatures() {
           <SpotlightCard className="md:col-span-5 p-8 min-h-[280px] flex flex-col justify-between relative overflow-hidden">
             <div
               className="absolute -right-12 -top-12 h-48 w-48 rounded-full opacity-10"
-              style={{ background: "radial-gradient(circle, #00d4ff, transparent 70%)" }}
+              style={{ background: "radial-gradient(circle, var(--color-accent), transparent 70%)" }}
             />
             <div>
-              <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-[#00d4ff]">Exclusive</div>
+              <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Exclusive</div>
               <h3 className="text-xl font-bold mb-3">AI knows your components</h3>
-              <p className="text-[#444] text-sm leading-relaxed">
+              <p className="text-text-4 text-sm leading-relaxed">
                 Every Pro component ships a Claude skill. Your AI assistant understands
                 every prop, every edge case, every customisation.
               </p>
             </div>
             <div className="mt-4 space-y-2">
-              <div className="flex items-center gap-2 rounded-lg bg-[#030303] border border-white/[0.05] px-3 py-2">
-                <Sparkle size={10} weight="fill" className="text-[#00d4ff]" />
-                <span className="font-mono text-[10px] text-[#333]">~/.claude/skills/</span>
-                <span className="font-mono text-[10px] text-[#00d4ff]">particle-hero/</span>
+              <div className="flex items-center gap-2 rounded-lg bg-bg border border-border px-3 py-2">
+                <Sparkle size={10} weight="fill" className="text-accent" />
+                <span className="font-mono text-[10px] text-text-4">~/.claude/skills/</span>
+                <span className="font-mono text-[10px] text-accent">particle-hero/</span>
               </div>
-              <div className="flex items-center gap-2 rounded-lg bg-[#030303] border border-white/[0.05] px-3 py-2">
-                <Sparkle size={10} weight="fill" className="text-[#00d4ff]" />
-                <span className="font-mono text-[10px] text-[#333]">~/.claude/skills/</span>
-                <span className="font-mono text-[10px] text-[#00d4ff]">magnetic-button/</span>
+              <div className="flex items-center gap-2 rounded-lg bg-bg border border-border px-3 py-2">
+                <Sparkle size={10} weight="fill" className="text-accent" />
+                <span className="font-mono text-[10px] text-text-4">~/.claude/skills/</span>
+                <span className="font-mono text-[10px] text-accent">magnetic-button/</span>
               </div>
             </div>
           </SpotlightCard>
@@ -401,15 +400,15 @@ function BentoFeatures() {
           {/* Multi-framework */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
             <h3 className="text-lg font-bold mb-2">React · Vue · Svelte</h3>
-            <p className="text-[#444] text-sm flex-1">Same design tokens. Three registries. One purchase.</p>
+            <p className="text-text-4 text-sm flex-1">Same design tokens. Three registries. One purchase.</p>
             <div className="mt-4 grid grid-cols-3 gap-2">
               {[["React", true], ["Vue", false], ["Svelte", false]].map(([fw, live]) => (
                 <div
                   key={fw as string}
                   className={`rounded-lg border py-2 text-center text-xs font-medium ${
                     live
-                      ? "border-white/[0.1] bg-white/[0.04] text-white"
-                      : "border-white/[0.04] bg-transparent text-[#333]"
+                      ? "border-border bg-white/[0.04] text-text-1"
+                      : "border-white/[0.04] bg-transparent text-text-4"
                   }`}
                 >
                   {fw as string}
@@ -421,23 +420,23 @@ function BentoFeatures() {
           {/* MCP server */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
             <h3 className="text-lg font-bold mb-2">MCP server included</h3>
-            <p className="text-[#444] text-sm flex-1">
+            <p className="text-text-4 text-sm flex-1">
               Let Claude search and install your components from inside any conversation.
             </p>
-            <div className="mt-4 rounded-lg bg-[#030303] border border-white/[0.05] px-3 py-2 font-mono text-[10px] text-[#444]">
-              claude mcp add <span className="text-[#00d4ff]">@particleui/mcp</span>
+            <div className="mt-4 rounded-lg bg-bg border border-border px-3 py-2 font-mono text-[10px] text-text-4">
+              claude mcp add <span className="text-accent">@particleui/mcp</span>
             </div>
           </SpotlightCard>
 
           {/* Lifetime */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
             <h3 className="text-lg font-bold mb-2">$149, once. Forever.</h3>
-            <p className="text-[#444] text-sm flex-1">
+            <p className="text-text-4 text-sm flex-1">
               No subscription. No per-seat. Every component we ever ship, yours.
             </p>
             <Link
               href="/pricing"
-              className="mt-4 flex items-center gap-1.5 text-sm font-medium text-white hover:text-[#00d4ff] transition-colors"
+              className="mt-4 flex items-center gap-1.5 text-sm font-medium text-text-1 hover:text-accent transition-colors"
             >
               See pricing <ArrowRight size={12} weight="bold" />
             </Link>
@@ -451,16 +450,16 @@ function BentoFeatures() {
 /* ─── Code section ────────────────────────────────────────────────────────── */
 function CodeSection() {
   return (
-    <section className="py-24 px-6 border-t border-white/[0.05]">
+    <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-6xl grid md:grid-cols-2 gap-16 items-center">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#555]">Developer first</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Developer first</span>
           <h2 className="mt-3 text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-[-0.04em] mb-4">
             Setup in 60 seconds.<br />
-            <span className="text-[#444]">Customise forever.</span>
+            <span className="text-text-3">Customise forever.</span>
           </h2>
-          <p className="text-[#444] leading-relaxed mb-8">
-            Add the registry to your <code className="text-[#888] bg-white/[0.04] px-1.5 py-0.5 rounded text-xs">components.json</code>.
+          <p className="text-text-4 leading-relaxed mb-8">
+            Add the registry to your <code className="text-text-2 bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">components.json</code>.
             Run the install. The source is yours — edit every line, every prop, every style.
           </p>
           <ul className="space-y-3">
@@ -470,8 +469,8 @@ function CodeSection() {
               "TypeScript-first, full type safety",
               "No runtime deps you don't already have",
             ].map((f) => (
-              <li key={f} className="flex items-center gap-3 text-sm text-[#666]">
-                <Check size={14} weight="bold" className="text-[#00d4ff] shrink-0" />
+              <li key={f} className="flex items-center gap-3 text-sm text-text-3">
+                <Check size={14} weight="bold" className="text-accent shrink-0" />
                 {f}
               </li>
             ))}
@@ -479,9 +478,9 @@ function CodeSection() {
         </div>
 
         {/* Code block */}
-        <div className="rounded-2xl border border-white/[0.07] overflow-hidden" style={{ background: "#0b0b0b" }}>
-          <div className="flex items-center justify-between border-b border-white/[0.05] px-5 py-3">
-            <span className="font-mono text-xs text-[#333]">components.json</span>
+        <div className="rounded-2xl border border-border overflow-hidden bg-surface-1">
+          <div className="flex items-center justify-between border-b border-border px-5 py-3">
+            <span className="font-mono text-xs text-text-4">components.json</span>
             <div className="flex gap-1.5">
               <span className="h-2 w-2 rounded-full bg-[#ff5f57]" />
               <span className="h-2 w-2 rounded-full bg-[#febc2e]" />
@@ -489,27 +488,27 @@ function CodeSection() {
             </div>
           </div>
           <pre className="p-5 font-mono text-xs leading-6 overflow-x-auto">
-            <span className="text-[#333]">{"{"}</span>{"\n"}
-            <span className="text-[#555]">  ...</span>{"\n"}
-            <span className="text-[#00d4ff]">  "registries"</span>
-            <span className="text-[#333]">: {"{"}</span>{"\n"}
-            <span className="text-white">    "@particleui"</span>
-            <span className="text-[#333]">: {"{"}</span>{"\n"}
-            <span className="text-[#555]">      </span>
-            <span className="text-[#888]">"url"</span>
-            <span className="text-[#333]">: </span>
-            <span className="text-[#4ade80]">"https://particleui.dev/r/react/{"{"}<span className="text-[#00d4ff]">name</span>{"}"}.json"</span>{"\n"}
-            <span className="text-[#555]">      </span>
-            <span className="text-[#888]">"headers"</span>
-            <span className="text-[#333]">: {"{"}</span>{"\n"}
-            <span className="text-[#555]">        </span>
-            <span className="text-[#888]">"Authorization"</span>
-            <span className="text-[#333]">: </span>
-            <span className="text-[#4ade80]">"Bearer ${"{"}<span className="text-[#00d4ff]">PARTICLEUI_TOKEN</span>{"}"}"</span>{"\n"}
-            <span className="text-[#333]">{"      }"}</span>{"\n"}
-            <span className="text-[#333]">{"    }"}</span>{"\n"}
-            <span className="text-[#333]">{"  }"}</span>{"\n"}
-            <span className="text-[#333]">{"}"}</span>
+            <span className="text-text-4">{"{"}</span>{"\n"}
+            <span className="text-text-3">  ...</span>{"\n"}
+            <span className="text-accent">  "registries"</span>
+            <span className="text-text-4">: {"{"}</span>{"\n"}
+            <span className="text-text-1">    "@particleui"</span>
+            <span className="text-text-4">: {"{"}</span>{"\n"}
+            <span className="text-text-3">      </span>
+            <span className="text-text-2">"url"</span>
+            <span className="text-text-4">: </span>
+            <span className="text-[#4ade80]">"https://particleui.dev/r/react/{"{"}<span className="text-accent">name</span>{"}"}.json"</span>{"\n"}
+            <span className="text-text-3">      </span>
+            <span className="text-text-2">"headers"</span>
+            <span className="text-text-4">: {"{"}</span>{"\n"}
+            <span className="text-text-3">        </span>
+            <span className="text-text-2">"Authorization"</span>
+            <span className="text-text-4">: </span>
+            <span className="text-[#4ade80]">"Bearer ${"{"}<span className="text-accent">PARTICLEUI_TOKEN</span>{"}"}"</span>{"\n"}
+            <span className="text-text-4">{"      }"}</span>{"\n"}
+            <span className="text-text-4">{"    }"}</span>{"\n"}
+            <span className="text-text-4">{"  }"}</span>{"\n"}
+            <span className="text-text-4">{"}"}</span>
           </pre>
         </div>
       </div>
@@ -529,13 +528,13 @@ const REVIEWS = [
 
 function Testimonials() {
   return (
-    <section className="py-24 px-6 border-t border-white/[0.05] overflow-hidden">
+    <section className="py-24 px-6 border-t border-border overflow-hidden">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 flex items-center justify-center gap-1">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={12} weight="fill" className="text-[#00d4ff]" />
+            <Star key={i} size={12} weight="fill" className="text-accent" />
           ))}
-          <span className="ml-2 text-xs text-[#444]">5.0 from 200+ developers</span>
+          <span className="ml-2 text-xs text-text-4">5.0 from 200+ developers</span>
         </div>
         <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-16">
           Loved by builders
@@ -544,16 +543,16 @@ function Testimonials() {
           {REVIEWS.map((r) => (
             <div
               key={r.name}
-              className="break-inside-avoid rounded-2xl border border-white/[0.07] bg-[#0a0a0a] p-6"
+              className="break-inside-avoid rounded-2xl border border-border bg-surface-1 p-6"
             >
-              <p className="text-sm text-[#777] leading-relaxed mb-5">"{r.text}"</p>
+              <p className="text-sm text-text-2 leading-relaxed mb-5">"{r.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#1a1a1a] to-[#111] text-xs font-bold text-[#555]">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-3 text-xs font-bold text-text-3">
                   {r.name[0]}
                 </div>
                 <div>
-                  <p className="text-sm font-medium">{r.name}</p>
-                  <p className="text-xs text-[#444]">{r.role}</p>
+                  <p className="text-sm font-medium text-text-1">{r.name}</p>
+                  <p className="text-xs text-text-4">{r.role}</p>
                 </div>
               </div>
             </div>
@@ -573,35 +572,35 @@ function Pricing() {
   ]
 
   return (
-    <section className="py-24 px-6 border-t border-white/[0.05]">
+    <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-4xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#555]">Pricing</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Pricing</span>
         </div>
         <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-4">
           One price. Everything. Forever.
         </h2>
-        <p className="text-center text-[#444] mb-12">No subscriptions. No per-seat. No games.</p>
+        <p className="text-center text-text-4 mb-12">No subscriptions. No per-seat. No games.</p>
 
         <div className="grid md:grid-cols-2 gap-4">
           {/* Free */}
           <SpotlightCard className="p-8">
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#444] mb-1">Free</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-text-3 mb-1">Free</p>
             <div className="flex items-end gap-1.5 mb-1">
               <span className="text-5xl font-bold">$0</span>
             </div>
-            <p className="text-sm text-[#444] mb-6">Free components, always free.</p>
+            <p className="text-sm text-text-4 mb-6">Free components, always free.</p>
             <Link
               href="/sign-up"
-              className="block w-full rounded-xl border border-white/[0.1] py-3 text-center text-sm font-medium text-[#666] hover:text-white hover:border-white/20 transition-all mb-6"
+              className="block w-full rounded-xl border border-border py-3 text-center text-sm font-medium text-text-3 hover:text-text-1 hover:border-border-hover transition-all mb-6"
             >
               Get started
             </Link>
-            <p className="text-xs text-[#333] mb-3 uppercase tracking-widest">Includes</p>
+            <p className="text-xs text-text-4 mb-3 uppercase tracking-widest">Includes</p>
             <ul className="space-y-2.5">
               {["Glow Button", "Gradient Card", "Electric Badge", "Noise Texture", "Community support"].map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-[#555]">
-                  <Check size={13} weight="bold" className="text-[#333] shrink-0" />
+                <li key={f} className="flex items-center gap-2.5 text-sm text-text-3">
+                  <Check size={13} weight="bold" className="text-text-4 shrink-0" />
                   {f}
                 </li>
               ))}
@@ -609,28 +608,28 @@ function Pricing() {
           </SpotlightCard>
 
           {/* Pro */}
-          <div className="relative rounded-2xl border border-[rgba(0,212,255,0.2)] bg-[#0a0a0a] p-8 overflow-hidden">
+          <div className="relative rounded-2xl border border-accent-border bg-surface-1 p-8 overflow-hidden">
             <div
               className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-10"
-              style={{ background: "radial-gradient(circle, #00d4ff, transparent)" }}
+              style={{ background: "radial-gradient(circle, var(--color-accent), transparent)" }}
             />
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#00d4ff] mb-1">Pro</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-accent mb-1">Pro</p>
             <div className="flex items-end gap-1.5 mb-1">
               <span className="text-5xl font-bold">$149</span>
-              <span className="text-[#444] text-sm mb-2">one-time</span>
+              <span className="text-text-4 text-sm mb-2">one-time</span>
             </div>
-            <p className="text-sm text-[#444] mb-6">Lifetime access. No expiry.</p>
+            <p className="text-sm text-text-4 mb-6">Lifetime access. No expiry.</p>
             <Link
               href="/sign-up?plan=pro"
-              className="block w-full rounded-xl bg-white py-3 text-center text-sm font-semibold text-black hover:bg-[#e2e2e2] transition-colors mb-6"
+              className="block w-full rounded-xl bg-white py-3 text-center text-sm font-semibold text-black hover:bg-gray-200 transition-colors mb-6"
             >
               Buy lifetime access →
             </Link>
-            <p className="text-xs text-[#333] mb-3 uppercase tracking-widest">Everything in Free, plus</p>
+            <p className="text-xs text-text-4 mb-3 uppercase tracking-widest">Everything in Free, plus</p>
             <ul className="space-y-2.5">
               {pro.map((f) => (
-                <li key={f} className="flex items-center gap-2.5 text-sm text-[#888]">
-                  <Check size={13} weight="bold" className="text-[#00d4ff] shrink-0" />
+                <li key={f} className="flex items-center gap-2.5 text-sm text-text-2">
+                  <Check size={13} weight="bold" className="text-accent shrink-0" />
                   {f}
                 </li>
               ))}
@@ -645,9 +644,12 @@ function Pricing() {
 /* ─── Bottom CTA ──────────────────────────────────────────────────────────── */
 function BottomCTA() {
   return (
-    <section className="relative overflow-hidden py-40 px-6 border-t border-white/[0.05]">
+    <section className="relative overflow-hidden py-40 px-6 border-t border-border">
       <HeroCanvas />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_50%,transparent_20%,#030303_80%)]" />
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 20%, var(--color-bg) 80%)" }}
+      />
       <div className="relative z-10 mx-auto max-w-3xl text-center">
         <h2 className="text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.96] tracking-[-0.05em] mb-6">
           Your users deserve
@@ -664,20 +666,20 @@ function BottomCTA() {
             the best UI alive
           </span>
         </h2>
-        <p className="text-[#444] text-lg mb-10">
+        <p className="text-text-4 text-lg mb-10">
           Start with free components today. Upgrade when you&apos;re ready to blow minds.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/sign-up"
-            className="flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-black hover:bg-[#e2e2e2] transition-colors"
+            className="flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-black hover:bg-gray-200 transition-colors"
           >
             Start building free
             <ArrowRight size={14} weight="bold" />
           </Link>
           <Link
             href="/pricing"
-            className="flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-8 py-4 text-sm font-medium text-[#666] hover:text-white hover:border-white/20 transition-all backdrop-blur-sm"
+            className="flex items-center gap-2 rounded-full border border-border bg-white/[0.03] px-8 py-4 text-sm font-medium text-text-3 hover:text-text-1 hover:border-border-hover transition-all backdrop-blur-sm"
           >
             See pricing <ArrowUpRight size={13} />
           </Link>
@@ -690,20 +692,20 @@ function BottomCTA() {
 /* ─── Footer ──────────────────────────────────────────────────────────────── */
 function Footer() {
   return (
-    <footer className="border-t border-white/[0.05] px-6 py-10">
+    <footer className="border-t border-border px-6 py-10">
       <div className="mx-auto max-w-6xl flex flex-col sm:flex-row items-center justify-between gap-6">
         <Link href="/" className="flex items-center gap-2 text-sm font-bold">
-          <Sparkle weight="fill" size={14} className="text-[#00d4ff]" />
+          <Sparkle weight="fill" size={14} className="text-accent" />
           ParticleUI
         </Link>
-        <nav className="flex items-center gap-6 text-xs text-[#333]">
+        <nav className="flex items-center gap-6 text-xs text-text-4">
           {["Components", "Docs", "Pricing", "Dashboard", "Blog"].map((l) => (
-            <Link key={l} href={`/${l.toLowerCase()}`} className="hover:text-[#666] transition-colors">
+            <Link key={l} href={`/${l.toLowerCase()}`} className="hover:text-text-2 transition-colors">
               {l}
             </Link>
           ))}
         </nav>
-        <p className="text-xs text-[#222]">© {new Date().getFullYear()} ParticleUI</p>
+        <p className="text-xs text-text-4">© {new Date().getFullYear()} ParticleUI</p>
       </div>
     </footer>
   )
@@ -712,7 +714,7 @@ function Footer() {
 /* ─── Badges ──────────────────────────────────────────────────────────────── */
 function ProBadge() {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-[#00d4ff]">
+    <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-accent">
       <Sparkle size={8} weight="fill" />Pro
     </span>
   )
@@ -720,7 +722,7 @@ function ProBadge() {
 
 function FreeBadge() {
   return (
-    <span className="inline-flex rounded-full border border-white/[0.07] bg-white/[0.03] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-[#333]">
+    <span className="inline-flex rounded-full border border-border bg-white/[0.03] px-2.5 py-1 text-[9px] font-semibold uppercase tracking-widest text-text-4">
       Free
     </span>
   )

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "calendar",
+  "type": "registry:ui",
+  "title": "Calendar",
+  "description": "Full-featured calendar picker built on react-day-picker with ParticleUI styling.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "react-day-picker",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/calendar.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { DayPicker, getDefaultClassNames } from \"react-day-picker\"\nimport { ChevronLeft, ChevronRight } from \"lucide-react\"\n\nexport type CalendarProps = React.ComponentProps<typeof DayPicker>\n\nfunction Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {\n  const def = getDefaultClassNames()\n\n  return (\n    <DayPicker\n      showOutsideDays={showOutsideDays}\n      className={[\"p-3\", className].filter(Boolean).join(\" \")}\n      classNames={{\n        ...def,\n        months: \"flex flex-col sm:flex-row gap-4\",\n        month: \"flex flex-col gap-4\",\n        month_caption: \"flex justify-center pt-1 relative items-center w-full\",\n        caption_label: \"text-sm font-semibold text-[var(--color-text-1)]\",\n        nav: \"flex items-center gap-1\",\n        button_previous: [\n          \"absolute left-1 inline-flex items-center justify-center h-7 w-7 rounded-md\",\n          \"border border-[var(--color-border)] bg-transparent\",\n          \"text-[var(--color-text-3)] hover:text-[var(--color-text-1)] hover:bg-[var(--color-surface-2)]\",\n          \"transition-colors duration-150 disabled:pointer-events-none disabled:opacity-40\",\n        ].join(\" \"),\n        button_next: [\n          \"absolute right-1 inline-flex items-center justify-center h-7 w-7 rounded-md\",\n          \"border border-[var(--color-border)] bg-transparent\",\n          \"text-[var(--color-text-3)] hover:text-[var(--color-text-1)] hover:bg-[var(--color-surface-2)]\",\n          \"transition-colors duration-150 disabled:pointer-events-none disabled:opacity-40\",\n        ].join(\" \"),\n        month_grid: \"w-full border-collapse\",\n        weekdays: \"flex\",\n        weekday: \"text-[var(--color-text-4)] rounded-md w-9 font-normal text-[0.8rem] flex-1 text-center\",\n        weeks: \"\",\n        week: \"flex w-full mt-2\",\n        day: \"relative flex-1 p-0 text-center text-sm focus-within:relative focus-within:z-20\",\n        day_button: [\n          \"inline-flex items-center justify-center h-9 w-9 rounded-md text-sm font-normal\",\n          \"text-[var(--color-text-2)] transition-colors duration-100\",\n          \"hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text-1)]\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-bg)]\",\n        ].join(\" \"),\n        selected: [\n          \"bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold rounded-md\",\n          \"shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]\",\n        ].join(\" \"),\n        today: \"bg-[var(--color-surface-2)] text-[var(--color-text-1)] font-semibold rounded-md\",\n        outside: \"text-[var(--color-text-4)] opacity-40\",\n        disabled: \"text-[var(--color-text-4)] opacity-30\",\n        range_middle: \"bg-[var(--color-accent-dim)] text-[var(--color-accent-text)]\",\n        hidden: \"invisible\",\n        ...classNames,\n      }}\n      components={{\n        Chevron: ({ orientation }) =>\n          orientation === \"left\" ? (\n            <ChevronLeft className=\"h-4 w-4\" />\n          ) : (\n            <ChevronRight className=\"h-4 w-4\" />\n          ),\n      }}\n      {...props}\n    />\n  )\n}\nCalendar.displayName = \"Calendar\"\n\nexport { Calendar }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

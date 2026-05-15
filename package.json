@@ -6,7 +6,8 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
-    "registry:build": "node packages/registry-builder/build.mjs && node packages/registry-builder/build-index.mjs"
+    "registry:build": "node packages/registry-builder/build.mjs && node packages/registry-builder/build-index.mjs",
+    "registry:gen": "node scripts/gen-registry.mjs && pnpm registry:build"
   },
   "devDependencies": {
     "turbo": "^2.9.14",

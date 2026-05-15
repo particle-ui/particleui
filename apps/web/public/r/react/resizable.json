@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "resizable",
+  "type": "registry:ui",
+  "title": "Resizable",
+  "description": "Draggable resize handles for panel layouts, built on react-resizable-panels.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "react-resizable-panels",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/resizable.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Group, Panel, Separator } from \"react-resizable-panels\"\nimport { GripVertical } from \"lucide-react\"\n\nfunction cn(...classes: (string | undefined | null | false)[]) {\n  return classes.filter(Boolean).join(\" \")\n}\n\nconst ResizablePanelGroup = ({\n  className,\n  ...props\n}: React.ComponentProps<typeof Group>) => (\n  <Group\n    className={cn(\n      \"flex h-full w-full data-[panel-group-direction=vertical]:flex-col\",\n      className\n    )}\n    {...props}\n  />\n)\nResizablePanelGroup.displayName = \"ResizablePanelGroup\"\n\nconst ResizablePanel = Panel\nResizablePanel.displayName = \"ResizablePanel\"\n\nconst ResizableHandle = ({\n  withHandle,\n  className,\n  ...props\n}: React.ComponentProps<typeof Separator> & {\n  withHandle?: boolean\n}) => (\n  <Separator\n    className={cn(\n      \"relative flex w-px items-center justify-center\",\n      \"bg-[var(--color-border)]\",\n      \"after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2\",\n      \"focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-bg)]\",\n      \"data-[panel-group-direction=vertical]:h-px data-[panel-group-direction=vertical]:w-full\",\n      \"data-[panel-group-direction=vertical]:after:left-0 data-[panel-group-direction=vertical]:after:h-1 data-[panel-group-direction=vertical]:after:w-full data-[panel-group-direction=vertical]:after:-translate-y-1/2 data-[panel-group-direction=vertical]:after:translate-x-0\",\n      \"transition-colors duration-150\",\n      className\n    )}\n    {...props}\n  >\n    {withHandle && (\n      <div className=\"z-10 flex h-4 w-3 items-center justify-center rounded-sm border border-[var(--color-border)] bg-[var(--color-surface-2)]\">\n        <GripVertical className=\"h-2.5 w-2.5 text-[var(--color-text-4)]\" />\n      </div>\n    )}\n  </Separator>\n)\nResizableHandle.displayName = \"ResizableHandle\"\n\nexport { ResizablePanelGroup, ResizablePanel, ResizableHandle }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ]
+}

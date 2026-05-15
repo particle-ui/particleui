@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "Circular avatar with image, fallback initials, and electric ring variant.",
+  "author": "ParticleUI",
+  "categories": [
+    "display",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-avatar"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/avatar.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as AvatarPrimitive from \"@radix-ui/react-avatar\"\n\nconst Avatar = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & {\n    ring?: boolean\n  }\n>(({ className, ring = false, ...props }, ref) => (\n  <AvatarPrimitive.Root\n    ref={ref}\n    className={[\n      \"relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full\",\n      ring && \"ring-2 ring-[var(--color-accent)] ring-offset-2 ring-offset-[var(--color-bg)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nAvatar.displayName = AvatarPrimitive.Root.displayName\n\nconst AvatarImage = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Image>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Image\n    ref={ref}\n    className={[\"aspect-square h-full w-full object-cover\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n))\nAvatarImage.displayName = AvatarPrimitive.Image.displayName\n\nconst AvatarFallback = React.forwardRef<\n  React.ElementRef<typeof AvatarPrimitive.Fallback>,\n  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>\n>(({ className, ...props }, ref) => (\n  <AvatarPrimitive.Fallback\n    ref={ref}\n    className={[\n      \"flex h-full w-full items-center justify-center rounded-full\",\n      \"bg-[var(--color-surface-2)] text-[var(--color-text-2)] text-xs font-medium\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nAvatarFallback.displayName = AvatarPrimitive.Fallback.displayName\n\nexport { Avatar, AvatarImage, AvatarFallback }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "sheet",
+  "type": "registry:ui",
+  "title": "Sheet",
+  "description": "Slide-in panel from any edge — left, right, top, or bottom. Built on Radix Dialog.",
+  "author": "ParticleUI",
+  "categories": [
+    "overlay",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/sheet.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as DialogPrimitive from \"@radix-ui/react-dialog\"\nimport { X } from \"lucide-react\"\nimport { tv, type VariantProps } from \"tailwind-variants\"\n\nconst Sheet = DialogPrimitive.Root\nconst SheetTrigger = DialogPrimitive.Trigger\nconst SheetClose = DialogPrimitive.Close\nconst SheetPortal = DialogPrimitive.Portal\n\nconst SheetOverlay = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Overlay>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Overlay\n    ref={ref}\n    className={[\n      \"fixed inset-0 z-50 bg-black/60 backdrop-blur-sm\",\n      \"data-[state=open]:animate-in data-[state=open]:fade-in-0\",\n      \"data-[state=closed]:animate-out data-[state=closed]:fade-out-0\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nSheetOverlay.displayName = \"SheetOverlay\"\n\nconst sheetVariants = tv({\n  base: [\n    \"fixed z-50 bg-[var(--color-surface-1)] border-[var(--color-border)]\",\n    \"shadow-[0_0_80px_0px_oklch(0%_0_0_/_0.5)]\",\n    \"transition ease-in-out duration-300\",\n    \"data-[state=open]:animate-in data-[state=closed]:animate-out\",\n  ],\n  variants: {\n    side: {\n      top: \"inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top\",\n      bottom: \"inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom\",\n      left: \"inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm\",\n      right: \"inset-y-0 right-0 h-full w-3/4 border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm\",\n    },\n  },\n  defaultVariants: { side: \"right\" },\n})\n\ninterface SheetContentProps\n  extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>,\n    VariantProps<typeof sheetVariants> {}\n\nconst SheetContent = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Content>,\n  SheetContentProps\n>(({ side = \"right\", className, children, ...props }, ref) => (\n  <SheetPortal>\n    <SheetOverlay />\n    <DialogPrimitive.Content\n      ref={ref}\n      className={sheetVariants({ side, className })}\n      {...props}\n    >\n      <DialogPrimitive.Close className=\"absolute right-4 top-4 rounded-md p-1 text-[var(--color-text-4)] opacity-70 transition-all hover:opacity-100 hover:bg-[var(--color-surface-2)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-1 focus:ring-offset-[var(--color-surface-1)] disabled:pointer-events-none\">\n        <X className=\"h-4 w-4\" />\n        <span className=\"sr-only\">Close</span>\n      </DialogPrimitive.Close>\n      {children}\n    </DialogPrimitive.Content>\n  </SheetPortal>\n))\nSheetContent.displayName = \"SheetContent\"\n\nconst SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (\n  <div className={[\"flex flex-col gap-1.5 p-6\", className].filter(Boolean).join(\" \")} {...props} />\n)\nSheetHeader.displayName = \"SheetHeader\"\n\nconst SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (\n  <div\n    className={[\"flex flex-col-reverse gap-2 p-6 pt-0 sm:flex-row sm:justify-end\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n)\nSheetFooter.displayName = \"SheetFooter\"\n\nconst SheetTitle = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Title>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Title\n    ref={ref}\n    className={[\"text-lg font-semibold text-[var(--color-text-1)]\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n))\nSheetTitle.displayName = \"SheetTitle\"\n\nconst SheetDescription = React.forwardRef<\n  React.ElementRef<typeof DialogPrimitive.Description>,\n  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>\n>(({ className, ...props }, ref) => (\n  <DialogPrimitive.Description\n    ref={ref}\n    className={[\"text-sm text-[var(--color-text-3)]\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n))\nSheetDescription.displayName = \"SheetDescription\"\n\nexport {\n  Sheet,\n  SheetPortal,\n  SheetOverlay,\n  SheetTrigger,\n  SheetClose,\n  SheetContent,\n  SheetHeader,\n  SheetFooter,\n  SheetTitle,\n  SheetDescription,\n}\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Text input with OKLCH-tuned focus ring and surface hierarchy.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/input.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type, ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        ref={ref}\n        data-slot=\"input\"\n        className={[\n          \"flex h-9 w-full rounded-md px-3 py-1 text-sm\",\n          \"bg-[var(--color-surface-1)] text-[var(--color-text-1)]\",\n          \"border border-[var(--color-border)]\",\n          \"placeholder:text-[var(--color-text-4)]\",\n          \"transition-colors duration-150\",\n          \"hover:border-[var(--color-border-hover)]\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-0 focus-visible:border-[var(--color-accent-border)]\",\n          \"disabled:cursor-not-allowed disabled:opacity-40\",\n          \"file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--color-text-2)]\",\n          \"selection:bg-[var(--color-accent)] selection:text-[var(--color-bg)]\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        {...props}\n      />\n    )\n  }\n)\nInput.displayName = \"Input\"\n\nexport { Input }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

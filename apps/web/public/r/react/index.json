@@ -1,5 +1,38 @@
 [
   {
+    "name": "accordion",
+    "type": "registry:ui",
+    "title": "Accordion",
+    "description": "Vertically stacked sections that expand/collapse, built on Radix UI.",
+    "categories": [
+      "disclosure",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "alert",
+    "type": "registry:ui",
+    "title": "Alert",
+    "description": "Inline alert banner with default, info, success, warning, and destructive variants.",
+    "categories": [
+      "feedback",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "alert-dialog",
+    "type": "registry:ui",
+    "title": "Alert Dialog",
+    "description": "Confirmation dialog with accessible labelling. Blocks interaction until dismissed.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "aurora-background",
     "type": "registry:ui",
     "title": "Aurora Background",
@@ -8,6 +41,28 @@
       "backgrounds",
       "animations",
       "pro"
+    ]
+  },
+  {
+    "name": "avatar",
+    "type": "registry:ui",
+    "title": "Avatar",
+    "description": "Circular avatar with image, fallback initials, and electric ring variant.",
+    "categories": [
+      "display",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "Inline status badge with five variants including electric accent.",
+    "categories": [
+      "badges",
+      "core",
+      "free"
     ]
   },
   {
@@ -22,6 +77,94 @@
     ]
   },
   {
+    "name": "breadcrumb",
+    "type": "registry:ui",
+    "title": "Breadcrumb",
+    "description": "Accessible breadcrumb navigation with separator, ellipsis, and current page slots.",
+    "categories": [
+      "navigation",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "title": "Button",
+    "description": "Accessible button with six variants and electric-glow on the default variant.",
+    "categories": [
+      "buttons",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "calendar",
+    "type": "registry:ui",
+    "title": "Calendar",
+    "description": "Full-featured calendar picker built on react-day-picker with ParticleUI styling.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "card",
+    "type": "registry:ui",
+    "title": "Card",
+    "description": "Composable card with header, content, and footer slots.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "checkbox",
+    "type": "registry:ui",
+    "title": "Checkbox",
+    "description": "Checkbox with electric fill and smooth check animation.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "combobox",
+    "type": "registry:ui",
+    "title": "Combobox",
+    "description": "Searchable select built by combining Command inside a Popover.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "command",
+    "type": "registry:ui",
+    "title": "Command",
+    "description": "Command palette / ⌘K menu built on cmdk with fuzzy search.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "context-menu",
+    "type": "registry:ui",
+    "title": "Context Menu",
+    "description": "Right-click context menu with items, checkboxes, radio groups, submenus, and shortcuts.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "cursor-trail",
     "type": "registry:ui",
     "title": "Cursor Trail",
@@ -33,12 +176,67 @@
     ]
   },
   {
+    "name": "data-table",
+    "type": "registry:ui",
+    "title": "Data Table",
+    "description": "Fully featured data table with sorting, filtering, pagination, and row selection via TanStack Table v8.",
+    "categories": [
+      "data",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "date-picker",
+    "type": "registry:ui",
+    "title": "Date Picker",
+    "description": "Calendar inside a Popover, triggered by a Button. Composable and accessible.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "dialog",
+    "type": "registry:ui",
+    "title": "Dialog",
+    "description": "Accessible modal dialog built on Radix UI with smooth enter/exit animations.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "dropdown-menu",
+    "type": "registry:ui",
+    "title": "Dropdown Menu",
+    "description": "Accessible dropdown with items, checkboxes, radio groups, labels, and submenus.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "electric-badge",
     "type": "registry:ui",
     "title": "Electric Badge",
     "description": "Animated badge with pulsing electric glow. Great for status indicators and labels.",
     "categories": [
       "badges",
+      "free"
+    ]
+  },
+  {
+    "name": "form",
+    "type": "registry:ui",
+    "title": "Form",
+    "description": "Form field wrappers integrating react-hook-form with accessible labels, descriptions, and error messages.",
+    "categories": [
+      "forms",
+      "core",
       "free"
     ]
   },
@@ -63,12 +261,45 @@
     ]
   },
   {
+    "name": "hover-card",
+    "type": "registry:ui",
+    "title": "Hover Card",
+    "description": "Rich hover card for previewing content without navigating away.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "input",
+    "type": "registry:ui",
+    "title": "Input",
+    "description": "Text input with OKLCH-tuned focus ring and surface hierarchy.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "kbd",
     "type": "registry:ui",
     "title": "Kbd",
     "description": "Keyboard shortcut display with OS-aware symbols and elegant dark styling.",
     "categories": [
       "typography",
+      "free"
+    ]
+  },
+  {
+    "name": "label",
+    "type": "registry:ui",
+    "title": "Label",
+    "description": "Accessible form label built on Radix UI.",
+    "categories": [
+      "forms",
+      "core",
       "free"
     ]
   },
@@ -81,6 +312,17 @@
       "buttons",
       "animations",
       "pro"
+    ]
+  },
+  {
+    "name": "navigation-menu",
+    "type": "registry:ui",
+    "title": "Navigation Menu",
+    "description": "Accessible site navigation with dropdown panels, built on Radix UI.",
+    "categories": [
+      "navigation",
+      "core",
+      "free"
     ]
   },
   {
@@ -104,6 +346,17 @@
     ]
   },
   {
+    "name": "pagination",
+    "type": "registry:ui",
+    "title": "Pagination",
+    "description": "Page navigation control with previous, next, numbered pages, and ellipsis.",
+    "categories": [
+      "navigation",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "particle-hero",
     "type": "registry:block",
     "title": "Particle Hero",
@@ -113,6 +366,94 @@
       "hero",
       "animations",
       "pro"
+    ]
+  },
+  {
+    "name": "popover",
+    "type": "registry:ui",
+    "title": "Popover",
+    "description": "Floating popover panel anchored to a trigger, with smart collision detection.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "progress",
+    "type": "registry:ui",
+    "title": "Progress",
+    "description": "Linear progress bar built on Radix UI with electric accent fill and glow.",
+    "categories": [
+      "feedback",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "radio-group",
+    "type": "registry:ui",
+    "title": "Radio Group",
+    "description": "Radio group built on Radix UI with electric accent indicator.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "resizable",
+    "type": "registry:ui",
+    "title": "Resizable",
+    "description": "Draggable resize handles for panel layouts, built on react-resizable-panels.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "scroll-area",
+    "type": "registry:ui",
+    "title": "Scroll Area",
+    "description": "Custom scrollbar overlay built on Radix UI. Consistent across browsers.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "select",
+    "type": "registry:ui",
+    "title": "Select",
+    "description": "Full-featured select built on Radix UI with keyboard navigation.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "separator",
+    "type": "registry:ui",
+    "title": "Separator",
+    "description": "Horizontal or vertical separator rule built on Radix UI.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "sheet",
+    "type": "registry:ui",
+    "title": "Sheet",
+    "description": "Slide-in panel from any edge — left, right, top, or bottom. Built on Radix Dialog.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
     ]
   },
   {
@@ -126,6 +467,39 @@
     ]
   },
   {
+    "name": "skeleton",
+    "type": "registry:ui",
+    "title": "Skeleton",
+    "description": "Loading placeholder with subtle pulse animation.",
+    "categories": [
+      "feedback",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "slider",
+    "type": "registry:ui",
+    "title": "Slider",
+    "description": "Range slider built on Radix UI with electric glow on the thumb.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "sonner",
+    "type": "registry:ui",
+    "title": "Sonner",
+    "description": "Toast notifications via Sonner with ParticleUI dark theme.",
+    "categories": [
+      "feedback",
+      "core",
+      "free"
+    ]
+  },
+  {
     "name": "spotlight-hero",
     "type": "registry:block",
     "title": "Spotlight Hero",
@@ -135,6 +509,61 @@
       "hero",
       "animations",
       "pro"
+    ]
+  },
+  {
+    "name": "switch",
+    "type": "registry:ui",
+    "title": "Switch",
+    "description": "Toggle switch built on Radix UI with electric accent when checked.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "table",
+    "type": "registry:ui",
+    "title": "Table",
+    "description": "Styled HTML table with header, body, footer, row, head, and cell slots.",
+    "categories": [
+      "data",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "tabs",
+    "type": "registry:ui",
+    "title": "Tabs",
+    "description": "Accessible tab panels built on Radix UI with keyboard navigation.",
+    "categories": [
+      "navigation",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "textarea",
+    "type": "registry:ui",
+    "title": "Textarea",
+    "description": "Auto-resizable textarea with matching input design language.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "tooltip",
+    "type": "registry:ui",
+    "title": "Tooltip",
+    "description": "Lightweight tooltip built on Radix UI with smooth fade-in.",
+    "categories": [
+      "overlay",
+      "core",
+      "free"
     ]
   }
 ]

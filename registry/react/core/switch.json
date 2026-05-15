@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "Toggle switch built on Radix UI with electric accent when checked.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-switch"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/switch.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as SwitchPrimitive from \"@radix-ui/react-switch\"\n\nconst Switch = React.forwardRef<\n  React.ElementRef<typeof SwitchPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <SwitchPrimitive.Root\n    ref={ref}\n    className={[\n      \"peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full\",\n      \"border-2 border-transparent\",\n      \"bg-[var(--color-surface-3)]\",\n      \"transition-[background-color,box-shadow] duration-200\",\n      \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]\",\n      \"disabled:cursor-not-allowed disabled:opacity-40\",\n      \"data-[state=checked]:bg-[var(--color-accent)]\",\n      \"data-[state=checked]:shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  >\n    <SwitchPrimitive.Thumb\n      className={[\n        \"pointer-events-none block h-4 w-4 rounded-full\",\n        \"bg-white shadow-sm\",\n        \"ring-0 transition-transform duration-200\",\n        \"data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0\",\n      ].join(\" \")}\n    />\n  </SwitchPrimitive.Root>\n))\nSwitch.displayName = SwitchPrimitive.Root.displayName\n\nexport { Switch }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

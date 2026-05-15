@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "alert",
+  "type": "registry:ui",
+  "title": "Alert",
+  "description": "Inline alert banner with default, info, success, warning, and destructive variants.",
+  "author": "ParticleUI",
+  "categories": [
+    "feedback",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "tailwind-variants",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/alert.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\nimport { tv, type VariantProps } from \"tailwind-variants\"\nimport { CircleAlert, CircleCheck, Info, TriangleAlert } from \"lucide-react\"\n\nconst alertVariants = tv({\n  base: [\n    \"relative w-full rounded-xl border px-4 py-3.5\",\n    \"text-sm leading-relaxed\",\n    \"[&>svg]:absolute [&>svg]:left-4 [&>svg]:top-3.5 [&>svg]:h-4 [&>svg]:w-4\",\n    \"[&>svg+div]:pl-7\",\n    \"[&:has(svg)]:pl-11\",\n  ],\n  variants: {\n    variant: {\n      default: [\n        \"bg-[var(--color-surface-1)] border-[var(--color-border)]\",\n        \"text-[var(--color-text-2)]\",\n        \"[&>svg]:text-[var(--color-text-3)]\",\n      ],\n      info: [\n        \"bg-[oklch(10%_0.02_220)] border-[oklch(50%_0.15_220_/_0.35)]\",\n        \"text-[oklch(78%_0.12_220)]\",\n        \"[&>svg]:text-[oklch(70%_0.18_220)]\",\n      ],\n      success: [\n        \"bg-[oklch(10%_0.03_160)] border-[oklch(50%_0.15_160_/_0.35)]\",\n        \"text-[oklch(75%_0.12_160)]\",\n        \"[&>svg]:text-[oklch(65%_0.18_160)]\",\n      ],\n      warning: [\n        \"bg-[oklch(11%_0.04_80)] border-[oklch(55%_0.18_80_/_0.35)]\",\n        \"text-[oklch(78%_0.14_80)]\",\n        \"[&>svg]:text-[oklch(70%_0.2_80)]\",\n      ],\n      destructive: [\n        \"bg-[oklch(9%_0.03_25)] border-[oklch(50%_0.2_25_/_0.35)]\",\n        \"text-[oklch(72%_0.15_25)]\",\n        \"[&>svg]:text-[oklch(62%_0.2_25)]\",\n      ],\n    },\n  },\n  defaultVariants: { variant: \"default\" },\n})\n\nconst ICONS = {\n  default: Info,\n  info: Info,\n  success: CircleCheck,\n  warning: TriangleAlert,\n  destructive: CircleAlert,\n} as const\n\ninterface AlertProps\n  extends React.HTMLAttributes<HTMLDivElement>,\n    VariantProps<typeof alertVariants> {\n  icon?: boolean\n}\n\nconst Alert = React.forwardRef<HTMLDivElement, AlertProps>(\n  ({ className, variant = \"default\", icon = true, children, ...props }, ref) => {\n    const Icon = ICONS[variant ?? \"default\"]\n    return (\n      <div\n        ref={ref}\n        role=\"alert\"\n        className={alertVariants({ variant, className })}\n        {...props}\n      >\n        {icon && <Icon />}\n        <div>{children}</div>\n      </div>\n    )\n  }\n)\nAlert.displayName = \"Alert\"\n\nconst AlertTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(\n  ({ className, ...props }, ref) => (\n    <h5\n      ref={ref}\n      className={[\"mb-1 font-semibold leading-none tracking-tight text-[var(--color-text-1)]\", className].filter(Boolean).join(\" \")}\n      {...props}\n    />\n  )\n)\nAlertTitle.displayName = \"AlertTitle\"\n\nconst AlertDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(\n  ({ className, ...props }, ref) => (\n    <p\n      ref={ref}\n      className={[\"text-sm leading-relaxed opacity-90\", className].filter(Boolean).join(\" \")}\n      {...props}\n    />\n  )\n)\nAlertDescription.displayName = \"AlertDescription\"\n\nexport { Alert, AlertTitle, AlertDescription }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

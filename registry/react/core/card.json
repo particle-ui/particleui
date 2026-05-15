@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Composable card with header, content, and footer slots.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/card.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\n\nfunction cn(...classes: (string | undefined | null | false)[]) {\n  return classes.filter(Boolean).join(\" \")\n}\n\nconst Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card\"\n      className={cn(\n        \"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]\",\n        \"text-[var(--color-text-1)]\",\n        \"transition-colors duration-150\",\n        className\n      )}\n      {...props}\n    />\n  )\n)\nCard.displayName = \"Card\"\n\nconst CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card-header\"\n      className={cn(\"flex flex-col gap-1.5 p-5\", className)}\n      {...props}\n    />\n  )\n)\nCardHeader.displayName = \"CardHeader\"\n\nconst CardTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card-title\"\n      className={cn(\"text-base font-semibold leading-tight tracking-tight text-[var(--color-text-1)]\", className)}\n      {...props}\n    />\n  )\n)\nCardTitle.displayName = \"CardTitle\"\n\nconst CardDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card-description\"\n      className={cn(\"text-sm text-[var(--color-text-3)]\", className)}\n      {...props}\n    />\n  )\n)\nCardDescription.displayName = \"CardDescription\"\n\nconst CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card-content\"\n      className={cn(\"px-5 pb-5\", className)}\n      {...props}\n    />\n  )\n)\nCardContent.displayName = \"CardContent\"\n\nconst CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(\n  ({ className, ...props }, ref) => (\n    <div\n      ref={ref}\n      data-slot=\"card-footer\"\n      className={cn(\n        \"flex items-center px-5 pb-5 pt-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n)\nCardFooter.displayName = \"CardFooter\"\n\nexport { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

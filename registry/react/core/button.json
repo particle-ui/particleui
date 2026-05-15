@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "button",
+  "type": "registry:ui",
+  "title": "Button",
+  "description": "Accessible button with six variants and electric-glow on the default variant.",
+  "author": "ParticleUI",
+  "categories": [
+    "buttons",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/button.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Slot } from \"@radix-ui/react-slot\"\nimport { tv, type VariantProps } from \"tailwind-variants\"\n\nconst buttonVariants = tv({\n  base: [\n    \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium\",\n    \"transition-all duration-150 cursor-pointer select-none\",\n    \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]\",\n    \"disabled:pointer-events-none disabled:opacity-40\",\n    \"[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0\",\n  ],\n  variants: {\n    variant: {\n      default: [\n        \"bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold\",\n        \"hover:brightness-110 active:brightness-90\",\n        \"shadow-transparent hover:shadow-[0_0_20px_0px_oklch(78%_0.17_200_/_0.35)]\",\n        \"transition-[filter,box-shadow,background-color] duration-200\",\n      ],\n      secondary: [\n        \"bg-[var(--color-surface-2)] text-[var(--color-text-1)] border border-[var(--color-border)]\",\n        \"hover:bg-[var(--color-surface-3)] hover:border-[var(--color-border-hover)]\",\n      ],\n      outline: [\n        \"border border-[var(--color-border)] text-[var(--color-text-2)] bg-transparent\",\n        \"hover:border-[var(--color-border-hover)] hover:text-[var(--color-text-1)] hover:bg-[var(--color-surface-1)]\",\n      ],\n      ghost: [\n        \"text-[var(--color-text-2)] bg-transparent\",\n        \"hover:bg-[var(--color-surface-1)] hover:text-[var(--color-text-1)]\",\n      ],\n      destructive: [\n        \"bg-red-600 text-white font-semibold\",\n        \"hover:bg-red-500 active:bg-red-700\",\n        \"hover:shadow-[0_0_20px_0px_oklch(50%_0.2_25_/_0.35)]\",\n        \"transition-[background-color,box-shadow] duration-200\",\n      ],\n      link: [\n        \"text-[var(--color-accent-text)] underline-offset-4 bg-transparent\",\n        \"hover:underline\",\n      ],\n    },\n    size: {\n      sm: \"h-8 px-3 text-xs rounded-md gap-1.5\",\n      default: \"h-9 px-4\",\n      lg: \"h-11 px-6 text-base rounded-lg\",\n      icon: \"size-9\",\n    },\n  },\n  defaultVariants: {\n    variant: \"default\",\n    size: \"default\",\n  },\n})\n\nexport interface ButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof buttonVariants> {\n  asChild?: boolean\n}\n\nconst Button = React.forwardRef<HTMLButtonElement, ButtonProps>(\n  ({ className, variant, size, asChild = false, ...props }, ref) => {\n    const Comp = asChild ? Slot : \"button\"\n    return (\n      <Comp\n        ref={ref}\n        className={buttonVariants({ variant, size, className })}\n        {...props}\n      />\n    )\n  }\n)\nButton.displayName = \"Button\"\n\nexport { Button, buttonVariants }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Auto-resizable textarea with matching input design language.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/textarea.tsx",
+      "content": "import * as React from \"react\"\n\nexport interface TextareaProps\n  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}\n\nconst Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(\n  ({ className, ...props }, ref) => {\n    return (\n      <textarea\n        ref={ref}\n        data-slot=\"textarea\"\n        className={[\n          \"flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm\",\n          \"bg-[var(--color-surface-1)] text-[var(--color-text-1)]\",\n          \"border border-[var(--color-border)]\",\n          \"placeholder:text-[var(--color-text-4)]\",\n          \"resize-y transition-colors duration-150\",\n          \"hover:border-[var(--color-border-hover)]\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-0 focus-visible:border-[var(--color-accent-border)]\",\n          \"disabled:cursor-not-allowed disabled:opacity-40\",\n          \"selection:bg-[var(--color-accent)] selection:text-[var(--color-bg)]\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        {...props}\n      />\n    )\n  }\n)\nTextarea.displayName = \"Textarea\"\n\nexport { Textarea }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ]
+}

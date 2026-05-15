@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "date-picker",
+  "type": "registry:ui",
+  "title": "Date Picker",
+  "description": "Calendar inside a Popover, triggered by a Button. Composable and accessible.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "date-fns",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/date-picker.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { format } from \"date-fns\"\nimport { CalendarIcon } from \"lucide-react\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Calendar } from \"@/components/ui/calendar\"\nimport { Button } from \"@/components/ui/button\"\n\nfunction cn(...classes: (string | undefined | null | false)[]) {\n  return classes.filter(Boolean).join(\" \")\n}\n\ninterface DatePickerProps {\n  date?: Date\n  onDateChange?: (date: Date | undefined) => void\n  placeholder?: string\n  className?: string\n  disabled?: boolean\n}\n\nfunction DatePicker({\n  date,\n  onDateChange,\n  placeholder = \"Pick a date\",\n  className,\n  disabled,\n}: DatePickerProps) {\n  return (\n    <Popover>\n      <PopoverTrigger asChild>\n        <Button\n          variant=\"outline\"\n          disabled={disabled}\n          className={cn(\n            \"w-full justify-start text-left font-normal\",\n            !date && \"text-[var(--color-text-4)]\",\n            className\n          )}\n        >\n          <CalendarIcon className=\"mr-2 h-4 w-4 text-[var(--color-text-4)]\" />\n          {date ? format(date, \"PPP\") : <span>{placeholder}</span>}\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className=\"w-auto p-0\" align=\"start\">\n        <Calendar\n          mode=\"single\"\n          selected={date}\n          onSelect={onDateChange}\n        />\n      </PopoverContent>\n    </Popover>\n  )\n}\n\nexport { DatePicker }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ]
+}

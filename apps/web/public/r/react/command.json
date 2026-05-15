@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "command",
+  "type": "registry:ui",
+  "title": "Command",
+  "description": "Command palette / ⌘K menu built on cmdk with fuzzy search.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "cmdk",
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/command.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Command as CommandPrimitive } from \"cmdk\"\nimport { Search } from \"lucide-react\"\n\nconst Command = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive>\n>(({ className, ...props }, ref) => (\n  <CommandPrimitive\n    ref={ref}\n    className={[\n      \"flex h-full w-full flex-col overflow-hidden rounded-xl\",\n      \"bg-[var(--color-surface-1)] text-[var(--color-text-1)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nCommand.displayName = CommandPrimitive.displayName\n\nconst CommandInput = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.Input>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>\n>(({ className, ...props }, ref) => (\n  <div className=\"flex items-center border-b border-[var(--color-border)] px-3\" cmdk-input-wrapper=\"\">\n    <Search className=\"mr-2 h-4 w-4 shrink-0 text-[var(--color-text-4)]\" />\n    <CommandPrimitive.Input\n      ref={ref}\n      className={[\n        \"flex h-11 w-full bg-transparent py-3 text-sm outline-none\",\n        \"text-[var(--color-text-1)] placeholder:text-[var(--color-text-4)]\",\n        \"disabled:cursor-not-allowed disabled:opacity-40\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      {...props}\n    />\n  </div>\n))\nCommandInput.displayName = CommandPrimitive.Input.displayName\n\nconst CommandList = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.List>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>\n>(({ className, ...props }, ref) => (\n  <CommandPrimitive.List\n    ref={ref}\n    className={[\"max-h-[300px] overflow-y-auto overflow-x-hidden p-1\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n))\nCommandList.displayName = CommandPrimitive.List.displayName\n\nconst CommandEmpty = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.Empty>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>\n>((props, ref) => (\n  <CommandPrimitive.Empty\n    ref={ref}\n    className=\"py-8 text-center text-sm text-[var(--color-text-4)]\"\n    {...props}\n  />\n))\nCommandEmpty.displayName = CommandPrimitive.Empty.displayName\n\nconst CommandGroup = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.Group>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Group>\n>(({ className, ...props }, ref) => (\n  <CommandPrimitive.Group\n    ref={ref}\n    className={[\n      \"overflow-hidden p-1 text-[var(--color-text-1)]\",\n      \"[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5\",\n      \"[&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:font-semibold\",\n      \"[&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-wider\",\n      \"[&_[cmdk-group-heading]]:text-[var(--color-text-4)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nCommandGroup.displayName = CommandPrimitive.Group.displayName\n\nconst CommandSeparator = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.Separator>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Separator>\n>(({ className, ...props }, ref) => (\n  <CommandPrimitive.Separator\n    ref={ref}\n    className={[\"-mx-1 h-px my-1 bg-[var(--color-border)]\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n))\nCommandSeparator.displayName = CommandPrimitive.Separator.displayName\n\nconst CommandItem = React.forwardRef<\n  React.ElementRef<typeof CommandPrimitive.Item>,\n  React.ComponentPropsWithoutRef<typeof CommandPrimitive.Item>\n>(({ className, ...props }, ref) => (\n  <CommandPrimitive.Item\n    ref={ref}\n    className={[\n      \"relative flex cursor-pointer select-none items-center gap-2 rounded-md px-2 py-1.5 text-sm\",\n      \"text-[var(--color-text-2)] outline-none transition-colors duration-100\",\n      \"data-[selected=true]:bg-[var(--color-surface-3)] data-[selected=true]:text-[var(--color-text-1)]\",\n      \"data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-40\",\n      \"[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-[var(--color-text-4)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  />\n))\nCommandItem.displayName = CommandPrimitive.Item.displayName\n\nconst CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => (\n  <span\n    className={[\"ml-auto text-xs tracking-widest text-[var(--color-text-4)] opacity-60\", className].filter(Boolean).join(\" \")}\n    {...props}\n  />\n)\nCommandShortcut.displayName = \"CommandShortcut\"\n\nexport {\n  Command,\n  CommandInput,\n  CommandList,\n  CommandEmpty,\n  CommandGroup,\n  CommandItem,\n  CommandShortcut,\n  CommandSeparator,\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "overlay",
+    "core",
+    "free"
+  ]
+}

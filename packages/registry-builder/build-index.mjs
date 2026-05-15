@@ -15,6 +15,7 @@ for (const fw of ["react", "vue", "svelte"]) {
   const index = files
     .map((f) => {
       const item = JSON.parse(readFileSync(f, "utf-8"))
+      if (!item.name) return null
       return {
         name: item.name,
         type: item.type,
@@ -23,6 +24,7 @@ for (const fw of ["react", "vue", "svelte"]) {
         categories: item.categories ?? [],
       }
     })
+    .filter(Boolean)
     .sort((a, b) => a.name.localeCompare(b.name))
 
   if (index.length === 0) continue

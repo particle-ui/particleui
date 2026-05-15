@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "progress",
+  "type": "registry:ui",
+  "title": "Progress",
+  "description": "Linear progress bar built on Radix UI with electric accent fill and glow.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "@radix-ui/react-progress"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/progress.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as ProgressPrimitive from \"@radix-ui/react-progress\"\n\nconst Progress = React.forwardRef<\n  React.ElementRef<typeof ProgressPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root>\n>(({ className, value, ...props }, ref) => (\n  <ProgressPrimitive.Root\n    ref={ref}\n    className={[\n      \"relative h-2 w-full overflow-hidden rounded-full\",\n      \"bg-[var(--color-surface-3)]\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  >\n    <ProgressPrimitive.Indicator\n      className={[\n        \"h-full w-full flex-1 rounded-full\",\n        \"bg-[var(--color-accent)]\",\n        \"shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]\",\n        \"transition-all duration-500 ease-out\",\n      ].join(\" \")}\n      style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}\n    />\n  </ProgressPrimitive.Root>\n))\nProgress.displayName = ProgressPrimitive.Root.displayName\n\nexport { Progress }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "feedback",
+    "core",
+    "free"
+  ]
+}

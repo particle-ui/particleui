@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "combobox",
+  "type": "registry:ui",
+  "title": "Combobox",
+  "description": "Searchable select built by combining Command inside a Popover.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/combobox.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Check, ChevronsUpDown } from \"lucide-react\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Command,\n  CommandEmpty,\n  CommandGroup,\n  CommandInput,\n  CommandItem,\n  CommandList,\n} from \"@/components/ui/command\"\n\nfunction cn(...classes: (string | undefined | null | false)[]) {\n  return classes.filter(Boolean).join(\" \")\n}\n\ninterface ComboboxOption {\n  value: string\n  label: string\n}\n\ninterface ComboboxProps {\n  options: ComboboxOption[]\n  value?: string\n  onValueChange?: (value: string) => void\n  placeholder?: string\n  searchPlaceholder?: string\n  emptyText?: string\n  className?: string\n  disabled?: boolean\n}\n\nfunction Combobox({\n  options,\n  value,\n  onValueChange,\n  placeholder = \"Select option...\",\n  searchPlaceholder = \"Search...\",\n  emptyText = \"No option found.\",\n  className,\n  disabled,\n}: ComboboxProps) {\n  const [open, setOpen] = React.useState(false)\n\n  const selected = options.find((o) => o.value === value)\n\n  return (\n    <Popover open={open} onOpenChange={setOpen}>\n      <PopoverTrigger asChild>\n        <Button\n          variant=\"outline\"\n          role=\"combobox\"\n          aria-expanded={open}\n          disabled={disabled}\n          className={cn(\"w-full justify-between\", !selected && \"text-[var(--color-text-4)]\", className)}\n        >\n          {selected ? selected.label : placeholder}\n          <ChevronsUpDown className=\"ml-2 h-4 w-4 shrink-0 text-[var(--color-text-4)]\" />\n        </Button>\n      </PopoverTrigger>\n      <PopoverContent className=\"w-full p-0\" align=\"start\">\n        <Command>\n          <CommandInput placeholder={searchPlaceholder} />\n          <CommandList>\n            <CommandEmpty>{emptyText}</CommandEmpty>\n            <CommandGroup>\n              {options.map((option) => (\n                <CommandItem\n                  key={option.value}\n                  value={option.value}\n                  onSelect={(currentValue) => {\n                    onValueChange?.(currentValue === value ? \"\" : currentValue)\n                    setOpen(false)\n                  }}\n                >\n                  <Check\n                    className={cn(\n                      \"mr-2 h-4 w-4 text-[var(--color-accent)]\",\n                      value === option.value ? \"opacity-100\" : \"opacity-0\"\n                    )}\n                  />\n                  {option.label}\n                </CommandItem>\n              ))}\n            </CommandGroup>\n          </CommandList>\n        </Command>\n      </PopoverContent>\n    </Popover>\n  )\n}\n\nexport { Combobox }\nexport type { ComboboxOption }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

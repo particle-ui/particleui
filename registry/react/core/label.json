@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "Accessible form label built on Radix UI.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-label",
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/label.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as LabelPrimitive from \"@radix-ui/react-label\"\nimport { tv, type VariantProps } from \"tailwind-variants\"\n\nconst labelVariants = tv({\n  base: [\n    \"text-sm font-medium leading-none text-[var(--color-text-2)]\",\n    \"select-none\",\n    \"peer-disabled:cursor-not-allowed peer-disabled:opacity-40\",\n    \"data-[error=true]:text-red-400\",\n  ],\n})\n\nexport interface LabelProps\n  extends React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>,\n    VariantProps<typeof labelVariants> {}\n\nconst Label = React.forwardRef<\n  React.ElementRef<typeof LabelPrimitive.Root>,\n  LabelProps\n>(({ className, ...props }, ref) => (\n  <LabelPrimitive.Root\n    ref={ref}\n    className={labelVariants({ className })}\n    {...props}\n  />\n))\nLabel.displayName = LabelPrimitive.Root.displayName\n\nexport { Label }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

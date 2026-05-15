@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "slider",
+  "type": "registry:ui",
+  "title": "Slider",
+  "description": "Range slider built on Radix UI with electric glow on the thumb.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "@radix-ui/react-slider"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/slider.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport * as SliderPrimitive from \"@radix-ui/react-slider\"\n\nconst Slider = React.forwardRef<\n  React.ElementRef<typeof SliderPrimitive.Root>,\n  React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>\n>(({ className, ...props }, ref) => (\n  <SliderPrimitive.Root\n    ref={ref}\n    className={[\n      \"relative flex w-full touch-none select-none items-center\",\n      className,\n    ]\n      .filter(Boolean)\n      .join(\" \")}\n    {...props}\n  >\n    <SliderPrimitive.Track className=\"relative h-1.5 w-full grow overflow-hidden rounded-full bg-[var(--color-surface-3)]\">\n      <SliderPrimitive.Range className=\"absolute h-full bg-[var(--color-accent)]\" />\n    </SliderPrimitive.Track>\n    <SliderPrimitive.Thumb\n      className={[\n        \"block h-4 w-4 rounded-full\",\n        \"border-2 border-[var(--color-accent)] bg-[var(--color-bg)]\",\n        \"shadow-[0_0_8px_0px_oklch(78%_0.17_200_/_0.4)]\",\n        \"transition-all duration-150\",\n        \"hover:shadow-[0_0_14px_0px_oklch(78%_0.17_200_/_0.55)] hover:scale-110\",\n        \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]\",\n        \"disabled:pointer-events-none disabled:opacity-40\",\n      ].join(\" \")}\n    />\n  </SliderPrimitive.Root>\n))\nSlider.displayName = SliderPrimitive.Root.displayName\n\nexport { Slider }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

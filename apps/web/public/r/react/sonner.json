@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "sonner",
+  "type": "registry:ui",
+  "title": "Sonner",
+  "description": "Toast notifications via Sonner with ParticleUI dark theme.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "sonner"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/sonner.tsx",
+      "content": "\"use client\"\n\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\n\nfunction Toaster({ ...props }: ToasterProps) {\n  return (\n    <Sonner\n      theme=\"dark\"\n      className=\"toaster group\"\n      style={\n        {\n          \"--normal-bg\": \"var(--color-surface-2)\",\n          \"--normal-border\": \"var(--color-border)\",\n          \"--normal-text\": \"var(--color-text-1)\",\n          \"--success-bg\": \"oklch(15% 0.05 160)\",\n          \"--success-border\": \"oklch(50% 0.15 160 / 0.4)\",\n          \"--success-text\": \"oklch(75% 0.15 160)\",\n          \"--error-bg\": \"oklch(12% 0.05 25)\",\n          \"--error-border\": \"oklch(50% 0.2 25 / 0.4)\",\n          \"--error-text\": \"oklch(70% 0.2 25)\",\n          \"--warning-bg\": \"oklch(14% 0.06 80)\",\n          \"--warning-border\": \"oklch(55% 0.18 80 / 0.4)\",\n          \"--warning-text\": \"oklch(78% 0.15 80)\",\n          \"--border-radius\": \"var(--radius-lg)\",\n          \"--font-size\": \"13px\",\n        } as React.CSSProperties\n      }\n      toastOptions={{\n        classNames: {\n          toast:\n            \"group toast border! shadow-[0_4px_24px_0px_oklch(0%_0_0_/_0.5)]! backdrop-blur-sm!\",\n          title: \"font-medium!\",\n          description: \"text-[var(--color-text-3)]!\",\n          actionButton:\n            \"bg-[var(--color-accent)]! text-[var(--color-bg)]! text-xs! font-semibold!\",\n          cancelButton:\n            \"bg-[var(--color-surface-3)]! text-[var(--color-text-2)]! text-xs!\",\n        },\n      }}\n      {...props}\n    />\n  )\n}\n\nexport { Toaster }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "feedback",
+    "core",
+    "free"
+  ]
+}

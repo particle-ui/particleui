@@ -1,24 +1,179 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  /* ── Fonts ──────────────────────────────────────────────────────────────── */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), "Fira Code", ui-monospace, monospace;
 
-  /* Neutral dark palette */
-  --color-surface-950: #090909;
-  --color-surface-900: #111111;
-  --color-surface-800: #1a1a1a;
-  --color-surface-700: #242424;
-  --color-surface-600: #333333;
-  --color-surface-500: #555555;
-  --color-surface-400: #888888;
-  --color-surface-300: #bbbbbb;
-  --color-surface-200: #dddddd;
-  --color-surface-100: #f0f0f0;
-  --color-surface-50:  #fafafa;
+  /* ── Neutral scale (OKLCH perceptual) ────────────────────────────────────
+     Step from 97% down to 3% lightness, 0 chroma, hue 0
+     Each step is visually equidistant — unlike raw hex grays             */
+  --color-gray-50:  oklch(97% 0 0);
+  --color-gray-100: oklch(93% 0 0);
+  --color-gray-200: oklch(86% 0 0);
+  --color-gray-300: oklch(76% 0 0);
+  --color-gray-400: oklch(62% 0 0);
+  --color-gray-500: oklch(50% 0 0);
+  --color-gray-600: oklch(40% 0 0);
+  --color-gray-700: oklch(30% 0 0);
+  --color-gray-800: oklch(22% 0 0);
+  --color-gray-900: oklch(14% 0 0);
+  --color-gray-950: oklch(9%  0 0);
+  --color-gray-1000: oklch(5% 0 0);
 
-  /* Single accent — electric cyan */
-  --color-accent: #00d4ff;
-  --color-accent-dim: rgba(0, 212, 255, 0.12);
-  --color-accent-border: rgba(0, 212, 255, 0.25);
+  /* ── Surfaces ────────────────────────────────────────────────────────────
+     Slightly warm-tinted to avoid pure black deadness                    */
+  --color-bg:        oklch(5%  0.004 265);   /* #030303-ish */
+  --color-surface-1: oklch(8%  0.004 265);   /* card bg */
+  --color-surface-2: oklch(11% 0.004 265);   /* elevated card */
+  --color-surface-3: oklch(14% 0.004 265);   /* hover state */
+  --color-border:    oklch(100% 0 0 / 0.07); /* default border */
+  --color-border-hover: oklch(100% 0 0 / 0.14);
+
+  /* ── Accent — electric cyan ──────────────────────────────────────────── */
+  --color-accent:        oklch(78% 0.17 200); /* #00d4ff-ish, slightly less harsh */
+  --color-accent-dim:    oklch(78% 0.17 200 / 0.10);
+  --color-accent-border: oklch(78% 0.17 200 / 0.25);
+  --color-accent-text:   oklch(85% 0.12 200); /* softer for inline text */
+
+  /* ── Text hierarchy ──────────────────────────────────────────────────── */
+  --color-text-1: oklch(97% 0 0);     /* headings, important */
+  --color-text-2: oklch(70% 0 0);     /* body copy */
+  --color-text-3: oklch(48% 0 0);     /* secondary */
+  --color-text-4: oklch(30% 0 0);     /* placeholders, captions */
+
+  /* ── Type scale ──────────────────────────────────────────────────────── */
+  --text-2xs: 0.6875rem;   /* 11px */
+  --text-xs:  0.75rem;     /* 12px */
+  --text-sm:  0.875rem;    /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:  1.125rem;    /* 18px */
+  --text-xl:  1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+  --text-5xl: 3rem;        /* 48px */
+
+  /* ── Radii ────────────────────────────────────────────────────────────── */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  18px;
+  --radius-2xl: 22px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --shadow-glow-sm: 0 0 14px 2px oklch(78% 0.17 200 / 0.20);
+  --shadow-glow-md: 0 0 28px 4px oklch(78% 0.17 200 / 0.25);
+}
+
+/* ── Semantic utility classes ────────────────────────────────────────────
+   Tailwind v4 generates utilities from @theme, but explicit declarations
+   here guarantee they work regardless of scanning / cache state.         */
+@layer utilities {
+  /* Backgrounds */
+  .bg-bg        { background-color: var(--color-bg); }
+  .bg-surface-1 { background-color: var(--color-surface-1); }
+  .bg-surface-2 { background-color: var(--color-surface-2); }
+  .bg-surface-3 { background-color: var(--color-surface-3); }
+  .bg-accent     { background-color: var(--color-accent); }
+  .bg-accent-dim { background-color: var(--color-accent-dim); }
+  .bg-text-4     { background-color: var(--color-text-4); }
+
+  /* Text */
+  .text-text-1    { color: var(--color-text-1); }
+  .text-text-2    { color: var(--color-text-2); }
+  .text-text-3    { color: var(--color-text-3); }
+  .text-text-4    { color: var(--color-text-4); }
+  .text-accent     { color: var(--color-accent); }
+  .text-accent-text { color: var(--color-accent-text); }
+
+  /* Borders */
+  .border-border        { border-color: var(--color-border); }
+  .border-border-hover  { border-color: var(--color-border-hover); }
+  .border-accent-border { border-color: var(--color-accent-border); }
+
+  /* Divide */
+  .divide-border > :not([hidden]) ~ :not([hidden]) {
+    border-color: var(--color-border);
+  }
+
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-1);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Headings ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: var(--color-text-1);
+}
+
+/* ── Code ───────────────────────────────────────────────────────────────── */
+code, kbd, pre {
+  font-family: var(--font-mono);
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+/* ── Focus ──────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(20% 0 0);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(28% 0 0);
+}
+
+/* ── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background: oklch(78% 0.17 200 / 0.25);
+}
+
+/* ── Accordion animations ───────────────────────────────────────────────── */
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
+}
+.animate-accordion-down {
+  animation: accordion-down 0.2s ease-out;
+}
+.animate-accordion-up {
+  animation: accordion-up 0.2s ease-out;
 }
