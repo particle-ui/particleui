@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "switch",
+  "type": "registry:ui",
+  "title": "Switch",
+  "description": "Accessible toggle switch with electric-cyan on state.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/switch.svelte",
+      "type": "registry:ui",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    checked?: boolean\n    onchange?: (checked: boolean) => void\n    disabled?: boolean\n    class?: string\n    id?: string\n    [key: string]: unknown\n  }\n\n  let {\n    checked = $bindable(false),\n    onchange,\n    disabled = false,\n    class: className,\n    id,\n    ...rest\n  }: Props = $props()\n\n  function toggle() {\n    if (disabled) return\n    checked = !checked\n    onchange?.(checked)\n  }\n\n  function handleKeydown(event: KeyboardEvent) {\n    if (event.key === \" \" || event.key === \"Enter\") {\n      event.preventDefault()\n      toggle()\n    }\n  }\n</script>\n\n<button\n  {id}\n  type=\"button\"\n  role=\"switch\"\n  aria-checked={checked}\n  {disabled}\n  onclick={toggle}\n  onkeydown={handleKeydown}\n  class=\"relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-50 {checked\n    ? 'bg-[var(--color-accent)] shadow-[0_0_8px_var(--color-accent-dim)]'\n    : 'bg-[var(--color-surface-3)]'} {className ?? ''}\"\n  {...rest}\n>\n  <span\n    class=\"pointer-events-none block h-4 w-4 rounded-full bg-white shadow-md ring-0 transition-transform duration-200 ease-in-out {checked\n      ? 'translate-x-4'\n      : 'translate-x-0'}\"\n  ></span>\n</button>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

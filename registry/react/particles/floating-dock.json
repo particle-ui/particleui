@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "floating-dock",
+  "type": "registry:ui",
+  "title": "Floating Dock",
+  "description": "macOS-style dock with spring-scale magnification on hover. Fully keyboard accessible.",
+  "author": "ParticleUI",
+  "categories": [
+    "navigation",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/floating-dock.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface DockItem {\n  icon: React.ReactNode\n  label: string\n  href?: string\n  onClick?: () => void\n}\n\ninterface FloatingDockProps {\n  items: DockItem[]\n  className?: string\n  magnification?: number\n  distance?: number\n}\n\nfunction FloatingDock({\n  items,\n  className,\n  magnification = 2.2,\n  distance = 120,\n}: FloatingDockProps) {\n  const [mouseX, setMouseX] = React.useState<number | null>(null)\n  const dockRef = React.useRef<HTMLDivElement>(null)\n\n  const handleMouseMove = (e: React.MouseEvent) => {\n    setMouseX(e.clientX)\n  }\n\n  const handleMouseLeave = () => setMouseX(null)\n\n  const getScale = (el: HTMLElement | null) => {\n    if (!el || mouseX === null) return 1\n    const rect = el.getBoundingClientRect()\n    const center = rect.left + rect.width / 2\n    const dist = Math.abs(mouseX - center)\n    if (dist > distance) return 1\n    const t = 1 - dist / distance\n    return 1 + (magnification - 1) * t * t\n  }\n\n  return (\n    <div\n      ref={dockRef}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      className={[\n        \"flex items-end gap-2 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-1)]/80 px-4 py-3 backdrop-blur-xl\",\n        \"shadow-[0_8px_32px_0px_oklch(0%_0_0_/_0.4)]\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n    >\n      {items.map((item, i) => (\n        <DockIcon key={i} item={item} getScale={getScale} mouseX={mouseX} />\n      ))}\n    </div>\n  )\n}\n\nfunction DockIcon({\n  item,\n  getScale,\n  mouseX,\n}: {\n  item: DockItem\n  getScale: (el: HTMLElement | null) => number\n  mouseX: number | null\n}) {\n  const ref = React.useRef<HTMLAnchorElement & HTMLButtonElement>(null)\n  const [scale, setScale] = React.useState(1)\n  const raf = React.useRef<number>(0)\n\n  React.useEffect(() => {\n    cancelAnimationFrame(raf.current)\n    raf.current = requestAnimationFrame(() => {\n      setScale(getScale(ref.current))\n    })\n  }, [mouseX, getScale])\n\n  const Comp = item.href ? \"a\" : \"button\"\n\n  return (\n    <div className=\"group relative flex flex-col items-center\">\n      <div\n        className=\"absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-[var(--color-border)] bg-[var(--color-surface-2)] px-2 py-1 text-[10px] font-medium text-[var(--color-text-2)] opacity-0 transition-opacity duration-150 group-hover:opacity-100 pointer-events-none\"\n      >\n        {item.label}\n      </div>\n      <Comp\n        ref={ref as React.Ref<HTMLAnchorElement & HTMLButtonElement>}\n        href={item.href as string}\n        onClick={item.onClick}\n        title={item.label}\n        style={{\n          transform: `scale(${scale})`,\n          transformOrigin: \"bottom center\",\n          transition: \"transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)\",\n        }}\n        className=\"flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-surface-2)] border border-[var(--color-border)] text-[var(--color-text-2)] hover:text-[var(--color-text-1)] hover:bg-[var(--color-surface-3)] hover:border-[var(--color-border-hover)] transition-colors duration-150 cursor-pointer\"\n      >\n        {item.icon}\n      </Comp>\n    </div>\n  )\n}\n\nexport { FloatingDock }\nexport type { DockItem }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

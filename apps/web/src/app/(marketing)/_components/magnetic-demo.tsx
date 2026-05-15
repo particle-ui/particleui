@@ -32,15 +32,13 @@ export function MagneticDemo() {
       style={{
         transform: `translate(${offset.x}px, ${offset.y}px)`,
         background: hovered
-          ? "rgba(0,212,255,0.12)"
-          : "rgba(255,255,255,0.05)",
+          ? "var(--color-accent-dim)"
+          : "var(--color-surface-1)",
         border: hovered
-          ? "1px solid rgba(0,212,255,0.4)"
-          : "1px solid rgba(255,255,255,0.1)",
-        color: hovered ? "#00d4ff" : "#888",
-        boxShadow: hovered
-          ? "0 0 30px rgba(0,212,255,0.2), inset 0 0 20px rgba(0,212,255,0.05)"
-          : "none",
+          ? "1px solid var(--color-accent-border)"
+          : "1px solid var(--color-border)",
+        color: hovered ? "var(--color-accent)" : "var(--color-text-3)",
+        boxShadow: hovered ? "var(--shadow-glow-sm)" : "none",
       }}
     >
       Magnetic Button

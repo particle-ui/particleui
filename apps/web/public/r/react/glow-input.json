@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "glow-input",
+  "type": "registry:ui",
+  "title": "Glow Input",
+  "description": "Input with animated gradient border and drop-shadow glow on focus. Drop-in replacement for Input.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/glow-input.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface GlowInputProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  glowColor?: string\n}\n\nconst GlowInput = React.forwardRef<HTMLInputElement, GlowInputProps>(\n  ({ className, type, glowColor = \"oklch(78% 0.17 200)\", style, ...props }, ref) => {\n    const [focused, setFocused] = React.useState(false)\n\n    return (\n      <div\n        className=\"relative\"\n        style={{\n          filter: focused ? `drop-shadow(0 0 8px ${glowColor}40)` : \"none\",\n          transition: \"filter 0.3s ease\",\n        }}\n      >\n        {focused && (\n          <div\n            aria-hidden\n            style={{\n              position: \"absolute\",\n              inset: -1,\n              borderRadius: 8,\n              background: `linear-gradient(135deg, ${glowColor}60, ${glowColor}20 50%, ${glowColor}60)`,\n              backgroundSize: \"200% 200%\",\n              animation: \"gradient-shift 2s linear infinite\",\n              zIndex: 0,\n            }}\n          />\n        )}\n        <input\n          type={type}\n          ref={ref}\n          onFocus={(e) => { setFocused(true); props.onFocus?.(e) }}\n          onBlur={(e) => { setFocused(false); props.onBlur?.(e) }}\n          style={{ position: \"relative\", zIndex: 1, ...style }}\n          className={[\n            \"flex h-9 w-full rounded-md px-3 py-1 text-sm\",\n            \"bg-[var(--color-surface-1)] text-[var(--color-text-1)]\",\n            \"border border-[var(--color-border)]\",\n            \"placeholder:text-[var(--color-text-4)]\",\n            \"transition-[border-color] duration-200\",\n            focused\n              ? \"border-[var(--color-accent)] outline-none ring-0\"\n              : \"hover:border-[var(--color-border-hover)]\",\n            \"disabled:cursor-not-allowed disabled:opacity-40\",\n            \"selection:bg-[var(--color-accent)] selection:text-[var(--color-bg)]\",\n            className,\n          ]\n            .filter(Boolean)\n            .join(\" \")}\n          {...props}\n        />\n      </div>\n    )\n  }\n)\nGlowInput.displayName = \"GlowInput\"\n\nexport { GlowInput }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "particles",
+    "free"
+  ]
+}

@@ -1,9 +1,28 @@
+import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Sparkle, ArrowUpRight, Star, Check } from "@phosphor-icons/react/dist/ssr"
+import { ArrowRight, Sparkle, ArrowUpRight, Star, Check, Robot, Palette, SquaresFour, Lightning } from "@phosphor-icons/react/dist/ssr"
 import { HeroCanvas } from "./_components/hero-canvas"
 import { SpotlightCard } from "./_components/spotlight-card"
 import { Marquee } from "./_components/marquee"
 import { MagneticDemo } from "./_components/magnetic-demo"
+import { Nav } from "./_components/nav"
+
+export const metadata: Metadata = {
+  title: "ParticleUI — Premium shadcn components",
+  description:
+    "85+ free, open-source components built on shadcn/ui. Particles, motion, and premium UI blocks for React, Vue, and Svelte. One command install.",
+  openGraph: {
+    title: "ParticleUI — Premium shadcn components",
+    description:
+      "85+ free, open-source components. Dark-first, Radix-powered, MIT licensed.",
+    images: [{ url: "/opengraph-image" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ParticleUI — Premium shadcn components",
+    images: ["/opengraph-image"],
+  },
+}
 
 export default function HomePage() {
   return (
@@ -18,53 +37,13 @@ export default function HomePage() {
       <Marquee />
       <LiveDemo />
       <BentoFeatures />
+      <AIFeatures />
       <CodeSection />
       <Testimonials />
       <Pricing />
       <BottomCTA />
       <Footer />
     </div>
-  )
-}
-
-/* ─── Nav ─────────────────────────────────────────────────────────────────── */
-function Nav() {
-  return (
-    <header className="fixed top-0 z-50 w-full">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-sm tracking-tight">
-          <Sparkle weight="fill" size={16} className="text-accent" />
-          ParticleUI
-        </Link>
-
-        {/* Center pill nav */}
-        <nav className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center gap-0.5 rounded-full border border-border bg-[#0a0a0a]/90 px-2 py-2 backdrop-blur-xl">
-          {["Components", "Docs", "Pricing", "Blog"].map((l) => (
-            <Link
-              key={l}
-              href={`/${l.toLowerCase()}`}
-              className="rounded-full px-4 py-1.5 text-sm text-text-3 hover:text-text-1 hover:bg-white/[0.06] transition-all duration-150"
-            >
-              {l}
-            </Link>
-          ))}
-        </nav>
-
-        {/* Right actions */}
-        <div className="flex items-center gap-4">
-          <Link href="/sign-in" className="text-sm text-text-4 hover:text-text-1 transition-colors">
-            Sign in
-          </Link>
-          <Link
-            href="/sign-up"
-            className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2 text-sm font-semibold text-black hover:bg-gray-200 transition-colors"
-          >
-            Get started free
-          </Link>
-        </div>
-      </div>
-    </header>
   )
 }
 
@@ -83,12 +62,12 @@ function Hero() {
         {/* Eyebrow pill */}
         <Link
           href="/components"
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-[#0a0a0a]/80 px-4 py-2 text-xs text-text-3 hover:text-text-2 transition-colors backdrop-blur-sm"
+          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-1/80 px-4 py-2 text-xs text-text-3 hover:text-text-2 transition-colors backdrop-blur-sm"
         >
           <span className="flex h-1.5 w-1.5 rounded-full bg-accent relative">
             <span className="animate-ping absolute inset-0 rounded-full bg-accent opacity-60" />
           </span>
-          50+ components — React · Vue · Svelte
+          85+ components — React · Svelte · Vue · MIT · Open source
           <ArrowRight size={10} weight="bold" />
         </Link>
 
@@ -99,7 +78,7 @@ function Hero() {
           <span
             className="inline-block"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #888888 40%, #00d4ff 70%, #ffffff 100%)",
+              background: "linear-gradient(135deg, #ffffff 0%, #888888 40%, #d4cfc8 70%, #ffffff 100%)",
               backgroundSize: "200%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -110,16 +89,16 @@ function Hero() {
           </span>
         </h1>
 
-        <p className="mx-auto max-w-lg text-[1.1rem] text-text-4 leading-relaxed mb-10">
-          Premium animated components built on shadcn/ui. Particles, magnetic
-          interactions, aurora effects. One command to install. Yours forever.
+        <p className="mx-auto max-w-lg text-lg text-text-2 leading-[1.7] mb-10">
+          85+ free, open-source components: primitives, particle effects,
+          and full-page blocks. Radix UI. OKLCH design tokens. One command to install.
         </p>
 
         {/* CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
           <Link
             href="/components"
-            className="group flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black hover:bg-gray-200 transition-all shadow-[0_0_0_1px_rgba(255,255,255,0.1)]"
+            className="group flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-bg hover:brightness-90 transition-all"
           >
             Browse components
             <ArrowRight size={13} weight="bold" className="group-hover:translate-x-0.5 transition-transform" />
@@ -135,7 +114,7 @@ function Hero() {
         {/* Terminal */}
         <div
           className="mx-auto max-w-md overflow-hidden rounded-2xl border border-border"
-          style={{ background: "linear-gradient(145deg, #0f0f0f, #080808)" }}
+          style={{ background: "var(--color-surface-1)" }}
         >
           <div className="flex items-center gap-2 border-b border-border px-4 py-3">
             <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
@@ -146,14 +125,13 @@ function Hero() {
           <div className="px-5 py-4 font-mono text-sm text-left">
             <div className="flex items-center gap-2 mb-1">
               <span className="text-text-4">$</span>
-              <span className="text-accent">npx shadcn</span>
-              <span className="text-text-1">add @particleui/particle-hero</span>
+              <span className="text-accent">npx particleui-cli</span>
+              <span className="text-text-1">add glow-card</span>
             </div>
             <div className="text-[#2a6c2a] mt-2 text-xs pl-4">
-              ✓ Resolved @particleui/particle-hero<br />
+              ✓ glow-card<br />
               ✓ Installing dependencies...<br />
-              ✓ Wrote components/blocks/particle-hero.tsx<br />
-              <span className="text-accent/40">✓ Installed Claude skill → ~/.claude/skills/particle-hero/</span>
+              ✓ Wrote src/components/ui/glow-card.tsx
             </div>
           </div>
         </div>
@@ -171,14 +149,14 @@ function LiveDemo() {
     <section className="py-32 px-6 relative">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
             Live preview
           </span>
         </div>
-        <h2 className="text-center text-[clamp(2rem,4vw,3.5rem)] font-bold tracking-[-0.04em] mb-4">
+        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
           See them move
         </h2>
-        <p className="text-center text-text-4 mb-16 max-w-md mx-auto">
+        <p className="text-center text-text-3 leading-[1.65] mb-16 max-w-md mx-auto">
           These are real components running in the browser. Hover, click, interact.
         </p>
 
@@ -207,7 +185,7 @@ function LiveDemo() {
               <button className="rounded-md bg-white px-4 py-2 text-xs font-semibold text-black transition-all hover:shadow-[0_0_20px_4px_rgba(255,255,255,0.15)] hover:scale-105">
                 Default
               </button>
-              <button className="rounded-md px-4 py-2 text-xs font-semibold text-accent transition-all border border-accent-border bg-accent-dim hover:shadow-[0_0_24px_rgba(0,212,255,0.35)] hover:scale-105">
+              <button className="rounded-md px-4 py-2 text-xs font-semibold text-accent transition-all border border-accent-border bg-accent-dim hover:shadow-[0_0_24px_rgba(255,255,255,0.12)] hover:scale-105">
                 Electric
               </button>
               <button className="rounded-md border border-border px-4 py-2 text-xs font-semibold text-text-3 hover:border-border-hover hover:text-text-1 transition-all hover:scale-105">
@@ -229,7 +207,7 @@ function LiveDemo() {
           <SpotlightCard className="p-8 flex flex-col justify-between min-h-[220px]">
             <div className="flex-1 flex items-center justify-center">
               <div className="w-full max-w-[220px] space-y-2">
-                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #222, rgba(0,212,255,0.13), #111)" }}>
+                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, var(--color-surface-2), var(--color-border-hover), var(--color-surface-1))" }}>
                   <div className="rounded-[11px] bg-surface-2 p-4">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="h-6 w-6 rounded-full bg-accent/20" />
@@ -239,7 +217,7 @@ function LiveDemo() {
                     <div className="h-1.5 w-3/4 rounded bg-white/[0.06]" />
                   </div>
                 </div>
-                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, #111, rgba(255,255,255,0.08), #0a0a0a)" }}>
+                <div className="rounded-xl p-px" style={{ background: "linear-gradient(135deg, var(--color-surface-1), var(--color-border-hover), var(--color-bg))" }}>
                   <div className="rounded-[11px] bg-surface-2 p-4">
                     <div className="h-1.5 w-full rounded bg-white/[0.06] mb-1.5" />
                     <div className="h-1.5 w-2/3 rounded bg-white/[0.06]" />
@@ -342,9 +320,9 @@ function BentoFeatures() {
     <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Why ParticleUI</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Why ParticleUI</span>
         </div>
-        <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-16">
+        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-16">
           Built different
         </h2>
 
@@ -355,16 +333,16 @@ function BentoFeatures() {
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-white/[0.04] px-3 py-1.5 text-xs text-text-3">
                 Zero new tools
               </div>
-              <h3 className="text-2xl font-bold tracking-tight mb-3">Works with the shadcn CLI you already know</h3>
-              <p className="text-text-4 text-sm leading-relaxed">
+              <h3 className="text-2xl font-bold tracking-[-0.03em] leading-[1.25] mb-3">Works with the shadcn CLI you already know</h3>
+              <p className="text-text-3 text-sm leading-[1.7]">
                 No proprietary CLI, no wrapper package, no runtime imports. Components land
                 directly in your codebase. Modify them, delete them, own them.
               </p>
             </div>
             <div className="mt-6 rounded-xl border border-border bg-bg p-4 font-mono text-xs">
               <span className="text-text-4">$&nbsp;</span>
-              <span className="text-accent">npx shadcn</span>
-              <span className="text-text-1"> add @particleui/glow-button</span>
+              <span className="text-accent">npx particleui-cli</span>
+              <span className="text-text-1"> add glow-button</span>
               <div className="mt-2 text-[#2a6c2a]">✓ Wrote src/components/ui/glow-button.tsx</div>
             </div>
           </SpotlightCard>
@@ -377,8 +355,8 @@ function BentoFeatures() {
             />
             <div>
               <div className="mb-4 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">Exclusive</div>
-              <h3 className="text-xl font-bold mb-3">AI knows your components</h3>
-              <p className="text-text-4 text-sm leading-relaxed">
+              <h3 className="text-xl font-bold tracking-[-0.03em] leading-[1.25] mb-3">AI knows your components</h3>
+              <p className="text-text-3 text-sm leading-[1.7]">
                 Every Pro component ships a Claude skill. Your AI assistant understands
                 every prop, every edge case, every customisation.
               </p>
@@ -399,10 +377,10 @@ function BentoFeatures() {
 
           {/* Multi-framework */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
-            <h3 className="text-lg font-bold mb-2">React · Vue · Svelte</h3>
-            <p className="text-text-4 text-sm flex-1">Same design tokens. Three registries. One purchase.</p>
+            <h3 className="text-lg font-bold tracking-[-0.02em] mb-2">React · Vue · Svelte</h3>
+            <p className="text-text-3 text-sm leading-[1.65] flex-1">Same OKLCH design tokens. Three registries. One install.</p>
             <div className="mt-4 grid grid-cols-3 gap-2">
-              {[["React", true], ["Vue", false], ["Svelte", false]].map(([fw, live]) => (
+              {[["React", true], ["Vue", true], ["Svelte", true]].map(([fw, live]) => (
                 <div
                   key={fw as string}
                   className={`rounded-lg border py-2 text-center text-xs font-medium ${
@@ -419,8 +397,8 @@ function BentoFeatures() {
 
           {/* MCP server */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
-            <h3 className="text-lg font-bold mb-2">MCP server included</h3>
-            <p className="text-text-4 text-sm flex-1">
+            <h3 className="text-lg font-bold tracking-[-0.02em] mb-2">MCP server included</h3>
+            <p className="text-text-3 text-sm leading-[1.65] flex-1">
               Let Claude search and install your components from inside any conversation.
             </p>
             <div className="mt-4 rounded-lg bg-bg border border-border px-3 py-2 font-mono text-[10px] text-text-4">
@@ -430,8 +408,8 @@ function BentoFeatures() {
 
           {/* Lifetime */}
           <SpotlightCard className="md:col-span-4 p-8 min-h-[200px] flex flex-col justify-between">
-            <h3 className="text-lg font-bold mb-2">$149, once. Forever.</h3>
-            <p className="text-text-4 text-sm flex-1">
+            <h3 className="text-lg font-bold tracking-[-0.02em] mb-2">$149, once. Forever.</h3>
+            <p className="text-text-3 text-sm leading-[1.65] flex-1">
               No subscription. No per-seat. Every component we ever ship, yours.
             </p>
             <Link
@@ -447,18 +425,134 @@ function BentoFeatures() {
   )
 }
 
+/* ─── AI Features section ─────────────────────────────────────────────────── */
+function AIFeatures() {
+  return (
+    <section className="py-24 px-6 border-t border-border">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-4 text-center">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Beyond components</span>
+        </div>
+        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
+          ParticleUI is a platform
+        </h2>
+        <p className="text-center text-text-3 leading-[1.65] mb-16 max-w-md mx-auto">
+          Not just a component library. A complete UI toolkit with an AI generator, live theme studio, templates, and multi-framework support.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* AI Generator */}
+          <Link href="/generate" className="group relative overflow-hidden rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover transition-all hover:bg-surface-2">
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: "radial-gradient(ellipse 60% 40% at 30% 50%, var(--color-accent-dim), transparent)" }} />
+            <div className="relative">
+              <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-border bg-accent-dim">
+                <Robot size={18} className="text-accent" />
+              </div>
+              <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">AI UI Generator</h3>
+              <p className="text-text-3 text-sm leading-[1.7] mb-6">
+                Describe any page in plain English. Get a live preview assembled from real ParticleUI blocks, plus a one-command install.
+              </p>
+              <div className="rounded-xl border border-border bg-bg p-3 font-mono text-xs text-text-3 leading-relaxed">
+                <span className="text-text-4">Prompt: </span>
+                <span className="text-text-2">"A SaaS landing page for a project management tool targeting remote teams"</span>
+                <div className="mt-2 text-accent text-[10px]">→ hero-split + logo-cloud + feature-alternating + pricing + faq + footer</div>
+              </div>
+              <div className="mt-5 flex items-center gap-1.5 text-xs text-accent group-hover:gap-2.5 transition-all">
+                Try the generator <ArrowRight size={11} weight="bold" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Theme Studio */}
+          <Link href="/theme-studio" className="group relative overflow-hidden rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover transition-all hover:bg-surface-2">
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: "radial-gradient(ellipse 60% 40% at 70% 50%, var(--color-accent-dim), transparent)" }} />
+            <div className="relative">
+              <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-border bg-accent-dim">
+                <Palette size={18} className="text-accent" />
+              </div>
+              <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">Live Theme Studio</h3>
+              <p className="text-text-3 text-sm leading-[1.7] mb-6">
+                Tweak OKLCH design tokens with real-time preview. Export your theme as CSS, share a registry URL, or save to your account.
+              </p>
+              <div className="flex gap-2 mb-4">
+                {[
+                  { name: "Espresso", bg: "oklch(4% 0.005 60)", accent: "oklch(96% 0.01 80)" },
+                  { name: "Ocean", bg: "oklch(8% 0.01 230)", accent: "oklch(75% 0.15 200)" },
+                  { name: "Forest", bg: "oklch(6% 0.01 145)", accent: "oklch(72% 0.18 145)" },
+                  { name: "Cyber", bg: "oklch(5% 0.005 270)", accent: "oklch(80% 0.22 300)" },
+                ].map((t) => (
+                  <div key={t.name} className="flex items-center gap-1.5 rounded-lg border border-border bg-bg px-2.5 py-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full" style={{ background: t.accent }} />
+                    <span className="text-[10px] text-text-3">{t.name}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5 flex items-center gap-1.5 text-xs text-accent group-hover:gap-2.5 transition-all">
+                Open Theme Studio <ArrowRight size={11} weight="bold" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Templates */}
+          <Link href="/docs/templates/landing" className="group relative overflow-hidden rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover transition-all hover:bg-surface-2">
+            <div className="relative">
+              <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-border bg-accent-dim">
+                <SquaresFour size={18} className="text-accent" />
+              </div>
+              <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">Full-page Templates</h3>
+              <p className="text-text-3 text-sm leading-[1.7] mb-6">
+                6 composed page templates — landing, SaaS dashboard, auth flow, pricing, docs, blog. Install every block in one command.
+              </p>
+              <div className="rounded-xl border border-border bg-bg p-3 font-mono text-xs">
+                <span className="text-text-4">$</span>
+                <span className="text-accent"> npx particleui-cli</span>
+                <span className="text-text-1"> add landing</span>
+                <div className="mt-1.5 text-[#2a6c2a] text-[10px]">✓ Installed 9 blocks</div>
+              </div>
+              <div className="mt-5 flex items-center gap-1.5 text-xs text-accent group-hover:gap-2.5 transition-all">
+                Browse templates <ArrowRight size={11} weight="bold" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Multi-framework */}
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface-1 p-8">
+            <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-border bg-accent-dim">
+              <Lightning size={18} className="text-accent" />
+            </div>
+            <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">React · Vue · Svelte</h3>
+            <p className="text-text-3 text-sm leading-[1.7] mb-6">
+              20+ components ported to Vue 3 and Svelte. Same API, same design tokens, same CLI install. Switch the registry URL and you're done.
+            </p>
+            <div className="flex flex-col gap-2">
+              {["react", "vue", "svelte"].map((fw) => (
+                <div key={fw} className="flex items-center justify-between rounded-lg border border-border bg-bg px-3 py-2">
+                  <span className="font-mono text-[10px] text-text-2 capitalize">{fw}</span>
+                  <span className="font-mono text-[10px] text-text-4">
+                    /r/{fw}/{"{"}name{"}"}.json
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Code section ────────────────────────────────────────────────────────── */
 function CodeSection() {
   return (
     <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-6xl grid md:grid-cols-2 gap-16 items-center">
         <div>
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Developer first</span>
-          <h2 className="mt-3 text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold tracking-[-0.04em] mb-4">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Developer first</span>
+          <h2 className="mt-3 text-[clamp(1.875rem,3.5vw,2.875rem)] font-bold tracking-[-0.04em] leading-[1.15] mb-4">
             Setup in 60 seconds.<br />
             <span className="text-text-3">Customise forever.</span>
           </h2>
-          <p className="text-text-4 leading-relaxed mb-8">
+          <p className="text-text-2 leading-[1.7] mb-8">
             Add the registry to your <code className="text-text-2 bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">components.json</code>.
             Run the install. The source is yours — edit every line, every prop, every style.
           </p>
@@ -469,7 +563,7 @@ function CodeSection() {
               "TypeScript-first, full type safety",
               "No runtime deps you don't already have",
             ].map((f) => (
-              <li key={f} className="flex items-center gap-3 text-sm text-text-3">
+              <li key={f} className="flex items-center gap-3 text-sm text-text-2">
                 <Check size={14} weight="bold" className="text-accent shrink-0" />
                 {f}
               </li>
@@ -536,7 +630,7 @@ function Testimonials() {
           ))}
           <span className="ml-2 text-xs text-text-4">5.0 from 200+ developers</span>
         </div>
-        <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-16">
+        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-16">
           Loved by builders
         </h2>
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
@@ -575,12 +669,12 @@ function Pricing() {
     <section className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-4xl">
         <div className="mb-4 text-center">
-          <span className="text-xs font-semibold uppercase tracking-[0.2em] text-text-3">Pricing</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Pricing</span>
         </div>
-        <h2 className="text-center text-[clamp(2rem,4vw,3rem)] font-bold tracking-[-0.04em] mb-4">
+        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
           One price. Everything. Forever.
         </h2>
-        <p className="text-center text-text-4 mb-12">No subscriptions. No per-seat. No games.</p>
+        <p className="text-center text-text-3 mb-12">No subscriptions. No per-seat. No games.</p>
 
         <div className="grid md:grid-cols-2 gap-4">
           {/* Free */}
@@ -589,7 +683,7 @@ function Pricing() {
             <div className="flex items-end gap-1.5 mb-1">
               <span className="text-5xl font-bold">$0</span>
             </div>
-            <p className="text-sm text-text-4 mb-6">Free components, always free.</p>
+            <p className="text-sm text-text-3 mb-6">Free components, always free.</p>
             <Link
               href="/sign-up"
               className="block w-full rounded-xl border border-border py-3 text-center text-sm font-medium text-text-3 hover:text-text-1 hover:border-border-hover transition-all mb-6"
@@ -598,7 +692,7 @@ function Pricing() {
             </Link>
             <p className="text-xs text-text-4 mb-3 uppercase tracking-widest">Includes</p>
             <ul className="space-y-2.5">
-              {["Glow Button", "Gradient Card", "Electric Badge", "Noise Texture", "Community support"].map((f) => (
+              {["39 core primitives (MIT)", "12 particle effects", "15 full-page blocks", "shadcn CLI compatible", "Community support"].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-text-3">
                   <Check size={13} weight="bold" className="text-text-4 shrink-0" />
                   {f}
@@ -618,7 +712,7 @@ function Pricing() {
               <span className="text-5xl font-bold">$149</span>
               <span className="text-text-4 text-sm mb-2">one-time</span>
             </div>
-            <p className="text-sm text-text-4 mb-6">Lifetime access. No expiry.</p>
+            <p className="text-sm text-text-3 mb-6">Lifetime access. No expiry.</p>
             <Link
               href="/sign-up?plan=pro"
               className="block w-full rounded-xl bg-white py-3 text-center text-sm font-semibold text-black hover:bg-gray-200 transition-colors mb-6"
@@ -656,7 +750,7 @@ function BottomCTA() {
           <br />
           <span
             style={{
-              background: "linear-gradient(135deg, #fff 0%, #00d4ff 50%, #fff 100%)",
+              background: "linear-gradient(135deg, #fff 0%, #d4cfc8 50%, #fff 100%)",
               backgroundSize: "200%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -666,7 +760,7 @@ function BottomCTA() {
             the best UI alive
           </span>
         </h2>
-        <p className="text-text-4 text-lg mb-10">
+        <p className="text-text-3 text-lg leading-[1.7] mb-10">
           Start with free components today. Upgrade when you&apos;re ready to blow minds.
         </p>
         <div className="flex flex-wrap justify-center gap-3">

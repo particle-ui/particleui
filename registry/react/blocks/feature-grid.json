@@ -1,0 +1,32 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "feature-grid",
+  "type": "registry:block",
+  "title": "Feature Grid",
+  "description": "Bento-style feature grid with glow cards, gradient text titles, and icon badges.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "glow-card",
+    "gradient-text",
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/feature-grid.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { GlowCard } from \"@/components/ui/glow-card\"\nimport { GradientText } from \"@/components/ui/gradient-text\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Zap, Lock, Palette, Package, Code2, Layers } from \"lucide-react\"\n\ninterface Feature {\n  icon: React.ReactNode\n  title: string\n  description: string\n  gradient?: \"electric\" | \"aurora\" | \"fire\" | \"candy\" | \"gold\"\n  large?: boolean\n}\n\ninterface FeatureGridProps {\n  badge?: string\n  heading?: string\n  headingGradient?: string\n  description?: string\n  features?: Feature[]\n}\n\nconst defaultFeatures: Feature[] = [\n  {\n    icon: <Zap size={24} />,\n    title: \"Electric by default\",\n    description: \"Every component ships with our OKLCH electric-cyan design language. Looks incredible out of the box — no theming required.\",\n    gradient: \"electric\",\n    large: true,\n  },\n  {\n    icon: <Lock size={24} />,\n    title: \"Accessible to the core\",\n    description: \"Built on Radix UI. Every component is keyboard navigable, screen-reader friendly, and ARIA-compliant.\",\n    gradient: \"aurora\",\n  },\n  {\n    icon: <Palette size={24} />,\n    title: \"Fully themeable\",\n    description: \"Swap the entire design language by changing 4 CSS variables. Dark mode is the default, light mode is supported.\",\n    gradient: \"gold\",\n  },\n  {\n    icon: <Package size={24} />,\n    title: \"Copy-paste ready\",\n    description: \"Installs via the shadcn CLI. You own the code — no runtime dependency, no version lock-in.\",\n    gradient: \"candy\",\n  },\n  {\n    icon: <Code2 size={24} />,\n    title: \"TypeScript first\",\n    description: \"Every component has full TypeScript types, variant type exports, and JSDoc on every prop.\",\n    gradient: \"fire\",\n  },\n  {\n    icon: <Layers size={24} />,\n    title: \"Particle layer\",\n    description: \"12 animated particle components that drop in as visual upgrades to your core primitives.\",\n    gradient: \"electric\",\n    large: true,\n  },\n]\n\nfunction FeatureGrid({\n  badge = \"Why ParticleUI\",\n  heading = \"Everything a component library\",\n  headingGradient = \"should be.\",\n  description = \"We've thought through every detail so you can focus on shipping your product.\",\n  features = defaultFeatures,\n}: FeatureGridProps) {\n  return (\n    <section className=\"flex flex-col items-center gap-12 px-4 py-24\">\n      <div className=\"flex flex-col items-center gap-4 text-center max-w-xl\">\n        {badge && (\n          <Badge variant=\"outline\" className=\"border-[var(--color-accent-border)] text-[var(--color-accent-text)]\">\n            {badge}\n          </Badge>\n        )}\n        <h2 className=\"text-3xl font-bold tracking-tight sm:text-4xl\">\n          {heading}{\" \"}\n          <GradientText variant=\"electric\">{headingGradient}</GradientText>\n        </h2>\n        <p className=\"text-[var(--color-text-2)]\">{description}</p>\n      </div>\n\n      <div className=\"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-5xl auto-rows-fr\">\n        {features.map((f, i) => (\n          <GlowCard\n            key={i}\n            className={[\"p-6 flex flex-col gap-4\", f.large ? \"sm:col-span-2 lg:col-span-1\" : \"\"].filter(Boolean).join(\" \")}\n          >\n            <div className=\"w-10 h-10 rounded-lg bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-[var(--color-accent)]\">\n              {f.icon}\n            </div>\n            <div className=\"flex flex-col gap-1.5\">\n              <GradientText variant={f.gradient ?? \"electric\"} className=\"text-base font-semibold\">\n                {f.title}\n              </GradientText>\n              <p className=\"text-sm text-[var(--color-text-3)] leading-relaxed\">{f.description}</p>\n            </div>\n          </GlowCard>\n        ))}\n      </div>\n    </section>\n  )\n}\n\nexport { FeatureGrid }\nexport type { Feature }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

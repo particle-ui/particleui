@@ -3,9 +3,14 @@
   "version": "0.1.0",
   "description": "ParticleUI MCP server — lets Claude Code search, install, and configure ParticleUI components",
   "type": "module",
+  "main": "./dist/index.js",
   "bin": {
     "particleui-mcp": "./dist/index.js"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"
@@ -17,5 +22,29 @@
   "devDependencies": {
     "typescript": "^5.8.3",
     "@types/node": "^22.15.21"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/particleui/particleui.git",
+    "directory": "mcp/particleui-mcp"
+  },
+  "license": "MIT",
+  "author": "ParticleUI Contributors",
+  "homepage": "https://particleui.dev",
+  "bugs": {
+    "url": "https://github.com/particleui/particleui/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "particleui",
+    "shadcn",
+    "ui",
+    "components",
+    "react",
+    "claude"
+  ]
 }

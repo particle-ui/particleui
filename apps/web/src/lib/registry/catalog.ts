@@ -1,10 +1,11 @@
 const PRO_ITEMS: Record<string, Set<string>> = {
   react: new Set([
-    "particle-hero",
-    "particle-cursor",
-    "magnetic-button",
     "aurora-background",
-    "liquid-glass-card",
+    "cursor-trail",
+    "magnetic-button",
+    "orbit-animation",
+    "particle-hero",
+    "spotlight-hero",
   ]),
   vue: new Set(),
   svelte: new Set(),

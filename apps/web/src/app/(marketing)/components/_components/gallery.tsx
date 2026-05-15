@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import Link from "next/link"
-import { MagnifyingGlass, Sparkle, ArrowUpRight } from "@phosphor-icons/react"
+import { MagnifyingGlass, ArrowUpRight, Sparkle } from "@phosphor-icons/react"
 
 interface RegistryItem {
   name: string
@@ -10,123 +10,176 @@ interface RegistryItem {
   title: string
   description: string
   categories: string[]
+  frameworks: { react: boolean; vue: boolean; svelte: boolean }
 }
 
-const ALL_CATEGORIES = ["all", "free", "pro", "animations", "backgrounds", "buttons", "blocks", "text"]
+type FilterKey = "all" | "core" | "particles" | "blocks" | "pro" | "free"
+
+const FILTERS: { key: FilterKey; label: string }[] = [
+  { key: "all", label: "All" },
+  { key: "core", label: "Core" },
+  { key: "particles", label: "Particles" },
+  { key: "blocks", label: "Blocks" },
+  { key: "pro", label: "Pro" },
+  { key: "free", label: "Free" },
+]
+
+function matchesFilter(item: RegistryItem, filter: FilterKey): boolean {
+  switch (filter) {
+    case "all":
+      return true
+    case "core":
+      return item.categories.includes("core")
+    case "particles":
+      return (
+        item.categories.includes("animations") ||
+        item.categories.includes("backgrounds")
+      )
+    case "blocks":
+      return item.categories.includes("blocks")
+    case "pro":
+      return item.categories.includes("pro")
+    case "free":
+      return !item.categories.includes("pro")
+  }
+}
+
+function getFilterCount(items: RegistryItem[], filter: FilterKey): number {
+  return items.filter((i) => matchesFilter(i, filter)).length
+}
 
 export function Gallery({ items }: { items: RegistryItem[] }) {
   const [q, setQ] = useState("")
-  const [cat, setCat] = useState("all")
+  const [activeFilter, setActiveFilter] = useState<FilterKey>("all")
 
   const filtered = useMemo(() => {
     return items.filter((item) => {
+      const lq = q.toLowerCase()
       const matchesQ =
         !q ||
-        item.name.includes(q.toLowerCase()) ||
-        item.title.toLowerCase().includes(q.toLowerCase()) ||
-        item.description.toLowerCase().includes(q.toLowerCase())
+        item.name.includes(lq) ||
+        item.title.toLowerCase().includes(lq) ||
+        item.description.toLowerCase().includes(lq)
 
-      const matchesCat =
-        cat === "all" ||
-        (cat === "free" && !item.categories.includes("pro")) ||
-        (cat === "pro" && item.categories.includes("pro")) ||
-        item.categories.includes(cat)
-
-      return matchesQ && matchesCat
+      return matchesQ && matchesFilter(item, activeFilter)
     })
-  }, [items, q, cat])
+  }, [items, q, activeFilter])
 
   const isPro = (item: RegistryItem) => item.categories.includes("pro")
 
   return (
     <div>
       {/* Search + filter bar */}
-      <div className="mb-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+      <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+        {/* Search */}
         <div className="relative flex-1 max-w-sm">
           <MagnifyingGlass
             size={14}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444]"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-text-4"
           />
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search components..."
-            className="w-full rounded-xl border border-white/[0.07] bg-[#0a0a0a] pl-9 pr-4 py-2.5 text-sm text-white placeholder:text-[#333] outline-none focus:border-[rgba(0,212,255,0.3)] transition-colors"
+            className="w-full rounded-xl border border-border bg-surface-1 pl-9 pr-4 py-2.5 text-sm text-text-1 placeholder:text-text-4 outline-none focus:border-border-hover transition-colors"
           />
         </div>
 
+        {/* Filter pills */}
         <div className="flex items-center gap-1.5 flex-wrap">
-          {ALL_CATEGORIES.map((c) => (
-            <button
-              key={c}
-              onClick={() => setCat(c)}
-              className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize transition-all ${
-                cat === c
-                  ? "bg-white text-black"
-                  : "border border-white/[0.07] text-[#555] hover:text-white hover:border-white/20"
-              }`}
-            >
-              {c}
-            </button>
-          ))}
+          {FILTERS.map(({ key, label }) => {
+            const count = getFilterCount(items, key)
+            const isActive = activeFilter === key
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveFilter(key)}
+                className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
+                  isActive
+                    ? "bg-accent text-bg"
+                    : "border border-border text-text-3 hover:text-text-1 hover:border-border-hover"
+                }`}
+              >
+                {label}{" "}
+                <span className={isActive ? "opacity-60" : "text-text-4"}>
+                  ({count})
+                </span>
+              </button>
+            )
+          })}
         </div>
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-[#333] mb-6">
+      <p className="text-xs text-text-4 mb-6">
         {filtered.length} component{filtered.length !== 1 ? "s" : ""}
-        {cat !== "all" && ` in "${cat}"`}
+        {activeFilter !== "all" && ` in "${FILTERS.find((f) => f.key === activeFilter)?.label}"`}
         {q && ` matching "${q}"`}
       </p>
 
-      {/* Grid */}
+      {/* Grid or empty state */}
       {filtered.length === 0 ? (
-        <div className="py-24 text-center text-[#333]">
-          <MagnifyingGlass size={32} className="mx-auto mb-4 text-[#222]" />
-          <p>No components found.</p>
+        <div className="py-24 text-center">
+          <MagnifyingGlass size={32} className="mx-auto mb-4 text-text-4" />
+          <p className="text-text-4">No components match.</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {filtered.map((item) => (
             <Link
               key={item.name}
-              href={`/components/${item.name}`}
-              className="group relative rounded-2xl border border-white/[0.07] bg-[#0a0a0a] p-5 hover:border-[rgba(0,212,255,0.2)] hover:bg-[#0d0d0d] transition-all"
+              href={`/docs/components/${item.name}`}
+              className="group relative bg-surface-1 border border-border rounded-2xl p-5 hover:border-border-hover hover:bg-surface-2 transition-all"
             >
-              <div className="flex items-start justify-between mb-3">
-                <span
-                  className={`text-[9px] font-bold uppercase tracking-widest rounded-full px-2.5 py-1 ${
-                    isPro(item)
-                      ? "border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] text-[#00d4ff]"
-                      : "border border-white/[0.07] bg-white/[0.03] text-[#333]"
-                  }`}
-                >
-                  {isPro(item) ? (
-                    <span className="flex items-center gap-1">
-                      <Sparkle size={8} weight="fill" />Pro
-                    </span>
-                  ) : "Free"}
-                </span>
+              {/* Top row: badge + arrow */}
+              <div className="flex items-start justify-between">
+                {isPro(item) ? (
+                  <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim text-accent text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
+                    <Sparkle size={8} weight="fill" />
+                    Pro
+                  </span>
+                ) : (
+                  <span className="inline-flex rounded-full border border-border text-text-4 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
+                    Free
+                  </span>
+                )}
                 <ArrowUpRight
                   size={14}
-                  className="text-[#222] group-hover:text-[#00d4ff] transition-colors"
+                  className="text-text-4 opacity-0 group-hover:opacity-100 transition-opacity"
                 />
               </div>
-              <h3 className="font-semibold text-sm mb-1">{item.title}</h3>
-              <p className="text-xs text-[#444] leading-relaxed line-clamp-2">{item.description}</p>
+
+              {/* Title */}
+              <h3 className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-text-1 mt-3 mb-1">
+                {item.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-sm text-text-3 leading-[1.6] line-clamp-2">
+                {item.description}
+              </p>
+
+              {/* Framework pills */}
               <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.categories
-                  .filter((c) => c !== "pro" && c !== "free")
-                  .map((c) => (
-                    <span
-                      key={c}
-                      className="rounded-full border border-white/[0.05] bg-white/[0.02] px-2 py-0.5 text-[9px] text-[#333] capitalize"
-                    >
-                      {c}
-                    </span>
-                  ))}
+                {item.frameworks.react && (
+                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                    React
+                  </span>
+                )}
+                {item.frameworks.vue && (
+                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                    Vue
+                  </span>
+                )}
+                {item.frameworks.svelte && (
+                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                    Svelte
+                  </span>
+                )}
               </div>
-              <div className="mt-3 font-mono text-[10px] text-[#333]">
+
+              {/* Install slug */}
+              <div className="font-mono text-[10px] text-text-4 mt-3">
                 @particleui/{item.name}
               </div>
             </Link>

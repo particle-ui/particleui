@@ -1,0 +1,34 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "pricing",
+  "type": "registry:block",
+  "title": "Pricing Section",
+  "description": "Three-tier pricing table with monthly/annual toggle, feature lists, and highlighted popular plan.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "badge",
+    "card",
+    "switch",
+    "label"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/pricing.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { Switch } from \"@/components/ui/switch\"\nimport { Label } from \"@/components/ui/label\"\nimport { CheckCircle, X } from \"lucide-react\"\n\ninterface PricingTier {\n  name: string\n  badge?: string\n  monthlyPrice: number\n  annualPrice: number\n  description: string\n  features: { text: string; included: boolean }[]\n  cta: string\n  ctaHref: string\n  featured?: boolean\n}\n\ninterface PricingSectionProps {\n  heading?: string\n  description?: string\n  tiers?: PricingTier[]\n}\n\nconst defaultTiers: PricingTier[] = [\n  {\n    name: \"Free\",\n    monthlyPrice: 0,\n    annualPrice: 0,\n    description: \"Everything you need to build great products.\",\n    features: [\n      { text: \"60+ open-source components\", included: true },\n      { text: \"Particle animation layer\", included: true },\n      { text: \"shadcn CLI compatible\", included: true },\n      { text: \"MIT license\", included: true },\n      { text: \"Pro blocks\", included: false },\n      { text: \"Theme generator\", included: false },\n    ],\n    cta: \"Get started free\",\n    ctaHref: \"/docs/getting-started/installation\",\n  },\n  {\n    name: \"Pro\",\n    badge: \"Most popular\",\n    monthlyPrice: 29,\n    annualPrice: 19,\n    description: \"Blocks, themes, and tools for ambitious teams.\",\n    featured: true,\n    features: [\n      { text: \"Everything in Free\", included: true },\n      { text: \"30+ Pro blocks\", included: true },\n      { text: \"Dashboard templates\", included: true },\n      { text: \"Theme generator\", included: true },\n      { text: \"Figma design system\", included: true },\n      { text: \"Priority support\", included: false },\n    ],\n    cta: \"Start Pro trial\",\n    ctaHref: \"/pricing\",\n  },\n  {\n    name: \"Enterprise\",\n    monthlyPrice: 99,\n    annualPrice: 79,\n    description: \"Custom contracts, SLAs, and dedicated support.\",\n    features: [\n      { text: \"Everything in Pro\", included: true },\n      { text: \"Custom themes\", included: true },\n      { text: \"Private registry\", included: true },\n      { text: \"SSO & access controls\", included: true },\n      { text: \"Priority support\", included: true },\n      { text: \"Dedicated Slack channel\", included: true },\n    ],\n    cta: \"Contact sales\",\n    ctaHref: \"/contact\",\n  },\n]\n\nfunction PricingSection({\n  heading = \"Simple, transparent pricing\",\n  description = \"Start free. Upgrade when you need more.\",\n  tiers = defaultTiers,\n}: PricingSectionProps) {\n  const [annual, setAnnual] = React.useState(false)\n\n  return (\n    <section className=\"flex flex-col items-center gap-10 px-4 py-24\">\n      <div className=\"flex flex-col items-center gap-4 text-center max-w-xl\">\n        <h2 className=\"text-3xl font-bold tracking-tight sm:text-4xl\">{heading}</h2>\n        <p className=\"text-[var(--color-text-2)]\">{description}</p>\n\n        <div className=\"flex items-center gap-3 mt-2\">\n          <Label htmlFor=\"billing-toggle\" className=\"text-[var(--color-text-2)]\">Monthly</Label>\n          <Switch\n            id=\"billing-toggle\"\n            checked={annual}\n            onCheckedChange={setAnnual}\n          />\n          <Label htmlFor=\"billing-toggle\" className=\"text-[var(--color-text-2)]\">\n            Annual{\" \"}\n            <span className=\"ml-1 text-[var(--color-accent)] text-xs font-semibold\">Save 35%</span>\n          </Label>\n        </div>\n      </div>\n\n      <div className=\"grid grid-cols-1 gap-6 md:grid-cols-3 w-full max-w-5xl\">\n        {tiers.map((tier) => (\n          <Card\n            key={tier.name}\n            className={[\n              \"flex flex-col\",\n              tier.featured\n                ? \"border-[var(--color-accent-border)] shadow-[0_0_40px_-4px_oklch(78%_0.17_200_/_0.25)] relative\"\n                : \"\",\n            ]\n              .filter(Boolean)\n              .join(\" \")}\n          >\n            {tier.badge && (\n              <div className=\"absolute -top-3 left-1/2 -translate-x-1/2\">\n                <Badge className=\"bg-[var(--color-accent)] text-[var(--color-bg)] border-0 px-3\">\n                  {tier.badge}\n                </Badge>\n              </div>\n            )}\n            <CardHeader className=\"gap-2\">\n              <CardTitle className=\"text-lg\">{tier.name}</CardTitle>\n              <div className=\"flex items-end gap-1\">\n                <span className=\"text-4xl font-bold tabular-nums\">\n                  ${annual ? tier.annualPrice : tier.monthlyPrice}\n                </span>\n                {tier.monthlyPrice > 0 && (\n                  <span className=\"text-[var(--color-text-3)] mb-1\">/mo</span>\n                )}\n              </div>\n              <CardDescription>{tier.description}</CardDescription>\n            </CardHeader>\n            <CardContent className=\"flex flex-col gap-2.5 flex-1\">\n              {tier.features.map((f) => (\n                <div key={f.text} className=\"flex items-center gap-2.5 text-sm\">\n                  {f.included ? (\n                    <CheckCircle size={15} className=\"shrink-0 text-[var(--color-accent)]\" />\n                  ) : (\n                    <X size={15} className=\"shrink-0 text-[var(--color-text-4)]\" />\n                  )}\n                  <span className={f.included ? \"text-[var(--color-text-2)]\" : \"text-[var(--color-text-4)]\"}>\n                    {f.text}\n                  </span>\n                </div>\n              ))}\n            </CardContent>\n            <CardFooter>\n              <Button\n                asChild\n                variant={tier.featured ? \"default\" : \"outline\"}\n                className=\"w-full\"\n              >\n                <a href={tier.ctaHref}>{tier.cta}</a>\n              </Button>\n            </CardFooter>\n          </Card>\n        ))}\n      </div>\n    </section>\n  )\n}\n\nexport { PricingSection }\nexport type { PricingTier }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

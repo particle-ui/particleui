@@ -1,11 +1,21 @@
 import { Sidebar } from "./_components/sidebar"
+import { MobileNav } from "./_components/mobile-nav"
+import { OnThisPage } from "@/components/docs/on-this-page"
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-bg min-h-svh text-text-1 flex">
       <Sidebar />
-      <div className="flex-1 min-w-0 lg:pl-64">
-        {children}
+      <MobileNav />
+      <div className="flex-1 lg:pl-64 pt-14 lg:pt-0">
+        <div className="flex">
+          <main className="flex-1 min-w-0">
+            {children}
+          </main>
+          <aside className="hidden xl:block w-56 shrink-0 sticky top-0 h-svh overflow-y-auto py-10 pr-6 border-l border-border">
+            <OnThisPage />
+          </aside>
+        </div>
       </div>
     </div>
   )

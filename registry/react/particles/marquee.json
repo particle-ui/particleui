@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "marquee",
+  "type": "registry:ui",
+  "title": "Marquee",
+  "description": "Infinite scroll marquee with configurable speed, direction, gap, and pause-on-hover.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/marquee.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface MarqueeProps {\n  children: React.ReactNode\n  speed?: number\n  direction?: \"left\" | \"right\"\n  pauseOnHover?: boolean\n  gap?: number\n  className?: string\n  repeat?: number\n}\n\nfunction Marquee({\n  children,\n  speed = 40,\n  direction = \"left\",\n  pauseOnHover = true,\n  gap = 16,\n  className,\n  repeat = 4,\n}: MarqueeProps) {\n  const duration = `${(1 / speed) * 1000}s`\n\n  return (\n    <div\n      className={[\"flex overflow-hidden [--gap:theme(spacing.4)]\", className].filter(Boolean).join(\" \")}\n      style={{ \"--marquee-gap\": `${gap}px` } as React.CSSProperties}\n    >\n      <div\n        className={[\n          \"flex min-w-full shrink-0 items-center gap-[var(--marquee-gap)]\",\n          pauseOnHover && \"hover:[animation-play-state:paused]\",\n          direction === \"left\"\n            ? \"animate-[marquee-left_var(--marquee-duration)_linear_infinite]\"\n            : \"animate-[marquee-right_var(--marquee-duration)_linear_infinite]\",\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        style={{ \"--marquee-duration\": duration } as React.CSSProperties}\n      >\n        {Array.from({ length: repeat }, (_, i) => (\n          <React.Fragment key={i}>{children}</React.Fragment>\n        ))}\n      </div>\n    </div>\n  )\n}\n\nexport { Marquee }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "blog",
+  "type": "registry:block",
+  "title": "Blog",
+  "description": "Blog index with header, hero, article list with author avatars, newsletter section, and footer.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [
+    "newsletter",
+    "footer"
+  ],
+  "files": [
+    {
+      "path": "components/templates/blog.tsx",
+      "content": "\"use client\"\n\nimport { NewsletterSection } from \"@/components/blocks/newsletter\"\nimport { Footer } from \"@/components/blocks/footer\"\n\nconst posts = [\n  {\n    tag: \"Tutorial\",\n    title: \"Getting started with React Server Components\",\n    excerpt: \"Learn how to leverage React Server Components in Next.js 15 to ship faster, more efficient applications with less client-side JavaScript.\",\n    author: \"Alex Rivera\",\n    date: \"May 12, 2026\",\n    readTime: \"8 min read\",\n  },\n  {\n    tag: \"Deep Dive\",\n    title: \"Building a design system with CSS custom properties\",\n    excerpt: \"A practical guide to creating a scalable, token-driven design system using modern CSS — no preprocessor required.\",\n    author: \"Priya Nair\",\n    date: \"May 8, 2026\",\n    readTime: \"12 min read\",\n  },\n  {\n    tag: \"Release\",\n    title: \"ParticleUI v2.0: Tailwind v4 and React 19 support\",\n    excerpt: \"We've rebuilt the entire component pipeline from the ground up. Here's what's new, what changed, and how to migrate.\",\n    author: \"James Okafor\",\n    date: \"May 1, 2026\",\n    readTime: \"5 min read\",\n  },\n]\n\nexport function BlogTemplate() {\n  return (\n    <div className=\"flex flex-col min-h-screen\">\n      {/* Header */}\n      <header className=\"border-b border-[var(--color-border)] bg-[var(--color-bg)] px-6 h-14 flex items-center justify-between\">\n        <div className=\"flex items-center gap-2\">\n          <span className=\"font-bold text-sm tracking-tight text-[var(--color-text-1)]\">The Particle Blog</span>\n        </div>\n        <nav className=\"hidden md:flex items-center gap-5 text-sm text-[var(--color-text-2)]\">\n          <a href=\"#\" className=\"hover:text-[var(--color-text-1)] transition-colors\">Articles</a>\n          <a href=\"#\" className=\"hover:text-[var(--color-text-1)] transition-colors\">Tutorials</a>\n          <a href=\"#\" className=\"hover:text-[var(--color-text-1)] transition-colors\">Newsletter</a>\n        </nav>\n      </header>\n\n      {/* Hero */}\n      <section className=\"px-4 py-16 text-center border-b border-[var(--color-border)]\">\n        <div className=\"mx-auto max-w-2xl\">\n          <h1 className=\"text-5xl font-bold tracking-tight leading-tight text-[var(--color-text-1)] mb-4\">\n            Ideas, tutorials &amp; releases\n          </h1>\n          <p className=\"text-lg text-[var(--color-text-2)]\">\n            The latest from the ParticleUI team — design system thinking, component patterns, and engineering deep dives.\n          </p>\n        </div>\n      </section>\n\n      {/* Post list */}\n      <main className=\"flex-1 px-4 py-16\">\n        <div className=\"mx-auto max-w-3xl flex flex-col gap-10\">\n          {posts.map((post) => (\n            <article\n              key={post.title}\n              className=\"group flex flex-col gap-3 border-b border-[var(--color-border)] pb-10 last:border-b-0 last:pb-0\"\n            >\n              <div className=\"flex items-center gap-3\">\n                <span className=\"rounded-full border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)] px-2.5 py-0.5 text-[11px] font-semibold text-[var(--color-accent-text)]\">\n                  {post.tag}\n                </span>\n                <span className=\"text-xs text-[var(--color-text-3)]\">{post.date}</span>\n                <span className=\"text-xs text-[var(--color-text-4)]\">·</span>\n                <span className=\"text-xs text-[var(--color-text-3)]\">{post.readTime}</span>\n              </div>\n              <a href=\"#\" className=\"group/link\">\n                <h2 className=\"text-2xl font-bold tracking-tight text-[var(--color-text-1)] group-hover/link:text-[var(--color-accent)] transition-colors\">\n                  {post.title}\n                </h2>\n              </a>\n              <p className=\"text-[var(--color-text-2)] leading-relaxed\">{post.excerpt}</p>\n              <div className=\"flex items-center gap-2 mt-1\">\n                <div className=\"h-7 w-7 rounded-full bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] flex items-center justify-center text-[10px] font-bold text-[var(--color-accent-text)]\">\n                  {post.author.split(\" \").map((n) => n[0]).join(\"\")}\n                </div>\n                <span className=\"text-sm text-[var(--color-text-2)]\">{post.author}</span>\n              </div>\n            </article>\n          ))}\n        </div>\n      </main>\n\n      {/* Newsletter */}\n      <NewsletterSection\n        heading=\"Get articles in your inbox\"\n        description=\"New posts, component releases, and design system ideas — delivered weekly. No spam, unsubscribe any time.\"\n      />\n\n      <Footer />\n    </div>\n  )\n}\n\nexport default BlogTemplate\n",
+      "type": "registry:block"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "template",
+    "content",
+    "free"
+  ]
+}

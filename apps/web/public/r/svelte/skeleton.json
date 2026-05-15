@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "skeleton",
+  "type": "registry:ui",
+  "title": "Skeleton",
+  "description": "Animated placeholder for loading states.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/skeleton.svelte",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    class?: string\n    [key: string]: unknown\n  }\n\n  let { class: className, ...rest }: Props = $props()\n</script>\n\n<div\n  class=\"animate-pulse rounded-md bg-[var(--color-surface-2)] {className ?? ''}\"\n  {...rest}\n></div>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "feedback",
+    "core",
+    "free"
+  ]
+}

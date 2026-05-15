@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "tilt-card",
+  "type": "registry:ui",
+  "title": "Tilt Card",
+  "description": "3D perspective tilt card with cursor-tracked glare highlight. Pure CSS transforms, no dependencies.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/tilt-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface TiltCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  intensity?: number\n  glare?: boolean\n  scale?: number\n}\n\nfunction TiltCard({\n  className,\n  children,\n  intensity = 12,\n  glare = true,\n  scale = 1.02,\n  style,\n  ...props\n}: TiltCardProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const glareRef = React.useRef<HTMLDivElement>(null)\n  const raf = React.useRef<number>(0)\n\n  const handleMouseMove = React.useCallback(\n    (e: React.MouseEvent<HTMLDivElement>) => {\n      cancelAnimationFrame(raf.current)\n      raf.current = requestAnimationFrame(() => {\n        const el = ref.current\n        if (!el) return\n        const rect = el.getBoundingClientRect()\n        const x = (e.clientX - rect.left) / rect.width - 0.5\n        const y = (e.clientY - rect.top) / rect.height - 0.5\n        const rotateX = -y * intensity\n        const rotateY = x * intensity\n        el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scale}, ${scale}, ${scale})`\n        if (glareRef.current) {\n          const angle = Math.atan2(y, x) * (180 / Math.PI) + 90\n          const dist = Math.sqrt(x * x + y * y)\n          glareRef.current.style.opacity = String(dist * 0.4)\n          glareRef.current.style.transform = `rotate(${angle}deg)`\n        }\n      })\n    },\n    [intensity, scale]\n  )\n\n  const handleMouseLeave = React.useCallback(() => {\n    cancelAnimationFrame(raf.current)\n    const el = ref.current\n    if (!el) return\n    el.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`\n    if (glareRef.current) glareRef.current.style.opacity = \"0\"\n  }, [])\n\n  return (\n    <div\n      ref={ref}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        transformStyle: \"preserve-3d\",\n        transition: \"transform 0.1s ease-out\",\n        willChange: \"transform\",\n        ...style,\n      }}\n      className={[\n        \"relative rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] overflow-hidden cursor-default\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      {...props}\n    >\n      {glare && (\n        <div\n          ref={glareRef}\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            background:\n              \"linear-gradient(135deg, oklch(100% 0 0 / 0.12) 0%, transparent 60%)\",\n            opacity: 0,\n            pointerEvents: \"none\",\n            transformOrigin: \"center center\",\n            borderRadius: \"inherit\",\n            transition: \"opacity 0.1s ease-out\",\n            zIndex: 1,\n          }}\n        />\n      )}\n      <div style={{ transform: \"translateZ(20px)\", position: \"relative\", zIndex: 2 }}>\n        {children}\n      </div>\n    </div>\n  )\n}\n\nexport { TiltCard }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

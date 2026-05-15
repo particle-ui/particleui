@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "textarea",
+  "type": "registry:ui",
+  "title": "Textarea",
+  "description": "Textarea with matching input design language.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/textarea.svelte",
+      "type": "registry:ui",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    placeholder?: string\n    value?: string\n    disabled?: boolean\n    rows?: number\n    class?: string\n    [key: string]: unknown\n  }\n\n  let {\n    placeholder,\n    value = $bindable(),\n    disabled = false,\n    rows = 4,\n    class: className,\n    ...props\n  }: Props = $props()\n</script>\n\n<textarea\n  {placeholder}\n  {disabled}\n  {rows}\n  bind:value\n  class=\"flex w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface-1)] px-3 py-2 text-sm text-[var(--color-text-1)] shadow-sm transition-colors placeholder:text-[var(--color-text-4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:border-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 hover:border-[var(--color-border-hover)] resize-y min-h-[80px] {className ?? ''}\"\n  {...props}\n></textarea>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

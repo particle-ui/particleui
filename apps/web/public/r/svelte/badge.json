@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Inline status badge with four variants.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/badge.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n  import { tv } from \"tailwind-variants\"\n\n  const badge = tv({\n    base: \"inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:ring-offset-2\",\n    variants: {\n      variant: {\n        default:\n          \"bg-[var(--color-accent)] text-[var(--color-bg)] border border-transparent shadow-[0_0_8px_var(--color-accent-dim)]\",\n        outline:\n          \"border border-[var(--color-accent-border)] text-[var(--color-accent-text)] bg-transparent\",\n        secondary:\n          \"bg-[var(--color-surface-2)] text-[var(--color-text-2)] border border-[var(--color-border)]\",\n        destructive:\n          \"bg-red-500/20 text-red-400 border border-red-500/30\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  })\n\n  interface Props {\n    variant?: \"default\" | \"outline\" | \"secondary\" | \"destructive\"\n    class?: string\n    children?: Snippet\n  }\n\n  let { variant = \"default\", class: className, children }: Props = $props()\n\n  const classes = $derived(badge({ variant, class: className }))\n</script>\n\n<span class={classes}>\n  {@render children?.()}\n</span>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "badges",
+    "core",
+    "free"
+  ]
+}

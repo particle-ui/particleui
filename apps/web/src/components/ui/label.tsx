@@ -9,7 +9,7 @@ const labelVariants = tv({
     "text-sm font-medium leading-none text-[var(--color-text-2)]",
     "select-none",
     "peer-disabled:cursor-not-allowed peer-disabled:opacity-40",
-    "data-[error=true]:text-red-400",
+    "data-[error=true]:text-[var(--color-error-text)]",
   ],
 })
 

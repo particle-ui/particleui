@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Horizontal or vertical visual divider.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/Separator.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    orientation?: 'horizontal' | 'vertical'\n    class?: string\n  }>(),\n  { orientation: 'horizontal' }\n)\n\nconst classes = computed(() =>\n  [\n    'shrink-0 bg-[var(--color-border)]',\n    props.orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div\n    role=\"separator\"\n    :aria-orientation=\"orientation\"\n    :class=\"classes\"\n  />\n</template>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

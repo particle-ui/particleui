@@ -19,7 +19,7 @@ const AlertDialogOverlay = React.forwardRef<
   <AlertDialogPrimitive.Overlay
     ref={ref}
     className={[
-      "fixed inset-0 z-50 bg-black/60 backdrop-blur-sm",
+      "fixed inset-0 z-50 bg-[var(--color-bg)]/75 backdrop-blur-sm",
       "data-[state=open]:animate-in data-[state=open]:fade-in-0",
       "data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
       className,
@@ -42,7 +42,7 @@ const AlertDialogContent = React.forwardRef<
       className={[
         "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2",
         "rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]",
-        "shadow-[0_24px_80px_0px_oklch(0%_0_0_/_0.6)] p-6 duration-200",
+        "shadow-[0_24px_80px_0px_var(--color-shadow-strong)] p-6 duration-200",
         "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]",
         className,
@@ -93,7 +93,7 @@ const AlertDialogAction = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
-    className={buttonBase({ className: ["bg-red-600 text-white hover:bg-red-500 active:bg-red-700 hover:shadow-[0_0_20px_0px_oklch(50%_0.2_25_/_0.35)] transition-[background-color,box-shadow]", className].filter(Boolean).join(" ") })}
+    className={buttonBase({ className: ["bg-[var(--color-error)] text-[var(--color-bg)] hover:brightness-110 active:brightness-90 hover:shadow-[0_0_20px_0px_var(--color-error-dim)] transition-[filter,box-shadow,background-color]", className].filter(Boolean).join(" ") })}
     {...props}
   />
 ))

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "Text input with OKLCH-tuned focus ring and surface hierarchy.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/input.svelte",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    type?: string\n    placeholder?: string\n    value?: string | number\n    disabled?: boolean\n    class?: string\n    [key: string]: unknown\n  }\n\n  let {\n    type = \"text\",\n    placeholder,\n    value = $bindable(),\n    disabled = false,\n    class: className,\n    ...props\n  }: Props = $props()\n</script>\n\n<input\n  {type}\n  {placeholder}\n  {disabled}\n  bind:value\n  class=\"flex h-9 w-full rounded-md border border-[var(--color-border)] bg-[var(--color-surface-1)] px-3 py-1 text-sm text-[var(--color-text-1)] shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-[var(--color-text-4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:border-[var(--color-accent)] disabled:cursor-not-allowed disabled:opacity-50 hover:border-[var(--color-border-hover)] {className ?? ''}\"\n  {...props}\n/>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ]
+}

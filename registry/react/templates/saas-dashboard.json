@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "saas-dashboard",
+  "type": "registry:block",
+  "title": "SaaS Dashboard",
+  "description": "Analytics-focused dashboard with KPI stat cards and a detailed data table. Drop into any admin layout.",
+  "author": "ParticleUI",
+  "categories": [
+    "template",
+    "dashboard",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "stats",
+    "dashboard-analytics"
+  ],
+  "files": [
+    {
+      "path": "components/templates/saas-dashboard.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport { DashboardAnalytics } from \"@/components/blocks/dashboard-analytics\"\nimport { StatsSection } from \"@/components/blocks/stats\"\n\nexport function SaasDashboardTemplate() {\n  return (\n    <div className=\"flex flex-col gap-0\">\n      <StatsSection />\n      <DashboardAnalytics />\n    </div>\n  )\n}\n\nexport default SaasDashboardTemplate\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

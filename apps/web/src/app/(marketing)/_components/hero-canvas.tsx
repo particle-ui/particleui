@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useTheme } from "next-themes"
 
 interface Particle {
   x: number; y: number
@@ -12,10 +13,13 @@ export function HeroCanvas() {
   const ref = useRef<HTMLCanvasElement>(null)
   const mouse = useRef({ x: -9999, y: -9999 })
   const raf = useRef(0)
+  const { resolvedTheme } = useTheme()
 
   useEffect(() => {
     const canvas = ref.current!
     const ctx = canvas.getContext("2d")!
+    const isDark = resolvedTheme !== "light"
+    const rgb = isDark ? "212,204,196" : "40,32,24"
     let W = 0, H = 0, particles: Particle[] = []
 
     const resize = () => {
@@ -78,8 +82,8 @@ export function HeroCanvas() {
 
           // Particle glow
           const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4)
-          grd.addColorStop(0, `rgba(0,212,255,${p.a})`)
-          grd.addColorStop(1, "rgba(0,212,255,0)")
+          grd.addColorStop(0, `rgba(${rgb},${p.a})`)
+          grd.addColorStop(1, `rgba(${rgb},0)`)
           ctx.beginPath()
           ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2)
           ctx.fillStyle = grd
@@ -88,7 +92,7 @@ export function HeroCanvas() {
           // Core dot
           ctx.beginPath()
           ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0,212,255,${p.a * 1.5})`
+          ctx.fillStyle = `rgba(${rgb},${p.a * 1.5})`
           ctx.fill()
         }
 
@@ -103,7 +107,7 @@ export function HeroCanvas() {
               ctx.beginPath()
               ctx.moveTo(particles[i].x, particles[i].y)
               ctx.lineTo(particles[j].x, particles[j].y)
-              ctx.strokeStyle = `rgba(0,212,255,${alpha})`
+              ctx.strokeStyle = `rgba(${rgb},${alpha})`
               ctx.lineWidth = 0.5
               ctx.stroke()
             }
@@ -120,7 +124,7 @@ export function HeroCanvas() {
       window.removeEventListener("mousemove", onMove)
       document.removeEventListener("visibilitychange", onVis)
     }
-  }, [])
+  }, [resolvedTheme])
 
   return (
     <canvas

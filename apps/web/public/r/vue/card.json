@@ -1,0 +1,51 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Composable card with header, content, and footer slots.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/Card.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  [\n    'rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]',\n    'text-[var(--color-text-1)]',\n    'transition-colors duration-150',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/CardHeader.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  ['flex flex-col gap-1.5 p-5', props.class].filter(Boolean).join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card-header\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/CardTitle.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  [\n    'text-base font-semibold leading-tight tracking-tight text-[var(--color-text-1)]',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card-title\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/CardDescription.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  ['text-sm text-[var(--color-text-3)]', props.class].filter(Boolean).join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card-description\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/CardContent.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  ['px-5 pb-5', props.class].filter(Boolean).join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card-content\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/CardFooter.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  ['flex items-center px-5 pb-5 pt-0', props.class].filter(Boolean).join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card-footer\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ]
+}

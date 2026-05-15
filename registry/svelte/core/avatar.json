@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "avatar",
+  "type": "registry:ui",
+  "title": "Avatar",
+  "description": "Circular avatar with image and initials fallback.",
+  "author": "ParticleUI",
+  "categories": [
+    "media",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/avatar.svelte",
+      "type": "registry:ui",
+      "content": "<script lang=\"ts\">\n  import { tv } from \"tailwind-variants\"\n\n  const avatarSizes = tv({\n    base: \"relative flex shrink-0 overflow-hidden rounded-full bg-[var(--color-surface-2)] border border-[var(--color-border)]\",\n    variants: {\n      size: {\n        sm: \"h-8 w-8 text-xs\",\n        md: \"h-10 w-10 text-sm\",\n        lg: \"h-14 w-14 text-base\",\n      },\n    },\n    defaultVariants: {\n      size: \"md\",\n    },\n  })\n\n  interface Props {\n    src?: string\n    alt?: string\n    fallback?: string\n    size?: \"sm\" | \"md\" | \"lg\"\n    class?: string\n  }\n\n  let { src, alt = \"\", fallback, size = \"md\", class: className }: Props = $props()\n\n  let imgError = $state(false)\n\n  function handleError() {\n    imgError = true\n  }\n\n  const showImage = $derived(!!src && !imgError)\n  const initials = $derived(\n    fallback ??\n      alt\n        .split(\" \")\n        .map((n) => n[0])\n        .join(\"\")\n        .toUpperCase()\n        .slice(0, 2)\n  )\n\n  const classes = $derived(avatarSizes({ size, class: className }))\n</script>\n\n<span class={classes}>\n  {#if showImage}\n    <img\n      {src}\n      {alt}\n      onerror={handleError}\n      class=\"aspect-square h-full w-full object-cover\"\n    />\n  {:else}\n    <span\n      class=\"flex h-full w-full items-center justify-center font-medium text-[var(--color-text-2)]\"\n      aria-label={alt || fallback}\n    >\n      {initials}\n    </span>\n  {/if}\n</span>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

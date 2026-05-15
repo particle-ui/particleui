@@ -21,7 +21,7 @@ export function NavLink({
       className={`flex items-center justify-between rounded-md px-2 py-1.5 text-sm transition-all duration-150 ${
         isActive
           ? "bg-surface-2 text-text-1 font-medium"
-          : "text-text-4 hover:text-text-1 hover:bg-white/[0.04]"
+          : "text-text-3 hover:text-text-1 hover:bg-surface-2"
       }`}
     >
       <span>{children}</span>

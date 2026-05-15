@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "counter",
+  "type": "registry:ui",
+  "title": "Counter",
+  "description": "Spring-animated number counter with IntersectionObserver trigger, easing, and prefix/suffix support.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/counter.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface CounterProps {\n  from?: number\n  to: number\n  duration?: number\n  decimals?: number\n  prefix?: string\n  suffix?: string\n  className?: string\n  formatter?: (n: number) => string\n  easing?: (t: number) => number\n}\n\nfunction easeOutExpo(t: number): number {\n  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t)\n}\n\nfunction Counter({\n  from = 0,\n  to,\n  duration = 1800,\n  decimals = 0,\n  prefix = \"\",\n  suffix = \"\",\n  className,\n  formatter,\n  easing = easeOutExpo,\n}: CounterProps) {\n  const [value, setValue] = React.useState(from)\n  const startRef = React.useRef<number | null>(null)\n  const rafRef = React.useRef<number>(0)\n  const elRef = React.useRef<HTMLSpanElement>(null)\n  const started = React.useRef(false)\n\n  React.useEffect(() => {\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting && !started.current) {\n          started.current = true\n          const animate = (ts: number) => {\n            if (!startRef.current) startRef.current = ts\n            const elapsed = ts - startRef.current\n            const progress = Math.min(elapsed / duration, 1)\n            const easedProgress = easing(progress)\n            setValue(from + (to - from) * easedProgress)\n            if (progress < 1) rafRef.current = requestAnimationFrame(animate)\n          }\n          rafRef.current = requestAnimationFrame(animate)\n        }\n      },\n      { threshold: 0.4 }\n    )\n    if (elRef.current) observer.observe(elRef.current)\n    return () => {\n      observer.disconnect()\n      cancelAnimationFrame(rafRef.current)\n    }\n  }, [from, to, duration, easing])\n\n  const display = formatter\n    ? formatter(value)\n    : value.toLocaleString(undefined, {\n        minimumFractionDigits: decimals,\n        maximumFractionDigits: decimals,\n      })\n\n  return (\n    <span ref={elRef} className={className}>\n      {prefix}{display}{suffix}\n    </span>\n  )\n}\n\nexport { Counter }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

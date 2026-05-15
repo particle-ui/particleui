@@ -1,0 +1,41 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Context-based tab panels with keyboard navigation.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/Tabs.vue",
+      "content": "<script setup lang=\"ts\">\nimport { provide, ref, watch } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    modelValue?: string\n    defaultValue?: string\n    class?: string\n  }>(),\n  {}\n)\n\nconst emit = defineEmits<{ 'update:modelValue': [value: string] }>()\n\nconst active = ref(props.modelValue ?? props.defaultValue ?? '')\n\nwatch(\n  () => props.modelValue,\n  (val) => {\n    if (val !== undefined) active.value = val\n  }\n)\n\nprovide('tabs', {\n  active,\n  setActive: (v: string) => {\n    active.value = v\n    emit('update:modelValue', v)\n  },\n})\n</script>\n\n<template>\n  <div :class=\"props.class\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/TabsList.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  [\n    'inline-flex h-9 items-center justify-center rounded-lg p-1',\n    'bg-[var(--color-surface-1)] border border-[var(--color-border)]',\n    'text-[var(--color-text-3)]',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div role=\"tablist\" :class=\"classes\">\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/TabsTrigger.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, inject, type Ref } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    value: string\n    disabled?: boolean\n    class?: string\n  }>(),\n  { disabled: false }\n)\n\nconst tabs = inject<{ active: Ref<string>; setActive: (v: string) => void }>('tabs')\n\nconst isActive = computed(() => tabs?.active.value === props.value)\n\nconst classes = computed(() =>\n  [\n    'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium',\n    'transition-all duration-150 cursor-pointer select-none',\n    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-1 focus-visible:ring-offset-[var(--color-surface-1)]',\n    'disabled:pointer-events-none disabled:opacity-40',\n    isActive.value\n      ? 'bg-[var(--color-surface-3)] text-[var(--color-text-1)] shadow-sm'\n      : 'text-[var(--color-text-3)] hover:text-[var(--color-text-2)]',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n\nfunction handleClick() {\n  if (!props.disabled) {\n    tabs?.setActive(props.value)\n  }\n}\n</script>\n\n<template>\n  <button\n    type=\"button\"\n    role=\"tab\"\n    :aria-selected=\"isActive\"\n    :disabled=\"disabled\"\n    :class=\"classes\"\n    @click=\"handleClick\"\n  >\n    <slot />\n  </button>\n</template>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/TabsContent.vue",
+      "content": "<script setup lang=\"ts\">\nimport { computed, inject, type Ref } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    value: string\n    class?: string\n  }>(),\n  {}\n)\n\nconst tabs = inject<{ active: Ref<string>; setActive: (v: string) => void }>('tabs')\n\nconst isActive = computed(() => tabs?.active.value === props.value)\n\nconst classes = computed(() =>\n  [\n    'mt-3 ring-offset-[var(--color-bg)]',\n    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div\n    v-if=\"isActive\"\n    role=\"tabpanel\"\n    :class=\"classes\"\n  >\n    <slot />\n  </div>\n</template>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "navigation",
+    "core",
+    "free"
+  ]
+}

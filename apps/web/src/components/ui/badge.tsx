@@ -19,13 +19,13 @@ const badgeVariants = tv({
         "bg-transparent text-[var(--color-text-2)] border-[var(--color-border)]",
       ],
       success: [
-        "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+        "bg-[var(--color-success-dim)] text-[var(--color-success-text)] border-[var(--color-success-border)]",
       ],
       destructive: [
-        "bg-red-500/10 text-red-400 border-red-500/30",
+        "bg-[var(--color-error-dim)] text-[var(--color-error-text)] border-[var(--color-error-border)]",
       ],
       warning: [
-        "bg-amber-500/10 text-amber-400 border-amber-500/30",
+        "bg-[var(--color-warning-dim)] text-[var(--color-warning-text)] border-[var(--color-warning-border)]",
       ],
     },
   },

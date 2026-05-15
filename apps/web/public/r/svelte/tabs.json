@@ -1,0 +1,41 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Context-based tab panels with keyboard navigation.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/tabs.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n  import { setContext } from \"svelte\"\n\n  interface Props {\n    defaultValue?: string\n    value?: string\n    onchange?: (value: string) => void\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let {\n    defaultValue = \"\",\n    value = $bindable(),\n    onchange,\n    class: className,\n    children,\n    ...rest\n  }: Props = $props()\n\n  let activeTab = $state(value ?? defaultValue)\n\n  $effect(() => {\n    if (value !== undefined) {\n      activeTab = value\n    }\n  })\n\n  setContext(\"tabs\", {\n    get active() {\n      return activeTab\n    },\n    set active(v: string) {\n      activeTab = v\n      value = v\n      onchange?.(v)\n    },\n  })\n</script>\n\n<div class=\"w-full {className ?? ''}\" {...rest}>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/tabs-list.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<div\n  role=\"tablist\"\n  class=\"inline-flex h-9 items-center justify-center rounded-lg bg-[var(--color-surface-2)] p-1 text-[var(--color-text-3)] {className ?? ''}\"\n  {...rest}\n>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/tabs-trigger.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n  import { getContext } from \"svelte\"\n\n  interface TabsContext {\n    active: string\n  }\n\n  interface Props {\n    value: string\n    disabled?: boolean\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { value, disabled = false, class: className, children, ...rest }: Props = $props()\n\n  const ctx = getContext<TabsContext>(\"tabs\")\n\n  const isActive = $derived(ctx.active === value)\n\n  function activate() {\n    if (!disabled) {\n      ctx.active = value\n    }\n  }\n\n  function handleKeydown(event: KeyboardEvent) {\n    if (event.key === \"Enter\" || event.key === \" \") {\n      event.preventDefault()\n      activate()\n    }\n  }\n</script>\n\n<button\n  type=\"button\"\n  role=\"tab\"\n  aria-selected={isActive}\n  aria-controls=\"tabpanel-{value}\"\n  id=\"tabtrigger-{value}\"\n  {disabled}\n  onclick={activate}\n  onkeydown={handleKeydown}\n  class=\"inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-[var(--color-bg)] transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer {isActive\n    ? 'bg-[var(--color-surface-3)] text-[var(--color-text-1)] shadow-sm'\n    : 'text-[var(--color-text-3)] hover:text-[var(--color-text-2)] hover:bg-[var(--color-surface-3)]/50'} {className ?? ''}\"\n  {...rest}\n>\n  {@render children?.()}\n</button>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/tabs-content.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n  import { getContext } from \"svelte\"\n\n  interface TabsContext {\n    active: string\n  }\n\n  interface Props {\n    value: string\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { value, class: className, children, ...rest }: Props = $props()\n\n  const ctx = getContext<TabsContext>(\"tabs\")\n\n  const isActive = $derived(ctx.active === value)\n</script>\n\n<div\n  role=\"tabpanel\"\n  id=\"tabpanel-{value}\"\n  aria-labelledby=\"tabtrigger-{value}\"\n  tabindex=\"0\"\n  hidden={!isActive}\n  class=\"mt-2 ring-offset-[var(--color-bg)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 {className ?? ''}\"\n  {...rest}\n>\n  {#if isActive}\n    {@render children?.()}\n  {/if}\n</div>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "navigation",
+    "core",
+    "free"
+  ]
+}

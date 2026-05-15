@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "confetti-button",
+  "type": "registry:ui",
+  "title": "Confetti Button",
+  "description": "Button that fires a canvas confetti burst on click. Wraps the core Button component.",
+  "author": "ParticleUI",
+  "categories": [
+    "buttons",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "components/ui/confetti-button.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\n\ninterface Particle {\n  x: number; y: number; vx: number; vy: number\n  color: string; size: number; life: number; rotation: number; rotationSpeed: number\n}\n\nconst COLORS = [\n  \"oklch(97% 0.005 80)\", \"oklch(86% 0 0)\", \"oklch(76% 0 0)\",\n  \"oklch(62% 0 0)\", \"oklch(50% 0 0)\", \"oklch(96% 0.01 80)\",\n]\n\nfunction ConfettiButton({ onClick, children, ...props }: ButtonProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null)\n  const btnRef = React.useRef<HTMLButtonElement>(null)\n  const particles = React.useRef<Particle[]>([])\n  const raf = React.useRef<number>(0)\n\n  const shoot = React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {\n    onClick?.(e)\n    const btn = btnRef.current\n    const canvas = canvasRef.current\n    if (!btn || !canvas) return\n\n    const rect = btn.getBoundingClientRect()\n    canvas.style.left = `${rect.left + rect.width / 2 - 150}px`\n    canvas.style.top = `${rect.top + rect.height / 2 - 150}px`\n    canvas.width = 300\n    canvas.height = 300\n\n    particles.current = Array.from({ length: 60 }, () => {\n      const angle = Math.random() * Math.PI * 2\n      const speed = 3 + Math.random() * 6\n      return {\n        x: 150, y: 150,\n        vx: Math.cos(angle) * speed,\n        vy: Math.sin(angle) * speed - 4,\n        color: COLORS[Math.floor(Math.random() * COLORS.length)],\n        size: 4 + Math.random() * 6,\n        life: 1,\n        rotation: Math.random() * 360,\n        rotationSpeed: (Math.random() - 0.5) * 12,\n      }\n    })\n\n    const ctx = canvas.getContext(\"2d\")!\n    cancelAnimationFrame(raf.current)\n\n    const draw = () => {\n      ctx.clearRect(0, 0, 300, 300)\n      particles.current = particles.current.filter((p) => p.life > 0)\n      for (const p of particles.current) {\n        ctx.save()\n        ctx.globalAlpha = p.life\n        ctx.fillStyle = p.color\n        ctx.translate(p.x, p.y)\n        ctx.rotate((p.rotation * Math.PI) / 180)\n        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6)\n        ctx.restore()\n        p.x += p.vx\n        p.y += p.vy\n        p.vy += 0.25\n        p.vx *= 0.98\n        p.life -= 0.016\n        p.rotation += p.rotationSpeed\n      }\n      if (particles.current.length > 0) raf.current = requestAnimationFrame(draw)\n      else ctx.clearRect(0, 0, 300, 300)\n    }\n    raf.current = requestAnimationFrame(draw)\n  }, [onClick])\n\n  return (\n    <>\n      <canvas\n        ref={canvasRef}\n        style={{\n          position: \"fixed\",\n          width: 300,\n          height: 300,\n          pointerEvents: \"none\",\n          zIndex: 9999,\n        }}\n      />\n      <Button ref={btnRef} onClick={shoot} {...props}>\n        {children}\n      </Button>\n    </>\n  )\n}\n\nexport { ConfettiButton }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

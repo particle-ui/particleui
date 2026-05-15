@@ -1,0 +1,31 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "feature-alternating",
+  "type": "registry:block",
+  "title": "Feature — Alternating",
+  "description": "Three alternating feature rows with code previews. Left-right layout flips on odd rows.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "badge",
+    "glow-card",
+    "gradient-text",
+    "beam"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/feature-alternating.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { GlowCard } from \"@/components/ui/glow-card\"\nimport { GradientText } from \"@/components/ui/gradient-text\"\nimport { Beam } from \"@/components/ui/beam\"\n\ninterface AlternatingFeature {\n  badge: string\n  title: string\n  titleGradient?: string\n  description: string\n  visual?: React.ReactNode\n}\n\ninterface FeatureAlternatingProps {\n  heading?: string\n  description?: string\n  features?: AlternatingFeature[]\n}\n\nconst CodeBlock = ({ children }: { children: string }) => (\n  <GlowCard className=\"overflow-hidden\">\n    <div className=\"p-3 border-b border-[var(--color-border)] flex items-center gap-1.5\">\n      <span className=\"w-2.5 h-2.5 rounded-full bg-[oklch(68%_0.22_25)]\" />\n      <span className=\"w-2.5 h-2.5 rounded-full bg-[oklch(78%_0.2_90)]\" />\n      <span className=\"w-2.5 h-2.5 rounded-full bg-[oklch(72%_0.2_140)]\" />\n    </div>\n    <pre className=\"p-4 text-xs font-mono text-[var(--color-text-2)] leading-relaxed overflow-auto\"><code>{children}</code></pre>\n    <div className=\"px-4 pb-3\"><Beam colorFrom=\"var(--color-accent)\" duration={4} /></div>\n  </GlowCard>\n)\n\nconst defaultFeatures: AlternatingFeature[] = [\n  {\n    badge: \"Installation\",\n    title: \"One command.\",\n    titleGradient: \"Zero friction.\",\n    description: \"Use the shadcn CLI to install any component directly into your project. You get the source — no black box, no version churn.\",\n    visual: (\n      <CodeBlock>{`# Add a single component\nnpx shadcn@latest add https://particleui.dev/r/button\n\n# Or browse and add interactively\nnpx shadcn@latest add`}</CodeBlock>\n    ),\n  },\n  {\n    badge: \"Customization\",\n    title: \"Tokens, not magic.\",\n    titleGradient: \"You control everything.\",\n    description: \"ParticleUI runs on 4 OKLCH CSS variables. Change the accent color in globals.css and every component updates. No Tailwind config surgery.\",\n    visual: (\n      <CodeBlock>{`:root {\n  --color-accent: oklch(78% 0.17 200);   /* electric cyan  */\n  --color-bg: oklch(5% 0.004 265);       /* near-black     */\n  --color-surface-1: oklch(8% 0.004 265); /* card bg        */\n  --color-text-1: oklch(97% 0 0);        /* headings       */\n}`}</CodeBlock>\n    ),\n  },\n  {\n    badge: \"Animation\",\n    title: \"Particle layer.\",\n    titleGradient: \"Wow-factor included.\",\n    description: \"12 animated components that work as drop-in replacements for their core counterparts. Swap Button for ConfettiButton. Input for GlowInput. No refactoring.\",\n    visual: (\n      <CodeBlock>{`// Before\nimport { Button } from \"@/components/ui/button\"\n<Button>Submit</Button>\n\n// After — zero prop changes\nimport { ConfettiButton } from \"@/components/ui/confetti-button\"\n<ConfettiButton>Submit</ConfettiButton>`}</CodeBlock>\n    ),\n  },\n]\n\nfunction FeatureAlternating({\n  heading = \"How it works\",\n  description = \"Fast to install. Easy to customize. Impossible to regret.\",\n  features = defaultFeatures,\n}: FeatureAlternatingProps) {\n  return (\n    <section className=\"flex flex-col items-center gap-16 px-4 py-24 max-w-5xl mx-auto\">\n      <div className=\"flex flex-col items-center gap-4 text-center\">\n        <h2 className=\"text-3xl font-bold tracking-tight sm:text-4xl\">{heading}</h2>\n        <p className=\"text-[var(--color-text-2)] max-w-md\">{description}</p>\n      </div>\n\n      <div className=\"flex flex-col gap-20 w-full\">\n        {features.map((f, i) => (\n          <div\n            key={i}\n            className={[\n              \"grid grid-cols-1 lg:grid-cols-2 gap-10 items-center\",\n              i % 2 === 1 ? \"lg:[&>*:first-child]:order-2\" : \"\",\n            ]\n              .filter(Boolean)\n              .join(\" \")}\n          >\n            <div className=\"flex flex-col gap-4\">\n              <Badge variant=\"outline\" className=\"w-fit border-[var(--color-accent-border)] text-[var(--color-accent-text)]\">\n                {f.badge}\n              </Badge>\n              <h3 className=\"text-2xl font-bold tracking-tight\">\n                {f.title}{\" \"}\n                {f.titleGradient && (\n                  <GradientText variant=\"electric\">{f.titleGradient}</GradientText>\n                )}\n              </h3>\n              <p className=\"text-[var(--color-text-2)] leading-relaxed\">{f.description}</p>\n            </div>\n            <div>{f.visual}</div>\n          </div>\n        ))}\n      </div>\n    </section>\n  )\n}\n\nexport { FeatureAlternating }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

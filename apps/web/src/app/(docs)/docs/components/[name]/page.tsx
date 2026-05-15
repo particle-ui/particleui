@@ -4,7 +4,12 @@ import { notFound } from "next/navigation"
 import Link from "next/link"
 import { Sparkle } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
+import { codeToHtml } from "shiki"
 import { ComponentTabs } from "../../../_components/component-tabs"
+import { PropsTable, parseProps } from "../../../_components/props-table"
+import { CodeBlock } from "@/components/code-block"
+import { PrevNext } from "@/components/docs/prev-next"
+import { FrameworkInstall } from "../../../_components/framework-install"
 import {
   GlowButtonPreview,
   ElectricBadgePreview,
@@ -56,6 +61,36 @@ import {
   CalendarPreview,
   DatePickerPreview,
   ComboboxPreview,
+  TiltCardPreview,
+  TypewriterPreview,
+  CounterPreview,
+  GradientTextPreview,
+  MeteorsPreview,
+  ConfettiButtonPreview,
+  ShimmerButtonPreview,
+  GlowCardPreview,
+  FloatingDockPreview,
+  MarqueePreview,
+  BeamPreview,
+  GlowInputPreview,
+  HeroCenteredPreview,
+  HeroSplitPreview,
+  PricingSectionPreview,
+  FeatureGridPreview,
+  FeatureAlternatingPreview,
+  CtaSectionPreview,
+  FooterPreview,
+  AuthSignInPreview,
+  AuthSignUpPreview,
+  DashboardAnalyticsPreview,
+  SettingsPagePreview,
+  AIChatPreview,
+  TestimonialsSectionPreview,
+  StatsSectionPreview,
+  FaqSectionPreview,
+  LogoCloudPreview,
+  HowItWorksPreview,
+  NewsletterSectionPreview,
 } from "../../../_components/previews"
 
 interface RegistryItem {
@@ -124,6 +159,38 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "calendar": <CalendarPreview />,
   "date-picker": <DatePickerPreview />,
   "combobox": <ComboboxPreview />,
+  // Phase 4: Particle layer
+  "tilt-card": <TiltCardPreview />,
+  "typewriter": <TypewriterPreview />,
+  "counter": <CounterPreview />,
+  "gradient-text": <GradientTextPreview />,
+  "meteors": <MeteorsPreview />,
+  "confetti-button": <ConfettiButtonPreview />,
+  "shimmer-button": <ShimmerButtonPreview />,
+  "glow-card": <GlowCardPreview />,
+  "floating-dock": <FloatingDockPreview />,
+  "marquee": <MarqueePreview />,
+  "beam": <BeamPreview />,
+  "glow-input": <GlowInputPreview />,
+  // Phase 5: Blocks
+  "hero-centered": <HeroCenteredPreview />,
+  "hero-split": <HeroSplitPreview />,
+  "pricing": <PricingSectionPreview />,
+  "feature-grid": <FeatureGridPreview />,
+  "feature-alternating": <FeatureAlternatingPreview />,
+  "cta-section": <CtaSectionPreview />,
+  "footer": <FooterPreview />,
+  "auth-sign-in": <AuthSignInPreview />,
+  "auth-sign-up": <AuthSignUpPreview />,
+  "dashboard-analytics": <DashboardAnalyticsPreview />,
+  "settings-page": <SettingsPagePreview />,
+  "ai-chat": <AIChatPreview />,
+  "testimonials": <TestimonialsSectionPreview />,
+  "stats": <StatsSectionPreview />,
+  "faq": <FaqSectionPreview />,
+  "logo-cloud": <LogoCloudPreview />,
+  "how-it-works": <HowItWorksPreview />,
+  "newsletter": <NewsletterSectionPreview />,
 }
 
 async function getItem(name: string): Promise<RegistryItem | null> {
@@ -137,8 +204,9 @@ async function getItem(name: string): Promise<RegistryItem | null> {
 
 export async function generateStaticParams() {
   const p = path.join(process.cwd(), "public/r/react/index.json")
-  const index = JSON.parse(await fs.readFile(p, "utf-8"))
-  return index.map((i: { name: string }) => ({ name: i.name }))
+  const data = JSON.parse(await fs.readFile(p, "utf-8"))
+  const items: { name: string; tier?: string }[] = Array.isArray(data) ? data : (data.items ?? [])
+  return items.filter((i) => i.tier !== "themes").map((i) => ({ name: i.name }))
 }
 
 export async function generateMetadata({
@@ -165,28 +233,36 @@ export default async function ComponentDocPage({
   const mainFile = item.files.find((f) => f.type !== "registry:file")
   const preview = PREVIEWS[name]
   const installCmd = `npx shadcn add @particleui/${item.name}`
+  const propDefs = mainFile?.content ? parseProps(mainFile.content) : []
+
+  const usageCode = generateUsage(item)
+  const highlightedUsage = usageCode
+    ? await codeToHtml(usageCode.trim(), { lang: "tsx", theme: "github-dark-dimmed" })
+    : undefined
+
+  const aiPrompt = generateAiPrompt(item, usageCode)
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Breadcrumb */}
-      <nav className="mb-6 flex items-center gap-2 text-xs text-text-4">
+      <nav className="mb-8 flex items-center gap-1.5 text-[11px] text-text-3">
         <Link href="/docs" className="hover:text-text-2 transition-colors">Docs</Link>
-        <span>/</span>
+        <span className="opacity-40">/</span>
         <Link href="/docs" className="hover:text-text-2 transition-colors">Components</Link>
-        <span>/</span>
+        <span className="opacity-40">/</span>
         <span className="text-text-3">{item.title}</span>
       </nav>
 
       {/* Title */}
-      <div className="mb-2 flex items-center gap-3">
-        <h1 className="text-3xl font-bold tracking-[-0.03em] text-text-1">{item.title}</h1>
+      <div className="mb-3 flex items-center gap-3">
+        <h1 className="text-[2rem] font-bold tracking-[-0.04em] leading-[1.15] text-text-1">{item.title}</h1>
         {isPro && (
           <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-accent">
             <Sparkle size={8} weight="fill" />Pro
           </span>
         )}
       </div>
-      <p className="mb-8 text-text-3 leading-relaxed">{item.description}</p>
+      <p className="mb-8 text-text-2 text-[0.9375rem] leading-[1.75]">{item.description}</p>
 
       {/* Pro notice */}
       {isPro && (
@@ -206,57 +282,63 @@ export default async function ComponentDocPage({
         <div className="mb-10">
           <ComponentTabs
             preview={preview ?? (
-              <p className="text-xs text-text-4">No preview available</p>
+              <p className="text-xs text-text-3">No preview available</p>
             )}
-            code={mainFile.content}
+            code={usageCode}
+            highlightedCode={highlightedUsage}
+            aiPrompt={aiPrompt}
+            componentName={name}
           />
         </div>
       )}
 
       {/* Installation */}
       <section className="mb-10">
-        <h2 className="mb-5 text-lg font-semibold tracking-tight text-text-1">Installation</h2>
+        <h2 id="installation" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Installation</h2>
 
-        {isPro && (
-          <Step n={1} title="Set up your token">
-            <p className="text-sm text-text-3 mb-3">
-              Add your ParticleUI token to <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">.env</code>:
-            </p>
-            <CodeBlock code={`PARTICLEUI_TOKEN=your-token-here`} />
+        {isPro ? (
+          <>
+            <Step n={1} title="Add your token to .env">
+              <p className="text-sm text-text-3 mb-3">
+                Get a token from{" "}
+                <Link href="/dashboard/tokens" className="text-accent hover:underline">your dashboard</Link>, then add it to{" "}
+                <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">.env</code>:
+              </p>
+              <CodeBlock code={`PARTICLEUI_TOKEN=your-token-here`} />
+            </Step>
+            <Step n={2} title="Add the registry to components.json">
+              <p className="text-sm text-text-3 mb-3">
+                Wire up the authenticated registry so the CLI can resolve Pro components:
+              </p>
+              <CodeBlock
+                code={`"registries": {\n  "@particleui": {\n    "url": "https://particleui.dev/r/react/{name}.json",\n    "headers": { "Authorization": "Bearer \${PARTICLEUI_TOKEN}" }\n  }\n}`}
+              />
+            </Step>
+            <Step n={3} title="Run the CLI">
+              <CodeBlock code={installCmd} />
+            </Step>
+          </>
+        ) : (
+          <Step n={1} title="Run the CLI">
+            <FrameworkInstall name={item.name} isPro={isPro} />
           </Step>
         )}
-
-        <Step n={isPro ? 2 : 1} title="Add the registry">
-          <p className="text-sm text-text-3 mb-3">
-            Add <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">@particleui</code> to{" "}
-            <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">components.json</code>:
-          </p>
-          <CodeBlock
-            code={`"registries": {
-  "@particleui": {
-    "url": "https://particleui.dev/r/react/{name}.json",
-    "headers": { "Authorization": "Bearer \${PARTICLEUI_TOKEN}" }
-  }
-}`}
-          />
-        </Step>
-
-        <Step n={isPro ? 3 : 2} title="Run the CLI">
-          <CodeBlock code={installCmd} />
-        </Step>
       </section>
 
       {/* Usage */}
       {mainFile?.content && (
         <section className="mb-10">
-          <h2 className="mb-5 text-lg font-semibold tracking-tight text-text-1">Usage</h2>
+          <h2 id="usage" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Usage</h2>
           <CodeBlock code={generateUsage(item)} />
         </section>
       )}
 
+      {/* Props table */}
+      <PropsTable props={propDefs} />
+
       {/* Details */}
       <section className="mb-10">
-        <h2 className="mb-5 text-lg font-semibold tracking-tight text-text-1">Details</h2>
+        <h2 id="details" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Details</h2>
         <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
           {[
             ["Source file", mainFile?.path ?? "—"],
@@ -267,12 +349,14 @@ export default async function ComponentDocPage({
             ["Claude skill", item.files.some((f) => f.type === "registry:file") ? "Bundled — installs to ~/.claude/skills/" : "—"],
           ].map(([label, value]) => (
             <div key={label as string} className="flex items-center gap-4 bg-surface-1 px-4 py-3">
-              <span className="w-36 shrink-0 text-xs text-text-4">{label}</span>
+              <span className="w-36 shrink-0 text-xs text-text-3">{label}</span>
               <span className="font-mono text-xs text-text-3">{value}</span>
             </div>
           ))}
         </div>
       </section>
+
+      <PrevNext />
     </div>
   )
 }
@@ -280,28 +364,661 @@ export default async function ComponentDocPage({
 function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
     <div className="mb-6 flex gap-4">
-      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-bold text-text-4">
+      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[11px] font-bold text-text-3">
         {n}
       </div>
       <div className="flex-1">
-        <h3 className="text-sm font-semibold mb-3 text-text-1">{title}</h3>
+        <h3 className="text-[0.9375rem] font-semibold tracking-[-0.01em] mb-3 text-text-1">{title}</h3>
         {children}
       </div>
     </div>
   )
 }
 
-function CodeBlock({ code }: { code: string }) {
+
+const USAGE_EXAMPLES: Record<string, string> = {
+  // Core primitives
+  button: `import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return <Button>Click me</Button>
+}`,
+  badge: `import { Badge } from "@/components/ui/badge"
+
+export default function Example() {
+  return <Badge>New</Badge>
+}`,
+  input: `import { Input } from "@/components/ui/input"
+
+export default function Example() {
+  return <Input placeholder="Email" />
+}`,
+  label: `import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+
+export default function Example() {
   return (
-    <div className="rounded-xl border border-border bg-surface-1 overflow-hidden mb-4">
-      <pre className="overflow-x-auto p-4 text-xs leading-6 text-accent-text">
-        <code>{code}</code>
-      </pre>
+    <div className="grid gap-1.5">
+      <Label htmlFor="email">Email</Label>
+      <Input id="email" placeholder="you@example.com" />
     </div>
   )
+}`,
+  textarea: `import { Textarea } from "@/components/ui/textarea"
+
+export default function Example() {
+  return <Textarea placeholder="Write something..." />
+}`,
+  card: `import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+
+export default function Example() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Title</CardTitle>
+      </CardHeader>
+      <CardContent>Content goes here.</CardContent>
+    </Card>
+  )
+}`,
+  avatar: `import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+
+export default function Example() {
+  return (
+    <Avatar>
+      <AvatarImage src="https://github.com/shadcn.png" />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  )
+}`,
+  separator: `import { Separator } from "@/components/ui/separator"
+
+export default function Example() {
+  return (
+    <div>
+      <p>Above</p>
+      <Separator className="my-4" />
+      <p>Below</p>
+    </div>
+  )
+}`,
+  skeleton: `import { Skeleton } from "@/components/ui/skeleton"
+
+export default function Example() {
+  return (
+    <div className="flex items-center gap-4">
+      <Skeleton className="h-12 w-12 rounded-full" />
+      <div className="space-y-2">
+        <Skeleton className="h-4 w-[200px]" />
+        <Skeleton className="h-4 w-[160px]" />
+      </div>
+    </div>
+  )
+}`,
+  tooltip: `import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="outline">Hover me</Button>
+        </TooltipTrigger>
+        <TooltipContent>This is a tooltip</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  )
+}`,
+  switch: `import { Switch } from "@/components/ui/switch"
+import { Label } from "@/components/ui/label"
+
+export default function Example() {
+  return (
+    <div className="flex items-center gap-2">
+      <Switch id="airplane" />
+      <Label htmlFor="airplane">Airplane mode</Label>
+    </div>
+  )
+}`,
+  checkbox: `import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
+
+export default function Example() {
+  return (
+    <div className="flex items-center gap-2">
+      <Checkbox id="terms" />
+      <Label htmlFor="terms">Accept terms</Label>
+    </div>
+  )
+}`,
+  select: `import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+
+export default function Example() {
+  return (
+    <Select>
+      <SelectTrigger className="w-48">
+        <SelectValue placeholder="Pick one" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="react">React</SelectItem>
+        <SelectItem value="vue">Vue</SelectItem>
+        <SelectItem value="svelte">Svelte</SelectItem>
+      </SelectContent>
+    </Select>
+  )
+}`,
+  "radio-group": `import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
+
+export default function Example() {
+  return (
+    <RadioGroup defaultValue="react">
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="react" id="react" />
+        <Label htmlFor="react">React</Label>
+      </div>
+      <div className="flex items-center gap-2">
+        <RadioGroupItem value="vue" id="vue" />
+        <Label htmlFor="vue">Vue</Label>
+      </div>
+    </RadioGroup>
+  )
+}`,
+  tabs: `import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+
+export default function Example() {
+  return (
+    <Tabs defaultValue="account">
+      <TabsList>
+        <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsTrigger value="password">Password</TabsTrigger>
+      </TabsList>
+      <TabsContent value="account">Account settings.</TabsContent>
+      <TabsContent value="password">Change password here.</TabsContent>
+    </Tabs>
+  )
+}`,
+  accordion: `import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+
+export default function Example() {
+  return (
+    <Accordion type="single" collapsible>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Is it accessible?</AccordionTrigger>
+        <AccordionContent>Yes. It follows WAI-ARIA guidelines.</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}`,
+  alert: `import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+
+export default function Example() {
+  return (
+    <Alert>
+      <AlertTitle>Heads up!</AlertTitle>
+      <AlertDescription>You can add components from the CLI.</AlertDescription>
+    </Alert>
+  )
+}`,
+  dialog: `import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button>Open dialog</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you sure?</DialogTitle>
+          <DialogDescription>This action cannot be undone.</DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+}`,
+  "alert-dialog": `import {
+  AlertDialog, AlertDialogTrigger, AlertDialogContent,
+  AlertDialogHeader, AlertDialogTitle, AlertDialogDescription,
+  AlertDialogFooter, AlertDialogCancel, AlertDialogAction,
+} from "@/components/ui/alert-dialog"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive">Delete</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction>Continue</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}`,
+  sheet: `import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button>Open sheet</Button>
+      </SheetTrigger>
+      <SheetContent>
+        <SheetHeader>
+          <SheetTitle>Edit profile</SheetTitle>
+        </SheetHeader>
+      </SheetContent>
+    </Sheet>
+  )
+}`,
+  popover: `import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </PopoverTrigger>
+      <PopoverContent>Place content here.</PopoverContent>
+    </Popover>
+  )
+}`,
+  "dropdown-menu": `import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
+
+export default function Example() {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">Open</Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>Settings</DropdownMenuItem>
+        <DropdownMenuItem>Log out</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}`,
+  sonner: `import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+
+export default function Example() {
+  return (
+    <Button onClick={() => toast("Event created!")}>Show toast</Button>
+  )
+}`,
+  slider: `import { Slider } from "@/components/ui/slider"
+
+export default function Example() {
+  return <Slider defaultValue={[50]} max={100} step={1} className="w-64" />
+}`,
+  progress: `import { Progress } from "@/components/ui/progress"
+
+export default function Example() {
+  return <Progress value={60} className="w-64" />
+}`,
+  breadcrumb: `import {
+  Breadcrumb, BreadcrumbList, BreadcrumbItem,
+  BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage,
+} from "@/components/ui/breadcrumb"
+
+export default function Example() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem><BreadcrumbLink href="/">Home</BreadcrumbLink></BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem><BreadcrumbLink href="/docs">Docs</BreadcrumbLink></BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem><BreadcrumbPage>Components</BreadcrumbPage></BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  )
+}`,
+  "scroll-area": `import { ScrollArea } from "@/components/ui/scroll-area"
+
+export default function Example() {
+  return (
+    <ScrollArea className="h-48 w-64 rounded-md border p-4">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <p key={i} className="text-sm">Item {i + 1}</p>
+      ))}
+    </ScrollArea>
+  )
+}`,
+  "hover-card": `import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+
+export default function Example() {
+  return (
+    <HoverCard>
+      <HoverCardTrigger className="underline cursor-pointer">@particleui</HoverCardTrigger>
+      <HoverCardContent>
+        <p className="text-sm">The component library for ambitious UIs.</p>
+      </HoverCardContent>
+    </HoverCard>
+  )
+}`,
+  "context-menu": `import {
+  ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem,
+} from "@/components/ui/context-menu"
+
+export default function Example() {
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger className="border rounded p-8 text-sm">Right-click here</ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem>Edit</ContextMenuItem>
+        <ContextMenuItem>Delete</ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  )
+}`,
+  resizable: `import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable"
+
+export default function Example() {
+  return (
+    <ResizablePanelGroup direction="horizontal" className="h-48 rounded-lg border">
+      <ResizablePanel defaultSize={50}>
+        <div className="flex h-full items-center justify-center p-6">One</div>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel defaultSize={50}>
+        <div className="flex h-full items-center justify-center p-6">Two</div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  )
+}`,
+  calendar: `import { Calendar } from "@/components/ui/calendar"
+import { useState } from "react"
+
+export default function Example() {
+  const [date, setDate] = useState<Date | undefined>(new Date())
+  return <Calendar mode="single" selected={date} onSelect={setDate} />
+}`,
+  "date-picker": `import { DatePicker } from "@/components/ui/date-picker"
+
+export default function Example() {
+  return <DatePicker />
+}`,
+  combobox: `import { Combobox } from "@/components/ui/combobox"
+
+export default function Example() {
+  return <Combobox />
+}`,
+  command: `import {
+  Command, CommandInput, CommandList, CommandEmpty,
+  CommandGroup, CommandItem,
+} from "@/components/ui/command"
+
+export default function Example() {
+  return (
+    <Command className="rounded-lg border shadow-md w-64">
+      <CommandInput placeholder="Type a command..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Suggestions">
+          <CommandItem>Calendar</CommandItem>
+          <CommandItem>Search</CommandItem>
+          <CommandItem>Settings</CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  )
+}`,
+  table: `import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
+
+export default function Example() {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Alice</TableCell>
+          <TableCell>Active</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  )
+}`,
+  pagination: `import {
+  Pagination, PaginationContent, PaginationItem,
+  PaginationPrevious, PaginationLink, PaginationNext,
+} from "@/components/ui/pagination"
+
+export default function Example() {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+        <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
+        <PaginationItem><PaginationLink href="#" isActive>2</PaginationLink></PaginationItem>
+        <PaginationItem><PaginationNext href="#" /></PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  )
+}`,
+  // Particle effects
+  marquee: `import { Marquee } from "@/components/ui/marquee"
+
+export default function Example() {
+  return (
+    <Marquee speed={30} pauseOnHover gap={24}>
+      {["React", "TypeScript", "Tailwind", "OKLCH", "ParticleUI"].map((tag) => (
+        <span key={tag} className="rounded-full border border-border bg-surface-1 px-4 py-1.5 text-sm text-text-2">
+          {tag}
+        </span>
+      ))}
+    </Marquee>
+  )
+}`,
+  "glow-button": `import { GlowButton } from "@/components/ui/glow-button"
+
+export default function Example() {
+  return <GlowButton>Get started</GlowButton>
+}`,
+  "shimmer-button": `import { ShimmerButton } from "@/components/ui/shimmer-button"
+
+export default function Example() {
+  return <ShimmerButton>Deploy now</ShimmerButton>
+}`,
+  "glow-card": `import { GlowCard } from "@/components/ui/glow-card"
+
+export default function Example() {
+  return (
+    <GlowCard className="p-6">
+      <h3 className="font-semibold">Card title</h3>
+      <p className="text-sm text-text-3 mt-1">Move your cursor over the card.</p>
+    </GlowCard>
+  )
+}`,
+  "glow-input": `import { GlowInput } from "@/components/ui/glow-input"
+
+export default function Example() {
+  return <GlowInput placeholder="Focus to glow..." />
+}`,
+  "tilt-card": `import { TiltCard } from "@/components/ui/tilt-card"
+
+export default function Example() {
+  return (
+    <TiltCard className="w-64 rounded-xl border border-border bg-surface-1 p-6">
+      <h3 className="font-semibold">Hover me</h3>
+      <p className="text-sm text-text-3 mt-1">Tilt effect on mouse move.</p>
+    </TiltCard>
+  )
+}`,
+  typewriter: `import { Typewriter } from "@/components/ui/typewriter"
+
+export default function Example() {
+  return (
+    <Typewriter
+      phrases={["Build faster.", "Ship beautiful UIs.", "Powered by ParticleUI."]}
+      className="text-2xl font-bold"
+    />
+  )
+}`,
+  counter: `import { Counter } from "@/components/ui/counter"
+
+export default function Example() {
+  return <Counter from={0} to={1000} duration={2} suffix="+" />
+}`,
+  "gradient-text": `import { GradientText } from "@/components/ui/gradient-text"
+
+export default function Example() {
+  return (
+    <GradientText className="text-4xl font-bold">
+      Beautiful gradients
+    </GradientText>
+  )
+}`,
+  meteors: `import { Meteors } from "@/components/ui/meteors"
+
+export default function Example() {
+  return (
+    <div className="relative h-48 overflow-hidden rounded-xl border border-border">
+      <Meteors number={20} />
+    </div>
+  )
+}`,
+  "confetti-button": `import { ConfettiButton } from "@/components/ui/confetti-button"
+
+export default function Example() {
+  return <ConfettiButton>Celebrate!</ConfettiButton>
+}`,
+  "floating-dock": `import { FloatingDock } from "@/components/ui/floating-dock"
+import { House, BookOpen, CreditCard } from "@phosphor-icons/react"
+
+export default function Example() {
+  const items = [
+    { title: "Home", icon: <House size={18} />, href: "/" },
+    { title: "Docs", icon: <BookOpen size={18} />, href: "/docs" },
+    { title: "Pricing", icon: <CreditCard size={18} />, href: "/pricing" },
+  ]
+  return <FloatingDock items={items} />
+}`,
+  beam: `import { Beam } from "@/components/ui/beam"
+
+export default function Example() {
+  return (
+    <div className="relative h-32 overflow-hidden rounded-xl border border-border">
+      <Beam />
+    </div>
+  )
+}`,
+  // Blocks
+  testimonials: `import { TestimonialsSection } from "@/components/blocks/testimonials"
+
+export default function Page() {
+  return <TestimonialsSection />
+}`,
+  stats: `import { StatsSection } from "@/components/blocks/stats"
+
+export default function Page() {
+  return <StatsSection />
+}`,
+  faq: `import { FaqSection } from "@/components/blocks/faq"
+
+export default function Page() {
+  return <FaqSection />
+}`,
+  "logo-cloud": `import { LogoCloud } from "@/components/blocks/logo-cloud"
+
+export default function Page() {
+  return <LogoCloud />
+}`,
+  "how-it-works": `import { HowItWorks } from "@/components/blocks/how-it-works"
+
+export default function Page() {
+  return <HowItWorks />
+}`,
+  newsletter: `import { NewsletterSection } from "@/components/blocks/newsletter"
+
+export default function Page() {
+  return <NewsletterSection />
+}`,
+  "hero-centered": `import { HeroCentered } from "@/components/blocks/hero-centered"
+
+export default function Page() {
+  return <HeroCentered />
+}`,
+  "hero-split": `import { HeroSplit } from "@/components/blocks/hero-split"
+
+export default function Page() {
+  return <HeroSplit />
+}`,
+  pricing: `import { PricingSection } from "@/components/blocks/pricing"
+
+export default function Page() {
+  return <PricingSection />
+}`,
+  "feature-grid": `import { FeatureGrid } from "@/components/blocks/feature-grid"
+
+export default function Page() {
+  return <FeatureGrid />
+}`,
+  "feature-alternating": `import { FeatureAlternating } from "@/components/blocks/feature-alternating"
+
+export default function Page() {
+  return <FeatureAlternating />
+}`,
+  "cta-section": `import { CtaSection } from "@/components/blocks/cta-section"
+
+export default function Page() {
+  return <CtaSection />
+}`,
+  footer: `import { Footer } from "@/components/blocks/footer"
+
+export default function Page() {
+  return <Footer />
+}`,
+  "auth-sign-in": `import { AuthSignIn } from "@/components/blocks/auth-sign-in"
+
+export default function Page() {
+  return <AuthSignIn />
+}`,
+  "auth-sign-up": `import { AuthSignUp } from "@/components/blocks/auth-sign-up"
+
+export default function Page() {
+  return <AuthSignUp />
+}`,
+  "dashboard-analytics": `import { DashboardAnalytics } from "@/components/blocks/dashboard-analytics"
+
+export default function Page() {
+  return <DashboardAnalytics />
+}`,
+  "settings-page": `import { SettingsPage } from "@/components/blocks/settings-page"
+
+export default function Page() {
+  return <SettingsPage />
+}`,
+  "ai-chat": `import { AIChat } from "@/components/blocks/ai-chat"
+
+export default function Page() {
+  return <AIChat />
+}`,
 }
 
 function generateUsage(item: RegistryItem): string {
+  if (USAGE_EXAMPLES[item.name]) return USAGE_EXAMPLES[item.name]
   const mainFile = item.files.find((f) => f.type !== "registry:file")
   if (!mainFile) return ""
   const importPath = mainFile.path.replace(".tsx", "").replace("components/", "@/components/")
@@ -311,4 +1028,19 @@ function generateUsage(item: RegistryItem): string {
 export default function Example() {
   return <${componentName} />
 }`
+}
+
+function generateAiPrompt(item: RegistryItem, usageCode: string): string {
+  const deps = item.dependencies?.length ? `\nDependencies: ${item.dependencies.join(", ")}` : ""
+  return `I'm using the ${item.title} component from ParticleUI in my Next.js project.
+
+${item.description}${deps}
+
+Here's how to use it:
+
+\`\`\`tsx
+${usageCode}
+\`\`\`
+
+Help me integrate this into my project.`
 }

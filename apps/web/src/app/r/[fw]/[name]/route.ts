@@ -1,7 +1,21 @@
+export const dynamic = "force-dynamic"
+
 import { NextRequest, NextResponse } from "next/server"
 import { readRegistryItem } from "@/lib/registry/reader"
 import { validateToken } from "@/lib/auth/token"
 import { isProItem } from "@/lib/registry/catalog"
+import { db } from "@/db"
+import { componentInstalls } from "@/db/schema"
+
+function isCLIRequest(req: NextRequest) {
+  const ua = req.headers.get("user-agent") ?? ""
+  return /shadcn|node|curl|bun|deno/i.test(ua)
+}
+
+function getTierFromName(name: string): string {
+  // Infer from catalog — pro items are tracked separately
+  return "core"
+}
 
 export async function GET(
   req: NextRequest,
@@ -17,6 +31,12 @@ export async function GET(
   if (!item) {
     return NextResponse.json({ error: "Component not found" }, { status: 404 })
   }
+
+  let userId: string | undefined
+  let tokenId: string | undefined
+  const itemRecord = item as Record<string, unknown>
+  const cats = Array.isArray(itemRecord.categories) ? (itemRecord.categories as string[]) : []
+  let tier = cats.includes("pro") ? "pro" : (cats[0] ?? "core")
 
   if (isProItem(fw, name)) {
     const authHeader = req.headers.get("authorization")
@@ -38,8 +58,8 @@ export async function GET(
       )
     }
 
-    const valid = await validateToken(token)
-    if (!valid) {
+    const result = await validateToken(token)
+    if (!result.valid) {
       return NextResponse.json(
         {
           type: "https://particleui.dev/errors/forbidden",
@@ -54,6 +74,24 @@ export async function GET(
         }
       )
     }
+
+    userId = result.userId
+    tokenId = result.tokenId
+    tier = "pro"
+  }
+
+  // Fire-and-forget install tracking
+  if (userId || isCLIRequest(req)) {
+    db.insert(componentInstalls)
+      .values({
+        userId: userId ?? null,
+        tokenId: tokenId ? (tokenId as `${string}-${string}-${string}-${string}-${string}`) : null,
+        componentName: name,
+        framework: fw,
+        tier,
+      })
+      .execute()
+      .catch(() => {})
   }
 
   return NextResponse.json(item, {

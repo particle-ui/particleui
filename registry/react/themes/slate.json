@@ -1,0 +1,56 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "slate",
+  "type": "registry:theme",
+  "title": "Slate",
+  "description": "Cool blue-gray surfaces with an electric blue accent. The canonical dark-tech look.",
+  "author": "ParticleUI",
+  "categories": ["themes", "free"],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "styles/themes/slate.css",
+      "type": "registry:style",
+      "content": "/* ParticleUI Slate Theme — paste inside your globals.css */\n\n.dark {\n  --color-bg:        oklch(4%  0.006 250);\n  --color-surface-1: oklch(8%  0.005 250);\n  --color-surface-2: oklch(12% 0.005 250);\n  --color-surface-3: oklch(16% 0.004 250);\n  --color-border:    oklch(100% 0 0 / 0.07);\n  --color-border-hover: oklch(100% 0 0 / 0.14);\n\n  --color-accent:        oklch(62% 0.17 250);\n  --color-accent-dim:    oklch(62% 0.17 250 / 0.10);\n  --color-accent-border: oklch(62% 0.17 250 / 0.22);\n  --color-accent-text:   oklch(70% 0.14 250);\n  --color-accent-glow-sm: oklch(62% 0.17 250 / 0.25);\n  --color-accent-glow-lg: oklch(62% 0.17 250 / 0.40);\n\n  --color-text-1: oklch(97% 0.002 250);\n  --color-text-2: oklch(72% 0.003 250);\n  --color-text-3: oklch(50% 0.002 250);\n  --color-text-4: oklch(33% 0.001 250);\n}\n\n.light {\n  --color-bg:        oklch(99%  0.003 250);\n  --color-surface-1: oklch(96%  0.003 250);\n  --color-surface-2: oklch(93%  0.002 250);\n  --color-surface-3: oklch(90%  0.002 250);\n  --color-border:    oklch(0% 0 0 / 0.08);\n  --color-border-hover: oklch(0% 0 0 / 0.16);\n\n  --color-accent:        oklch(40% 0.17 250);\n  --color-accent-dim:    oklch(40% 0.17 250 / 0.08);\n  --color-accent-border: oklch(40% 0.17 250 / 0.18);\n  --color-accent-text:   oklch(35% 0.15 250);\n  --color-accent-glow-sm: oklch(40% 0.17 250 / 0.20);\n  --color-accent-glow-lg: oklch(40% 0.17 250 / 0.30);\n\n  --color-text-1: oklch(10%  0.004 250);\n  --color-text-2: oklch(28%  0.003 250);\n  --color-text-3: oklch(45%  0.002 250);\n  --color-text-4: oklch(62%  0.001 250);\n}"
+    }
+  ],
+  "cssVars": {
+    "dark": {
+      "--color-bg":              "oklch(4%  0.006 250)",
+      "--color-surface-1":       "oklch(8%  0.005 250)",
+      "--color-surface-2":       "oklch(12% 0.005 250)",
+      "--color-surface-3":       "oklch(16% 0.004 250)",
+      "--color-border":          "oklch(100% 0 0 / 0.07)",
+      "--color-border-hover":    "oklch(100% 0 0 / 0.14)",
+      "--color-accent":          "oklch(62% 0.17 250)",
+      "--color-accent-dim":      "oklch(62% 0.17 250 / 0.10)",
+      "--color-accent-border":   "oklch(62% 0.17 250 / 0.22)",
+      "--color-accent-text":     "oklch(70% 0.14 250)",
+      "--color-accent-glow-sm":  "oklch(62% 0.17 250 / 0.25)",
+      "--color-accent-glow-lg":  "oklch(62% 0.17 250 / 0.40)",
+      "--color-text-1":          "oklch(97% 0.002 250)",
+      "--color-text-2":          "oklch(72% 0.003 250)",
+      "--color-text-3":          "oklch(50% 0.002 250)",
+      "--color-text-4":          "oklch(33% 0.001 250)"
+    },
+    "light": {
+      "--color-bg":              "oklch(99%  0.003 250)",
+      "--color-surface-1":       "oklch(96%  0.003 250)",
+      "--color-surface-2":       "oklch(93%  0.002 250)",
+      "--color-surface-3":       "oklch(90%  0.002 250)",
+      "--color-border":          "oklch(0% 0 0 / 0.08)",
+      "--color-border-hover":    "oklch(0% 0 0 / 0.16)",
+      "--color-accent":          "oklch(40% 0.17 250)",
+      "--color-accent-dim":      "oklch(40% 0.17 250 / 0.08)",
+      "--color-accent-border":   "oklch(40% 0.17 250 / 0.18)",
+      "--color-accent-text":     "oklch(35% 0.15 250)",
+      "--color-accent-glow-sm":  "oklch(40% 0.17 250 / 0.20)",
+      "--color-accent-glow-lg":  "oklch(40% 0.17 250 / 0.30)",
+      "--color-text-1":          "oklch(10%  0.004 250)",
+      "--color-text-2":          "oklch(28%  0.003 250)",
+      "--color-text-3":          "oklch(45%  0.002 250)",
+      "--color-text-4":          "oklch(62%  0.001 250)"
+    }
+  }
+}

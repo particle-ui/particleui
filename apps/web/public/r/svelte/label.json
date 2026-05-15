@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "Accessible form label.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/label.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    for?: string\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { for: htmlFor, class: className, children, ...rest }: Props = $props()\n</script>\n\n<label\n  for={htmlFor}\n  class=\"text-sm font-medium leading-none text-[var(--color-text-1)] peer-disabled:cursor-not-allowed peer-disabled:opacity-70 {className ?? ''}\"\n  {...rest}\n>\n  {@render children?.()}\n</label>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ]
+}

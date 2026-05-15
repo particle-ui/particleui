@@ -32,7 +32,7 @@ const RadioGroupItem = React.forwardRef<
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
       "disabled:cursor-not-allowed disabled:opacity-40",
       "data-[state=checked]:border-[var(--color-accent)] data-[state=checked]:bg-[var(--color-accent-dim)]",
-      "data-[state=checked]:shadow-[0_0_8px_0px_oklch(78%_0.17_200_/_0.35)]",
+      "data-[state=checked]:shadow-[0_0_8px_0px_var(--color-accent-glow-sm)]",
       className,
     ]
       .filter(Boolean)

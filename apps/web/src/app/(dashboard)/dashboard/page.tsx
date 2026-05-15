@@ -1,177 +1,246 @@
+export const dynamic = "force-dynamic"
+
 import { auth, currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
-import { apiTokens, users } from "@/db/schema"
-import { eq, isNull } from "drizzle-orm"
-import { createToken } from "@/lib/auth/token"
-import { TokenRow } from "./token-row"
-import {
-  Key,
-  Plus,
-  Lightning,
-  ArrowSquareOut,
-} from "@phosphor-icons/react/dist/ssr"
+import { users, apiTokens, componentInstalls } from "@/db/schema"
+import { eq, isNull, desc, gte, count, sql } from "drizzle-orm"
 import Link from "next/link"
+import { Key, Download, ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = { title: "Dashboard" }
+
+function relativeTime(date: Date) {
+  const diff = Date.now() - date.getTime()
+  const m = Math.floor(diff / 60000)
+  if (m < 1) return "just now"
+  if (m < 60) return `${m}m ago`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h}h ago`
+  return `${Math.floor(h / 24)}d ago`
+}
+
+const FW_COLORS: Record<string, string> = {
+  react: "bg-[var(--color-info-dim)] text-[var(--color-info-text)] border-[var(--color-info-border)]",
+  vue: "bg-[var(--color-success-dim)] text-[var(--color-success-text)] border-[var(--color-success-border)]",
+  svelte: "bg-[var(--color-error-dim)] text-[var(--color-error-text)] border-[var(--color-error-border)]",
+}
 
 export default async function DashboardPage() {
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
 
   const clerkUser = await currentUser()
-  if (clerkUser) {
-    await db
-      .insert(users)
-      .values({
-        id: userId,
-        email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
-        plan: "free",
+  const dbReady = !!process.env.DATABASE_URL
+
+  let user: { plan: string; createdAt: Date; email: string } | undefined
+  let activeTokenCount = 0
+  let recentInstalls: { componentName: string; framework: string; tier: string; createdAt: Date }[] = []
+  let totalInstalls30d = 0
+  let topComponent: string | null = null
+
+  if (dbReady) {
+    if (clerkUser) {
+      await db
+        .insert(users)
+        .values({
+          id: userId,
+          email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
+          plan: "free",
+        })
+        .onConflictDoNothing()
+    }
+
+    const [userRow] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
+    user = userRow
+
+    const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+
+    const [tokenCountRow] = await db
+      .select({ count: count() })
+      .from(apiTokens)
+      .where(eq(apiTokens.userId, userId) && isNull(apiTokens.revokedAt))
+    activeTokenCount = tokenCountRow?.count ?? 0
+
+    recentInstalls = await db
+      .select({
+        componentName: componentInstalls.componentName,
+        framework: componentInstalls.framework,
+        tier: componentInstalls.tier,
+        createdAt: componentInstalls.createdAt,
       })
-      .onConflictDoNothing()
+      .from(componentInstalls)
+      .where(eq(componentInstalls.userId, userId))
+      .orderBy(desc(componentInstalls.createdAt))
+      .limit(8)
+
+    const [installCount] = await db
+      .select({ count: count() })
+      .from(componentInstalls)
+      .where(eq(componentInstalls.userId, userId) && gte(componentInstalls.createdAt, since30d))
+    totalInstalls30d = installCount?.count ?? 0
+
+    const topRows = await db
+      .select({
+        componentName: componentInstalls.componentName,
+        installs: sql<number>`count(*)`,
+      })
+      .from(componentInstalls)
+      .where(eq(componentInstalls.userId, userId) && gte(componentInstalls.createdAt, since30d))
+      .groupBy(componentInstalls.componentName)
+      .orderBy(desc(sql`count(*)`))
+      .limit(1)
+    topComponent = topRows[0]?.componentName ?? null
   }
 
-  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
-
-  const tokens = await db
-    .select()
-    .from(apiTokens)
-    .where(eq(apiTokens.userId, userId) && isNull(apiTokens.revokedAt))
-    .orderBy(apiTokens.createdAt)
-
   const isPro = user?.plan === "pro"
+  const memberSince = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
+    : "—"
 
   return (
-    <main className="min-h-svh bg-[#090909] text-white">
-      <header className="border-b border-white/[0.06] bg-[#090909]">
-        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-2 text-sm font-semibold">
-            <Lightning weight="fill" size={16} className="text-[#00d4ff]" />
-            ParticleUI
-          </Link>
-          <Link
-            href="/docs"
-            className="flex items-center gap-1.5 text-xs text-[#555] hover:text-[#888] transition-colors"
-          >
-            Docs <ArrowSquareOut size={12} />
+    <div>
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-1)] mb-1">
+          Welcome back{clerkUser?.firstName ? `, ${clerkUser.firstName}` : ""}
+        </h1>
+        <p className="text-sm text-[var(--color-text-3)]">
+          {clerkUser?.emailAddresses[0]?.emailAddress}
+        </p>
+      </div>
+
+      {/* DB not ready warning */}
+      {!dbReady && (
+        <div className="mb-6 rounded-xl border border-[var(--color-warning-border)] bg-[var(--color-warning-dim)] px-4 py-3">
+          <p className="text-sm font-medium text-[var(--color-warning-text)] mb-0.5">Database not connected</p>
+          <p className="text-xs text-[var(--color-text-3)]">
+            Add <code className="text-[var(--color-warning-text)]">DATABASE_URL</code> to <code>.env.local</code> to enable all features. Get a free DB at{" "}
+            <a href="https://neon.tech" target="_blank" rel="noreferrer" className="underline">neon.tech</a>.
+          </p>
+        </div>
+      )}
+
+      {/* Stats grid */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        {/* Plan card */}
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-5">
+          <div className="flex items-start justify-between mb-3">
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-text-4)] mb-1">Current Plan</p>
+              <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
+                isPro
+                  ? "bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] text-[var(--color-accent-text)]"
+                  : "bg-[var(--color-surface-2)] border border-[var(--color-border)] text-[var(--color-text-3)]"
+              }`}>
+                {isPro && <Sparkle size={10} weight="fill" />}
+                {isPro ? "Pro" : "Free"}
+              </span>
+            </div>
+            <p className="text-[10px] text-[var(--color-text-4)]">since {memberSince}</p>
+          </div>
+          {!isPro && (
+            <Link
+              href="/dashboard/plan"
+              className="flex items-center gap-1 text-xs text-[var(--color-accent-text)] hover:underline mt-2"
+            >
+              Upgrade to Pro <ArrowRight size={11} />
+            </Link>
+          )}
+        </div>
+
+        {/* Stats card */}
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-5">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-text-4)] mb-3">30-day activity</p>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-2 text-sm text-[var(--color-text-3)]">
+                <Download size={13} /> Installs
+              </span>
+              <span className="font-semibold text-sm text-[var(--color-text-1)]">{totalInstalls30d}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-2 text-sm text-[var(--color-text-3)]">
+                <Key size={13} /> Active tokens
+              </span>
+              <span className="font-semibold text-sm text-[var(--color-text-1)]">{activeTokenCount}</span>
+            </div>
+            {topComponent && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-[var(--color-text-3)]">Top component</span>
+                <span className="font-mono text-xs text-[var(--color-text-2)]">{topComponent}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Recent activity */}
+      <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] mb-6">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--color-border)]">
+          <h2 className="text-sm font-semibold text-[var(--color-text-1)]">Recent installs</h2>
+          <Link href="/dashboard/installs" className="text-xs text-[var(--color-text-4)] hover:text-[var(--color-text-2)] transition-colors">
+            View all →
           </Link>
         </div>
-      </header>
-
-      <div className="mx-auto max-w-3xl px-6 py-12">
-        {/* Header row */}
-        <div className="mb-10 flex items-start justify-between">
-          <div>
-            <h1 className="text-2xl font-bold mb-1">Dashboard</h1>
-            <p className="text-sm text-[#555]">
-              {clerkUser?.emailAddresses[0]?.emailAddress}
+        {recentInstalls.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <Download size={28} className="text-[var(--color-text-4)] mb-3" />
+            <p className="text-sm text-[var(--color-text-3)] mb-1">No installs yet</p>
+            <p className="text-xs text-[var(--color-text-4)]">
+              Installs appear here when you use the CLI to add components.
             </p>
           </div>
-          <PlanBadge plan={user?.plan ?? "free"} />
-        </div>
-
-        {/* Upgrade nudge */}
-        {!isPro && (
-          <div className="mb-8 rounded-xl border border-[rgba(0,212,255,0.2)] bg-[rgba(0,212,255,0.05)] p-5 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-medium mb-0.5">Unlock Pro components</p>
-              <p className="text-xs text-[#555]">
-                Particle Hero, Magnetic Button, Aurora Background, and more.
-              </p>
-            </div>
-            <Link
-              href="/pricing"
-              className="shrink-0 rounded-md bg-[#00d4ff] px-4 py-2 text-xs font-semibold text-black hover:bg-[#22e0ff] transition-colors"
-            >
-              Upgrade — $149
-            </Link>
-          </div>
+        ) : (
+          <ul className="divide-y divide-[var(--color-border)]">
+            {recentInstalls.map((install, i) => (
+              <li key={i} className="flex items-center gap-3 px-5 py-3">
+                <div className="flex-1 min-w-0">
+                  <Link
+                    href={`/docs/components/${install.componentName}`}
+                    className="text-sm font-medium text-[var(--color-text-1)] hover:underline font-mono"
+                  >
+                    {install.componentName}
+                  </Link>
+                </div>
+                <span className={`text-[10px] font-medium px-2 py-0.5 rounded border ${FW_COLORS[install.framework] ?? "bg-[var(--color-surface-2)] text-[var(--color-text-3)] border-[var(--color-border)]"}`}>
+                  {install.framework}
+                </span>
+                <span className="text-[11px] text-[var(--color-text-4)] shrink-0">
+                  {relativeTime(new Date(install.createdAt))}
+                </span>
+              </li>
+            ))}
+          </ul>
         )}
+      </div>
 
-        {/* Tokens card */}
-        <section className="rounded-xl border border-white/[0.07] bg-[#0e0e0e] p-6 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center gap-2">
-              <Key size={18} weight="duotone" className="text-[#00d4ff]" />
-              <h2 className="font-semibold text-sm">API Tokens</h2>
-            </div>
-            <CreateTokenForm userId={userId} />
-          </div>
-
-          {tokens.length === 0 ? (
-            <div className="py-8 text-center">
-              <Key size={28} weight="thin" className="text-[#333] mx-auto mb-3" />
-              <p className="text-sm text-[#444]">No tokens yet.</p>
-              <p className="text-xs text-[#333] mt-1">Create one to start installing Pro components.</p>
-            </div>
-          ) : (
-            <div className="space-y-2">
-              {tokens.map((t) => (
-                <TokenRow key={t.id} token={t} />
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* Setup snippet */}
-        <section className="rounded-xl border border-white/[0.07] bg-[#0e0e0e] p-6">
-          <h2 className="font-semibold text-sm mb-4">Quick setup</h2>
-          <p className="text-xs text-[#555] mb-4">
-            Add your token to <code className="text-[#00d4ff]">.env</code>, then configure{" "}
-            <code className="text-[#00d4ff]">components.json</code>:
+      {/* Quick start — show if no tokens */}
+      {activeTokenCount === 0 && (
+        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-5">
+          <h2 className="text-sm font-semibold text-[var(--color-text-1)] mb-3">Quick start</h2>
+          <p className="text-xs text-[var(--color-text-3)] mb-3">
+            Create an API token, then add it to your project:
           </p>
-          <pre className="rounded-lg bg-[#090909] border border-white/[0.06] p-4 text-xs text-[#666] overflow-x-auto leading-relaxed">
-{`# .env
+          <pre className="rounded-lg bg-[var(--color-bg)] border border-[var(--color-border)] p-4 text-[11px] font-mono text-[var(--color-text-3)] overflow-x-auto leading-relaxed">{`# .env
 PARTICLEUI_TOKEN=<your-token>
 
 # components.json
 "registries": {
   "@particleui": {
     "url": "https://particleui.dev/r/react/{name}.json",
-    "headers": {
-      "Authorization": "Bearer \${PARTICLEUI_TOKEN}"
-    }
+    "headers": { "Authorization": "Bearer \${PARTICLEUI_TOKEN}" }
   }
-}`}
-          </pre>
-        </section>
-      </div>
-    </main>
-  )
-}
-
-function PlanBadge({ plan }: { plan: string }) {
-  return (
-    <span
-      className={`rounded-full px-3 py-1 text-xs font-medium ${
-        plan === "pro"
-          ? "border border-[rgba(0,212,255,0.3)] bg-[rgba(0,212,255,0.08)] text-[#00d4ff]"
-          : "border border-white/[0.08] bg-white/[0.04] text-[#555]"
-      }`}
-    >
-      {plan === "pro" ? "Pro" : "Free"}
-    </span>
-  )
-}
-
-async function CreateTokenForm({ userId }: { userId: string }) {
-  async function create() {
-    "use server"
-    await createToken(userId, "Default")
-    const { revalidatePath } = await import("next/cache")
-    revalidatePath("/dashboard")
-  }
-
-  return (
-    <form action={create}>
-      <button
-        type="submit"
-        className="flex items-center gap-1.5 rounded-md border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs text-[#888] hover:border-white/20 hover:text-white transition-colors"
-      >
-        <Plus size={12} weight="bold" />
-        New token
-      </button>
-    </form>
+}`}</pre>
+          <Link
+            href="/dashboard/tokens"
+            className="mt-4 inline-flex items-center gap-1.5 text-xs text-[var(--color-accent-text)] hover:underline"
+          >
+            Create your first token <ArrowRight size={11} />
+          </Link>
+        </div>
+      )}
+    </div>
   )
 }

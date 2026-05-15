@@ -1,0 +1,39 @@
+{
+  "name": "particleui-cli",
+  "version": "0.3.1",
+  "description": "Install ParticleUI components into your project with one command",
+  "bin": { "particleui": "./dist/index.js" },
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^12.1.0",
+    "ora": "^8.2.0",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/prompts": "^2.4.9",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  },
+  "engines": { "node": ">=18" },
+  "keywords": ["particleui", "shadcn", "components", "ui", "react", "vue", "svelte", "cli", "scaffold"],
+  "license": "MIT",
+  "author": "ParticleUI Contributors",
+  "homepage": "https://particleui.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/particleui/particleui.git",
+    "directory": "packages/cli"
+  },
+  "bugs": {
+    "url": "https://github.com/particleui/particleui/issues"
+  },
+  "publishConfig": { "access": "public" }
+}

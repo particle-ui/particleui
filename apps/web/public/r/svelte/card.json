@@ -1,0 +1,51 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "Composable card with header, content, and footer slots.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/card.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<div\n  class=\"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] text-[var(--color-text-1)] shadow-sm transition-colors {className ?? ''}\"\n  {...rest}\n>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/card-header.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<div class=\"flex flex-col space-y-1.5 p-6 {className ?? ''}\" {...rest}>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/card-title.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<h3\n  class=\"text-lg font-semibold leading-none tracking-tight text-[var(--color-text-1)] {className ?? ''}\"\n  {...rest}\n>\n  {@render children?.()}\n</h3>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/card-description.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<p class=\"text-sm text-[var(--color-text-3)] {className ?? ''}\" {...rest}>\n  {@render children?.()}\n</p>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/card-content.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<div class=\"p-6 pt-0 {className ?? ''}\" {...rest}>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    },
+    {
+      "path": "components/ui/card-footer.svelte",
+      "content": "<script lang=\"ts\">\n  import type { Snippet } from \"svelte\"\n\n  interface Props {\n    class?: string\n    children?: Snippet\n    [key: string]: unknown\n  }\n\n  let { class: className, children, ...rest }: Props = $props()\n</script>\n\n<div class=\"flex items-center p-6 pt-0 {className ?? ''}\" {...rest}>\n  {@render children?.()}\n</div>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ]
+}

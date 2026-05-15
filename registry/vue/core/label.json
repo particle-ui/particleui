@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "label",
+  "type": "registry:ui",
+  "title": "Label",
+  "description": "Accessible form label.",
+  "author": "ParticleUI",
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/Label.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\nimport { tv } from 'tailwind-variants'\n\nconst labelVariants = tv({\n  base: [\n    'text-sm font-medium leading-none text-[var(--color-text-2)]',\n    'select-none',\n    'peer-disabled:cursor-not-allowed peer-disabled:opacity-40',\n  ],\n})\n\nconst props = defineProps<{\n  for?: string\n  class?: string\n}>()\n\nconst classes = computed(() => labelVariants({ class: props.class }))\n</script>\n\n<template>\n  <label :for=\"props.for\" :class=\"classes\">\n    <slot />\n  </label>\n</template>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

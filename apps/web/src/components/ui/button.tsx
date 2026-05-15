@@ -17,7 +17,7 @@ const buttonVariants = tv({
       default: [
         "bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold",
         "hover:brightness-110 active:brightness-90",
-        "shadow-transparent hover:shadow-[0_0_20px_0px_oklch(78%_0.17_200_/_0.35)]",
+        "shadow-transparent hover:shadow-[0_0_20px_0px_oklch(96%_0.01_80_/_0.25)]",
         "transition-[filter,box-shadow,background-color] duration-200",
       ],
       secondary: [
@@ -33,10 +33,10 @@ const buttonVariants = tv({
         "hover:bg-[var(--color-surface-1)] hover:text-[var(--color-text-1)]",
       ],
       destructive: [
-        "bg-red-600 text-white font-semibold",
-        "hover:bg-red-500 active:bg-red-700",
-        "hover:shadow-[0_0_20px_0px_oklch(50%_0.2_25_/_0.35)]",
-        "transition-[background-color,box-shadow] duration-200",
+        "bg-[var(--color-error)] text-[var(--color-bg)] font-semibold",
+        "hover:brightness-110 active:brightness-90",
+        "hover:shadow-[0_0_20px_0px_var(--color-error-dim)]",
+        "transition-[filter,box-shadow,background-color] duration-200",
       ],
       link: [
         "text-[var(--color-accent-text)] underline-offset-4 bg-transparent",

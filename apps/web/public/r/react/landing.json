@@ -1,0 +1,36 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "landing",
+  "type": "registry:block",
+  "title": "Landing Page",
+  "description": "Complete SaaS landing page: hero, logo cloud, alternating features, stats, testimonials, pricing, FAQ, CTA, and footer. Install one component, get everything.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [
+    "hero-split",
+    "logo-cloud",
+    "feature-alternating",
+    "stats",
+    "testimonials",
+    "pricing",
+    "faq",
+    "cta-section",
+    "footer"
+  ],
+  "files": [
+    {
+      "path": "components/templates/landing.tsx",
+      "content": "\"use client\"\n\nimport { HeroSplit } from \"@/components/blocks/hero-split\"\nimport { LogoCloud } from \"@/components/blocks/logo-cloud\"\nimport { FeatureAlternating } from \"@/components/blocks/feature-alternating\"\nimport { StatsSection } from \"@/components/blocks/stats\"\nimport { TestimonialsSection } from \"@/components/blocks/testimonials\"\nimport { PricingSection } from \"@/components/blocks/pricing\"\nimport { FaqSection } from \"@/components/blocks/faq\"\nimport { CtaSection } from \"@/components/blocks/cta-section\"\nimport { Footer } from \"@/components/blocks/footer\"\n\nexport function LandingTemplate() {\n  return (\n    <>\n      <HeroSplit />\n      <LogoCloud />\n      <FeatureAlternating />\n      <StatsSection />\n      <TestimonialsSection />\n      <PricingSection />\n      <FaqSection />\n      <CtaSection />\n      <Footer />\n    </>\n  )\n}\n\nexport default LandingTemplate\n",
+      "type": "registry:block"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "template",
+    "marketing",
+    "free"
+  ]
+}

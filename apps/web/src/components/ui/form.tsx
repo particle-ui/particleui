@@ -66,7 +66,7 @@ const FormLabel = React.forwardRef<
       ref={ref}
       className={[
         "text-sm font-medium leading-none text-[var(--color-text-2)] select-none",
-        error && "text-red-400",
+        error && "text-[var(--color-error-text)]",
         className,
       ]
         .filter(Boolean)
@@ -119,7 +119,7 @@ const FormMessage = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<
       <p
         ref={ref}
         id={formMessageId}
-        className={["text-xs font-medium text-red-400", className].filter(Boolean).join(" ")}
+        className={["text-xs font-medium text-[var(--color-error-text)]", className].filter(Boolean).join(" ")}
         {...props}
       >
         {body}

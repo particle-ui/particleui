@@ -11,6 +11,17 @@
     ]
   },
   {
+    "name": "ai-chat",
+    "type": "registry:block",
+    "title": "AI Chat Interface",
+    "description": "Full-featured AI chat UI with message bubbles, model selector, copy button, and typing indicator.",
+    "categories": [
+      "ai",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "alert",
     "type": "registry:ui",
     "title": "Alert",
@@ -44,6 +55,39 @@
     ]
   },
   {
+    "name": "auth",
+    "type": "registry:block",
+    "title": "Auth Flow",
+    "description": "Sign-in, sign-up, forgot-password, and verify-email screens stitched together. Ready to wire to your auth provider.",
+    "categories": [
+      "template",
+      "auth",
+      "free"
+    ]
+  },
+  {
+    "name": "auth-sign-in",
+    "type": "registry:block",
+    "title": "Auth — Sign In",
+    "description": "Sign-in form with email/password, Google/GitHub social buttons, and forgot password link.",
+    "categories": [
+      "auth",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "auth-sign-up",
+    "type": "registry:block",
+    "title": "Auth — Sign Up",
+    "description": "Sign-up form with name, email, password, terms checkbox, and social login options.",
+    "categories": [
+      "auth",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "avatar",
     "type": "registry:ui",
     "title": "Avatar",
@@ -66,6 +110,17 @@
     ]
   },
   {
+    "name": "beam",
+    "type": "registry:ui",
+    "title": "Beam",
+    "description": "Animated light beam that slides across a 1px separator line. Configurable color, speed, and delay.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ]
+  },
+  {
     "name": "bento-grid",
     "type": "registry:block",
     "title": "Bento Grid",
@@ -74,6 +129,17 @@
       "blocks",
       "layouts",
       "pro"
+    ]
+  },
+  {
+    "name": "blog",
+    "type": "registry:block",
+    "title": "Blog",
+    "description": "Blog index with header, hero, article list with author avatars, newsletter section, and footer.",
+    "categories": [
+      "template",
+      "content",
+      "free"
     ]
   },
   {
@@ -154,6 +220,17 @@
     ]
   },
   {
+    "name": "confetti-button",
+    "type": "registry:ui",
+    "title": "Confetti Button",
+    "description": "Button that fires a canvas confetti burst on click. Wraps the core Button component.",
+    "categories": [
+      "buttons",
+      "particles",
+      "free"
+    ]
+  },
+  {
     "name": "context-menu",
     "type": "registry:ui",
     "title": "Context Menu",
@@ -161,6 +238,28 @@
     "categories": [
       "overlay",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "counter",
+    "type": "registry:ui",
+    "title": "Counter",
+    "description": "Spring-animated number counter with IntersectionObserver trigger, easing, and prefix/suffix support.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "cta-section",
+    "type": "registry:block",
+    "title": "CTA Section",
+    "description": "Full-width call-to-action section with radial gradient background, meteors, and dual CTA buttons.",
+    "categories": [
+      "marketing",
+      "blocks",
       "free"
     ]
   },
@@ -173,6 +272,17 @@
       "cursors",
       "animations",
       "pro"
+    ]
+  },
+  {
+    "name": "dashboard-analytics",
+    "type": "registry:block",
+    "title": "Dashboard — Analytics",
+    "description": "Analytics dashboard with metric cards, recent orders table, and top pages with progress bars.",
+    "categories": [
+      "dashboard",
+      "blocks",
+      "free"
     ]
   },
   {
@@ -209,6 +319,17 @@
     ]
   },
   {
+    "name": "docs-site",
+    "type": "registry:block",
+    "title": "Docs Site",
+    "description": "Documentation shell with sticky top nav, sidebar navigation, main content area, on-page TOC, and footer.",
+    "categories": [
+      "template",
+      "documentation",
+      "free"
+    ]
+  },
+  {
     "name": "dropdown-menu",
     "type": "registry:ui",
     "title": "Dropdown Menu",
@@ -226,6 +347,61 @@
     "description": "Animated badge with pulsing electric glow. Great for status indicators and labels.",
     "categories": [
       "badges",
+      "free"
+    ]
+  },
+  {
+    "name": "faq",
+    "type": "registry:block",
+    "title": "FAQ Section",
+    "description": "Centered FAQ with Accordion, covering pricing, shadcn compatibility, frameworks, license, TypeScript, and Figma.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "feature-alternating",
+    "type": "registry:block",
+    "title": "Feature — Alternating",
+    "description": "Three alternating feature rows with code previews. Left-right layout flips on odd rows.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "feature-grid",
+    "type": "registry:block",
+    "title": "Feature Grid",
+    "description": "Bento-style feature grid with glow cards, gradient text titles, and icon badges.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "floating-dock",
+    "type": "registry:ui",
+    "title": "Floating Dock",
+    "description": "macOS-style dock with spring-scale magnification on hover. Fully keyboard accessible.",
+    "categories": [
+      "navigation",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "footer",
+    "type": "registry:block",
+    "title": "Footer",
+    "description": "Three-column footer with brand tagline, link groups, legal links, and copyright.",
+    "categories": [
+      "layout",
+      "blocks",
       "free"
     ]
   },
@@ -251,12 +427,67 @@
     ]
   },
   {
+    "name": "glow-card",
+    "type": "registry:ui",
+    "title": "Glow Card",
+    "description": "Card with cursor-tracked radial spotlight glow. Configurable color, size, and opacity.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "glow-input",
+    "type": "registry:ui",
+    "title": "Glow Input",
+    "description": "Input with animated gradient border and drop-shadow glow on focus. Drop-in replacement for Input.",
+    "categories": [
+      "forms",
+      "particles",
+      "free"
+    ]
+  },
+  {
     "name": "gradient-card",
     "type": "registry:ui",
     "title": "Gradient Card",
     "description": "Card with animated border gradient and dark glass background.",
     "categories": [
       "cards",
+      "free"
+    ]
+  },
+  {
+    "name": "gradient-text",
+    "type": "registry:ui",
+    "title": "Gradient Text",
+    "description": "Animated gradient text with 5 variants: electric, aurora, fire, candy, and gold.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "hero-centered",
+    "type": "registry:block",
+    "title": "Hero — Centered",
+    "description": "Full-width centered hero with gradient headline, typewriter subtitle, CTA buttons, beam separator, and optional meteor shower.",
+    "categories": [
+      "hero",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "hero-split",
+    "type": "registry:block",
+    "title": "Hero — Split",
+    "description": "Two-column hero with headline and feature bullets on the left, animated code preview card on the right.",
+    "categories": [
+      "hero",
+      "blocks",
       "free"
     ]
   },
@@ -268,6 +499,17 @@
     "categories": [
       "overlay",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "how-it-works",
+    "type": "registry:block",
+    "title": "How It Works",
+    "description": "Three-step horizontal flow with numbered circles, phosphor icons, dotted connector lines, and code snippets.",
+    "categories": [
+      "marketing",
+      "blocks",
       "free"
     ]
   },
@@ -304,6 +546,28 @@
     ]
   },
   {
+    "name": "landing",
+    "type": "registry:block",
+    "title": "Landing Page",
+    "description": "Complete SaaS landing page: hero, logo cloud, alternating features, stats, testimonials, pricing, FAQ, CTA, and footer. Install one component, get everything.",
+    "categories": [
+      "template",
+      "marketing",
+      "free"
+    ]
+  },
+  {
+    "name": "logo-cloud",
+    "type": "registry:block",
+    "title": "Logo Cloud",
+    "description": "Dual-row Marquee scrolling company name pills with fade edges. Top row scrolls left, bottom row scrolls right.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "magnetic-button",
     "type": "registry:ui",
     "title": "Magnetic Button",
@@ -315,6 +579,38 @@
     ]
   },
   {
+    "name": "marquee",
+    "type": "registry:ui",
+    "title": "Marquee",
+    "description": "Infinite scroll marquee with configurable speed, direction, gap, and pause-on-hover.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "meteors",
+    "type": "registry:ui",
+    "title": "Meteors",
+    "description": "CSS-animated meteor shower effect. Drop into any relative-positioned container.",
+    "categories": [
+      "background",
+      "particles",
+      "free"
+    ]
+  },
+  {
+    "name": "mono",
+    "type": "registry:theme",
+    "title": "Mono",
+    "description": "Pure grayscale — zero chroma, maximum contrast. Timeless monochrome.",
+    "categories": [
+      "themes",
+      "free"
+    ]
+  },
+  {
     "name": "navigation-menu",
     "type": "registry:ui",
     "title": "Navigation Menu",
@@ -322,6 +618,17 @@
     "categories": [
       "navigation",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "newsletter",
+    "type": "registry:block",
+    "title": "Newsletter Section",
+    "description": "Email newsletter signup inside a GlowCard with success state, inline submit, and no-spam disclaimer.",
+    "categories": [
+      "marketing",
+      "blocks",
       "free"
     ]
   },
@@ -380,6 +687,28 @@
     ]
   },
   {
+    "name": "pricing",
+    "type": "registry:block",
+    "title": "Pricing Section",
+    "description": "Three-tier pricing table with monthly/annual toggle, feature lists, and highlighted popular plan.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
+    "name": "pricing-page",
+    "type": "registry:block",
+    "title": "Pricing Page",
+    "description": "Dedicated pricing page with a centered hero, three-tier pricing table, FAQ section, and CTA footer.",
+    "categories": [
+      "template",
+      "marketing",
+      "free"
+    ]
+  },
+  {
     "name": "progress",
     "type": "registry:ui",
     "title": "Progress",
@@ -409,6 +738,27 @@
     "categories": [
       "layout",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "rose",
+    "type": "registry:theme",
+    "title": "Rose",
+    "description": "Warm rose/pink accent on deep garnet surfaces. Dramatic and editorial.",
+    "categories": [
+      "themes",
+      "free"
+    ]
+  },
+  {
+    "name": "saas-dashboard",
+    "type": "registry:block",
+    "title": "SaaS Dashboard",
+    "description": "Analytics-focused dashboard with KPI stat cards and a detailed data table. Drop into any admin layout.",
+    "categories": [
+      "template",
+      "dashboard",
       "free"
     ]
   },
@@ -446,6 +796,17 @@
     ]
   },
   {
+    "name": "settings-page",
+    "type": "registry:block",
+    "title": "Settings Page",
+    "description": "Settings layout with Profile, Security, Notifications, and Billing tabs.",
+    "categories": [
+      "dashboard",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "sheet",
     "type": "registry:ui",
     "title": "Sheet",
@@ -453,6 +814,17 @@
     "categories": [
       "overlay",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "shimmer-button",
+    "type": "registry:ui",
+    "title": "Shimmer Button",
+    "description": "Button with rotating conic-gradient shimmer border effect. Three variants: default, filled, dark.",
+    "categories": [
+      "buttons",
+      "particles",
       "free"
     ]
   },
@@ -474,6 +846,16 @@
     "categories": [
       "feedback",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "slate",
+    "type": "registry:theme",
+    "title": "Slate",
+    "description": "Cool blue-gray surfaces with an electric blue accent. The canonical dark-tech look.",
+    "categories": [
+      "themes",
       "free"
     ]
   },
@@ -512,6 +894,17 @@
     ]
   },
   {
+    "name": "stats",
+    "type": "registry:block",
+    "title": "Stats Section",
+    "description": "Four animated stat counters in a GlowCard row with icons, labels, and a Beam separator.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "switch",
     "type": "registry:ui",
     "title": "Switch",
@@ -545,6 +938,17 @@
     ]
   },
   {
+    "name": "testimonials",
+    "type": "registry:block",
+    "title": "Testimonials Section",
+    "description": "Three-column testimonials grid with 5-star ratings, quote text, and avatar initials. Uses GlowCard for hover effects.",
+    "categories": [
+      "marketing",
+      "blocks",
+      "free"
+    ]
+  },
+  {
     "name": "textarea",
     "type": "registry:ui",
     "title": "Textarea",
@@ -556,6 +960,17 @@
     ]
   },
   {
+    "name": "tilt-card",
+    "type": "registry:ui",
+    "title": "Tilt Card",
+    "description": "3D perspective tilt card with cursor-tracked glare highlight. Pure CSS transforms, no dependencies.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ]
+  },
+  {
     "name": "tooltip",
     "type": "registry:ui",
     "title": "Tooltip",
@@ -563,6 +978,17 @@
     "categories": [
       "overlay",
       "core",
+      "free"
+    ]
+  },
+  {
+    "name": "typewriter",
+    "type": "registry:ui",
+    "title": "Typewriter",
+    "description": "Animated typewriter with configurable typing/deleting speed, pause, and loop. Electric cursor blink.",
+    "categories": [
+      "text",
+      "particles",
       "free"
     ]
   }

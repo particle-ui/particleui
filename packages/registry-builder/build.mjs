@@ -82,6 +82,9 @@ for (const fw of frameworks) {
   const outDir = path.join(REGISTRY_OUT, fw)
   mkdirSync(outDir, { recursive: true })
 
+  /** { name, tier, title, description, categories, dependencies } */
+  const indexEntries = []
+
   for (const file of files) {
     const raw = JSON.parse(readFileSync(file, "utf-8"))
     const result = registryItemSchema.safeParse(raw)
@@ -95,11 +98,30 @@ for (const fw of frameworks) {
       continue
     }
 
+    // Extract tier from directory structure: registry/<fw>/<tier>/<name>.json
+    const rel = path.relative(path.join(REGISTRY_SRC, fw), file)
+    const tier = rel.split(path.sep).length > 1 ? rel.split(path.sep)[0] : "core"
+
     const outPath = path.join(outDir, `${result.data.name}.json`)
     writeFileSync(outPath, JSON.stringify(result.data, null, 2))
-    console.log(chalk.green(`✓ ${fw}/${result.data.name}`))
+    console.log(chalk.green(`✓ ${fw}/${tier}/${result.data.name}`))
     emitted++
+
+    indexEntries.push({
+      name: result.data.name,
+      tier,
+      title: result.data.title ?? result.data.name,
+      description: result.data.description ?? "",
+      categories: result.data.categories ?? [],
+      dependencies: result.data.dependencies ?? [],
+      registryDependencies: result.data.registryDependencies ?? [],
+    })
   }
+
+  // Emit tiered index
+  const indexPath = path.join(outDir, "index.json")
+  writeFileSync(indexPath, JSON.stringify({ items: indexEntries }, null, 2))
+  console.log(chalk.cyan(`  → wrote ${fw}/index.json (${indexEntries.length} items)`))
 }
 
 if (errors > 0) {

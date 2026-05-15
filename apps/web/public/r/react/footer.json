@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "footer",
+  "type": "registry:block",
+  "title": "Footer",
+  "description": "Three-column footer with brand tagline, link groups, legal links, and copyright.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [
+    "separator"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/footer.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Separator } from \"@/components/ui/separator\"\n\ninterface FooterLink {\n  label: string\n  href: string\n}\n\ninterface FooterGroup {\n  title: string\n  links: FooterLink[]\n}\n\ninterface FooterProps {\n  brand?: string\n  tagline?: string\n  groups?: FooterGroup[]\n  legal?: FooterLink[]\n  copyright?: string\n}\n\nconst defaultGroups: FooterGroup[] = [\n  {\n    title: \"Product\",\n    links: [\n      { label: \"Components\", href: \"/docs/components/button\" },\n      { label: \"Getting started\", href: \"/docs/getting-started/installation\" },\n      { label: \"Theming\", href: \"/docs/theming\" },\n      { label: \"Changelog\", href: \"/changelog\" },\n    ],\n  },\n  {\n    title: \"Resources\",\n    links: [\n      { label: \"Documentation\", href: \"/docs\" },\n      { label: \"Figma kit\", href: \"/figma\" },\n      { label: \"GitHub\", href: \"https://github.com\" },\n      { label: \"Releases\", href: \"https://github.com/releases\" },\n    ],\n  },\n  {\n    title: \"Company\",\n    links: [\n      { label: \"About\", href: \"/about\" },\n      { label: \"Blog\", href: \"/blog\" },\n      { label: \"Pricing\", href: \"/pricing\" },\n      { label: \"Contact\", href: \"/contact\" },\n    ],\n  },\n]\n\nconst defaultLegal: FooterLink[] = [\n  { label: \"Privacy\", href: \"/privacy\" },\n  { label: \"Terms\", href: \"/terms\" },\n  { label: \"License (MIT)\", href: \"/license\" },\n]\n\nfunction Footer({\n  brand = \"ParticleUI\",\n  tagline = \"The component library that ships with you.\",\n  groups = defaultGroups,\n  legal = defaultLegal,\n  copyright = `© ${new Date().getFullYear()} ParticleUI. Open source under MIT.`,\n}: FooterProps) {\n  return (\n    <footer className=\"border-t border-[var(--color-border)] bg-[var(--color-surface-1)]\">\n      <div className=\"mx-auto max-w-6xl px-4 py-12\">\n        <div className=\"grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4\">\n          {/* Brand */}\n          <div className=\"flex flex-col gap-3\">\n            <div className=\"text-lg font-bold text-[var(--color-text-1)]\">{brand}</div>\n            <p className=\"text-sm text-[var(--color-text-3)] max-w-48 leading-relaxed\">{tagline}</p>\n          </div>\n\n          {/* Link groups */}\n          {groups.map((g) => (\n            <div key={g.title} className=\"flex flex-col gap-3\">\n              <div className=\"text-xs font-semibold uppercase tracking-widest text-[var(--color-text-4)]\">\n                {g.title}\n              </div>\n              <ul className=\"flex flex-col gap-2\">\n                {g.links.map((l) => (\n                  <li key={l.label}>\n                    <a\n                      href={l.href}\n                      className=\"text-sm text-[var(--color-text-3)] hover:text-[var(--color-text-1)] transition-colors duration-150\"\n                    >\n                      {l.label}\n                    </a>\n                  </li>\n                ))}\n              </ul>\n            </div>\n          ))}\n        </div>\n\n        <Separator className=\"my-8\" />\n\n        <div className=\"flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4\">\n          <p className=\"text-xs text-[var(--color-text-4)]\">{copyright}</p>\n          <div className=\"flex items-center gap-4\">\n            {legal.map((l) => (\n              <a\n                key={l.label}\n                href={l.href}\n                className=\"text-xs text-[var(--color-text-4)] hover:text-[var(--color-text-2)] transition-colors\"\n              >\n                {l.label}\n              </a>\n            ))}\n          </div>\n        </div>\n      </div>\n    </footer>\n  )\n}\n\nexport { Footer }\n",
+      "type": "registry:block"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "blocks",
+    "free"
+  ]
+}

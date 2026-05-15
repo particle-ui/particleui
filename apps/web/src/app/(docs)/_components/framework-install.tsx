@@ -1,0 +1,88 @@
+"use client"
+
+import { useState } from "react"
+import { CopyButton } from "@/components/copy-button"
+
+const PORTED_VUE = new Set([
+  "avatar", "badge", "button", "card", "checkbox", "input",
+  "label", "separator", "skeleton", "switch", "tabs", "textarea",
+])
+
+const PORTED_SVELTE = new Set([
+  "avatar", "badge", "button", "card", "checkbox", "input",
+  "label", "separator", "skeleton", "switch", "tabs", "textarea",
+])
+
+type Framework = "react" | "vue" | "svelte"
+
+function installUrl(name: string, fw: Framework, isPro: boolean): string {
+  if (isPro || fw === "react") return `https://particleui.dev/r/${fw}/${name}.json`
+  return `https://particleui.dev/r/${fw}/${name}.json`
+}
+
+export function FrameworkInstall({
+  name,
+  isPro,
+}: {
+  name: string
+  isPro: boolean
+}) {
+  const [fw, setFw] = useState<Framework>("react")
+
+  const hasVue = PORTED_VUE.has(name)
+  const hasSvelte = PORTED_SVELTE.has(name)
+
+  const cmd =
+    fw === "react"
+      ? `npx particleui-cli add ${name}`
+      : `npx particleui-cli add ${name} --framework ${fw}`
+
+  return (
+    <div>
+      {/* Framework chips */}
+      <div className="mb-4 flex items-center gap-1.5">
+        {(["react", "vue", "svelte"] as Framework[]).map((f) => {
+          const available = f === "react" || (f === "vue" && hasVue) || (f === "svelte" && hasSvelte)
+          return (
+            <button
+              key={f}
+              onClick={() => available && setFw(f)}
+              disabled={!available}
+              className={[
+                "rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-wide transition-all",
+                fw === f && available
+                  ? "border-accent-border bg-accent-dim text-accent"
+                  : available
+                  ? "border-border bg-surface-1 text-text-3 hover:border-border-hover hover:text-text-2"
+                  : "cursor-not-allowed border-border bg-surface-1 text-text-4 opacity-50",
+              ].join(" ")}
+              title={!available ? `Not yet available for ${f}` : undefined}
+            >
+              {f}
+              {!available && <span className="ml-1.5 text-[9px] normal-case tracking-normal opacity-70">soon</span>}
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Install command */}
+      <div className="flex items-center gap-2 rounded-xl border border-border bg-surface-1 px-4 py-3 font-mono text-xs text-text-2">
+        <span className="text-text-4 select-none">$</span>
+        <span className="flex-1 min-w-0 truncate">{cmd}</span>
+        <CopyButton code={cmd} />
+      </div>
+
+      {fw !== "react" && (
+        <p className="mt-2 text-[11px] text-text-4">
+          {fw === "vue" ? "Requires Vue 3 + Tailwind." : "Requires Svelte 4/5 + Tailwind."}{" "}
+          <a
+            href={`/docs/getting-started/installation#${fw}`}
+            className="text-accent hover:underline"
+          >
+            Setup guide →
+          </a>
+        </p>
+      )}
+    </div>
+  )
+}

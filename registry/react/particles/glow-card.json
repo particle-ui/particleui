@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "glow-card",
+  "type": "registry:ui",
+  "title": "Glow Card",
+  "description": "Card with cursor-tracked radial spotlight glow. Configurable color, size, and opacity.",
+  "author": "ParticleUI",
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/glow-card.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface GlowCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  glowColor?: string\n  glowSize?: number\n  glowOpacity?: number\n}\n\nfunction GlowCard({\n  className,\n  children,\n  glowColor = \"oklch(78% 0.17 200)\",\n  glowSize = 300,\n  glowOpacity = 0.15,\n  style,\n  ...props\n}: GlowCardProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null)\n\n  const handleMouseMove = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {\n    const el = ref.current\n    if (!el) return\n    const rect = el.getBoundingClientRect()\n    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top })\n  }, [])\n\n  const handleMouseLeave = React.useCallback(() => setPos(null), [])\n\n  return (\n    <div\n      ref={ref}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={handleMouseLeave}\n      style={{\n        position: \"relative\",\n        overflow: \"hidden\",\n        ...style,\n      }}\n      className={[\n        \"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] transition-colors duration-200\",\n        pos ? \"border-[var(--color-border-hover)]\" : \"\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      {...props}\n    >\n      {pos && (\n        <div\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            left: pos.x - glowSize / 2,\n            top: pos.y - glowSize / 2,\n            width: glowSize,\n            height: glowSize,\n            background: `radial-gradient(circle, ${glowColor.replace(\")\", ` / ${glowOpacity})`)} 0%, transparent 70%)`,\n            pointerEvents: \"none\",\n            zIndex: 0,\n            borderRadius: \"50%\",\n          }}\n        />\n      )}\n      <div style={{ position: \"relative\", zIndex: 1 }}>{children}</div>\n    </div>\n  )\n}\n\nexport { GlowCard }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -22,7 +22,7 @@ const Progress = React.forwardRef<
       className={[
         "h-full w-full flex-1 rounded-full",
         "bg-[var(--color-accent)]",
-        "shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]",
+        "shadow-[0_0_10px_0px_var(--color-accent-glow-sm)]",
         "transition-all duration-500 ease-out",
       ].join(" ")}
       style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}

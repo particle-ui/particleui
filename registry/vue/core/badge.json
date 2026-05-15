@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "badge",
+  "type": "registry:ui",
+  "title": "Badge",
+  "description": "Inline status badge with four variants.",
+  "author": "ParticleUI",
+  "categories": [
+    "badges",
+    "core",
+    "free"
+  ],
+  "dependencies": [
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/Badge.vue",
+      "type": "registry:ui",
+      "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\nimport { tv } from 'tailwind-variants'\n\nconst badgeVariants = tv({\n  base: [\n    'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium',\n    'transition-colors duration-150',\n    'border',\n  ],\n  variants: {\n    variant: {\n      default: [\n        'bg-[var(--color-accent-dim)] text-[var(--color-accent-text)] border-[var(--color-accent-border)]',\n      ],\n      secondary: [\n        'bg-[var(--color-surface-2)] text-[var(--color-text-2)] border-[var(--color-border)]',\n      ],\n      outline: [\n        'bg-transparent text-[var(--color-text-2)] border-[var(--color-border)]',\n      ],\n      destructive: [\n        'bg-red-500/10 text-red-400 border-red-500/30',\n      ],\n    },\n  },\n  defaultVariants: {\n    variant: 'default',\n  },\n})\n\nconst props = withDefaults(\n  defineProps<{\n    variant?: 'default' | 'secondary' | 'outline' | 'destructive'\n    class?: string\n  }>(),\n  { variant: 'default' }\n)\n\nconst classes = computed(() => badgeVariants({ variant: props.variant, class: props.class }))\n</script>\n\n<template>\n  <span :class=\"classes\">\n    <slot />\n  </span>\n</template>\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

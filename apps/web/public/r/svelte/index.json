@@ -1,0 +1,134 @@
+[
+  {
+    "name": "avatar",
+    "type": "registry:ui",
+    "title": "Avatar",
+    "description": "Circular avatar with image and initials fallback.",
+    "categories": [
+      "media",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "Inline status badge with four variants.",
+    "categories": [
+      "badges",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "button",
+    "type": "registry:ui",
+    "title": "Button",
+    "description": "Accessible button with six variants. Electric-glow on the default variant.",
+    "categories": [
+      "buttons",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "card",
+    "type": "registry:ui",
+    "title": "Card",
+    "description": "Composable card with header, content, and footer slots.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "checkbox",
+    "type": "registry:ui",
+    "title": "Checkbox",
+    "description": "Accessible checkbox with electric-accent checked state.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "input",
+    "type": "registry:ui",
+    "title": "Input",
+    "description": "Text input with OKLCH-tuned focus ring and surface hierarchy.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "label",
+    "type": "registry:ui",
+    "title": "Label",
+    "description": "Accessible form label.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "separator",
+    "type": "registry:ui",
+    "title": "Separator",
+    "description": "Horizontal or vertical visual divider.",
+    "categories": [
+      "layout",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "skeleton",
+    "type": "registry:ui",
+    "title": "Skeleton",
+    "description": "Animated placeholder for loading states.",
+    "categories": [
+      "feedback",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "switch",
+    "type": "registry:ui",
+    "title": "Switch",
+    "description": "Accessible toggle switch with electric-cyan on state.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "tabs",
+    "type": "registry:ui",
+    "title": "Tabs",
+    "description": "Context-based tab panels with keyboard navigation.",
+    "categories": [
+      "navigation",
+      "core",
+      "free"
+    ]
+  },
+  {
+    "name": "textarea",
+    "type": "registry:ui",
+    "title": "Textarea",
+    "description": "Textarea with matching input design language.",
+    "categories": [
+      "forms",
+      "core",
+      "free"
+    ]
+  }
+]

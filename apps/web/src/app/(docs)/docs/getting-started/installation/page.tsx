@@ -1,127 +1,133 @@
 import type { Metadata } from "next"
+import { CodeBlock } from "@/components/code-block"
+import { Callout } from "@/components/docs/callout"
+import { Steps, Step } from "@/components/docs/steps"
+import { PrevNext } from "@/components/docs/prev-next"
 
 export const metadata: Metadata = { title: "Installation — ParticleUI Docs" }
-
-function CodeBlock({ code, filename }: { code: string; filename?: string }) {
-  return (
-    <div className="rounded-xl border border-border bg-surface-1 overflow-hidden mb-5">
-      {filename && (
-        <div className="border-b border-border px-4 py-2.5">
-          <span className="font-mono text-xs text-text-4">{filename}</span>
-        </div>
-      )}
-      <pre className="overflow-x-auto p-4 text-xs leading-6 text-accent-text">
-        <code>{code}</code>
-      </pre>
-    </div>
-  )
-}
-
-function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
-  return (
-    <div className="mb-8 flex gap-4">
-      <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-bold text-text-4">
-        {n}
-      </div>
-      <div className="flex-1">
-        <h3 className="text-base font-semibold mb-3 text-text-1">{title}</h3>
-        {children}
-      </div>
-    </div>
-  )
-}
 
 export default function InstallationPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-4">
+      <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
-      <h1 className="mb-4 text-4xl font-bold tracking-[-0.03em] text-text-1">Installation</h1>
-      <p className="mb-10 text-text-3 leading-relaxed">
-        ParticleUI works with any project that uses shadcn/ui. If you haven't set up shadcn yet,{" "}
-        <a href="https://ui.shadcn.com/docs/installation" className="text-accent hover:underline">
-          do that first
-        </a>.
+      <h1 id="installation" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+        Installation
+      </h1>
+      <p className="mb-8 text-text-2 leading-[1.75] text-[0.9375rem]">
+        ParticleUI ships its own CLI — <code>particleui-cli</code> — so you don&apos;t need the
+        shadcn CLI at all. One command installs any component directly into your project.
       </p>
 
-      <Step n={1} title="Get a token">
-        <p className="text-sm text-text-3 mb-3">
-          Free components don't require a token. For Pro components,{" "}
-          <a href="/sign-up" className="text-accent hover:underline">create an account</a> and
-          copy your API token from the{" "}
-          <a href="/dashboard" className="text-accent hover:underline">dashboard</a>.
-        </p>
-        <CodeBlock filename=".env" code="PARTICLEUI_TOKEN=pui_your_token_here" />
-      </Step>
+      <Callout variant="note">
+        The ParticleUI CLI is a drop-in replacement for <code>npx shadcn add @particleui/…</code>.
+        Both work — but the dedicated CLI is faster, supports Vue &amp; Svelte natively, and adds
+        AI-powered layout generation.
+      </Callout>
 
-      <Step n={2} title="Add the registry">
-        <p className="text-sm text-text-3 mb-3">
-          Open your <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">components.json</code> and
-          add <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">@particleui</code> under{" "}
-          <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">registries</code>:
-        </p>
-        <CodeBlock
-          filename="components.json"
-          code={`{
-  "registries": {
-    "@particleui": {
-      "url": "https://particleui.dev/r/react/{name}.json",
-      "headers": {
-        "Authorization": "Bearer \${PARTICLEUI_TOKEN}"
-      }
-    }
-  }
-}`}
-        />
-        <p className="text-xs text-text-4">
-          The <code className="text-text-3">{"{name}"}</code> placeholder is filled in by the shadcn CLI automatically.
-          The token is read from your environment — it's never hard-coded.
-        </p>
-      </Step>
+      <h2 id="steps" className="mb-6 mt-10 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        Setup steps
+      </h2>
 
-      <Step n={3} title="Install a component">
-        <p className="text-sm text-text-3 mb-3">
-          Use the standard shadcn CLI with the <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">@particleui</code> namespace:
-        </p>
-        <CodeBlock code="npx shadcn add @particleui/glow-button" />
-        <p className="text-sm text-text-3 mb-3">For Pro components:</p>
-        <CodeBlock code="npx shadcn add @particleui/particle-hero" />
-      </Step>
+      <Steps>
+        <Step title="Install your first component">
+          <p className="mb-3">
+            No setup required. Just run the CLI with the component name — it auto-detects your
+            framework and writes the file directly into your project:
+          </p>
+          <CodeBlock code="npx particleui-cli add button" />
+          <p className="mt-3 text-text-3 text-sm">
+            Install multiple at once:
+          </p>
+          <div className="mt-2">
+            <CodeBlock code="npx particleui-cli add glow-card tilt-card marquee" />
+          </div>
+        </Step>
 
-      <Step n={4} title="Use it">
-        <p className="text-sm text-text-3 mb-3">
-          The component is now in your project. Import it like any other component:
-        </p>
-        <CodeBlock
-          code={`import { GlowButton } from "@/components/ui/glow-button"
+        <Step title="(Optional) Set up project config">
+          <p className="mb-3">
+            The CLI auto-detects your framework and components directory. To lock in your preferences,
+            run the interactive init:
+          </p>
+          <CodeBlock code="npx particleui-cli init" />
+          <p className="mt-3 text-text-3 text-sm">
+            This creates a <code>particleui.json</code> in your project root with your framework,
+            components directory, and optional Pro token path.
+          </p>
+        </Step>
+
+        <Step title="Use it like any other component">
+          <p className="mb-3">Import and use — the file is already in your project:</p>
+          <CodeBlock
+            code={`import { GlowButton } from "@/components/ui/glow-button"
 
 export default function Page() {
   return <GlowButton variant="electric">Ship it</GlowButton>
 }`}
-        />
-      </Step>
+          />
+        </Step>
+      </Steps>
 
-      <hr className="border-border my-8" />
+      <Callout variant="tip" title="Global install for daily use">
+        Install once, use everywhere without npx:
+        <br />
+        <br />
+        <code>npm install -g particleui-cli</code>
+        <br />
+        <code>particleui add glow-button tilt-card beam</code>
+      </Callout>
 
-      <section>
-        <h2 className="mb-4 text-xl font-semibold tracking-tight text-text-1">Vue & Svelte</h2>
-        <p className="text-sm text-text-3 leading-relaxed mb-3">
-          Use the framework-specific registry URL:
+      <hr className="border-border my-10" />
+
+      <section className="mb-10">
+        <h2 id="pro-components" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+          Pro components
+        </h2>
+        <p className="text-sm text-text-2 leading-[1.75] mb-4">
+          Pro components require an active license. After purchasing,{" "}
+          <a href="/dashboard" className="text-accent hover:underline">
+            copy your API token from the dashboard
+          </a>{" "}
+          and set it in your environment:
+        </p>
+        <CodeBlock filename=".env" code="PARTICLEUI_TOKEN=pui_your_token_here" />
+        <p className="mt-3 text-sm text-text-3 mb-3">
+          The CLI reads this automatically — no extra config needed:
+        </p>
+        <CodeBlock code="npx particleui-cli add particle-hero" />
+        <p className="mt-2 text-xs text-text-3">
+          The token is read at install time only — it is never bundled into your app. Add{" "}
+          <code>.env</code> to <code>.gitignore</code>.
+        </p>
+      </section>
+
+      <section className="mb-10">
+        <h2 id="vue-svelte" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+          Vue &amp; Svelte
+        </h2>
+        <p className="text-sm text-text-2 leading-[1.75] mb-3">
+          The CLI auto-detects Vue and Svelte projects. You can also pass <code>--framework</code>:
+        </p>
+        <CodeBlock code={`npx particleui-cli add button --framework vue\nnpx particleui-cli add button --framework svelte`} />
+        <p className="mt-3 text-sm text-text-3 mb-3">
+          Frameworks with available components (more ported weekly):
         </p>
         <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
           {[
-            ["React", "https://particleui.dev/r/react/{name}.json"],
-            ["Vue", "https://particleui.dev/r/vue/{name}.json"],
-            ["Svelte", "https://particleui.dev/r/svelte/{name}.json"],
-          ].map(([fw, url]) => (
+            ["React", "85 components"],
+            ["Vue", "12 components"],
+            ["Svelte", "12 components"],
+          ].map(([fw, count]) => (
             <div key={fw as string} className="flex items-center gap-4 bg-surface-1 px-4 py-3">
               <span className="w-16 shrink-0 text-xs font-medium text-text-3">{fw}</span>
-              <code className="text-xs text-text-4 font-mono">{url as string}</code>
+              <span className="text-xs text-text-4">{count as string}</span>
             </div>
           ))}
         </div>
       </section>
+
+      <PrevNext />
     </div>
   )
 }

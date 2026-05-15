@@ -17,7 +17,7 @@ const Switch = React.forwardRef<
       "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
       "disabled:cursor-not-allowed disabled:opacity-40",
       "data-[state=checked]:bg-[var(--color-accent)]",
-      "data-[state=checked]:shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]",
+      "data-[state=checked]:shadow-[0_0_10px_0px_var(--color-accent-glow-sm)]",
       className,
     ]
       .filter(Boolean)
@@ -27,7 +27,7 @@ const Switch = React.forwardRef<
     <SwitchPrimitive.Thumb
       className={[
         "pointer-events-none block h-4 w-4 rounded-full",
-        "bg-white shadow-sm",
+        "bg-[var(--color-bg)] shadow-sm",
         "ring-0 transition-transform duration-200",
         "data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0",
       ].join(" ")}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "checkbox",
+  "type": "registry:ui",
+  "title": "Checkbox",
+  "description": "Accessible checkbox with electric-accent checked state.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/checkbox.svelte",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    checked?: boolean\n    onchange?: (checked: boolean) => void\n    disabled?: boolean\n    id?: string\n    class?: string\n    [key: string]: unknown\n  }\n\n  let {\n    checked = $bindable(false),\n    onchange,\n    disabled = false,\n    id,\n    class: className,\n    ...rest\n  }: Props = $props()\n\n  function toggle() {\n    if (disabled) return\n    checked = !checked\n    onchange?.(checked)\n  }\n\n  function handleKeydown(event: KeyboardEvent) {\n    if (event.key === \" \" || event.key === \"Enter\") {\n      event.preventDefault()\n      toggle()\n    }\n  }\n</script>\n\n<button\n  {id}\n  type=\"button\"\n  role=\"checkbox\"\n  aria-checked={checked}\n  {disabled}\n  onclick={toggle}\n  onkeydown={handleKeydown}\n  class=\"inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-sm border transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer {checked\n    ? 'bg-[var(--color-accent)] border-[var(--color-accent)] shadow-[0_0_6px_var(--color-accent-dim)] text-[var(--color-bg)]'\n    : 'bg-transparent border-[var(--color-border)] hover:border-[var(--color-border-hover)]'} {className ?? ''}\"\n  {...rest}\n>\n  {#if checked}\n    <svg\n      xmlns=\"http://www.w3.org/2000/svg\"\n      viewBox=\"0 0 24 24\"\n      fill=\"none\"\n      stroke=\"currentColor\"\n      stroke-width=\"3\"\n      stroke-linecap=\"round\"\n      stroke-linejoin=\"round\"\n      class=\"h-3 w-3\"\n      aria-hidden=\"true\"\n    >\n      <polyline points=\"20 6 9 17 4 12\"></polyline>\n    </svg>\n  {/if}\n</button>\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "forms",
+    "core",
+    "free"
+  ]
+}

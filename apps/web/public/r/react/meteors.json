@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "meteors",
+  "type": "registry:ui",
+  "title": "Meteors",
+  "description": "CSS-animated meteor shower effect. Drop into any relative-positioned container.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/meteors.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface MeteorsProps {\n  count?: number\n  className?: string\n  color?: string\n}\n\nfunction Meteors({ count = 18, className, color = \"var(--color-accent)\" }: MeteorsProps) {\n  const meteors = React.useMemo(\n    () =>\n      Array.from({ length: count }, (_, i) => ({\n        id: i,\n        delay: Math.random() * 8,\n        duration: 2 + Math.random() * 4,\n        left: Math.random() * 100,\n        size: 1 + Math.random() * 1.5,\n        length: 80 + Math.random() * 120,\n      })),\n    [count]\n  )\n\n  return (\n    <div\n      aria-hidden\n      className={[\n        \"pointer-events-none absolute inset-0 overflow-hidden\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n    >\n      {meteors.map((m) => (\n        <span\n          key={m.id}\n          style={{\n            position: \"absolute\",\n            top: \"-10%\",\n            left: `${m.left}%`,\n            width: `${m.size}px`,\n            height: `${m.length}px`,\n            background: `linear-gradient(to bottom, ${color}, transparent)`,\n            borderRadius: \"9999px\",\n            opacity: 0,\n            transform: \"rotate(215deg)\",\n            animation: `meteor ${m.duration}s ${m.delay}s linear infinite`,\n          }}\n        />\n      ))}\n      <style>{`\n        @keyframes meteor {\n          0%   { opacity: 0; transform: rotate(215deg) translateX(0); }\n          5%   { opacity: 1; }\n          80%  { opacity: 1; }\n          100% { opacity: 0; transform: rotate(215deg) translateX(calc(100vh + 200px)); }\n        }\n      `}</style>\n    </div>\n  )\n}\n\nexport { Meteors }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "background",
+    "particles",
+    "free"
+  ]
+}

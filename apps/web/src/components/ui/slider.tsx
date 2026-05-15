@@ -24,9 +24,9 @@ const Slider = React.forwardRef<
       className={[
         "block h-4 w-4 rounded-full",
         "border-2 border-[var(--color-accent)] bg-[var(--color-bg)]",
-        "shadow-[0_0_8px_0px_oklch(78%_0.17_200_/_0.4)]",
+        "shadow-[0_0_8px_0px_var(--color-accent-glow-sm)]",
         "transition-all duration-150",
-        "hover:shadow-[0_0_14px_0px_oklch(78%_0.17_200_/_0.55)] hover:scale-110",
+        "hover:shadow-[0_0_14px_0px_var(--color-accent-glow-lg)] hover:scale-110",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]",
         "disabled:pointer-events-none disabled:opacity-40",
       ].join(" ")}

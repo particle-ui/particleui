@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "typewriter",
+  "type": "registry:ui",
+  "title": "Typewriter",
+  "description": "Animated typewriter with configurable typing/deleting speed, pause, and loop. Electric cursor blink.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/typewriter.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface TypewriterProps {\n  words: string[]\n  typingSpeed?: number\n  deletingSpeed?: number\n  pauseMs?: number\n  className?: string\n  cursorClassName?: string\n  loop?: boolean\n}\n\nfunction Typewriter({\n  words,\n  typingSpeed = 60,\n  deletingSpeed = 35,\n  pauseMs = 1800,\n  className,\n  cursorClassName,\n  loop = true,\n}: TypewriterProps) {\n  const [displayed, setDisplayed] = React.useState(\"\")\n  const [wordIdx, setWordIdx] = React.useState(0)\n  const [isDeleting, setIsDeleting] = React.useState(false)\n  const [isPaused, setIsPaused] = React.useState(false)\n\n  React.useEffect(() => {\n    const current = words[wordIdx % words.length]\n\n    if (isPaused) {\n      const t = setTimeout(() => {\n        setIsPaused(false)\n        if (loop || wordIdx < words.length - 1) setIsDeleting(true)\n      }, pauseMs)\n      return () => clearTimeout(t)\n    }\n\n    const t = setTimeout(\n      () => {\n        if (!isDeleting) {\n          setDisplayed(current.slice(0, displayed.length + 1))\n          if (displayed.length + 1 === current.length) setIsPaused(true)\n        } else {\n          setDisplayed(current.slice(0, displayed.length - 1))\n          if (displayed.length === 0) {\n            setIsDeleting(false)\n            setWordIdx((i) => (i + 1) % words.length)\n          }\n        }\n      },\n      isDeleting ? deletingSpeed : typingSpeed\n    )\n    return () => clearTimeout(t)\n  }, [displayed, isDeleting, isPaused, wordIdx, words, typingSpeed, deletingSpeed, pauseMs, loop])\n\n  return (\n    <span className={className}>\n      {displayed}\n      <span\n        aria-hidden\n        className={[\n          \"inline-block w-0.5 h-[1em] ml-0.5 align-middle\",\n          \"bg-[var(--color-accent)]\",\n          \"animate-[typewriter-blink_0.75s_step-end_infinite]\",\n          cursorClassName,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n      />\n    </span>\n  )\n}\n\nexport { Typewriter }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

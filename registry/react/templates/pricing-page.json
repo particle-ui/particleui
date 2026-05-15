@@ -1,0 +1,32 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "pricing-page",
+  "type": "registry:block",
+  "title": "Pricing Page",
+  "description": "Dedicated pricing page with a centered hero, three-tier pricing table, FAQ section, and CTA footer.",
+  "author": "ParticleUI",
+  "categories": [
+    "template",
+    "marketing",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "hero-centered",
+    "pricing",
+    "faq",
+    "cta-section",
+    "footer"
+  ],
+  "files": [
+    {
+      "path": "components/templates/pricing-page.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport { HeroCentered } from \"@/components/blocks/hero-centered\"\nimport { PricingSection } from \"@/components/blocks/pricing\"\nimport { FaqSection } from \"@/components/blocks/faq\"\nimport { CtaSection } from \"@/components/blocks/cta-section\"\nimport { Footer } from \"@/components/blocks/footer\"\n\nexport function PricingPageTemplate() {\n  return (\n    <>\n      <HeroCentered\n        badge=\"Simple pricing\"\n        headlinePre=\"Pricing that\"\n        headlineGradient=\"scales with you.\"\n        headlinePost=\"\"\n        subwords={[\"Free forever.\", \"No credit card.\", \"Cancel anytime.\", \"MIT license.\"]}\n        description=\"Start free and upgrade only when you need more. Every plan includes all core components.\"\n        primaryCta=\"View plans below\"\n        primaryHref=\"#pricing\"\n        secondaryCta=\"Talk to sales\"\n        secondaryHref=\"/contact\"\n        meteors={true}\n      />\n      <PricingSection />\n      <FaqSection\n        heading=\"Pricing questions\"\n        description=\"Everything you need to know about our plans and billing.\"\n      />\n      <CtaSection\n        heading=\"Ready to get started?\"\n        headingGradient=\"It's free.\"\n        description=\"Join thousands of developers already building with ParticleUI.\"\n        primaryCta=\"Start for free\"\n        primaryHref=\"/docs/getting-started/installation\"\n      />\n      <Footer />\n    </>\n  )\n}\n\nexport default PricingPageTemplate\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

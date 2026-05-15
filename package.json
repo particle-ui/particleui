@@ -1,13 +1,29 @@
 {
   "name": "particleui",
   "private": true,
+  "description": "85+ open source components for shadcn/ui — install with the ParticleUI CLI",
+  "license": "MIT",
+  "homepage": "https://particleui.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/particleui/particleui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/particleui/particleui/issues"
+  },
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "typecheck": "turbo typecheck",
     "registry:build": "node packages/registry-builder/build.mjs && node packages/registry-builder/build-index.mjs",
-    "registry:gen": "node scripts/gen-registry.mjs && pnpm registry:build"
+    "registry:gen": "node scripts/gen-registry.mjs && pnpm registry:build",
+    "registry:particles": "node scripts/gen-particles.mjs && pnpm registry:build",
+    "registry:blocks": "node scripts/gen-blocks.mjs && pnpm registry:build",
+    "registry:svelte": "node scripts/gen-svelte.mjs && pnpm registry:build",
+    "registry:vue": "node scripts/gen-vue.mjs && pnpm registry:build",
+    "registry:templates": "node scripts/gen-templates.mjs && pnpm registry:build",
+    "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build"
   },
   "devDependencies": {
     "turbo": "^2.9.14",

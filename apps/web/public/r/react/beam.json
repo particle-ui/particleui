@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "beam",
+  "type": "registry:ui",
+  "title": "Beam",
+  "description": "Animated light beam that slides across a 1px separator line. Configurable color, speed, and delay.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/beam.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface BeamProps {\n  width?: string | number\n  duration?: number\n  delay?: number\n  colorFrom?: string\n  colorTo?: string\n  className?: string\n}\n\nfunction Beam({\n  width = \"100%\",\n  duration = 3,\n  delay = 0,\n  colorFrom = \"oklch(78% 0.17 200)\",\n  colorTo = \"transparent\",\n  className,\n}: BeamProps) {\n  return (\n    <div\n      className={[\"relative h-px overflow-hidden\", className].filter(Boolean).join(\" \")}\n      style={{ width }}\n    >\n      <div\n        style={{\n          position: \"absolute\",\n          inset: 0,\n          background: `linear-gradient(to right, transparent 0%, ${colorFrom} 50%, ${colorTo} 100%)`,\n          animation: `beam-slide ${duration}s ${delay}s ease-in-out infinite`,\n        }}\n      />\n      <div\n        style={{\n          position: \"absolute\",\n          inset: 0,\n          background: `linear-gradient(90deg, transparent, oklch(78% 0.17 200 / 0.1), transparent)`,\n        }}\n      />\n      <style>{`\n        @keyframes beam-slide {\n          0%   { transform: translateX(-100%); opacity: 0; }\n          20%  { opacity: 1; }\n          80%  { opacity: 1; }\n          100% { transform: translateX(200%); opacity: 0; }\n        }\n      `}</style>\n    </div>\n  )\n}\n\nexport { Beam }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ]
+}

@@ -13,14 +13,16 @@ function headers(): Record<string, string> {
 }
 
 type IndexItem = {
-  name: string; type: string; title: string
-  description: string; categories: string[]
+  name: string; tier: string; title: string
+  description: string; categories: string[]; dependencies: string[]
 }
 
 async function fetchIndex(fw: string): Promise<IndexItem[]> {
   const res = await fetch(`${BASE}/${fw}/index.json`)
   if (!res.ok) return []
-  return res.json()
+  const data = await res.json()
+  // Support both { items: [...] } (new) and legacy flat array
+  return Array.isArray(data) ? data : (data.items ?? [])
 }
 
 const server = new McpServer({ name: "particleui", version: "0.1.0" })
@@ -40,8 +42,8 @@ server.tool(
     const results = index.filter((item) => {
       const matchesTier =
         tier === "all" ||
-        (tier === "pro" && item.categories.includes("pro")) ||
-        (tier === "free" && !item.categories.includes("pro"))
+        (tier === "pro" && item.tier === "pro") ||
+        (tier === "free" && item.tier !== "pro")
       const matchesQuery =
         item.name.includes(q) ||
         item.title.toLowerCase().includes(q) ||
@@ -55,7 +57,7 @@ server.tool(
 
     const lines = results.map(
       (r) =>
-        `• **${r.name}**${r.categories.includes("pro") ? " [PRO]" : " [free]"} — ${r.description}`
+        `• **${r.name}**${r.tier === "pro" ? " [PRO]" : " [free]"} (${r.tier}) — ${r.description}`
     )
     return {
       content: [{ type: "text", text: `Found ${results.length}:\n\n${lines.join("\n")}` }],
@@ -152,6 +154,115 @@ server.tool(
         text: `Categories: ${[...cats].sort().join(", ")}`,
       }],
     }
+  }
+)
+
+/* ── generate_layout ── */
+server.tool(
+  "generate_layout",
+  "Generate a page layout from a prompt. Returns a list of ParticleUI blocks that compose the described page, plus a one-command install string.",
+  {
+    prompt: z.string().max(500).describe("Natural-language description of the page or UI"),
+    framework: z.enum(["react", "vue", "svelte"]).default("react"),
+  },
+  async ({ prompt, framework }) => {
+    const base = process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev"
+    const res = await fetch(`${base}/api/mcp/generate`, {
+      method: "POST",
+      headers: { ...headers(), "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt }),
+    })
+    if (res.status === 401)
+      return { content: [{ type: "text", text: "Missing or invalid PARTICLEUI_TOKEN. Get a token at https://particleui.dev/dashboard" }] }
+    if (!res.ok)
+      return { content: [{ type: "text", text: `Generation failed: ${res.statusText}` }] }
+
+    const data = (await res.json()) as { layout: { blocks: { component: string }[] }; installCmd: string }
+    const blocks = data.layout?.blocks ?? []
+    const installCmd = `npx shadcn add ${blocks.map((b) => `@particleui/${b.component}`).join(" ")}`
+    const lines = [
+      `## Generated layout for: "${prompt.slice(0, 60)}..."`,
+      ``,
+      `**Blocks (${blocks.length}):**`,
+      blocks.map((b, i) => `${i + 1}. \`${b.component}\``).join("\n"),
+      ``,
+      `**Install all in one command:**`,
+      `\`\`\`bash`,
+      installCmd,
+      `\`\`\``,
+      ``,
+      `**Preview in browser:** ${base}/generate`,
+    ]
+    return { content: [{ type: "text", text: lines.join("\n") }] }
+  }
+)
+
+/* ── install_template ── */
+server.tool(
+  "install_template",
+  "Get the install command for a full-page ParticleUI template. Templates are composed multi-section pages (landing, dashboard, auth, pricing, docs, blog).",
+  {
+    name: z.enum(["landing", "saas-dashboard", "auth", "pricing-page", "docs-site", "blog"]).describe("Template name"),
+  },
+  async ({ name }) => {
+    const TEMPLATE_BLOCKS: Record<string, string[]> = {
+      landing: ["hero-split", "logo-cloud", "feature-alternating", "stats", "testimonials", "pricing", "faq", "cta-section", "footer"],
+      "saas-dashboard": ["dashboard-analytics", "stats"],
+      auth: ["auth-sign-in", "auth-sign-up", "auth-forgot-password", "auth-verify-email"],
+      "pricing-page": ["hero-centered", "pricing", "faq", "cta-section", "footer"],
+      "docs-site": ["footer"],
+      blog: ["newsletter", "footer"],
+    }
+    const blocks = TEMPLATE_BLOCKS[name] ?? []
+    const installCmd = `npx shadcn add ${blocks.map((b) => `@particleui/${b}`).join(" ")}`
+    const lines = [
+      `## Template: ${name}`,
+      ``,
+      `**Blocks included (${blocks.length}):** ${blocks.join(", ")}`,
+      ``,
+      `**Install everything in one command:**`,
+      `\`\`\`bash`,
+      installCmd,
+      `\`\`\``,
+      ``,
+      `**Docs:** https://particleui.dev/docs/templates/${name}`,
+    ]
+    return { content: [{ type: "text", text: lines.join("\n") }] }
+  }
+)
+
+/* ── preview_theme ── */
+server.tool(
+  "preview_theme",
+  "Generate a CSS theme snippet from OKLCH token values. Returns ready-to-paste CSS for globals.css and a shareable theme studio URL.",
+  {
+    bg: z.string().describe("Background color in OKLCH e.g. oklch(4% 0.005 60)").optional(),
+    accent: z.string().describe("Accent/brand color in OKLCH").optional(),
+    name: z.string().describe("Theme name").default("My Theme"),
+  },
+  async ({ bg, accent, name }) => {
+    const safeBg = bg ?? "oklch(4% 0.005 60)"
+    const safeAccent = accent ?? "oklch(96% 0.01 80)"
+    const css = `.dark {
+  --color-bg: ${safeBg};
+  --color-accent: ${safeAccent};
+  --color-accent-dim: ${safeAccent.replace(")", " / 0.08)")};
+  --color-accent-border: ${safeAccent.replace(")", " / 0.18)")};
+}
+
+/* Apply to your globals.css .dark block */`
+    const studioUrl = `https://particleui.dev/theme-studio`
+    const lines = [
+      `## Theme: ${name}`,
+      ``,
+      `\`\`\`css`,
+      css,
+      `\`\`\``,
+      ``,
+      `**Customize further:** ${studioUrl}`,
+      `**Install a community theme:** \`npx shadcn add https://particleui.dev/r/themes/<slug>.json\``,
+    ]
+    return { content: [{ type: "text", text: lines.join("\n") }] }
   }
 )
 

@@ -14,7 +14,7 @@ const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
 const contentBase = [
   "z-50 min-w-[8rem] overflow-hidden rounded-lg p-1",
   "bg-[var(--color-surface-2)] border border-[var(--color-border)]",
-  "shadow-[0_8px_32px_0px_oklch(0%_0_0_/_0.5)]",
+  "shadow-[0_8px_32px_0px_var(--color-shadow-overlay)]",
   "data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95",
   "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
   "data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2",

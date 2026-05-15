@@ -37,6 +37,37 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { Calendar } from "@/components/ui/calendar"
 import { DatePicker } from "@/components/ui/date-picker"
 import { Combobox } from "@/components/ui/combobox"
+import { TiltCard } from "@/components/ui/tilt-card"
+import { Typewriter } from "@/components/ui/typewriter"
+import { Counter } from "@/components/ui/counter"
+import { GradientText } from "@/components/ui/gradient-text"
+import { Meteors } from "@/components/ui/meteors"
+import { ConfettiButton } from "@/components/ui/confetti-button"
+import { ShimmerButton } from "@/components/ui/shimmer-button"
+import { GlowCard } from "@/components/ui/glow-card"
+import { FloatingDock } from "@/components/ui/floating-dock"
+import { Marquee } from "@/components/ui/marquee"
+import { Beam } from "@/components/ui/beam"
+import { GlowInput } from "@/components/ui/glow-input"
+import { Home, Search, Bell, Star, Heart, Music, Video, Camera } from "lucide-react"
+import { HeroCentered } from "@/components/blocks/hero-centered"
+import { HeroSplit } from "@/components/blocks/hero-split"
+import { PricingSection } from "@/components/blocks/pricing"
+import { FeatureGrid } from "@/components/blocks/feature-grid"
+import { FeatureAlternating } from "@/components/blocks/feature-alternating"
+import { CtaSection } from "@/components/blocks/cta-section"
+import { Footer } from "@/components/blocks/footer"
+import { AuthSignIn } from "@/components/blocks/auth-sign-in"
+import { AuthSignUp } from "@/components/blocks/auth-sign-up"
+import { DashboardAnalytics } from "@/components/blocks/dashboard-analytics"
+import { SettingsPage } from "@/components/blocks/settings-page"
+import { AIChat } from "@/components/blocks/ai-chat"
+import { TestimonialsSection } from "@/components/blocks/testimonials"
+import { StatsSection } from "@/components/blocks/stats"
+import { FaqSection } from "@/components/blocks/faq"
+import { LogoCloud } from "@/components/blocks/logo-cloud"
+import { HowItWorks } from "@/components/blocks/how-it-works"
+import { NewsletterSection } from "@/components/blocks/newsletter"
 
 /* ── Glow Button Preview ─────────────────────────────────────────────────── */
 export function GlowButtonPreview() {
@@ -55,10 +86,10 @@ export function GlowButtonPreview() {
         {
           label: "Electric",
           style: {
-            background: "rgba(0,212,255,0.1)",
-            color: "#00d4ff",
-            border: "1px solid rgba(0,212,255,0.3)",
-            boxShadow: "0 0 16px rgba(0,212,255,0.2)",
+            background: "rgba(255,255,255,0.04)",
+            color: "oklch(96% 0.01 80)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            boxShadow: "0 0 16px rgba(255,255,255,0.08)",
           },
         },
         {
@@ -89,9 +120,9 @@ export function ElectricBadgePreview() {
       {[
         {
           label: "Live",
-          color: "#00d4ff",
-          bg: "rgba(0,212,255,0.08)",
-          border: "rgba(0,212,255,0.3)",
+          color: "oklch(96% 0.01 80)",
+          bg: "rgba(255,255,255,0.04)",
+          border: "rgba(255,255,255,0.12)",
         },
         {
           label: "Deployed",
@@ -137,7 +168,7 @@ export function GradientCardPreview() {
   return (
     <div className="space-y-3 w-full max-w-[260px]">
       {[
-        { from: "#222", mid: "rgba(0,212,255,0.15)", to: "#0a0a0a" },
+        { from: "#222", mid: "rgba(255,255,255,0.06)", to: "#0a0a0a" },
         { from: "#1a1a1a", mid: "rgba(124,58,237,0.15)", to: "#080808" },
       ].map(({ from, mid, to }, i) => (
         <div
@@ -220,10 +251,10 @@ export function MagneticButtonPreview() {
         className="rounded-full px-8 py-3 text-sm font-medium transition-all duration-150"
         style={{
           transform: `translate(${offset.x}px, ${offset.y}px)`,
-          border: `1px solid ${hovered ? "rgba(0,212,255,0.4)" : "rgba(255,255,255,0.1)"}`,
-          background: hovered ? "rgba(0,212,255,0.08)" : "rgba(255,255,255,0.04)",
-          color: hovered ? "#00d4ff" : "#888",
-          boxShadow: hovered ? "0 0 30px rgba(0,212,255,0.2)" : "none",
+          border: `1px solid ${hovered ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.1)"}`,
+          background: hovered ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.04)",
+          color: hovered ? "oklch(96% 0.01 80)" : "#888",
+          boxShadow: hovered ? "0 0 30px rgba(255,255,255,0.08)" : "none",
         }}
       >
         Hover me
@@ -236,7 +267,7 @@ export function MagneticButtonPreview() {
 /* ── Aurora Background Preview ───────────────────────────────────────────── */
 export function AuroraBackgroundPreview() {
   const blobs = [
-    { color: "#00d4ff", top: "10%", left: "20%", dur: "8s" },
+    { color: "#f5f0e8", top: "10%", left: "20%", dur: "8s" },
     { color: "#7c3aed", top: "40%", left: "60%", dur: "11s" },
     { color: "#0ea5e9", top: "70%", left: "10%", dur: "9s" },
   ]
@@ -388,7 +419,7 @@ export function SpotlightHeroPreview() {
       <div
         className="pointer-events-none absolute h-32 w-32 rounded-full opacity-15 blur-[40px] transition-all duration-150"
         style={{
-          background: "#00d4ff",
+          background: "#f5f0e8",
           left: `calc(${pos.x} - 4rem)`,
           top: `calc(${pos.y} - 4rem)`,
         }}
@@ -423,7 +454,7 @@ export function BentoGridPreview() {
             className="pointer-events-none absolute inset-0 transition-opacity duration-300"
             style={{
               opacity: pos.opacity,
-              background: `radial-gradient(200px circle at ${pos.x}px ${pos.y}px, rgba(0,212,255,0.07), transparent 60%)`,
+              background: `radial-gradient(200px circle at ${pos.x}px ${pos.y}px, rgba(255,255,255,0.04), transparent 60%)`,
             }}
           />
           <p className="text-xs font-semibold mb-1">{title}</p>
@@ -755,11 +786,11 @@ export function DialogPreview() {
           <div className="space-y-3 py-2">
             <div className="space-y-1.5">
               <Label htmlFor="dialog-name">Display name</Label>
-              <Input id="dialog-name" defaultValue="Dawit" />
+              <Input id="dialog-name" defaultValue="Alex Rivera" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="dialog-username">Username</Label>
-              <Input id="dialog-username" defaultValue="@dawit" />
+              <Input id="dialog-username" defaultValue="@alexrivera" />
             </div>
           </div>
           <DialogFooter>
@@ -901,11 +932,11 @@ export function TabsPreview() {
         <TabsContent value="account" className="space-y-3">
           <div className="space-y-1.5">
             <Label>Display name</Label>
-            <Input placeholder="Dawit" />
+            <Input placeholder="Alex Rivera" />
           </div>
           <div className="space-y-1.5">
             <Label>Email</Label>
-            <Input type="email" placeholder="dawit@example.com" />
+            <Input type="email" placeholder="alex@example.com" />
           </div>
           <Button size="sm">Save account</Button>
         </TabsContent>
@@ -1343,4 +1374,263 @@ export function ComboboxPreview() {
       </div>
     </div>
   )
+}
+
+/* ── Phase 4: Particle Components ───────────────────────────────────────── */
+
+export function TiltCardPreview() {
+  return (
+    <div className="flex gap-4 flex-wrap justify-center">
+      <TiltCard className="w-48 p-6 flex flex-col gap-2">
+        <div className="text-2xl font-bold text-[var(--color-accent)]">3D</div>
+        <div className="text-sm text-[var(--color-text-2)]">Hover to tilt</div>
+      </TiltCard>
+      <TiltCard intensity={20} className="w-48 p-6 flex flex-col gap-2">
+        <div className="text-2xl font-bold text-[var(--color-text-1)]">High</div>
+        <div className="text-sm text-[var(--color-text-2)]">intensity 20</div>
+      </TiltCard>
+      <TiltCard glare={false} className="w-48 p-6 flex flex-col gap-2">
+        <div className="text-2xl font-bold text-[var(--color-text-1)]">No Glare</div>
+        <div className="text-sm text-[var(--color-text-2)]">glare off</div>
+      </TiltCard>
+    </div>
+  )
+}
+
+export function TypewriterPreview() {
+  return (
+    <div className="flex flex-col gap-6 items-center">
+      <div className="text-2xl font-bold text-[var(--color-text-1)]">
+        Build{" "}
+        <Typewriter
+          words={["faster.", "smarter.", "better.", "with ParticleUI."]}
+          className="text-[var(--color-accent)]"
+        />
+      </div>
+      <div className="text-base text-[var(--color-text-2)]">
+        <Typewriter
+          words={["Elegant components.", "Zero compromise.", "Ship today."]}
+          typingSpeed={50}
+          deletingSpeed={30}
+        />
+      </div>
+    </div>
+  )
+}
+
+export function CounterPreview() {
+  return (
+    <div className="flex gap-8 flex-wrap justify-center">
+      {[
+        { to: 12500, prefix: "+", suffix: "", label: "Stars" },
+        { to: 99.9, prefix: "", suffix: "%", label: "Uptime", decimals: 1 },
+        { to: 50, prefix: "", suffix: " components", label: "Free" },
+        { to: 4200, prefix: "", suffix: " users", label: "Developers" },
+      ].map(({ to, prefix, suffix, label, decimals }) => (
+        <div key={label} className="flex flex-col items-center gap-1">
+          <span className="text-3xl font-bold text-[var(--color-accent)] tabular-nums">
+            <Counter to={to} prefix={prefix} suffix={suffix} decimals={decimals ?? 0} />
+          </span>
+          <span className="text-xs text-[var(--color-text-3)] uppercase tracking-widest">{label}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function GradientTextPreview() {
+  const variants = ["electric", "aurora", "fire", "candy", "gold"] as const
+  return (
+    <div className="flex flex-col gap-3 items-center">
+      {variants.map((v) => (
+        <GradientText key={v} variant={v} className="text-2xl font-bold">
+          {v.charAt(0).toUpperCase() + v.slice(1)} Gradient
+        </GradientText>
+      ))}
+    </div>
+  )
+}
+
+export function MeteorsPreview() {
+  return (
+    <div className="relative w-full h-48 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] overflow-hidden flex items-center justify-center">
+      <Meteors count={14} />
+      <span className="relative z-10 text-[var(--color-text-1)] font-semibold">Meteor Shower</span>
+    </div>
+  )
+}
+
+export function ConfettiButtonPreview() {
+  return (
+    <div className="flex gap-3 flex-wrap justify-center">
+      <ConfettiButton>Click for confetti</ConfettiButton>
+      <ConfettiButton variant="outline">Outline</ConfettiButton>
+      <ConfettiButton variant="ghost">Ghost</ConfettiButton>
+    </div>
+  )
+}
+
+export function ShimmerButtonPreview() {
+  return (
+    <div className="flex gap-3 flex-wrap justify-center">
+      <ShimmerButton>Default shimmer</ShimmerButton>
+      <ShimmerButton variant="filled">Filled</ShimmerButton>
+      <ShimmerButton variant="dark">Dark</ShimmerButton>
+      <ShimmerButton size="sm">Small</ShimmerButton>
+      <ShimmerButton size="lg">Large</ShimmerButton>
+    </div>
+  )
+}
+
+export function GlowCardPreview() {
+  return (
+    <div className="flex gap-4 flex-wrap justify-center">
+      <GlowCard className="w-52 p-6">
+        <div className="text-sm font-semibold text-[var(--color-text-1)] mb-1">Glow Card</div>
+        <div className="text-xs text-[var(--color-text-3)]">Move cursor over me</div>
+      </GlowCard>
+      <GlowCard glowColor="oklch(72% 0.2 280)" className="w-52 p-6">
+        <div className="text-sm font-semibold text-[var(--color-text-1)] mb-1">Purple Glow</div>
+        <div className="text-xs text-[var(--color-text-3)]">Custom color</div>
+      </GlowCard>
+      <GlowCard glowColor="oklch(72% 0.22 60)" glowOpacity={0.2} className="w-52 p-6">
+        <div className="text-sm font-semibold text-[var(--color-text-1)] mb-1">Amber Glow</div>
+        <div className="text-xs text-[var(--color-text-3)]">Higher opacity</div>
+      </GlowCard>
+    </div>
+  )
+}
+
+export function FloatingDockPreview() {
+  const items = [
+    { icon: <Home size={18} />, label: "Home", href: "#" },
+    { icon: <Search size={18} />, label: "Search", href: "#" },
+    { icon: <Bell size={18} />, label: "Notifications", href: "#" },
+    { icon: <Star size={18} />, label: "Favorites", href: "#" },
+    { icon: <Heart size={18} />, label: "Liked", href: "#" },
+    { icon: <Music size={18} />, label: "Music", href: "#" },
+  ]
+  return (
+    <div className="flex justify-center py-8">
+      <FloatingDock items={items} />
+    </div>
+  )
+}
+
+export function MarqueePreview() {
+  const tags = ["React", "TypeScript", "Tailwind", "Radix UI", "OKLCH", "ParticleUI", "Open Source", "Free"]
+  return (
+    <div className="flex flex-col gap-4">
+      <Marquee speed={30} gap={24}>
+        {tags.map((t) => (
+          <span key={t} className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface-2)] px-4 py-1.5 text-xs font-medium text-[var(--color-text-2)] whitespace-nowrap">
+            {t}
+          </span>
+        ))}
+      </Marquee>
+      <Marquee speed={25} direction="right" gap={24}>
+        {tags.slice().reverse().map((t) => (
+          <span key={t} className="rounded-full border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)] px-4 py-1.5 text-xs font-medium text-[var(--color-accent-text)] whitespace-nowrap">
+            {t}
+          </span>
+        ))}
+      </Marquee>
+    </div>
+  )
+}
+
+export function BeamPreview() {
+  return (
+    <div className="flex flex-col gap-6 py-4">
+      <Beam colorFrom="var(--color-accent)" />
+      <Beam colorFrom="oklch(72% 0.2 280)" duration={2} />
+      <Beam colorFrom="oklch(72% 0.22 60)" duration={4} delay={1} />
+      <Beam colorFrom="oklch(72% 0.2 340)" duration={5} delay={2} />
+    </div>
+  )
+}
+
+export function GlowInputPreview() {
+  return (
+    <div className="flex flex-col gap-4 w-72">
+      <GlowInput placeholder="Focus for electric glow…" />
+      <GlowInput glowColor="oklch(72% 0.2 280)" placeholder="Purple glow on focus" />
+      <GlowInput glowColor="oklch(72% 0.22 60)" placeholder="Amber glow on focus" />
+      <GlowInput type="password" placeholder="Password with glow" />
+    </div>
+  )
+}
+
+/* ── Phase 5: Blocks ────────────────────────────────────────────────────── */
+
+export function HeroCenteredPreview() {
+  return <HeroCentered meteors={false} />
+}
+
+export function HeroSplitPreview() {
+  return <HeroSplit />
+}
+
+export function PricingSectionPreview() {
+  return <PricingSection />
+}
+
+export function FeatureGridPreview() {
+  return <FeatureGrid />
+}
+
+export function FeatureAlternatingPreview() {
+  return <FeatureAlternating />
+}
+
+export function CtaSectionPreview() {
+  return <CtaSection meteors={false} />
+}
+
+export function FooterPreview() {
+  return <Footer />
+}
+
+export function AuthSignInPreview() {
+  return <AuthSignIn />
+}
+
+export function AuthSignUpPreview() {
+  return <AuthSignUp />
+}
+
+export function DashboardAnalyticsPreview() {
+  return <DashboardAnalytics />
+}
+
+export function SettingsPagePreview() {
+  return <SettingsPage />
+}
+
+export function AIChatPreview() {
+  return <AIChat />
+}
+
+export function TestimonialsSectionPreview() {
+  return <TestimonialsSection />
+}
+
+export function StatsSectionPreview() {
+  return <StatsSection />
+}
+
+export function FaqSectionPreview() {
+  return <FaqSection />
+}
+
+export function LogoCloudPreview() {
+  return <LogoCloud />
+}
+
+export function HowItWorksPreview() {
+  return <HowItWorks />
+}
+
+export function NewsletterSectionPreview() {
+  return <NewsletterSection />
 }

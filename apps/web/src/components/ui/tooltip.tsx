@@ -19,7 +19,7 @@ const TooltipContent = React.forwardRef<
         "z-50 overflow-hidden rounded-md",
         "bg-[var(--color-surface-3)] border border-[var(--color-border)]",
         "px-2.5 py-1.5 text-xs text-[var(--color-text-1)]",
-        "shadow-[0_4px_24px_0px_oklch(0%_0_0_/_0.4)]",
+        "shadow-[0_4px_24px_0px_var(--color-shadow-overlay)]",
         "animate-in fade-in-0 zoom-in-95",
         "data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95",
         "data-[side=bottom]:slide-in-from-top-2",

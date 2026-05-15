@@ -1,101 +1,225 @@
 import Link from "next/link"
-import { ArrowRight, Terminal, BookOpen } from "@phosphor-icons/react/dist/ssr"
+import {
+  Sparkle,
+  Palette,
+  Code,
+  Robot,
+  ShieldCheck,
+  ArrowRight,
+  Cube,
+  Lightning,
+  Rows,
+} from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
+import { CodeBlock } from "@/components/code-block"
+import { Steps, Step } from "@/components/docs/steps"
+import { PrevNext } from "@/components/docs/prev-next"
 
-export const metadata: Metadata = { title: "Introduction — ParticleUI Docs" }
+export const metadata: Metadata = {
+  title: "Introduction",
+  description: "Get started with ParticleUI — 85+ free components built on shadcn/ui.",
+}
 
 export default function DocsIndexPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      <div className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-4">
+      {/* Eyebrow */}
+      <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
-      <h1 className="mb-4 text-4xl font-bold tracking-[-0.03em] text-text-1">Introduction</h1>
-      <p className="mb-8 text-text-3 leading-relaxed text-lg">
-        ParticleUI is a premium component registry for shadcn/ui projects. Components install
-        directly into your codebase — you own the source and can edit everything.
+
+      {/* Hero */}
+      <h1 id="introduction" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+        Build faster with ParticleUI
+      </h1>
+      <p className="mb-8 text-text-2 leading-[1.75] text-[1.0625rem]">
+        A premium component registry for{" "}
+        <a
+          href="https://ui.shadcn.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-accent hover:underline"
+        >
+          shadcn/ui
+        </a>{" "}
+        projects. 85+ components install directly into your codebase via the shadcn CLI — you
+        own the source, style it however you want, ship it to production.
       </p>
 
-      <div className="mb-10 grid sm:grid-cols-2 gap-3">
-        {[
-          {
-            icon: Terminal,
-            title: "Quick start",
-            desc: "Add the registry and install your first component.",
-            href: "/docs/getting-started/installation",
-          },
-          {
-            icon: BookOpen,
-            title: "Browse components",
-            desc: "See all 13 components with live previews.",
-            href: "/docs/components/glow-button",
-          },
-        ].map(({ icon: Icon, title, desc, href }) => (
-          <Link
-            key={href}
-            href={href}
-            className="group flex items-start gap-4 rounded-xl border border-border bg-surface-1 p-5 hover:border-border-hover hover:bg-surface-2 transition-all duration-150"
-          >
-            <Icon size={18} className="text-accent mt-0.5 shrink-0" />
-            <div>
-              <p className="font-semibold text-sm mb-1 text-text-2 group-hover:text-text-1 transition-colors">{title}</p>
-              <p className="text-xs text-text-4">{desc}</p>
-            </div>
-            <ArrowRight size={14} className="ml-auto mt-0.5 text-text-4 group-hover:text-text-3 transition-colors shrink-0" />
-          </Link>
-        ))}
+      {/* Install command */}
+      <div className="mb-12">
+        <CodeBlock code="npx particleui-cli add glow-button" filename="Terminal" />
       </div>
 
-      <hr className="border-border mb-8" />
+      <hr className="border-border mb-12" />
 
-      <section className="mb-10">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight text-text-1">How it works</h2>
-        <p className="text-sm text-text-3 leading-relaxed mb-4">
-          ParticleUI is a third-party registry compatible with the shadcn/ui CLI. When you
-          run <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5">npx shadcn add @particleui/foo</code>,
-          the CLI fetches the component JSON from our registry, validates it, and writes the
-          source files directly into your project.
+      {/* Quick start steps */}
+      <section className="mb-12">
+        <h2 id="quick-start" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+          Quick start
+        </h2>
+        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+          Up and running in under two minutes.
         </p>
-        <p className="text-sm text-text-3 leading-relaxed">
-          Nothing is imported from an npm package at runtime. The component source is yours.
-        </p>
+
+        <Steps>
+          <Step title="Install shadcn (if you haven't already)">
+            <p className="mb-3">
+              ParticleUI works with any project that already uses shadcn/ui. If you're starting
+              fresh:
+            </p>
+            <CodeBlock code="npx particleui-cli init" />
+          </Step>
+          <Step title="Add the ParticleUI registry">
+            <p className="mb-3">
+              Open <code>components.json</code> and add{" "}
+              <code>@particleui</code> under <code>registries</code>:
+            </p>
+            <CodeBlock
+              filename="components.json"
+              code={`{
+  "registries": {
+    "@particleui": {
+      "url": "https://particleui.dev/r/react/{name}.json",
+      "headers": {
+        "Authorization": "Bearer \${PARTICLEUI_TOKEN}"
+      }
+    }
+  }
+}`}
+            />
+          </Step>
+          <Step title="Install your first component">
+            <p className="mb-3">
+              Use the standard shadcn CLI with the <code>@particleui</code> namespace:
+            </p>
+            <CodeBlock code="npx particleui-cli add glow-button" />
+            <p className="mt-3">
+              The component source lands in <code>src/components/ui/glow-button.tsx</code>.
+              You own it — edit it freely.
+            </p>
+          </Step>
+        </Steps>
       </section>
 
-      <section className="mb-10">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight text-text-1">Free vs Pro</h2>
-        <div className="divide-y divide-border rounded-xl border border-border overflow-hidden text-sm">
+      <hr className="border-border mb-12" />
+
+      {/* What you get */}
+      <section className="mb-12">
+        <h2 id="what-you-get" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+          What&apos;s included
+        </h2>
+        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+          Three tiers of components, from foundational primitives to full-page blocks.
+        </p>
+
+        <div className="grid sm:grid-cols-3 gap-3">
           {[
-            ["Free", "No token needed. Install and use immediately."],
-            ["Pro", "Requires PARTICLEUI_TOKEN. Get a token from your dashboard after purchase."],
-          ].map(([tier, desc]) => (
-            <div key={tier as string} className="flex items-start gap-4 bg-surface-1 px-5 py-4">
-              <span
-                className={`mt-0.5 shrink-0 rounded-full px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest ${
-                  tier === "Pro"
-                    ? "border border-accent-border bg-accent-dim text-accent"
-                    : "border border-border bg-white/[0.03] text-text-4"
-                }`}
-              >
-                {tier}
-              </span>
-              <p className="text-text-3">{desc}</p>
+            {
+              icon: Cube,
+              label: "Core Primitives",
+              count: 40,
+              desc: "Buttons, inputs, modals, tables — every building block you need.",
+              href: "/docs/components/button",
+            },
+            {
+              icon: Sparkle,
+              label: "Particle Effects",
+              count: 12,
+              desc: "Glows, beams, meteors, tilt, marquee, shimmer — motion that delights.",
+              href: "/docs/components/glow-button",
+            },
+            {
+              icon: Rows,
+              label: "Full-page Blocks",
+              count: 19,
+              desc: "Hero, pricing, auth, dashboards, FAQ, testimonials — ready to ship.",
+              href: "/docs/components/hero-centered",
+            },
+          ].map(({ icon: Icon, label, count, desc, href }) => (
+            <Link
+              key={href}
+              href={href}
+              className="group flex flex-col gap-3 rounded-xl border border-border bg-surface-1 p-5 hover:border-border-hover hover:bg-surface-2 transition-all duration-150"
+            >
+              <div className="flex items-center justify-between">
+                <Icon size={18} className="text-accent" />
+                <span className="text-[1.75rem] font-bold tracking-[-0.04em] text-text-1">
+                  {count}
+                </span>
+              </div>
+              <div>
+                <p className="font-semibold text-sm mb-1 text-text-1 group-hover:text-accent transition-colors">
+                  {label}
+                </p>
+                <p className="text-xs text-text-3 leading-[1.55]">{desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <hr className="border-border mb-12" />
+
+      {/* Feature highlights */}
+      <section className="mb-12">
+        <h2 id="features" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+          Why ParticleUI
+        </h2>
+        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+          Everything you need, nothing you don&apos;t.
+        </p>
+
+        <div className="grid sm:grid-cols-2 gap-3">
+          {[
+            {
+              icon: Code,
+              title: "Own CLI · shadcn compatible",
+              desc: "npx particleui-cli add button. Works standalone or alongside shadcn. No extra config.",
+            },
+            {
+              icon: Palette,
+              title: "OKLCH design tokens",
+              desc: "Perceptual color scales with semantic tokens. Dark mode works everywhere, first class.",
+            },
+            {
+              icon: ArrowRight,
+              title: "React · Vue · Svelte",
+              desc: "Same components, three frameworks. Switch the registry URL and you're done.",
+            },
+            {
+              icon: Robot,
+              title: "MCP Server",
+              desc: "Claude can search and install components in any conversation. AI-native DX.",
+            },
+            {
+              icon: ShieldCheck,
+              title: "WCAG AA accessible",
+              desc: "All color pairs checked against WCAG 2.1 AA. Focus rings, ARIA roles, keyboard nav.",
+            },
+            {
+              icon: Lightning,
+              title: "MIT licensed",
+              desc: "Free components are MIT. Pro components require a license. You always own the source.",
+            },
+          ].map(({ icon: Icon, title, desc }) => (
+            <div
+              key={title}
+              className="flex items-start gap-4 rounded-xl border border-border bg-surface-1 p-5"
+            >
+              <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-accent-border bg-accent-dim">
+                <Icon size={14} className="text-accent" />
+              </div>
+              <div>
+                <p className="font-semibold text-sm mb-1 text-text-1">{title}</p>
+                <p className="text-xs text-text-3 leading-[1.6]">{desc}</p>
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      <section>
-        <h2 className="mb-4 text-xl font-semibold tracking-tight text-text-1">Claude skills</h2>
-        <p className="text-sm text-text-3 leading-relaxed mb-3">
-          Every Pro component ships with a bundled Claude skill. When you install the component,
-          a <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5">SKILL.md</code> file
-          is written to <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5">~/.claude/skills/&lt;name&gt;/</code>.
-        </p>
-        <p className="text-sm text-text-3 leading-relaxed">
-          This gives Claude Code full context on every prop, use case, and customisation
-          pattern — so AI-assisted development just works.
-        </p>
-      </section>
+      <PrevNext />
     </div>
   )
 }

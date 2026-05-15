@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "shimmer-button",
+  "type": "registry:ui",
+  "title": "Shimmer Button",
+  "description": "Button with rotating conic-gradient shimmer border effect. Three variants: default, filled, dark.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "tailwind-variants"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/shimmer-button.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { tv, type VariantProps } from \"tailwind-variants\"\n\nconst shimmerInnerVariants = tv({\n  base: [\n    \"relative inline-flex items-center justify-center gap-2 w-full h-full\",\n    \"rounded-[5px] text-sm font-semibold cursor-pointer select-none\",\n    \"transition-colors duration-300\",\n    \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]\",\n    \"disabled:pointer-events-none disabled:opacity-40\",\n  ],\n  variants: {\n    variant: {\n      default: \"bg-[var(--color-surface-1)] text-[var(--color-text-1)] hover:bg-[var(--color-surface-2)]\",\n      filled: \"bg-[var(--color-accent)] text-[var(--color-bg)] hover:brightness-110\",\n      dark: \"bg-[var(--color-bg)] text-[var(--color-text-1)] hover:bg-[var(--color-surface-1)]\",\n    },\n  },\n  defaultVariants: { variant: \"default\" },\n})\n\nconst shimmerWrapVariants = tv({\n  base: \"relative inline-flex overflow-hidden rounded-md p-[1.5px]\",\n  variants: {\n    size: {\n      sm: \"h-8\",\n      default: \"h-9\",\n      lg: \"h-11\",\n    },\n  },\n  defaultVariants: { size: \"default\" },\n})\n\nconst shimmerPaddingVariants = tv({\n  base: \"relative inline-flex items-center justify-center px-4\",\n  variants: {\n    size: {\n      sm: \"px-3 text-xs\",\n      default: \"px-4\",\n      lg: \"px-6 text-base\",\n    },\n  },\n  defaultVariants: { size: \"default\" },\n})\n\ninterface ShimmerButtonProps\n  extends React.ButtonHTMLAttributes<HTMLButtonElement>,\n    VariantProps<typeof shimmerInnerVariants>,\n    VariantProps<typeof shimmerWrapVariants> {}\n\nconst ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(\n  ({ className, variant, size, children, style, ...props }, ref) => {\n    const gradientColor =\n      variant === \"filled\"\n        ? \"conic-gradient(from 0deg, transparent 0%, oklch(100% 0 0 / 0.6) 20%, transparent 40%)\"\n        : \"conic-gradient(from 0deg, transparent 0%, oklch(78% 0.17 200) 20%, transparent 40%)\"\n\n    return (\n      <div className={shimmerWrapVariants({ size })}>\n        <span\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            inset: \"-150%\",\n            background: gradientColor,\n            animation: \"shimmer-spin 2.5s linear infinite\",\n          }}\n        />\n        <button\n          ref={ref}\n          style={style}\n          className={[shimmerInnerVariants({ variant }), shimmerPaddingVariants({ size }), className]\n            .filter(Boolean)\n            .join(\" \")}\n          {...props}\n        >\n          {children}\n        </button>\n      </div>\n    )\n  }\n)\nShimmerButton.displayName = \"ShimmerButton\"\n\nexport { ShimmerButton }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "buttons",
+    "particles",
+    "free"
+  ]
+}

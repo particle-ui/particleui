@@ -1,0 +1,32 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "cta-section",
+  "type": "registry:block",
+  "title": "CTA Section",
+  "description": "Full-width call-to-action section with radial gradient background, meteors, and dual CTA buttons.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "button",
+    "gradient-text",
+    "meteors"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/cta-section.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { GradientText } from \"@/components/ui/gradient-text\"\nimport { Meteors } from \"@/components/ui/meteors\"\nimport { ArrowRight } from \"lucide-react\"\n\ninterface CtaSectionProps {\n  heading?: string\n  headingGradient?: string\n  description?: string\n  primaryCta?: string\n  primaryHref?: string\n  secondaryCta?: string\n  secondaryHref?: string\n  meteors?: boolean\n}\n\nfunction CtaSection({\n  heading = \"Start building today.\",\n  headingGradient = \"Free, forever.\",\n  description = \"60+ components. No credit card. MIT license. Copy the code and own it.\",\n  primaryCta = \"Browse components\",\n  primaryHref = \"/docs/components/button\",\n  secondaryCta = \"View on GitHub\",\n  secondaryHref = \"https://github.com\",\n  meteors: showMeteors = true,\n}: CtaSectionProps) {\n  return (\n    <section className=\"relative flex flex-col items-center justify-center gap-6 px-4 py-28 text-center overflow-hidden border-y border-[var(--color-border)]\">\n      <div\n        aria-hidden\n        className=\"absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,oklch(78%_0.17_200_/_0.08)_0%,transparent_70%)]\"\n      />\n      {showMeteors && <Meteors count={10} />}\n\n      <div className=\"relative z-10 flex flex-col items-center gap-5 max-w-2xl\">\n        <h2 className=\"text-4xl font-bold tracking-tight sm:text-5xl\">\n          {heading}{\" \"}\n          <GradientText variant=\"electric\">{headingGradient}</GradientText>\n        </h2>\n        <p className=\"text-lg text-[var(--color-text-2)] max-w-md\">{description}</p>\n\n        <div className=\"flex flex-wrap gap-3 justify-center\">\n          <Button asChild size=\"lg\">\n            <a href={primaryHref}>\n              {primaryCta}\n              <ArrowRight size={16} className=\"ml-1\" />\n            </a>\n          </Button>\n          <Button asChild variant=\"outline\" size=\"lg\">\n            <a href={secondaryHref}>{secondaryCta}</a>\n          </Button>\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport { CtaSection }\n",
+      "type": "registry:block"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ]
+}

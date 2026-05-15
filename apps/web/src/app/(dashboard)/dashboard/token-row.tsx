@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Eye, EyeSlash, Copy, Check, Trash } from "@phosphor-icons/react"
+import { revokeToken } from "./token-actions"
 
 interface Token {
   id: string
@@ -58,23 +59,10 @@ export function TokenRow({ token }: { token: Token }) {
 
 function RevokeButton({ tokenId }: { tokenId: string }) {
   return (
-    <form
-      action={async () => {
-        "use server"
-        const { db } = await import("@/db")
-        const { apiTokens } = await import("@/db/schema")
-        const { eq } = await import("drizzle-orm")
-        await db
-          .update(apiTokens)
-          .set({ revokedAt: new Date() })
-          .where(eq(apiTokens.id, tokenId))
-        const { revalidatePath } = await import("next/cache")
-        revalidatePath("/dashboard")
-      }}
-    >
+    <form action={revokeToken.bind(null, tokenId)}>
       <button
         type="submit"
-        className="rounded p-1.5 text-[#333] hover:text-red-500 hover:bg-red-500/[0.08] transition-colors"
+        className="rounded p-1.5 text-[#333] hover:text-error hover:bg-error-dim transition-colors"
         title="Revoke token"
       >
         <Trash size={14} />

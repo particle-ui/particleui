@@ -46,7 +46,7 @@ function Calendar({ className, classNames, showOutsideDays = true, ...props }: C
         ].join(" "),
         selected: [
           "bg-[var(--color-accent)] text-[var(--color-bg)] font-semibold rounded-md",
-          "shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]",
+          "shadow-[0_0_10px_0px_var(--color-accent-glow-sm)]",
         ].join(" "),
         today: "bg-[var(--color-surface-2)] text-[var(--color-text-1)] font-semibold rounded-md",
         outside: "text-[var(--color-text-4)] opacity-40",

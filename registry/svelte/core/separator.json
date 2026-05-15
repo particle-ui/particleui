@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "separator",
+  "type": "registry:ui",
+  "title": "Separator",
+  "description": "Horizontal or vertical visual divider.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "core",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/separator.svelte",
+      "type": "registry:ui",
+      "content": "<script lang=\"ts\">\n  interface Props {\n    orientation?: \"horizontal\" | \"vertical\"\n    class?: string\n    [key: string]: unknown\n  }\n\n  let { orientation = \"horizontal\", class: className, ...rest }: Props = $props()\n\n  const isHorizontal = $derived(orientation === \"horizontal\")\n</script>\n\n{#if isHorizontal}\n  <div\n    role=\"separator\"\n    aria-orientation=\"horizontal\"\n    class=\"h-px w-full bg-[var(--color-border)] shrink-0 {className ?? ''}\"\n    {...rest}\n  ></div>\n{:else}\n  <div\n    role=\"separator\"\n    aria-orientation=\"vertical\"\n    class=\"w-px h-full bg-[var(--color-border)] shrink-0 {className ?? ''}\"\n    {...rest}\n  ></div>\n{/if}\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}
