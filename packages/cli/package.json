@@ -2,13 +2,19 @@
   "name": "particleui-cli",
   "version": "0.3.1",
   "description": "Install ParticleUI components into your project with one command",
-  "bin": { "particleui": "./dist/index.js" },
+  "bin": {
+    "particleui": "./dist/index.js"
+  },
   "type": "module",
   "main": "./dist/index.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "chalk": "^5.4.1",
@@ -20,10 +26,23 @@
     "@types/node": "^22.0.0",
     "@types/prompts": "^2.4.9",
     "tsup": "^8.5.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.6"
   },
-  "engines": { "node": ">=18" },
-  "keywords": ["particleui", "shadcn", "components", "ui", "react", "vue", "svelte", "cli", "scaffold"],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "particleui",
+    "shadcn",
+    "components",
+    "ui",
+    "react",
+    "vue",
+    "svelte",
+    "cli",
+    "scaffold"
+  ],
   "license": "MIT",
   "author": "ParticleUI Contributors",
   "homepage": "https://particleui.dev",
@@ -35,5 +54,7 @@
   "bugs": {
     "url": "https://github.com/particleui/particleui/issues"
   },
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }

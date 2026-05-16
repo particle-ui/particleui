@@ -17,7 +17,7 @@ import { PrevNext } from "@/components/docs/prev-next"
 
 export const metadata: Metadata = {
   title: "Introduction",
-  description: "Get started with ParticleUI — 85+ free components built on shadcn/ui.",
+  description: "Get started with ParticleUI — 100+ components built on shadcn/ui.",
 }
 
 export default function DocsIndexPage() {
@@ -42,7 +42,7 @@ export default function DocsIndexPage() {
         >
           shadcn/ui
         </a>{" "}
-        projects. 85+ components install directly into your codebase via the shadcn CLI — you
+        projects. 100+ components install directly into your codebase via the shadcn CLI — you
         own the source, style it however you want, ship it to production.
       </p>
 
@@ -118,21 +118,21 @@ export default function DocsIndexPage() {
             {
               icon: Cube,
               label: "Core Primitives",
-              count: 40,
+              count: 45,
               desc: "Buttons, inputs, modals, tables — every building block you need.",
               href: "/docs/components/button",
             },
             {
               icon: Sparkle,
               label: "Particle Effects",
-              count: 12,
+              count: 20,
               desc: "Glows, beams, meteors, tilt, marquee, shimmer — motion that delights.",
               href: "/docs/components/glow-button",
             },
             {
               icon: Rows,
               label: "Full-page Blocks",
-              count: 19,
+              count: 26,
               desc: "Hero, pricing, auth, dashboards, FAQ, testimonials — ready to ship.",
               href: "/docs/components/hero-centered",
             },

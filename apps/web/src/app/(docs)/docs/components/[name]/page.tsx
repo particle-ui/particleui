@@ -73,6 +73,13 @@ import {
   MarqueePreview,
   BeamPreview,
   GlowInputPreview,
+  SpotlightPreview,
+  BorderBeamPreview,
+  WordRotatePreview,
+  ScrollRevealPreview,
+  RippleButtonPreview,
+  FlipCardPreview,
+  ShineBorderPreview,
   HeroCenteredPreview,
   HeroSplitPreview,
   PricingSectionPreview,
@@ -82,6 +89,8 @@ import {
   FooterPreview,
   AuthSignInPreview,
   AuthSignUpPreview,
+  AuthForgotPasswordPreview,
+  AuthVerifyEmailPreview,
   DashboardAnalyticsPreview,
   SettingsPagePreview,
   AIChatPreview,
@@ -91,6 +100,16 @@ import {
   LogoCloudPreview,
   HowItWorksPreview,
   NewsletterSectionPreview,
+  GlobePreview,
+  AnimatedBeamPreview,
+  CursorTrailPreview,
+  ParticleHeroPreview,
+  LandingTemplatePreview,
+  AuthTemplatePreview,
+  BlogTemplatePreview,
+  DocsSiteTemplatePreview,
+  PricingPageTemplatePreview,
+  SaasDashboardTemplatePreview,
 } from "../../../_components/previews"
 
 interface RegistryItem {
@@ -112,6 +131,9 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "shimmer-text": <ShimmerTextPreview />,
   "magnetic-button": <MagneticButtonPreview />,
   "aurora-background": <AuroraBackgroundPreview />,
+  "globe": <GlobePreview />,
+  "animated-beam": <AnimatedBeamPreview />,
+  "cursor-trail": <CursorTrailPreview />,
   "kbd": <KbdPreview />,
   "orbit-animation": <OrbitAnimationPreview />,
   "noise-texture": <NoiseTexturePreview />,
@@ -172,6 +194,13 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "marquee": <MarqueePreview />,
   "beam": <BeamPreview />,
   "glow-input": <GlowInputPreview />,
+  "spotlight": <SpotlightPreview />,
+  "border-beam": <BorderBeamPreview />,
+  "word-rotate": <WordRotatePreview />,
+  "scroll-reveal": <ScrollRevealPreview />,
+  "ripple": <RippleButtonPreview />,
+  "flip-card": <FlipCardPreview />,
+  "shine-border": <ShineBorderPreview />,
   // Phase 5: Blocks
   "hero-centered": <HeroCenteredPreview />,
   "hero-split": <HeroSplitPreview />,
@@ -182,6 +211,8 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "footer": <FooterPreview />,
   "auth-sign-in": <AuthSignInPreview />,
   "auth-sign-up": <AuthSignUpPreview />,
+  "auth-forgot-password": <AuthForgotPasswordPreview />,
+  "auth-verify-email": <AuthVerifyEmailPreview />,
   "dashboard-analytics": <DashboardAnalyticsPreview />,
   "settings-page": <SettingsPagePreview />,
   "ai-chat": <AIChatPreview />,
@@ -191,6 +222,15 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "logo-cloud": <LogoCloudPreview />,
   "how-it-works": <HowItWorksPreview />,
   "newsletter": <NewsletterSectionPreview />,
+  // Templates
+  "landing": <LandingTemplatePreview />,
+  "auth": <AuthTemplatePreview />,
+  "blog": <BlogTemplatePreview />,
+  "docs-site": <DocsSiteTemplatePreview />,
+  "pricing-page": <PricingPageTemplatePreview />,
+  "saas-dashboard": <SaasDashboardTemplatePreview />,
+  // Pro blocks
+  "particle-hero": <ParticleHeroPreview />,
 }
 
 async function getItem(name: string): Promise<RegistryItem | null> {
@@ -955,6 +995,90 @@ export default function Page() {
 export default function Page() {
   return <NewsletterSection />
 }`,
+  spotlight: `import { Spotlight } from "@/components/ui/spotlight"
+
+export default function Example() {
+  return (
+    <Spotlight className="w-64 p-6">
+      <h3 className="font-semibold">Hover me</h3>
+      <p className="text-sm text-muted-foreground mt-1">Cursor-tracked spotlight.</p>
+    </Spotlight>
+  )
+}`,
+  "border-beam": `import { BorderBeam } from "@/components/ui/border-beam"
+
+export default function Example() {
+  return (
+    <BorderBeam className="w-64 p-6 bg-surface-1">
+      <h3 className="font-semibold">Border Beam</h3>
+      <p className="text-sm text-muted-foreground mt-1">Rotating gradient border.</p>
+    </BorderBeam>
+  )
+}`,
+  "word-rotate": `import { WordRotate } from "@/components/ui/word-rotate"
+
+export default function Example() {
+  return (
+    <h1 className="text-4xl font-bold">
+      <WordRotate
+        staticPrefix="Build "
+        words={["beautiful", "accessible", "fast"]}
+      />
+      {" UIs"}
+    </h1>
+  )
+}`,
+  "scroll-reveal": `import { ScrollReveal } from "@/components/ui/scroll-reveal"
+
+export default function Example() {
+  return (
+    <ScrollReveal direction="up" delay={100}>
+      <div className="rounded-xl border p-6">
+        <h3 className="font-semibold">Appears on scroll</h3>
+        <p className="text-sm text-muted-foreground mt-1">Fades in from below.</p>
+      </div>
+    </ScrollReveal>
+  )
+}`,
+  "magnetic-button": `import { MagneticButton } from "@/components/ui/magnetic-button"
+
+export default function Example() {
+  return <MagneticButton strength={0.4}>Hover me</MagneticButton>
+}`,
+  ripple: `import { RippleButton } from "@/components/ui/ripple"
+
+export default function Example() {
+  return <RippleButton>Click me</RippleButton>
+}`,
+  "flip-card": `import { FlipCard } from "@/components/ui/flip-card"
+
+export default function Example() {
+  return (
+    <FlipCard
+      height={200}
+      className="w-48"
+      front={
+        <div className="flex h-full items-center justify-center">
+          <p className="font-semibold">Front</p>
+        </div>
+      }
+      back={
+        <div className="flex h-full items-center justify-center">
+          <p className="font-semibold text-accent">Back</p>
+        </div>
+      }
+    />
+  )
+}`,
+  "shine-border": `import { ShineBorder } from "@/components/ui/shine-border"
+
+export default function Example() {
+  return (
+    <ShineBorder className="w-64 p-6 flex items-center justify-center">
+      <p className="font-semibold">Shine Border</p>
+    </ShineBorder>
+  )
+}`,
   "hero-centered": `import { HeroCentered } from "@/components/blocks/hero-centered"
 
 export default function Page() {
@@ -1000,6 +1124,16 @@ export default function Page() {
 export default function Page() {
   return <AuthSignUp />
 }`,
+  "auth-forgot-password": `import { AuthForgotPassword } from "@/components/blocks/auth-forgot-password"
+
+export default function Page() {
+  return <AuthForgotPassword />
+}`,
+  "auth-verify-email": `import { AuthVerifyEmail } from "@/components/blocks/auth-verify-email"
+
+export default function Page() {
+  return <AuthVerifyEmail />
+}`,
   "dashboard-analytics": `import { DashboardAnalytics } from "@/components/blocks/dashboard-analytics"
 
 export default function Page() {
@@ -1014,6 +1148,249 @@ export default function Page() {
 
 export default function Page() {
   return <AIChat />
+}`,
+  // Pro components
+  globe: `import { Globe } from "@/components/ui/globe"
+
+export default function Example() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <Globe size={320} />
+    </div>
+  )
+}`,
+  "animated-beam": `"use client"
+import { useRef } from "react"
+import { AnimatedBeam } from "@/components/ui/animated-beam"
+
+export default function Example() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const fromRef = useRef<HTMLDivElement>(null)
+  const toRef = useRef<HTMLDivElement>(null)
+
+  return (
+    <div ref={containerRef} className="relative flex items-center justify-between px-12 py-8">
+      <div ref={fromRef} className="h-12 w-12 rounded-full border bg-card flex items-center justify-center">
+        🤖
+      </div>
+      <div ref={toRef} className="h-12 w-12 rounded-full border bg-card flex items-center justify-center">
+        💡
+      </div>
+      <AnimatedBeam containerRef={containerRef} fromRef={fromRef} toRef={toRef} />
+    </div>
+  )
+}`,
+  "cursor-trail": `"use client"
+import { CursorTrail } from "@/components/ui/cursor-trail"
+
+// Mount once at root layout or a top-level client component.
+// The canvas is position:fixed z-[9999] so it overlays everything.
+export default function Layout({ children }) {
+  return (
+    <>
+      <CursorTrail color="oklch(78% 0.17 200)" size={6} length={24} />
+      {children}
+    </>
+  )
+}`,
+  "aurora-background": `import { AuroraBackground } from "@/components/ui/aurora-background"
+
+export default function Example() {
+  return (
+    <AuroraBackground className="h-screen w-full bg-background">
+      <div className="relative z-10 flex h-full items-center justify-center">
+        <h1 className="text-4xl font-bold">Your content here</h1>
+      </div>
+    </AuroraBackground>
+  )
+}`,
+  "orbit-animation": `import { OrbitAnimation } from "@/components/ui/orbit-animation"
+
+export default function Example() {
+  return (
+    <OrbitAnimation
+      size={300}
+      center={<div className="h-14 w-14 rounded-full border bg-card flex items-center justify-center text-2xl">⚛️</div>}
+      items={[
+        { content: <div className="h-9 w-9 rounded-full border bg-card flex items-center justify-center">🎨</div>, radius: 70, duration: 10 },
+        { content: <div className="h-9 w-9 rounded-full border bg-card flex items-center justify-center">⚡</div>, radius: 110, duration: 16 },
+        { content: <div className="h-9 w-9 rounded-full border bg-card flex items-center justify-center">🌊</div>, radius: 70, duration: 10, offset: 180 },
+      ]}
+    />
+  )
+}`,
+  // Core components with complex usage
+  "electric-badge": `import { ElectricBadge } from "@/components/ui/electric-badge"
+
+export default function Example() {
+  return (
+    <div className="flex gap-2">
+      <ElectricBadge>New</ElectricBadge>
+      <ElectricBadge variant="outline">Beta</ElectricBadge>
+      <ElectricBadge pulse>Live</ElectricBadge>
+    </div>
+  )
+}`,
+  "gradient-card": `import { GradientCard } from "@/components/ui/gradient-card"
+
+export default function Example() {
+  return (
+    <GradientCard className="max-w-sm p-6">
+      <h3 className="text-lg font-semibold mb-2">Card title</h3>
+      <p className="text-sm text-muted-foreground">Card content goes here.</p>
+    </GradientCard>
+  )
+}`,
+  kbd: `import { Kbd } from "@/components/ui/kbd"
+
+export default function Example() {
+  return (
+    <div className="flex items-center gap-1 text-sm">
+      Press <Kbd>⌘</Kbd><Kbd>K</Kbd> to open command palette
+    </div>
+  )
+}`,
+  "shimmer-text": `import { ShimmerText } from "@/components/ui/shimmer-text"
+
+export default function Example() {
+  return (
+    <ShimmerText className="text-3xl font-bold">
+      Shimmer effect
+    </ShimmerText>
+  )
+}`,
+  "noise-texture": `import { NoiseTexture } from "@/components/ui/noise-texture"
+
+export default function Example() {
+  return (
+    <div className="relative h-48 w-full rounded-xl bg-neutral-900 overflow-hidden">
+      <NoiseTexture opacity={0.08} />
+      <div className="relative z-10 flex h-full items-center justify-center">
+        <p className="text-white font-semibold">Content over noise</p>
+      </div>
+    </div>
+  )
+}`,
+  "data-table": `"use client"
+import { DataTable } from "@/components/ui/data-table"
+import type { ColumnDef } from "@tanstack/react-table"
+
+type User = { id: string; name: string; email: string }
+const columns: ColumnDef<User>[] = [
+  { accessorKey: "name", header: "Name" },
+  { accessorKey: "email", header: "Email" },
+]
+const data: User[] = [
+  { id: "1", name: "Alice", email: "alice@example.com" },
+  { id: "2", name: "Bob", email: "bob@example.com" },
+]
+
+export default function Example() {
+  return <DataTable columns={columns} data={data} />
+}`,
+  form: `"use client"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { z } from "zod"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
+const schema = z.object({ email: z.string().email() })
+
+export default function Example() {
+  const form = useForm({ resolver: zodResolver(schema), defaultValues: { email: "" } })
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(console.log)} className="space-y-4 max-w-sm">
+        <FormField control={form.control} name="email" render={({ field }) => (
+          <FormItem>
+            <FormLabel>Email</FormLabel>
+            <FormControl><Input placeholder="you@example.com" {...field} /></FormControl>
+            <FormMessage />
+          </FormItem>
+        )} />
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
+  )
+}`,
+  "navigation-menu": `import {
+  NavigationMenu, NavigationMenuContent, NavigationMenuItem,
+  NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
+
+export default function Example() {
+  return (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Getting Started</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/docs">Documentation</NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  )
+}`,
+  // Blocks
+  "bento-grid": `import { BentoGrid } from "@/components/blocks/bento-grid"
+
+export default function Page() {
+  return <BentoGrid />
+}`,
+  "spotlight-hero": `import { SpotlightHero } from "@/components/blocks/spotlight-hero"
+
+export default function Page() {
+  return <SpotlightHero />
+}`,
+  "particle-hero": `import { ParticleHero } from "@/components/blocks/particle-hero"
+
+export default function Page() {
+  return (
+    <ParticleHero
+      headline="Build something amazing"
+      subtext="Animated particle canvas hero. Pro component."
+      cta={[
+        { label: "Get started", href: "/docs", variant: "electric" },
+        { label: "View pricing", href: "/pricing", variant: "outline" },
+      ]}
+      particleCount={80}
+      connectLines
+    />
+  )
+}`,
+  // Templates
+  landing: `import { LandingTemplate } from "@/components/templates/landing"
+
+export default function Page() {
+  return <LandingTemplate />
+}`,
+  auth: `import { AuthTemplate } from "@/components/templates/auth"
+
+export default function Page() {
+  return <AuthTemplate />
+}`,
+  blog: `import { BlogTemplate } from "@/components/templates/blog"
+
+export default function Page() {
+  return <BlogTemplate />
+}`,
+  "docs-site": `import { DocsSiteTemplate } from "@/components/templates/docs-site"
+
+export default function Page() {
+  return <DocsSiteTemplate />
+}`,
+  "pricing-page": `import { PricingPageTemplate } from "@/components/templates/pricing-page"
+
+export default function Page() {
+  return <PricingPageTemplate />
+}`,
+  "saas-dashboard": `import { SaasDashboardTemplate } from "@/components/templates/saas-dashboard"
+
+export default function Page() {
+  return <SaasDashboardTemplate />
 }`,
 }
 

@@ -3,11 +3,9 @@
   "name": "testimonials",
   "type": "registry:block",
   "title": "Testimonials Section",
-  "description": "Three-column testimonials grid with 5-star ratings, quote text, and avatar initials. Uses GlowCard for hover effects.",
+  "description": "Customer testimonial cards in a responsive grid with avatars and star ratings.",
   "author": "ParticleUI",
-  "dependencies": [
-    "@phosphor-icons/react"
-  ],
+  "dependencies": [],
   "registryDependencies": [
     "glow-card",
     "avatar"

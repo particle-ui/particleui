@@ -3,7 +3,6 @@ export const dynamic = "force-dynamic"
 import { NextRequest, NextResponse } from "next/server"
 import { readRegistryItem } from "@/lib/registry/reader"
 import { validateToken } from "@/lib/auth/token"
-import { isProItem } from "@/lib/registry/catalog"
 import { db } from "@/db"
 import { componentInstalls } from "@/db/schema"
 
@@ -12,10 +11,6 @@ function isCLIRequest(req: NextRequest) {
   return /shadcn|node|curl|bun|deno/i.test(ua)
 }
 
-function getTierFromName(name: string): string {
-  // Infer from catalog — pro items are tracked separately
-  return "core"
-}
 
 export async function GET(
   req: NextRequest,
@@ -38,7 +33,7 @@ export async function GET(
   const cats = Array.isArray(itemRecord.categories) ? (itemRecord.categories as string[]) : []
   let tier = cats.includes("pro") ? "pro" : (cats[0] ?? "core")
 
-  if (isProItem(fw, name)) {
+  if (tier === "pro") {
     const authHeader = req.headers.get("authorization")
     const token = authHeader?.replace(/^Bearer\s+/i, "")
 

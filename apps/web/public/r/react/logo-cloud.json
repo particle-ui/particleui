@@ -3,7 +3,7 @@
   "name": "logo-cloud",
   "type": "registry:block",
   "title": "Logo Cloud",
-  "description": "Dual-row Marquee scrolling company name pills with fade edges. Top row scrolls left, bottom row scrolls right.",
+  "description": "Infinite-scroll marquee of brand logos. Two rows, mirrored direction.",
   "author": "ParticleUI",
   "dependencies": [],
   "registryDependencies": [

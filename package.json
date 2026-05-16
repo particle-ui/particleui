@@ -20,10 +20,12 @@
     "registry:gen": "node scripts/gen-registry.mjs && pnpm registry:build",
     "registry:particles": "node scripts/gen-particles.mjs && pnpm registry:build",
     "registry:blocks": "node scripts/gen-blocks.mjs && pnpm registry:build",
+    "registry:pro": "node scripts/gen-pro.mjs && pnpm registry:build",
     "registry:svelte": "node scripts/gen-svelte.mjs && pnpm registry:build",
     "registry:vue": "node scripts/gen-vue.mjs && pnpm registry:build",
     "registry:templates": "node scripts/gen-templates.mjs && pnpm registry:build",
-    "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build",
+    "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-pro.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build",
+    "test": "turbo test && node --test scripts/__tests__/*.test.mjs",
     "check": "pnpm --filter web typecheck && pnpm --filter particleui-cli build && pnpm registry:all",
     "prepare": "simple-git-hooks"
   },

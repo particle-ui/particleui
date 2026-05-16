@@ -27,7 +27,12 @@ const FW_COLORS: Record<string, string> = {
   svelte: "bg-[var(--color-error-dim)] text-[var(--color-error-text)] border-[var(--color-error-border)]",
 }
 
-export default async function DashboardPage() {
+export default async function DashboardPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ upgraded?: string }>
+}) {
+  const { upgraded } = await searchParams
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
 
@@ -110,6 +115,21 @@ export default async function DashboardPage() {
           {clerkUser?.emailAddresses[0]?.emailAddress}
         </p>
       </div>
+
+      {/* Post-purchase success banner */}
+      {upgraded === "1" && (
+        <div className="mb-6 rounded-xl border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)] px-5 py-4 flex items-start gap-3">
+          <Sparkle size={16} weight="fill" className="text-[var(--color-accent)] mt-0.5 shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-[var(--color-text-1)] mb-0.5">Welcome to ParticleUI Pro! 🎉</p>
+            <p className="text-xs text-[var(--color-text-3)]">
+              Your license is active. An API token has been auto-generated — check your email or go to{" "}
+              <a href="/dashboard/tokens" className="text-[var(--color-accent)] hover:underline font-medium">Tokens</a>{" "}
+              to copy it. You can now install any Pro component.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* DB not ready warning */}
       {!dbReady && (

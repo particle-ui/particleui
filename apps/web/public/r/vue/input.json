@@ -9,7 +9,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Input.vue",
+      "path": "components/ui/input.vue",
       "content": "<script setup lang=\"ts\">\ndefineOptions({ inheritAttrs: false })\n\nconst props = withDefaults(\n  defineProps<{\n    modelValue?: string | number\n    type?: string\n    placeholder?: string\n    disabled?: boolean\n    class?: string\n  }>(),\n  {\n    type: 'text',\n    disabled: false,\n  }\n)\n\nconst emit = defineEmits<{ 'update:modelValue': [value: string] }>()\n</script>\n\n<template>\n  <input\n    v-bind=\"$attrs\"\n    :type=\"type\"\n    :value=\"modelValue\"\n    :placeholder=\"placeholder\"\n    :disabled=\"disabled\"\n    :class=\"[\n      'flex h-9 w-full rounded-md px-3 py-1 text-sm',\n      'bg-[var(--color-surface-1)] text-[var(--color-text-1)]',\n      'border border-[var(--color-border)]',\n      'placeholder:text-[var(--color-text-4)]',\n      'transition-colors duration-150',\n      'hover:border-[var(--color-border-hover)]',\n      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-0 focus-visible:border-[var(--color-accent-border)]',\n      'disabled:cursor-not-allowed disabled:opacity-40',\n      'file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-[var(--color-text-2)]',\n      'selection:bg-[var(--color-accent)] selection:text-[var(--color-bg)]',\n      props.class,\n    ].filter(Boolean).join(' ')\"\n    @input=\"emit('update:modelValue', ($event.target as HTMLInputElement).value)\"\n  />\n</template>\n",
       "type": "registry:ui"
     }

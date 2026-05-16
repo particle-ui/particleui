@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Card.vue",
+      "path": "components/ui/card.vue",
       "type": "registry:ui",
       "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  [\n    'rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]',\n    'text-[var(--color-text-1)]',\n    'transition-colors duration-150',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"card\">\n    <slot />\n  </div>\n</template>\n"
     },

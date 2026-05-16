@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "spotlight",
+  "type": "registry:ui",
+  "title": "Spotlight",
+  "description": "Card wrapper with a dual-layer radial spotlight that tracks the cursor. Drop-in replacement for GlowCard with a tighter, more intense beam.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/spotlight.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface SpotlightProps extends React.HTMLAttributes<HTMLDivElement> {\n  color?: string\n  size?: number\n}\n\nfunction Spotlight({\n  className,\n  children,\n  color = \"oklch(78% 0.17 200)\",\n  size = 400,\n  style,\n  ...props\n}: SpotlightProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null)\n\n  const handleMouseMove = React.useCallback((e: React.MouseEvent<HTMLDivElement>) => {\n    const el = ref.current\n    if (!el) return\n    const rect = el.getBoundingClientRect()\n    setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top })\n  }, [])\n\n  return (\n    <div\n      ref={ref}\n      onMouseMove={handleMouseMove}\n      onMouseLeave={() => setPos(null)}\n      style={{ position: \"relative\", overflow: \"hidden\", ...style }}\n      className={[\"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      {...props}\n    >\n      {pos && (\n        <div\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            left: pos.x - size / 2,\n            top: pos.y - size / 2,\n            width: size,\n            height: size,\n            background: `radial-gradient(circle, ${color.replace(\")\", \" / 0.12)\")} 0%, transparent 65%)`,\n            pointerEvents: \"none\",\n            zIndex: 0,\n            borderRadius: \"50%\",\n            transition: \"opacity 0.15s\",\n          }}\n        />\n      )}\n      {pos && (\n        <div\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            left: pos.x - size / 4,\n            top: pos.y - size / 4,\n            width: size / 2,\n            height: size / 2,\n            background: `radial-gradient(circle, ${color.replace(\")\", \" / 0.06)\")} 0%, transparent 70%)`,\n            pointerEvents: \"none\",\n            zIndex: 0,\n            borderRadius: \"50%\",\n          }}\n        />\n      )}\n      <div style={{ position: \"relative\", zIndex: 1 }}>{children}</div>\n    </div>\n  )\n}\n\nexport { Spotlight }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

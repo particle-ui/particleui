@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Textarea.vue",
+      "path": "components/ui/textarea.vue",
       "type": "registry:ui",
       "content": "<script setup lang=\"ts\">\ndefineOptions({ inheritAttrs: false })\n\nconst props = withDefaults(\n  defineProps<{\n    modelValue?: string\n    placeholder?: string\n    disabled?: boolean\n    rows?: number\n    class?: string\n  }>(),\n  {\n    disabled: false,\n    rows: 3,\n  }\n)\n\nconst emit = defineEmits<{ 'update:modelValue': [value: string] }>()\n</script>\n\n<template>\n  <textarea\n    v-bind=\"$attrs\"\n    :value=\"modelValue\"\n    :placeholder=\"placeholder\"\n    :disabled=\"disabled\"\n    :rows=\"rows\"\n    :class=\"[\n      'flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm',\n      'bg-[var(--color-surface-1)] text-[var(--color-text-1)]',\n      'border border-[var(--color-border)]',\n      'placeholder:text-[var(--color-text-4)]',\n      'resize-y transition-colors duration-150',\n      'hover:border-[var(--color-border-hover)]',\n      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-0 focus-visible:border-[var(--color-accent-border)]',\n      'disabled:cursor-not-allowed disabled:opacity-40',\n      'selection:bg-[var(--color-accent)] selection:text-[var(--color-bg)]',\n      props.class,\n    ].filter(Boolean).join(' ')\"\n    @input=\"emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)\"\n  />\n</template>\n"
     }

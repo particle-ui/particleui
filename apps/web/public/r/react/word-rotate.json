@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "word-rotate",
+  "type": "registry:ui",
+  "title": "Word Rotate",
+  "description": "Cycles through an array of words with a fade + slide animation. Supports static prefix and suffix text.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/word-rotate.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface WordRotateProps {\n  words: string[]\n  interval?: number\n  className?: string\n  staticPrefix?: string\n  staticSuffix?: string\n}\n\nfunction WordRotate({\n  words,\n  interval = 2500,\n  className,\n  staticPrefix,\n  staticSuffix,\n}: WordRotateProps) {\n  const [index, setIndex] = React.useState(0)\n  const [visible, setVisible] = React.useState(true)\n\n  React.useEffect(() => {\n    const id = setInterval(() => {\n      setVisible(false)\n      setTimeout(() => {\n        setIndex((i) => (i + 1) % words.length)\n        setVisible(true)\n      }, 300)\n    }, interval)\n    return () => clearInterval(id)\n  }, [words.length, interval])\n\n  return (\n    <span className={className}>\n      {staticPrefix}\n      <span\n        style={{\n          display: \"inline-block\",\n          opacity: visible ? 1 : 0,\n          transform: visible ? \"translateY(0)\" : \"translateY(-8px)\",\n          transition: \"opacity 0.3s ease, transform 0.3s ease\",\n          color: \"oklch(78% 0.17 200)\",\n        }}\n      >\n        {words[index]}\n      </span>\n      {staticSuffix}\n    </span>\n  )\n}\n\nexport { WordRotate }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

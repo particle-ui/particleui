@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "border-beam",
+  "type": "registry:ui",
+  "title": "Border Beam",
+  "description": "Rotating conic-gradient border that sweeps around any container. Configurable colors, speed, and border width.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/border-beam.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface BorderBeamProps extends React.HTMLAttributes<HTMLDivElement> {\n  duration?: number\n  colorFrom?: string\n  colorTo?: string\n  borderWidth?: number\n}\n\nfunction BorderBeam({\n  className,\n  children,\n  duration = 4,\n  colorFrom = \"oklch(78% 0.17 200)\",\n  colorTo = \"oklch(78% 0.17 280)\",\n  borderWidth = 1.5,\n  style,\n  ...props\n}: BorderBeamProps) {\n  const id = React.useId()\n  const animId = `border-beam-${id.replace(/:/g, \"\")}`\n\n  return (\n    <div\n      style={{ position: \"relative\", ...style }}\n      className={[\"rounded-xl overflow-hidden\", className].filter(Boolean).join(\" \")}\n      {...props}\n    >\n      <div\n        aria-hidden\n        style={{\n          position: \"absolute\",\n          inset: 0,\n          borderRadius: \"inherit\",\n          padding: borderWidth,\n          background: `conic-gradient(from 0deg, transparent 0%, ${colorFrom} 20%, ${colorTo} 40%, transparent 60%)`,\n          WebkitMask: \"linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)\",\n          WebkitMaskComposite: \"xor\",\n          maskComposite: \"exclude\",\n          animation: `${animId} ${duration}s linear infinite`,\n        }}\n      />\n      <style>{`\n        @keyframes ${animId} {\n          from { transform: rotate(0deg); }\n          to   { transform: rotate(360deg); }\n        }\n      `}</style>\n      <div style={{ position: \"relative\", zIndex: 1 }}>{children}</div>\n    </div>\n  )\n}\n\nexport { BorderBeam }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

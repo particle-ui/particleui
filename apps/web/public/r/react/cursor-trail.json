@@ -3,26 +3,22 @@
   "name": "cursor-trail",
   "type": "registry:ui",
   "title": "Cursor Trail",
-  "description": "Attaches a glowing particle trail that follows the cursor. Drop into any layout.",
+  "description": "Full-page canvas cursor trail that leaves a fading particle stream. Fixed overlay, zero layout impact. Configurable color, size, trail length, and fade duration.",
   "author": "ParticleUI",
-  "dependencies": [
-    "clsx",
-    "tailwind-merge"
-  ],
+  "dependencies": [],
+  "registryDependencies": [],
   "files": [
     {
       "path": "components/ui/cursor-trail.tsx",
-      "content": "\"use client\"\nimport { useEffect, useRef } from \"react\"\n\ninterface TrailPoint { x: number; y: number; t: number }\n\nexport function CursorTrail({ color = \"#00d4ff\", size = 6, length = 20 }: {\n  color?: string; size?: number; length?: number\n}) {\n  const canvasRef = useRef<HTMLCanvasElement>(null)\n  const trail = useRef<TrailPoint[]>([])\n  const raf = useRef(0)\n\n  useEffect(() => {\n    const canvas = canvasRef.current!\n    const ctx = canvas.getContext(\"2d\")!\n    let W = 0, H = 0\n\n    const resize = () => {\n      W = canvas.width = window.innerWidth\n      H = canvas.height = window.innerHeight\n    }\n    resize()\n    window.addEventListener(\"resize\", resize)\n\n    const onMove = (e: MouseEvent) => {\n      trail.current.push({ x: e.clientX, y: e.clientY, t: Date.now() })\n      if (trail.current.length > length) trail.current.shift()\n    }\n    window.addEventListener(\"mousemove\", onMove)\n\n    const draw = () => {\n      ctx.clearRect(0, 0, W, H)\n      const now = Date.now()\n      trail.current = trail.current.filter(p => now - p.t < 600)\n      for (let i = 0; i < trail.current.length; i++) {\n        const p = trail.current[i]\n        const age = (now - p.t) / 600\n        const alpha = (1 - age) * (i / trail.current.length)\n        const r = size * (1 - age * 0.5)\n        const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r * 3)\n        grd.addColorStop(0, color.replace(\")\", `, ${alpha})`))\n        grd.addColorStop(1, \"rgba(0,0,0,0)\")\n        ctx.beginPath()\n        ctx.arc(p.x, p.y, r * 3, 0, Math.PI * 2)\n        ctx.fillStyle = grd\n        ctx.fill()\n      }\n      raf.current = requestAnimationFrame(draw)\n    }\n    draw()\n\n    return () => {\n      cancelAnimationFrame(raf.current)\n      window.removeEventListener(\"resize\", resize)\n      window.removeEventListener(\"mousemove\", onMove)\n    }\n  }, [color, size, length])\n\n  return (\n    <canvas\n      ref={canvasRef}\n      className=\"pointer-events-none fixed inset-0 z-[9999]\"\n      aria-hidden\n    />\n  )\n}\n",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface TrailPoint {\n  x: number\n  y: number\n  t: number\n}\n\ninterface CursorTrailProps {\n  color?: string\n  size?: number\n  length?: number\n  fade?: number\n  className?: string\n}\n\nfunction CursorTrail({\n  color = \"oklch(78% 0.17 200)\",\n  size = 6,\n  length = 24,\n  fade = 400,\n  className,\n}: CursorTrailProps) {\n  const canvasRef = React.useRef<HTMLCanvasElement>(null)\n  const trail = React.useRef<TrailPoint[]>([])\n  const rafRef = React.useRef<number>(0)\n\n  React.useEffect(() => {\n    const canvas = canvasRef.current\n    if (!canvas) return\n    const ctx = canvas.getContext(\"2d\")\n    if (!ctx) return\n\n    let W = 0\n    let H = 0\n\n    function resize() {\n      W = window.innerWidth\n      H = window.innerHeight\n      canvas!.width = W\n      canvas!.height = H\n    }\n    resize()\n    window.addEventListener(\"resize\", resize)\n\n    function onMouseMove(e: MouseEvent) {\n      trail.current.push({ x: e.clientX, y: e.clientY, t: Date.now() })\n      if (trail.current.length > length) trail.current.shift()\n    }\n    window.addEventListener(\"mousemove\", onMouseMove)\n\n    function draw() {\n      ctx!.clearRect(0, 0, W, H)\n      const now = Date.now()\n\n      for (let i = 1; i < trail.current.length; i++) {\n        const p = trail.current[i]\n        const age = now - p.t\n        if (age > fade) continue\n\n        const alpha = (1 - age / fade) * (i / trail.current.length)\n        const r = size * (i / trail.current.length)\n\n        ctx!.beginPath()\n        ctx!.arc(p.x, p.y, r, 0, Math.PI * 2)\n        ctx!.fillStyle = color.replace(\")\", ` / ${alpha.toFixed(2)})`)\n        ctx!.fill()\n      }\n\n      rafRef.current = requestAnimationFrame(draw)\n    }\n    draw()\n\n    return () => {\n      window.removeEventListener(\"resize\", resize)\n      window.removeEventListener(\"mousemove\", onMouseMove)\n      cancelAnimationFrame(rafRef.current)\n    }\n  }, [color, size, length, fade])\n\n  return (\n    <canvas\n      ref={canvasRef}\n      className={[\"pointer-events-none fixed inset-0 z-[9999]\", className].filter(Boolean).join(\" \")}\n      aria-hidden\n    />\n  )\n}\n\nexport { CursorTrail }\n",
       "type": "registry:ui"
-    },
-    {
-      "path": "skills/cursor-trail/SKILL.md",
-      "type": "registry:file",
-      "target": "~/.claude/skills/cursor-trail/SKILL.md"
     }
   ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
   "categories": [
-    "cursors",
     "animations",
     "pro"
   ]

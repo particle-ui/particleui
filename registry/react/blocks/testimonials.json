@@ -1,0 +1,29 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "testimonials",
+  "type": "registry:block",
+  "title": "Testimonials Section",
+  "description": "Customer testimonial cards in a responsive grid with avatars and star ratings.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "glow-card",
+    "avatar"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/testimonials.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Star } from \"@phosphor-icons/react\"\nimport { GlowCard } from \"@/components/ui/glow-card\"\nimport { Avatar, AvatarFallback } from \"@/components/ui/avatar\"\n\ninterface Testimonial {\n  quote: string\n  name: string\n  role: string\n  initials: string\n}\n\ninterface TestimonialsSectionProps {\n  heading?: string\n  subheading?: string\n  testimonials?: Testimonial[]\n}\n\nconst defaultTestimonials: Testimonial[] = [\n  {\n    quote: \"ParticleUI saved us weeks of design work. The components are polished, consistent, and drop right into our Next.js app without a fight.\",\n    name: \"Alex Rivera\",\n    role: \"Senior Engineer at Linear\",\n    initials: \"AR\",\n  },\n  {\n    quote: \"Finally a component library that doesn't look like every other shadcn clone. The glow effects and dark-first tokens are exactly what we needed.\",\n    name: \"Priya Nair\",\n    role: \"Frontend Lead at Vercel\",\n    initials: \"PN\",\n  },\n  {\n    quote: \"We shipped our landing page in two days. ParticleUI's blocks are beautifully designed and the code is clean — no fighting the abstraction.\",\n    name: \"James Okafor\",\n    role: \"Founder at Resend\",\n    initials: \"JO\",\n  },\n  {\n    quote: \"The Beam, Meteors, and GlowCard components alone are worth it. Our marketing site now looks like it cost 10× what it did.\",\n    name: \"Sarah Chen\",\n    role: \"Design Engineer at Stripe\",\n    initials: \"SC\",\n  },\n  {\n    quote: \"TypeScript support is first-class. Every prop is typed, the defaults are sensible, and the components just work. Highly recommend.\",\n    name: \"Marcus Webb\",\n    role: \"Staff Engineer at Clerk\",\n    initials: \"MW\",\n  },\n  {\n    quote: \"We evaluated every component library out there. ParticleUI won on aesthetics, DX, and the MIT license. Zero lock-in, maximum flexibility.\",\n    name: \"Leila Hassan\",\n    role: \"CTO at Neon\",\n    initials: \"LH\",\n  },\n]\n\nfunction TestimonialsSection({\n  heading = \"Loved by developers\",\n  subheading = \"Teams shipping production apps trust ParticleUI to make their UIs beautiful without slowing them down.\",\n  testimonials = defaultTestimonials,\n}: TestimonialsSectionProps) {\n  return (\n    <section className=\"px-4 py-24\">\n      <div className=\"mx-auto max-w-6xl\">\n        {/* Header */}\n        <div className=\"mb-16 text-center\">\n          <h2 className=\"text-4xl font-bold tracking-tight text-[var(--color-text-1)]\">\n            {heading}\n          </h2>\n          <p className=\"mt-4 text-lg text-[var(--color-text-2)] max-w-xl mx-auto\">\n            {subheading}\n          </p>\n        </div>\n\n        {/* Grid */}\n        <div className=\"grid gap-6 sm:grid-cols-2 lg:grid-cols-3\">\n          {testimonials.map((t, i) => (\n            <GlowCard key={i} className=\"flex flex-col gap-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-6\">\n              {/* Stars */}\n              <div className=\"flex gap-1\">\n                {Array.from({ length: 5 }).map((_, s) => (\n                  <Star key={s} size={16} weight=\"fill\" className=\"text-[var(--color-accent)]\" />\n                ))}\n              </div>\n\n              {/* Quote */}\n              <p className=\"flex-1 text-sm leading-relaxed text-[var(--color-text-2)]\">\n                &ldquo;{t.quote}&rdquo;\n              </p>\n\n              {/* Author */}\n              <div className=\"flex items-center gap-3 border-t border-[var(--color-border)] pt-4\">\n                <Avatar className=\"h-9 w-9\">\n                  <AvatarFallback className=\"bg-[var(--color-accent-dim)] text-[var(--color-accent-text)] text-xs font-semibold\">\n                    {t.initials}\n                  </AvatarFallback>\n                </Avatar>\n                <div>\n                  <p className=\"text-sm font-semibold text-[var(--color-text-1)]\">{t.name}</p>\n                  <p className=\"text-xs text-[var(--color-text-3)]\">{t.role}</p>\n                </div>\n              </div>\n            </GlowCard>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport { TestimonialsSection }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

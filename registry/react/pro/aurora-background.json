@@ -3,20 +3,24 @@
   "name": "aurora-background",
   "type": "registry:ui",
   "title": "Aurora Background",
-  "description": "Slow-moving animated aurora gradient background with configurable colors.",
+  "description": "Slow-moving blurred blob aurora background with configurable palette, speed, and blur radius. Wraps any content.",
   "author": "ParticleUI",
-  "categories": ["backgrounds", "animations", "pro"],
-  "dependencies": ["clsx", "tailwind-merge"],
+  "categories": [
+    "background",
+    "animations",
+    "pro"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
   "files": [
     {
       "path": "components/ui/aurora-background.tsx",
       "type": "registry:ui",
-      "content": "\"use client\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface AuroraBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {\n  colors?: string[]\n  speed?: \"slow\" | \"medium\" | \"fast\"\n  blur?: number\n}\n\nconst DURATIONS = { slow: \"18s\", medium: \"10s\", fast: \"5s\" }\n\nexport function AuroraBackground({\n  className, children,\n  colors = [\"#00d4ff\", \"#7c3aed\", \"#0ea5e9\", \"#10b981\"],\n  speed = \"medium\",\n  blur = 80,\n  ...props\n}: AuroraBackgroundProps) {\n  const dur = DURATIONS[speed]\n  return (\n    <div className={cn(\"relative overflow-hidden\", className)} {...props}>\n      <div className=\"pointer-events-none absolute inset-0\" aria-hidden>\n        {colors.map((color, i) => (\n          <div\n            key={i}\n            className=\"absolute rounded-full opacity-20\"\n            style={{\n              background: color,\n              width: \"60%\",\n              height: \"60%\",\n              top: `${(i * 30) % 60}%`,\n              left: `${(i * 40) % 60}%`,\n              filter: `blur(${blur}px)`,\n              animation: `aurora-${i % 3} ${dur} ease-in-out infinite`,\n              animationDelay: `${i * (parseFloat(dur) / colors.length)}s`,\n            }}\n          />\n        ))}\n        <style>{`\n          @keyframes aurora-0 {\n            0%,100% { transform: translate(0,0) scale(1); }\n            50% { transform: translate(10%, -15%) scale(1.1); }\n          }\n          @keyframes aurora-1 {\n            0%,100% { transform: translate(0,0) scale(1.05); }\n            50% { transform: translate(-12%, 10%) scale(0.95); }\n          }\n          @keyframes aurora-2 {\n            0%,100% { transform: translate(0,0) scale(0.9); }\n            50% { transform: translate(8%, 12%) scale(1.1); }\n          }\n        `}</style>\n      </div>\n      {children}\n    </div>\n  )\n}\n"
-    },
-    {
-      "path": "skills/aurora-background/SKILL.md",
-      "type": "registry:file",
-      "target": "~/.claude/skills/aurora-background/SKILL.md"
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface AuroraBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {\n  colors?: string[]\n  speed?: \"slow\" | \"medium\" | \"fast\"\n  blur?: number\n}\n\nconst DURATIONS = { slow: \"18s\", medium: \"10s\", fast: \"5s\" }\n\nfunction AuroraBackground({\n  className,\n  children,\n  colors = [\n    \"oklch(78% 0.17 200)\",\n    \"oklch(65% 0.25 285)\",\n    \"oklch(72% 0.2 220)\",\n    \"oklch(60% 0.22 300)\",\n  ],\n  speed = \"medium\",\n  blur = 80,\n  style,\n  ...props\n}: AuroraBackgroundProps) {\n  const dur = DURATIONS[speed]\n\n  return (\n    <div\n      className={[\"relative overflow-hidden\", className].filter(Boolean).join(\" \")}\n      style={style}\n      {...props}\n    >\n      <div className=\"pointer-events-none absolute inset-0\" aria-hidden>\n        {colors.map((color, i) => (\n          <div\n            key={i}\n            className=\"absolute rounded-full opacity-20\"\n            style={{\n              background: color,\n              width: \"65%\",\n              height: \"65%\",\n              top: `${(i * 28) % 55}%`,\n              left: `${(i * 35) % 55}%`,\n              filter: `blur(${blur}px)`,\n              animation: `aurora-blob-${i % 3} ${dur} ease-in-out infinite`,\n              animationDelay: `${i * (parseFloat(dur) / colors.length)}s`,\n            }}\n          />\n        ))}\n        <style>{`\n          @keyframes aurora-blob-0 {\n            0%,100% { transform: translate(0,0) scale(1); }\n            33% { transform: translate(8%,-12%) scale(1.08); }\n            66% { transform: translate(-6%,8%) scale(0.95); }\n          }\n          @keyframes aurora-blob-1 {\n            0%,100% { transform: translate(0,0) scale(1.05); }\n            33% { transform: translate(-10%,8%) scale(0.94); }\n            66% { transform: translate(12%,-10%) scale(1.1); }\n          }\n          @keyframes aurora-blob-2 {\n            0%,100% { transform: translate(0,0) scale(0.92); }\n            33% { transform: translate(6%,10%) scale(1.08); }\n            66% { transform: translate(-8%,-8%) scale(1); }\n          }\n        `}</style>\n      </div>\n      <div className=\"relative z-[1]\">{children}</div>\n    </div>\n  )\n}\n\nexport { AuroraBackground }\n"
     }
-  ]
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
 }

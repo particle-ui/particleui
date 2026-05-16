@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "faq",
+  "type": "registry:block",
+  "title": "FAQ Section",
+  "description": "Accordion-based FAQ section with configurable questions and answers.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [
+    "accordion"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/faq.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport {\n  Accordion,\n  AccordionContent,\n  AccordionItem,\n  AccordionTrigger,\n} from \"@/components/ui/accordion\"\n\ninterface FaqItem {\n  question: string\n  answer: string\n}\n\ninterface FaqSectionProps {\n  heading?: string\n  description?: string\n  items?: FaqItem[]\n}\n\nconst defaultItems: FaqItem[] = [\n  {\n    question: \"Is ParticleUI free to use?\",\n    answer:\n      \"Yes — the core library and all free-tier components are MIT licensed. You own every file you copy into your project. Pro components (animations, advanced blocks) require a Pro license, but the vast majority of ParticleUI is completely free.\",\n  },\n  {\n    question: \"Is ParticleUI compatible with shadcn/ui?\",\n    answer:\n      \"Absolutely. ParticleUI shares the same Radix UI foundation and Tailwind CSS approach as shadcn. You can use both libraries in the same project — ParticleUI simply extends the design language with electric tokens, particle effects, and ready-to-go blocks.\",\n  },\n  {\n    question: \"Which frameworks does ParticleUI support?\",\n    answer:\n      \"ParticleUI targets React 18+ and Next.js 13+ (App Router). The components are framework-agnostic at their core and will work in Remix, Vite, Astro, or any React-compatible environment. Server components and client components are clearly marked.\",\n  },\n  {\n    question: \"What does the license allow?\",\n    answer:\n      \"All free components are MIT — use them in personal projects, client work, and commercial products with no attribution required. Pro components come with a per-seat license that allows unlimited commercial use. Check the LICENSE file for the exact terms.\",\n  },\n  {\n    question: \"Does ParticleUI support TypeScript?\",\n    answer:\n      \"TypeScript is a first-class citizen. Every component ships with full type definitions, exported interfaces, and strict prop types. You get autocomplete, type safety, and inline JSDoc comments right out of the box.\",\n  },\n  {\n    question: \"Are Figma design files available?\",\n    answer:\n      \"Yes — a community Figma file with every free component is available to duplicate. Pro subscribers get access to the full Figma design system including variables, color tokens, and component properties synced with the code.\",\n  },\n]\n\nfunction FaqSection({\n  heading = \"Frequently asked questions\",\n  description = \"Everything you need to know about ParticleUI. Can't find your answer? Reach out on Discord.\",\n  items = defaultItems,\n}: FaqSectionProps) {\n  return (\n    <section className=\"px-4 py-24\">\n      <div className=\"mx-auto max-w-2xl\">\n        {/* Header */}\n        <div className=\"mb-12 text-center\">\n          <h2 className=\"text-4xl font-bold tracking-tight text-[var(--color-text-1)]\">\n            {heading}\n          </h2>\n          <p className=\"mt-4 text-lg text-[var(--color-text-2)]\">{description}</p>\n        </div>\n\n        {/* Accordion */}\n        <Accordion type=\"single\" collapsible className=\"w-full divide-y divide-[var(--color-border)]\">\n          {items.map((item, i) => (\n            <AccordionItem key={i} value={`item-${i}`} className=\"border-0\">\n              <AccordionTrigger className=\"py-5 text-left text-base font-medium text-[var(--color-text-1)] hover:text-[var(--color-accent)] hover:no-underline\">\n                {item.question}\n              </AccordionTrigger>\n              <AccordionContent className=\"pb-5 text-sm leading-relaxed text-[var(--color-text-2)]\">\n                {item.answer}\n              </AccordionContent>\n            </AccordionItem>\n          ))}\n        </Accordion>\n      </div>\n    </section>\n  )\n}\n\nexport { FaqSection }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

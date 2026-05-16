@@ -1,0 +1,28 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "how-it-works",
+  "type": "registry:block",
+  "title": "How It Works",
+  "description": "Three-step process section with numbered steps, icons, and a code snippet preview.",
+  "author": "ParticleUI",
+  "categories": [
+    "marketing",
+    "blocks",
+    "free"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/blocks/how-it-works.tsx",
+      "type": "registry:block",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { TerminalWindow, Copy, Rocket } from \"@phosphor-icons/react\"\n\ninterface Step {\n  number: number\n  icon: React.ReactNode\n  title: string\n  description: string\n  code?: string\n}\n\ninterface HowItWorksProps {\n  heading?: string\n  description?: string\n  steps?: Step[]\n}\n\nconst defaultSteps: Step[] = [\n  {\n    number: 1,\n    icon: <TerminalWindow size={24} weight=\"duotone\" />,\n    title: \"Install via CLI\",\n    description: \"Add any component in seconds with a single command. No boilerplate, no configuration files.\",\n    code: \"npx shadcn add @particleui/button\",\n  },\n  {\n    number: 2,\n    icon: <Copy size={24} weight=\"duotone\" />,\n    title: \"Copy components\",\n    description: \"Your code, your rules. Every file lands directly in your project — fully editable, MIT licensed.\",\n  },\n  {\n    number: 3,\n    icon: <Rocket size={24} weight=\"duotone\" />,\n    title: \"Ship\",\n    description: \"Production-ready from day one. Accessible, typed, and battle-tested across hundreds of projects.\",\n  },\n]\n\nfunction HowItWorks({\n  heading = \"Get started in minutes\",\n  description = \"Three steps from zero to a production-quality UI. No accounts, no lock-in, no magic.\",\n  steps = defaultSteps,\n}: HowItWorksProps) {\n  return (\n    <section className=\"px-4 py-24\">\n      <div className=\"mx-auto max-w-5xl\">\n        {/* Header */}\n        <div className=\"mb-16 text-center\">\n          <h2 className=\"text-4xl font-bold tracking-tight text-[var(--color-text-1)]\">\n            {heading}\n          </h2>\n          <p className=\"mt-4 text-lg text-[var(--color-text-2)] max-w-xl mx-auto\">\n            {description}\n          </p>\n        </div>\n\n        {/* Steps */}\n        <div className=\"relative grid gap-8 sm:grid-cols-3\">\n          {/* Connector lines (desktop only) */}\n          <div\n            aria-hidden\n            className=\"pointer-events-none absolute inset-x-0 top-10 hidden h-px sm:block\"\n            style={{\n              background:\n                \"repeating-linear-gradient(to right, var(--color-border) 0, var(--color-border) 6px, transparent 6px, transparent 14px)\",\n              left: \"calc(33.333% / 2 + 2.5rem)\",\n              right: \"calc(33.333% / 2 + 2.5rem)\",\n            }}\n          />\n\n          {steps.map((step) => (\n            <div key={step.number} className=\"relative flex flex-col items-center gap-4 text-center\">\n              {/* Step number circle */}\n              <div className=\"relative z-10 flex h-20 w-20 flex-col items-center justify-center rounded-full border-2 border-[var(--color-accent-border)] bg-[var(--color-surface-1)] shadow-[0_0_20px_var(--color-accent-dim)]\">\n                <span className=\"text-[var(--color-accent)] [&>*]:text-[var(--color-accent)]\">\n                  {step.icon}\n                </span>\n                <span className=\"absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[var(--color-accent)] text-[10px] font-bold text-[var(--color-bg)]\">\n                  {step.number}\n                </span>\n              </div>\n\n              <h3 className=\"text-lg font-semibold text-[var(--color-text-1)]\">{step.title}</h3>\n              <p className=\"text-sm leading-relaxed text-[var(--color-text-2)] max-w-[220px]\">\n                {step.description}\n              </p>\n\n              {step.code && (\n                <code className=\"rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-2)] px-3 py-1.5 font-mono text-xs text-[var(--color-accent-text)]\">\n                  {step.code}\n                </code>\n              )}\n            </div>\n          ))}\n        </div>\n      </div>\n    </section>\n  )\n}\n\nexport { HowItWorks }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

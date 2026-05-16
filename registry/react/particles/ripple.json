@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "ripple",
+  "type": "registry:ui",
+  "title": "Ripple Button",
+  "description": "Button that fires an expanding ripple at the click position. Configurable ripple color.",
+  "author": "ParticleUI",
+  "categories": [
+    "buttons",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/ripple.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface RippleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  rippleColor?: string\n}\n\ninterface RippleItem {\n  id: number\n  x: number\n  y: number\n  size: number\n}\n\nfunction RippleButton({\n  children,\n  className,\n  rippleColor = \"oklch(78% 0.17 200 / 0.35)\",\n  onClick,\n  style,\n  ...props\n}: RippleButtonProps) {\n  const ref = React.useRef<HTMLButtonElement>(null)\n  const [ripples, setRipples] = React.useState<RippleItem[]>([])\n  const counter = React.useRef(0)\n\n  const handleClick = React.useCallback(\n    (e: React.MouseEvent<HTMLButtonElement>) => {\n      const el = ref.current\n      if (!el) return\n      const rect = el.getBoundingClientRect()\n      const size = Math.max(rect.width, rect.height) * 2\n      const x = e.clientX - rect.left - size / 2\n      const y = e.clientY - rect.top - size / 2\n      const id = ++counter.current\n\n      setRipples((prev) => [...prev, { id, x, y, size }])\n      setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== id)), 600)\n      onClick?.(e)\n    },\n    [onClick]\n  )\n\n  return (\n    <button\n      ref={ref}\n      onClick={handleClick}\n      style={{ position: \"relative\", overflow: \"hidden\", ...style }}\n      className={[\n        \"inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold cursor-pointer select-none\",\n        \"bg-[var(--color-accent)] text-[var(--color-bg)]\",\n        \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]\",\n        \"disabled:pointer-events-none disabled:opacity-40\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      {...props}\n    >\n      {ripples.map((r) => (\n        <span\n          key={r.id}\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            left: r.x,\n            top: r.y,\n            width: r.size,\n            height: r.size,\n            borderRadius: \"50%\",\n            background: rippleColor,\n            animation: \"ripple-expand 0.6s ease-out forwards\",\n            pointerEvents: \"none\",\n          }}\n        />\n      ))}\n      <style>{`\n        @keyframes ripple-expand {\n          from { transform: scale(0); opacity: 1; }\n          to   { transform: scale(1); opacity: 0; }\n        }\n      `}</style>\n      <span style={{ position: \"relative\", zIndex: 1 }}>{children}</span>\n    </button>\n  )\n}\n\nexport { RippleButton }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

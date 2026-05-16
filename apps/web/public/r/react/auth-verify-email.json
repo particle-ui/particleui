@@ -1,0 +1,31 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "auth-verify-email",
+  "type": "registry:block",
+  "title": "Auth — Verify Email",
+  "description": "Email verification screen with resend link and success state.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "@phosphor-icons/react"
+  ],
+  "registryDependencies": [
+    "button",
+    "card"
+  ],
+  "files": [
+    {
+      "path": "components/blocks/auth-verify-email.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from \"@/components/ui/card\"\nimport { EnvelopeSimple } from \"@phosphor-icons/react\"\n\ninterface AuthVerifyEmailProps {\n  email?: string\n  onOpenEmailApp?: () => void\n  onResend?: () => void\n  openEmailHref?: string\n  resendCooldown?: number\n}\n\nfunction AuthVerifyEmail({\n  email = \"email@example.com\",\n  onOpenEmailApp,\n  onResend,\n  openEmailHref = \"https://mail.google.com\",\n  resendCooldown = 60,\n}: AuthVerifyEmailProps) {\n  const [seconds, setSeconds] = React.useState(resendCooldown)\n  const [canResend, setCanResend] = React.useState(false)\n  const [resending, setResending] = React.useState(false)\n\n  React.useEffect(() => {\n    if (seconds <= 0) {\n      setCanResend(true)\n      return\n    }\n    const timer = setTimeout(() => setSeconds((s) => s - 1), 1000)\n    return () => clearTimeout(timer)\n  }, [seconds])\n\n  const handleResend = async () => {\n    if (!canResend) return\n    setResending(true)\n    try {\n      await onResend?.()\n    } finally {\n      setResending(false)\n      setCanResend(false)\n      setSeconds(resendCooldown)\n    }\n  }\n\n  return (\n    <div className=\"flex items-center justify-center min-h-[420px] px-4\">\n      <Card className=\"w-full max-w-sm text-center\">\n        <CardHeader className=\"gap-3 items-center\">\n          <div className=\"flex h-16 w-16 items-center justify-center rounded-full border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)]\">\n            <EnvelopeSimple size={32} weight=\"duotone\" className=\"text-[var(--color-accent)]\" />\n          </div>\n          <div className=\"flex flex-col gap-1\">\n            <CardTitle className=\"text-xl\">Verify your email</CardTitle>\n            <CardDescription>\n              We sent a verification link to{\" \"}\n              <span className=\"font-medium text-[var(--color-text-2)]\">{email}</span>\n            </CardDescription>\n          </div>\n        </CardHeader>\n\n        <CardContent className=\"flex flex-col gap-3\">\n          <Button asChild className=\"w-full\" onClick={onOpenEmailApp}>\n            <a href={openEmailHref} target=\"_blank\" rel=\"noopener noreferrer\">\n              Open email app\n            </a>\n          </Button>\n        </CardContent>\n\n        <CardFooter className=\"justify-center\">\n          {canResend ? (\n            <button\n              type=\"button\"\n              onClick={handleResend}\n              disabled={resending}\n              className=\"text-xs text-[var(--color-accent-text)] hover:text-[var(--color-accent)] transition-colors disabled:opacity-50\"\n            >\n              {resending ? \"Resending…\" : \"Resend email\"}\n            </button>\n          ) : (\n            <p className=\"text-xs text-[var(--color-text-3)]\">\n              Resend in{\" \"}\n              <span className=\"tabular-nums text-[var(--color-text-2)]\">{seconds}s</span>\n            </p>\n          )}\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}\n\nexport { AuthVerifyEmail }\nexport default AuthVerifyEmail\n",
+      "type": "registry:block"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "auth",
+    "blocks",
+    "free"
+  ]
+}

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition, useMemo } from "react"
+import { useState, useTransition, useMemo, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { Palette, Copy, Check, Share, FloppyDisk } from "@phosphor-icons/react"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -330,7 +330,7 @@ function PreviewPanel({ tokens, mode }: { tokens: ThemeTokens; mode: "dark" | "l
 
 // ─── Main page ───────────────────────────────────────────────────────────────
 
-export default function ThemeStudioPage() {
+function ThemeStudioInner() {
   const { isSignedIn } = useUser()
   const searchParams = useSearchParams()
   const presetKey = searchParams.get("preset") ?? "espresso"
@@ -591,5 +591,13 @@ export default function ThemeStudioPage() {
         </aside>
       </div>
     </div>
+  )
+}
+
+export default function ThemeStudioPage() {
+  return (
+    <Suspense>
+      <ThemeStudioInner />
+    </Suspense>
   )
 }

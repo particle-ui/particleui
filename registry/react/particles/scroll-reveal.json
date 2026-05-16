@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "scroll-reveal",
+  "type": "registry:ui",
+  "title": "Scroll Reveal",
+  "description": "IntersectionObserver-powered fade-in wrapper. Configurable direction (up/down/left/right), distance, duration, delay, and once/repeat mode.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/scroll-reveal.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype RevealDirection = \"up\" | \"down\" | \"left\" | \"right\" | \"none\"\n\ninterface ScrollRevealProps extends React.HTMLAttributes<HTMLDivElement> {\n  direction?: RevealDirection\n  distance?: number\n  duration?: number\n  delay?: number\n  once?: boolean\n}\n\nconst directionMap: Record<RevealDirection, string> = {\n  up:    \"translateY(VAR)\",\n  down:  \"translateY(-VAR)\",\n  left:  \"translateX(VAR)\",\n  right: \"translateX(-VAR)\",\n  none:  \"translateY(0)\",\n}\n\nfunction ScrollReveal({\n  children,\n  className,\n  direction = \"up\",\n  distance = 24,\n  duration = 600,\n  delay = 0,\n  once = true,\n  style,\n  ...props\n}: ScrollRevealProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [revealed, setRevealed] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setRevealed(true)\n          if (once) observer.disconnect()\n        } else if (!once) {\n          setRevealed(false)\n        }\n      },\n      { threshold: 0.15 }\n    )\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [once])\n\n  const hiddenTransform = directionMap[direction].replace(\"VAR\", `${distance}px`)\n\n  return (\n    <div\n      ref={ref}\n      style={{\n        opacity: revealed ? 1 : 0,\n        transform: revealed ? \"translate(0)\" : hiddenTransform,\n        transition: `opacity ${duration}ms ease ${delay}ms, transform ${duration}ms ease ${delay}ms`,\n        ...style,\n      }}\n      className={className}\n      {...props}\n    >\n      {children}\n    </div>\n  )\n}\n\nexport { ScrollReveal }\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

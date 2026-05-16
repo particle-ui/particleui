@@ -39,7 +39,7 @@ export function detectComponentsDir(): string {
   return resolve("src/components/ui")
 }
 
-type RegistryFile = { path: string; content: string; type: string }
+export type RegistryFile = { path: string; content: string; type: string }
 
 export function writeComponentFiles(files: RegistryFile[], componentsDir: string): string[] {
   const written: string[] = []

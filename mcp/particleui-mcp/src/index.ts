@@ -2,28 +2,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js"
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod"
-
-const BASE = process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev/r"
-const TOKEN = process.env.PARTICLEUI_TOKEN
-
-function headers(): Record<string, string> {
-  return TOKEN
-    ? { Authorization: `Bearer ${TOKEN}`, Accept: "application/vnd.shadcn.v1+json" }
-    : { Accept: "application/vnd.shadcn.v1+json" }
-}
-
-type IndexItem = {
-  name: string; tier: string; title: string
-  description: string; categories: string[]; dependencies: string[]
-}
-
-async function fetchIndex(fw: string): Promise<IndexItem[]> {
-  const res = await fetch(`${BASE}/${fw}/index.json`)
-  if (!res.ok) return []
-  const data = await res.json()
-  // Support both { items: [...] } (new) and legacy flat array
-  return Array.isArray(data) ? data : (data.items ?? [])
-}
+import { fetchIndex, fetchComponent } from "./registry.js"
 
 const server = new McpServer({ name: "particleui", version: "0.1.0" })
 
@@ -74,18 +53,11 @@ server.tool(
     framework: z.enum(["react", "vue", "svelte"]).default("react"),
   },
   async ({ name, framework }) => {
-    const res = await fetch(`${BASE}/${framework}/${name}.json`, { headers: headers() })
-    if (res.status === 401)
-      return {
-        content: [{
-          type: "text",
-          text: `**${name}** is a Pro component. Add your PARTICLEUI_TOKEN to the MCP environment:\n\`\`\`\nPARTICLEUI_TOKEN=your-token claude mcp add @particleui/mcp\n\`\`\`\nGet a token at https://particleui.dev/dashboard`,
-        }],
-      }
-    if (!res.ok)
-      return { content: [{ type: "text", text: `Component "${name}" not found.` }] }
+    const result = await fetchComponent(framework, name)
+    if (!result.ok)
+      return { content: [{ type: "text", text: result.message }] }
 
-    const item = await res.json()
+    const item = result.item
     const isPro = item.categories?.includes("pro")
     const mainFile = item.files?.find((f: { type: string }) => f.type !== "registry:file")
 
@@ -124,7 +96,7 @@ server.tool(
       `Add to your **components.json** under \`"registries"\`:`,
       `\`\`\`json`,
       `"@particleui": {`,
-      `  "url": "${BASE}/${framework}/{name}.json",`,
+      `  "url": "${process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev/r"}/${framework}/{name}.json",`,
       `  "headers": { "Authorization": "Bearer \${PARTICLEUI_TOKEN}" }`,
       `}`,
       `\`\`\``,
@@ -169,7 +141,10 @@ server.tool(
     const base = process.env.PARTICLEUI_REGISTRY_URL ?? "https://particleui.dev"
     const res = await fetch(`${base}/api/mcp/generate`, {
       method: "POST",
-      headers: { ...headers(), "Content-Type": "application/json" },
+      headers: {
+        ...(process.env.PARTICLEUI_TOKEN ? { Authorization: `Bearer ${process.env.PARTICLEUI_TOKEN}` } : {}),
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ prompt }),
     })
     if (res.status === 401)

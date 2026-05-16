@@ -3,20 +3,23 @@
   "name": "orbit-animation",
   "type": "registry:ui",
   "title": "Orbit Animation",
-  "description": "Elements orbit a central node at configurable speeds and radii. Great for tech stack icons.",
+  "description": "CSS orbital rings with configurable items, radii, speeds, and reverse direction. Accepts any ReactNode as orbiting or center content.",
   "author": "ParticleUI",
-  "categories": ["animations", "pro"],
-  "dependencies": ["clsx", "tailwind-merge"],
+  "categories": [
+    "animations",
+    "pro"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
   "files": [
     {
       "path": "components/ui/orbit-animation.tsx",
       "type": "registry:ui",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\ninterface OrbitItem { content: React.ReactNode; radius?: number; duration?: number; offset?: number }\n\ninterface OrbitAnimationProps {\n  center?: React.ReactNode\n  items: OrbitItem[]\n  size?: number\n  className?: string\n}\n\nexport function OrbitAnimation({ center, items, size = 280, className }: OrbitAnimationProps) {\n  return (\n    <div\n      className={cn(\"relative flex items-center justify-center\", className)}\n      style={{ width: size, height: size }}\n    >\n      {/* Rings */}\n      {Array.from(new Set(items.map(i => i.radius ?? 80))).map(r => (\n        <div\n          key={r}\n          className=\"absolute rounded-full border border-white/[0.06]\"\n          style={{ width: r * 2, height: r * 2 }}\n        />\n      ))}\n      {/* Center */}\n      {center && (\n        <div className=\"relative z-10 flex items-center justify-center\">{center}</div>\n      )}\n      {/* Orbiting items */}\n      {items.map((item, i) => {\n        const r = item.radius ?? 80 + i * 40\n        const dur = item.duration ?? 10 + i * 3\n        const off = item.offset ?? (i * 360) / items.length\n        return (\n          <div\n            key={i}\n            className=\"absolute inset-0 flex items-center justify-center\"\n            style={{ animation: `orbit ${dur}s linear infinite`, animationDelay: `${-(off / 360) * dur}s` }}\n          >\n            <div style={{ transform: `translateY(-${r}px)` }}>{item.content}</div>\n          </div>\n        )\n      })}\n      <style>{`\n        @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }\n      `}</style>\n    </div>\n  )\n}\n"
-    },
-    {
-      "path": "skills/orbit-animation/SKILL.md",
-      "type": "registry:file",
-      "target": "~/.claude/skills/orbit-animation/SKILL.md"
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface OrbitItem {\n  content: React.ReactNode\n  radius?: number\n  duration?: number\n  offset?: number\n  reverse?: boolean\n}\n\ninterface OrbitAnimationProps {\n  center?: React.ReactNode\n  items: OrbitItem[]\n  size?: number\n  showRings?: boolean\n  className?: string\n}\n\nfunction OrbitAnimation({\n  center,\n  items,\n  size = 300,\n  showRings = true,\n  className,\n}: OrbitAnimationProps) {\n  const radii = items.map((item, i) => item.radius ?? 60 + i * 48)\n  const uniqueRadii = [...new Set(radii)]\n\n  return (\n    <div\n      className={[\"relative flex items-center justify-center select-none\", className]\n        .filter(Boolean)\n        .join(\" \")}\n      style={{ width: size, height: size }}\n    >\n      {/* Rings */}\n      {showRings &&\n        uniqueRadii.map((r) => (\n          <div\n            key={r}\n            className=\"absolute rounded-full border border-white/[0.07]\"\n            style={{ width: r * 2, height: r * 2 }}\n          />\n        ))}\n\n      {/* Center node */}\n      {center && (\n        <div className=\"relative z-10 flex items-center justify-center rounded-full\">\n          {center}\n        </div>\n      )}\n\n      {/* Orbiting items */}\n      {items.map((item, i) => {\n        const r = radii[i]\n        const dur = item.duration ?? 10 + i * 4\n        const off = item.offset ?? (i * 360) / items.length\n        const dir = item.reverse ? \"reverse\" : \"normal\"\n\n        return (\n          <div\n            key={i}\n            className=\"absolute inset-0 flex items-center justify-center\"\n            style={{\n              animation: `particle-orbit ${dur}s linear infinite ${dir}`,\n              animationDelay: `${-(off / 360) * dur}s`,\n            }}\n          >\n            <div\n              style={{ transform: `translateY(-${r}px)` }}\n              className=\"flex items-center justify-center\"\n            >\n              {item.content}\n            </div>\n          </div>\n        )\n      })}\n\n      <style>{`\n        @keyframes particle-orbit {\n          from { transform: rotate(0deg); }\n          to   { transform: rotate(360deg); }\n        }\n      `}</style>\n    </div>\n  )\n}\n\nexport { OrbitAnimation }\n"
     }
-  ]
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
 }

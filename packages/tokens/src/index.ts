@@ -1,2 +1,1 @@
-export { tokens, type TokenScale } from "./tokens"
-export { tailwindPreset } from "./tailwind-preset"
+export { tokens, tailwindPreset, vars, type TokenScale } from "./tokens"

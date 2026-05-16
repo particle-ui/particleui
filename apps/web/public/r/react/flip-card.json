@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "flip-card",
+  "type": "registry:ui",
+  "title": "Flip Card",
+  "description": "3D CSS flip card with front and back slots. Supports horizontal/vertical flip and hover/click trigger.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/flip-card.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface FlipCardProps extends React.HTMLAttributes<HTMLDivElement> {\n  front: React.ReactNode\n  back: React.ReactNode\n  height?: number | string\n  direction?: \"horizontal\" | \"vertical\"\n  trigger?: \"hover\" | \"click\"\n}\n\nfunction FlipCard({\n  front,\n  back,\n  height = 240,\n  direction = \"horizontal\",\n  trigger = \"hover\",\n  className,\n  style,\n  ...props\n}: FlipCardProps) {\n  const [flipped, setFlipped] = React.useState(false)\n  const rotateAxis = direction === \"horizontal\" ? \"rotateY\" : \"rotateX\"\n\n  const hoverProps =\n    trigger === \"hover\"\n      ? { onMouseEnter: () => setFlipped(true), onMouseLeave: () => setFlipped(false) }\n      : { onClick: () => setFlipped((f) => !f) }\n\n  return (\n    <div\n      {...hoverProps}\n      style={{ perspective: \"1200px\", height, ...style }}\n      className={[\"relative w-full cursor-pointer select-none\", className].filter(Boolean).join(\" \")}\n      {...props}\n    >\n      <div\n        style={{\n          position: \"relative\",\n          width: \"100%\",\n          height: \"100%\",\n          transformStyle: \"preserve-3d\",\n          transform: flipped ? `${rotateAxis}(180deg)` : `${rotateAxis}(0deg)`,\n          transition: \"transform 0.55s cubic-bezier(0.4, 0, 0.2, 1)\",\n        }}\n      >\n        <div\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            backfaceVisibility: \"hidden\",\n            WebkitBackfaceVisibility: \"hidden\",\n          }}\n          className=\"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] overflow-hidden\"\n        >\n          {front}\n        </div>\n        <div\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            backfaceVisibility: \"hidden\",\n            WebkitBackfaceVisibility: \"hidden\",\n            transform: `${rotateAxis}(180deg)`,\n          }}\n          className=\"rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-2)] overflow-hidden\"\n        >\n          {back}\n        </div>\n      </div>\n    </div>\n  )\n}\n\nexport { FlipCard }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

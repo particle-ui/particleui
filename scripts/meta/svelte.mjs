@@ -1,0 +1,76 @@
+export const meta = {
+  button: {
+    title: "Button",
+    description: "Accessible button with six variants. Electric-glow on the default variant.",
+    categories: ["buttons", "core", "free"],
+    dependencies: ["tailwind-variants"],
+  },
+  input: {
+    title: "Input",
+    description: "Text input with OKLCH-tuned focus ring and surface hierarchy.",
+    categories: ["forms", "core", "free"],
+    dependencies: [],
+  },
+  textarea: {
+    title: "Textarea",
+    description: "Textarea with matching input design language.",
+    categories: ["forms", "core", "free"],
+    dependencies: [],
+  },
+  label: {
+    title: "Label",
+    description: "Accessible form label.",
+    categories: ["forms", "core", "free"],
+    dependencies: [],
+  },
+  badge: {
+    title: "Badge",
+    description: "Inline status badge with four variants.",
+    categories: ["badges", "core", "free"],
+    dependencies: ["tailwind-variants"],
+  },
+  card: {
+    title: "Card",
+    description: "Composable card with header, content, and footer slots.",
+    categories: ["layout", "core", "free"],
+    dependencies: [],
+    subFiles: ["card-header", "card-title", "card-description", "card-content", "card-footer"],
+  },
+  separator: {
+    title: "Separator",
+    description: "Horizontal or vertical visual divider.",
+    categories: ["layout", "core", "free"],
+    dependencies: [],
+  },
+  skeleton: {
+    title: "Skeleton",
+    description: "Animated placeholder for loading states.",
+    categories: ["feedback", "core", "free"],
+    dependencies: [],
+  },
+  avatar: {
+    title: "Avatar",
+    description: "Circular avatar with image and initials fallback.",
+    categories: ["media", "core", "free"],
+    dependencies: [],
+  },
+  switch: {
+    title: "Switch",
+    description: "Accessible toggle switch with electric-cyan on state.",
+    categories: ["forms", "core", "free"],
+    dependencies: [],
+  },
+  checkbox: {
+    title: "Checkbox",
+    description: "Accessible checkbox with electric-accent checked state.",
+    categories: ["forms", "core", "free"],
+    dependencies: [],
+  },
+  tabs: {
+    title: "Tabs",
+    description: "Context-based tab panels with keyboard navigation.",
+    categories: ["navigation", "core", "free"],
+    dependencies: [],
+    subFiles: ["tabs-list", "tabs-trigger", "tabs-content"],
+  },
+}

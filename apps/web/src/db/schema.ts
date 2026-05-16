@@ -3,7 +3,10 @@ import { pgTable, text, timestamp, boolean, uuid } from "drizzle-orm/pg-core"
 export const users = pgTable("users", {
   id: text("id").primaryKey(), // Clerk user ID
   email: text("email").notNull(),
-  plan: text("plan", { enum: ["free", "pro"] }).notNull().default("free"),
+  plan: text("plan", { enum: ["free", "pro", "team"] }).notNull().default("free"),
+  stripeCustomerId: text("stripe_customer_id"),
+  stripeSessionId: text("stripe_session_id"),   // Checkout Session ID for receipt lookup
+  // legacy Lemon Squeezy fields — kept so existing dev-mode rows don't break
   lsCustomerId: text("ls_customer_id"),
   lsSubscriptionId: text("ls_subscription_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

@@ -1,8 +1,9 @@
 import { Command } from "commander"
 import chalk from "chalk"
 import ora from "ora"
-import { fetchComponent, type RegistryItem } from "../lib/registry.js"
+import { fetchComponent } from "../lib/registry.js"
 import { detectFramework, detectComponentsDir, writeComponentFiles, readLocalConfig } from "../lib/project.js"
+import { ComponentInstaller } from "../lib/installer.js"
 import { log } from "../lib/logger.js"
 
 export const addCommand = new Command("add")
@@ -21,59 +22,45 @@ export const addCommand = new Command("add")
     log.dim(`Framework: ${framework}  |  Output: ${componentsDir}`)
     console.log()
 
-    const allDeps = new Set<string>()
-    const allDevDeps = new Set<string>()
-    const installed = new Set<string>()
+    const installer = new ComponentInstaller(framework, componentsDir, {
+      fetch: fetchComponent,
+      write: writeComponentFiles,
+    })
 
-    async function install(name: string): Promise<void> {
-      if (installed.has(name)) return
-      installed.add(name)
-
+    for (const name of components) {
       const spinner = ora({ text: chalk.dim(`Fetching ${name}...`), color: "white" }).start()
-
-      let item: RegistryItem
       try {
-        item = await fetchComponent(framework, name)
+        const item = await installer.installWithDeps(name)
+        if (!item) {
+          spinner.info(chalk.dim(`${name} already installed`))
+          continue
+        }
         spinner.succeed(chalk.green(`✓ ${item.title ?? name}`))
+        const { writtenPaths } = installer.getResult()
+        for (const p of writtenPaths.slice(-item.files.length)) {
+          log.dim(`  → ${p.replace(process.cwd() + "/", "")}`)
+        }
       } catch (err) {
         spinner.fail(chalk.red(`✗ ${name}`))
         log.error(String(err instanceof Error ? err.message : err))
-        return
-      }
-
-      // Write files
-      const written = writeComponentFiles(item.files, componentsDir)
-      for (const p of written) {
-        log.dim(`  → ${p.replace(process.cwd() + "/", "")}`)
-      }
-
-      // Collect deps
-      for (const dep of item.dependencies ?? []) allDeps.add(dep)
-      for (const dep of item.devDependencies ?? []) allDevDeps.add(dep)
-
-      // Recursively install registry dependencies
-      for (const dep of item.registryDependencies ?? []) {
-        await install(dep)
       }
     }
 
-    for (const name of components) {
-      await install(name)
-    }
+    const { deps, devDeps } = installer.getResult()
 
     console.log()
 
-    if (opts.deps && allDeps.size > 0) {
+    if (opts.deps && deps.size > 0) {
       log.info("Install npm dependencies:")
-      console.log(chalk.cyan(`  npm install ${[...allDeps].join(" ")}`))
+      console.log(chalk.cyan(`  npm install ${[...deps].join(" ")}`))
       console.log()
     }
-    if (opts.deps && allDevDeps.size > 0) {
+    if (opts.deps && devDeps.size > 0) {
       log.info("Install dev dependencies:")
-      console.log(chalk.cyan(`  npm install -D ${[...allDevDeps].join(" ")}`))
+      console.log(chalk.cyan(`  npm install -D ${[...devDeps].join(" ")}`))
       console.log()
     }
 
-    log.success(`Done! ${installed.size} component(s) added.`)
+    log.success(`Done! ${installer.getResult().installed.size} component(s) added.`)
     console.log()
   })

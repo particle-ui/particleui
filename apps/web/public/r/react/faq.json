@@ -3,7 +3,7 @@
   "name": "faq",
   "type": "registry:block",
   "title": "FAQ Section",
-  "description": "Centered FAQ with Accordion, covering pricing, shadcn compatibility, frameworks, license, TypeScript, and Figma.",
+  "description": "Accordion-based FAQ section with configurable questions and answers.",
   "author": "ParticleUI",
   "dependencies": [],
   "registryDependencies": [

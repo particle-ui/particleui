@@ -3,7 +3,7 @@
   "name": "how-it-works",
   "type": "registry:block",
   "title": "How It Works",
-  "description": "Three-step horizontal flow with numbered circles, phosphor icons, dotted connector lines, and code snippets.",
+  "description": "Three-step process section with numbered steps, icons, and a code snippet preview.",
   "author": "ParticleUI",
   "dependencies": [
     "@phosphor-icons/react"

@@ -14,7 +14,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Skeleton.vue",
+      "path": "components/ui/skeleton.vue",
       "type": "registry:ui",
       "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = defineProps<{\n  class?: string\n}>()\n\nconst classes = computed(() =>\n  ['animate-pulse rounded-md bg-[var(--color-surface-2)]', props.class]\n    .filter(Boolean)\n    .join(' ')\n)\n</script>\n\n<template>\n  <div :class=\"classes\" data-slot=\"skeleton\" />\n</template>\n"
     }

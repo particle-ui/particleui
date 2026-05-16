@@ -9,7 +9,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Tabs.vue",
+      "path": "components/ui/tabs.vue",
       "content": "<script setup lang=\"ts\">\nimport { provide, ref, watch } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    modelValue?: string\n    defaultValue?: string\n    class?: string\n  }>(),\n  {}\n)\n\nconst emit = defineEmits<{ 'update:modelValue': [value: string] }>()\n\nconst active = ref(props.modelValue ?? props.defaultValue ?? '')\n\nwatch(\n  () => props.modelValue,\n  (val) => {\n    if (val !== undefined) active.value = val\n  }\n)\n\nprovide('tabs', {\n  active,\n  setActive: (v: string) => {\n    active.value = v\n    emit('update:modelValue', v)\n  },\n})\n</script>\n\n<template>\n  <div :class=\"props.class\">\n    <slot />\n  </div>\n</template>\n",
       "type": "registry:ui"
     },

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "shine-border",
+  "type": "registry:ui",
+  "title": "Shine Border",
+  "description": "Animated conic-gradient border with a multi-stop color sweep. Uses @property for smooth angle interpolation.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/shine-border.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface ShineBorderProps extends React.HTMLAttributes<HTMLDivElement> {\n  shineColor?: string | string[]\n  duration?: number\n  borderWidth?: number\n}\n\nfunction ShineBorder({\n  children,\n  className,\n  shineColor = [\"oklch(78% 0.17 200)\", \"oklch(78% 0.17 280)\", \"oklch(78% 0.17 320)\"],\n  duration = 8,\n  borderWidth = 1,\n  style,\n  ...props\n}: ShineBorderProps) {\n  const gradient = Array.isArray(shineColor)\n    ? shineColor.join(\", \")\n    : `${shineColor}, transparent, ${shineColor}`\n\n  const id = React.useId().replace(/:/g, \"\")\n\n  return (\n    <div\n      style={{ position: \"relative\", ...style }}\n      className={[\"rounded-xl overflow-hidden\", className].filter(Boolean).join(\" \")}\n      {...props}\n    >\n      <div\n        aria-hidden\n        style={{\n          position: \"absolute\",\n          inset: 0,\n          borderRadius: \"inherit\",\n          padding: borderWidth,\n          background: `conic-gradient(from var(--shine-angle, 0deg), ${gradient})`,\n          WebkitMask: \"linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)\",\n          WebkitMaskComposite: \"xor\",\n          maskComposite: \"exclude\",\n          animation: `shine-rotate-${id} ${duration}s linear infinite`,\n        }}\n      />\n      <style>{`\n        @keyframes shine-rotate-${id} {\n          from { --shine-angle: 0deg; }\n          to   { --shine-angle: 360deg; }\n        }\n        @property --shine-angle {\n          syntax: '<angle>';\n          initial-value: 0deg;\n          inherits: false;\n        }\n      `}</style>\n      <div\n        className=\"relative z-[1] rounded-[inherit] bg-[var(--color-surface-1)]\"\n        style={{ height: \"100%\" }}\n      >\n        {children}\n      </div>\n    </div>\n  )\n}\n\nexport { ShineBorder }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

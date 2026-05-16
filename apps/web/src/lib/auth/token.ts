@@ -1,7 +1,7 @@
 import { createHash } from "crypto"
 import { db } from "@/db"
 import { apiTokens, users } from "@/db/schema"
-import { eq, isNull, or } from "drizzle-orm"
+import { and, eq, isNull, or } from "drizzle-orm"
 
 function hashToken(plaintext: string) {
   return createHash("sha256").update(plaintext).digest("hex")
@@ -75,6 +75,6 @@ export async function listTokens(userId: string) {
       createdAt: apiTokens.createdAt,
     })
     .from(apiTokens)
-    .where(eq(apiTokens.userId, userId) && isNull(apiTokens.revokedAt))
+    .where(and(eq(apiTokens.userId, userId), isNull(apiTokens.revokedAt)))
     .orderBy(apiTokens.createdAt)
 }

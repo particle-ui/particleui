@@ -1,6 +1,15 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, type ComponentType } from "react"
+
+// For components that need no configuration to demonstrate: wraps a component
+// with optional default props and returns a named preview function.
+function createPreview<P extends object>(Component: ComponentType<P>, props?: Partial<P>) {
+  return function Preview() {
+    return <Component {...(props as P)} />
+  }
+}
+
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -49,6 +58,19 @@ import { FloatingDock } from "@/components/ui/floating-dock"
 import { Marquee } from "@/components/ui/marquee"
 import { Beam } from "@/components/ui/beam"
 import { GlowInput } from "@/components/ui/glow-input"
+import { Spotlight } from "@/components/ui/spotlight"
+import { BorderBeam } from "@/components/ui/border-beam"
+import { WordRotate } from "@/components/ui/word-rotate"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
+import { MagneticButton } from "@/components/ui/magnetic-button"
+import { RippleButton } from "@/components/ui/ripple"
+import { FlipCard } from "@/components/ui/flip-card"
+import { ShineBorder } from "@/components/ui/shine-border"
+import { Globe } from "@/components/ui/globe"
+import { AnimatedBeam } from "@/components/ui/animated-beam"
+import { CursorTrail } from "@/components/ui/cursor-trail"
+import { AuroraBackground } from "@/components/ui/aurora-background"
+import { OrbitAnimation } from "@/components/ui/orbit-animation"
 import { Home, Search, Bell, Star, Heart, Music, Video, Camera } from "lucide-react"
 import { HeroCentered } from "@/components/blocks/hero-centered"
 import { HeroSplit } from "@/components/blocks/hero-split"
@@ -68,6 +90,9 @@ import { FaqSection } from "@/components/blocks/faq"
 import { LogoCloud } from "@/components/blocks/logo-cloud"
 import { HowItWorks } from "@/components/blocks/how-it-works"
 import { NewsletterSection } from "@/components/blocks/newsletter"
+import { AuthForgotPassword } from "@/components/blocks/auth-forgot-password"
+import { AuthVerifyEmail } from "@/components/blocks/auth-verify-email"
+import { ParticleHero } from "@/components/blocks/particle-hero"
 
 /* ── Glow Button Preview ─────────────────────────────────────────────────── */
 export function GlowButtonPreview() {
@@ -266,37 +291,12 @@ export function MagneticButtonPreview() {
 
 /* ── Aurora Background Preview ───────────────────────────────────────────── */
 export function AuroraBackgroundPreview() {
-  const blobs = [
-    { color: "#f5f0e8", top: "10%", left: "20%", dur: "8s" },
-    { color: "#7c3aed", top: "40%", left: "60%", dur: "11s" },
-    { color: "#0ea5e9", top: "70%", left: "10%", dur: "9s" },
-  ]
   return (
-    <div className="relative w-full h-40 rounded-xl overflow-hidden bg-[#050505]">
-      {blobs.map((b, i) => (
-        <div
-          key={i}
-          className="absolute rounded-full opacity-25"
-          style={{
-            background: b.color,
-            width: "55%",
-            height: "55%",
-            top: b.top,
-            left: b.left,
-            filter: "blur(50px)",
-            animation: `aurora-${i % 3} ${b.dur} ease-in-out infinite`,
-          }}
-        />
-      ))}
-      <style>{`
-        @keyframes aurora-0 { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(10%,-15%) scale(1.1); } }
-        @keyframes aurora-1 { 0%,100% { transform:translate(0,0) scale(1.05); } 50% { transform:translate(-12%,10%) scale(0.95); } }
-        @keyframes aurora-2 { 0%,100% { transform:translate(0,0) scale(0.9); } 50% { transform:translate(8%,12%) scale(1.1); } }
-      `}</style>
-      <div className="absolute inset-0 flex items-center justify-center text-sm font-medium text-white/60">
-        Aurora Background
+    <AuroraBackground className="w-full h-44 rounded-xl bg-[var(--color-bg)]">
+      <div className="absolute inset-0 flex items-center justify-center">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Aurora Background</p>
       </div>
-    </div>
+    </AuroraBackground>
   )
 }
 
@@ -323,45 +323,21 @@ export function KbdPreview() {
 
 /* ── Orbit Animation Preview ─────────────────────────────────────────────── */
 export function OrbitAnimationPreview() {
-  const items = [
-    { emoji: "⚛️", r: 60, dur: 8 },
-    { emoji: "🎨", r: 90, dur: 13 },
-    { emoji: "⚡", r: 60, dur: 8, off: 180 },
-    { emoji: "🌊", r: 90, dur: 13, off: 180 },
-  ]
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 220, height: 220 }}>
-      {[60, 90].map((r) => (
-        <div
-          key={r}
-          className="absolute rounded-full border border-white/[0.06]"
-          style={{ width: r * 2, height: r * 2 }}
-        />
-      ))}
-      <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.05] border border-white/[0.1] text-lg">
-        ✦
-      </div>
-      {items.map(({ emoji, r, dur, off = 0 }, i) => (
-        <div
-          key={i}
-          className="absolute inset-0 flex items-center justify-center"
-          style={{
-            animation: `orbit ${dur}s linear infinite`,
-            animationDelay: `${-(off / 360) * dur}s`,
-          }}
-        >
-          <div
-            style={{ transform: `translateY(-${r}px)` }}
-            className="flex h-7 w-7 items-center justify-center rounded-full bg-[#111] border border-white/[0.08] text-sm"
-          >
-            {emoji}
-          </div>
+    <OrbitAnimation
+      size={240}
+      center={
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-xl">
+          ✦
         </div>
-      ))}
-      <style>{`
-        @keyframes orbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-      `}</style>
-    </div>
+      }
+      items={[
+        { content: <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-sm">⚛️</span>, radius: 60, duration: 8 },
+        { content: <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-sm">🎨</span>, radius: 95, duration: 13 },
+        { content: <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-sm">⚡</span>, radius: 60, duration: 8, offset: 180 },
+        { content: <span className="flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-sm">🌊</span>, radius: 95, duration: 13, offset: 180 },
+      ]}
+    />
   )
 }
 
@@ -1561,76 +1537,252 @@ export function GlowInputPreview() {
   )
 }
 
-/* ── Phase 5: Blocks ────────────────────────────────────────────────────── */
+/* ── New Particles ───────────────────────────────────────────────────────── */
 
-export function HeroCenteredPreview() {
-  return <HeroCentered meteors={false} />
+export function SpotlightPreview() {
+  return (
+    <div className="flex gap-4 flex-wrap justify-center">
+      <Spotlight className="w-56 p-6 flex flex-col gap-2">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Spotlight Card</p>
+        <p className="text-xs text-[var(--color-text-3)]">Move your cursor over this card to see the spotlight effect.</p>
+      </Spotlight>
+      <Spotlight color="oklch(78% 0.17 280)" className="w-56 p-6 flex flex-col gap-2">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Purple Spotlight</p>
+        <p className="text-xs text-[var(--color-text-3)]">Configurable spotlight color.</p>
+      </Spotlight>
+    </div>
+  )
 }
 
-export function HeroSplitPreview() {
-  return <HeroSplit />
+export function BorderBeamPreview() {
+  return (
+    <div className="flex gap-6 flex-wrap justify-center">
+      <BorderBeam className="w-48 h-32 p-4 flex items-center justify-center bg-[var(--color-surface-1)]">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Border Beam</p>
+      </BorderBeam>
+      <BorderBeam colorFrom="oklch(78% 0.17 30)" colorTo="oklch(78% 0.17 60)" duration={2} className="w-48 h-32 p-4 flex items-center justify-center bg-[var(--color-surface-1)]">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Fast & Warm</p>
+      </BorderBeam>
+    </div>
+  )
 }
 
-export function PricingSectionPreview() {
-  return <PricingSection />
+export function WordRotatePreview() {
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <h2 className="text-3xl font-bold text-[var(--color-text-1)]">
+        <WordRotate words={["beautiful", "accessible", "performant", "open source"]} staticPrefix="Build " />
+      </h2>
+      <p className="text-[var(--color-text-3)]">
+        <WordRotate words={["React", "Svelte", "Vue"]} staticPrefix="Works with " staticSuffix=" out of the box" />
+      </p>
+    </div>
+  )
 }
 
-export function FeatureGridPreview() {
-  return <FeatureGrid />
+export function ScrollRevealPreview() {
+  return (
+    <div className="flex flex-col gap-4 w-full max-w-xs">
+      {(["up", "left", "right"] as const).map((dir, i) => (
+        <ScrollReveal key={dir} direction={dir} delay={i * 100} once={false}>
+          <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-1)] px-4 py-3 text-sm text-[var(--color-text-2)]">
+            Reveals from the <strong className="text-[var(--color-accent)]">{dir}</strong>
+          </div>
+        </ScrollReveal>
+      ))}
+    </div>
+  )
 }
 
-export function FeatureAlternatingPreview() {
-  return <FeatureAlternating />
+export function RippleButtonPreview() {
+  return (
+    <div className="flex gap-4 flex-wrap justify-center">
+      <RippleButton>Click me</RippleButton>
+      <RippleButton rippleColor="oklch(100% 0 0 / 0.4)">White ripple</RippleButton>
+    </div>
+  )
 }
 
-export function CtaSectionPreview() {
-  return <CtaSection meteors={false} />
+export function FlipCardPreview() {
+  return (
+    <div className="flex gap-6 flex-wrap justify-center">
+      <FlipCard
+        height={180}
+        className="w-48"
+        front={
+          <div className="flex h-full flex-col items-center justify-center gap-2 p-4">
+            <p className="text-2xl">🃏</p>
+            <p className="text-sm font-semibold text-[var(--color-text-1)]">Front side</p>
+            <p className="text-xs text-[var(--color-text-3)]">Hover to flip</p>
+          </div>
+        }
+        back={
+          <div className="flex h-full flex-col items-center justify-center gap-2 p-4">
+            <p className="text-2xl">✨</p>
+            <p className="text-sm font-semibold text-[var(--color-accent)]">Back side</p>
+            <p className="text-xs text-[var(--color-text-3)]">Surprise!</p>
+          </div>
+        }
+      />
+      <FlipCard
+        height={180}
+        direction="vertical"
+        className="w-48"
+        front={
+          <div className="flex h-full flex-col items-center justify-center gap-2 p-4">
+            <p className="text-sm font-semibold text-[var(--color-text-1)]">Vertical flip</p>
+            <p className="text-xs text-[var(--color-text-3)]">Hover to flip</p>
+          </div>
+        }
+        back={
+          <div className="flex h-full flex-col items-center justify-center gap-2 p-4">
+            <p className="text-sm font-semibold text-[var(--color-accent)]">Flipped!</p>
+          </div>
+        }
+      />
+    </div>
+  )
 }
 
-export function FooterPreview() {
-  return <Footer />
+export function ShineBorderPreview() {
+  return (
+    <div className="flex gap-6 flex-wrap justify-center">
+      <ShineBorder className="w-48 h-32 flex items-center justify-center p-4">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Shine Border</p>
+      </ShineBorder>
+      <ShineBorder shineColor={["oklch(78% 0.17 30)", "oklch(78% 0.17 60)", "oklch(78% 0.17 90)"]} className="w-48 h-32 flex items-center justify-center p-4">
+        <p className="text-sm font-semibold text-[var(--color-text-1)]">Warm tones</p>
+      </ShineBorder>
+    </div>
+  )
 }
 
-export function AuthSignInPreview() {
-  return <AuthSignIn />
+/* ── Pro components ──────────────────────────────────────────────────────── */
+
+export function GlobePreview() {
+  return (
+    <div className="flex items-center justify-center">
+      <Globe size={240} />
+    </div>
+  )
 }
 
-export function AuthSignUpPreview() {
-  return <AuthSignUp />
+export function AnimatedBeamPreview() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const fromRef = useRef<HTMLDivElement>(null)
+  const toRef = useRef<HTMLDivElement>(null)
+  const midRef = useRef<HTMLDivElement>(null)
+
+  return (
+    <div ref={containerRef} className="relative flex w-full max-w-xs items-center justify-between px-8 py-10">
+      <div ref={fromRef} className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-lg">
+        🤖
+      </div>
+      <div ref={midRef} className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-sm">
+        ⚡
+      </div>
+      <div ref={toRef} className="flex h-12 w-12 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-surface-1)] text-lg">
+        💡
+      </div>
+      <AnimatedBeam containerRef={containerRef} fromRef={fromRef} toRef={midRef} curvature={-30} />
+      <AnimatedBeam containerRef={containerRef} fromRef={midRef} toRef={toRef} curvature={30} reverse />
+    </div>
+  )
 }
 
-export function DashboardAnalyticsPreview() {
-  return <DashboardAnalytics />
+export function CursorTrailPreview() {
+  return (
+    <div className="flex flex-col items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] px-8 py-6">
+      <p className="text-sm font-semibold text-[var(--color-text-1)]">Cursor Trail</p>
+      <p className="text-xs text-[var(--color-text-3)] text-center max-w-xs">
+        A fixed canvas overlay that follows your cursor with a fading particle stream. Move your mouse anywhere on the page to see it.
+      </p>
+      <code className="text-xs text-[var(--color-accent)] bg-[var(--color-surface-2)] px-2 py-1 rounded">
+        {`<CursorTrail color="oklch(78% 0.17 200)" />`}
+      </code>
+    </div>
+  )
 }
 
-export function SettingsPagePreview() {
-  return <SettingsPage />
+/* ── Blocks ──────────────────────────────────────────────────────────────── */
+
+export const HeroCenteredPreview = createPreview(HeroCentered, { meteors: false })
+export const HeroSplitPreview = createPreview(HeroSplit)
+export const PricingSectionPreview = createPreview(PricingSection)
+export const FeatureGridPreview = createPreview(FeatureGrid)
+export const FeatureAlternatingPreview = createPreview(FeatureAlternating)
+export const CtaSectionPreview = createPreview(CtaSection, { meteors: false })
+export const FooterPreview = createPreview(Footer)
+export const AuthSignInPreview = createPreview(AuthSignIn)
+export const AuthSignUpPreview = createPreview(AuthSignUp)
+export const DashboardAnalyticsPreview = createPreview(DashboardAnalytics)
+export const SettingsPagePreview = createPreview(SettingsPage)
+export const AIChatPreview = createPreview(AIChat)
+export const TestimonialsSectionPreview = createPreview(TestimonialsSection)
+export const StatsSectionPreview = createPreview(StatsSection)
+export const FaqSectionPreview = createPreview(FaqSection)
+export const LogoCloudPreview = createPreview(LogoCloud)
+export const HowItWorksPreview = createPreview(HowItWorks)
+export const NewsletterSectionPreview = createPreview(NewsletterSection)
+export const AuthForgotPasswordPreview = createPreview(AuthForgotPassword)
+export const AuthVerifyEmailPreview = createPreview(AuthVerifyEmail)
+
+/* ── Particle Hero (Pro block) ───────────────────────────────────────────── */
+export function ParticleHeroPreview() {
+  return (
+    <div className="relative h-48 overflow-hidden rounded-xl">
+      <ParticleHero
+        headline="Build faster"
+        subtext="Animated particle canvas hero section."
+        particleCount={40}
+        speed="slow"
+        connectLines
+        className="min-h-0 h-48"
+      />
+    </div>
+  )
 }
 
-export function AIChatPreview() {
-  return <AIChat />
+/* ── Template composition previews ──────────────────────────────────────── */
+
+function TemplatePreview({ title, blocks }: { title: string; blocks: string[] }) {
+  return (
+    <div className="w-full max-w-sm rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] overflow-hidden">
+      <div className="border-b border-[var(--color-border)] bg-[var(--color-surface-2)] px-4 py-2.5">
+        <p className="text-xs font-semibold text-[var(--color-text-1)]">{title}</p>
+      </div>
+      <div className="divide-y divide-[var(--color-border)]">
+        {blocks.map((block) => (
+          <div key={block} className="flex items-center gap-2.5 px-4 py-2">
+            <div className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+            <p className="text-xs text-[var(--color-text-2)]">{block}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
-export function TestimonialsSectionPreview() {
-  return <TestimonialsSection />
+export function LandingTemplatePreview() {
+  return <TemplatePreview title="Landing Page Template" blocks={["Hero Split", "Logo Cloud", "Feature Alternating", "Stats", "Testimonials", "Pricing", "FAQ", "CTA Section", "Footer"]} />
 }
 
-export function StatsSectionPreview() {
-  return <StatsSection />
+export function AuthTemplatePreview() {
+  return <TemplatePreview title="Auth Template" blocks={["Auth Sign In", "Auth Sign Up", "Auth Forgot Password", "Auth Verify Email"]} />
 }
 
-export function FaqSectionPreview() {
-  return <FaqSection />
+export function BlogTemplatePreview() {
+  return <TemplatePreview title="Blog Template" blocks={["Newsletter Section", "Footer"]} />
 }
 
-export function LogoCloudPreview() {
-  return <LogoCloud />
+export function DocsSiteTemplatePreview() {
+  return <TemplatePreview title="Docs Site Template" blocks={["Footer"]} />
 }
 
-export function HowItWorksPreview() {
-  return <HowItWorks />
+export function PricingPageTemplatePreview() {
+  return <TemplatePreview title="Pricing Page Template" blocks={["Hero Centered", "Pricing Section", "FAQ Section", "CTA Section", "Footer"]} />
 }
 
-export function NewsletterSectionPreview() {
-  return <NewsletterSection />
+export function SaasDashboardTemplatePreview() {
+  return <TemplatePreview title="SaaS Dashboard Template" blocks={["Stats Section", "Dashboard Analytics"]} />
 }

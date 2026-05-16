@@ -9,7 +9,7 @@
   "registryDependencies": [],
   "files": [
     {
-      "path": "components/ui/Switch.vue",
+      "path": "components/ui/switch.vue",
       "content": "<script setup lang=\"ts\">\nimport { computed } from 'vue'\n\nconst props = withDefaults(\n  defineProps<{\n    modelValue?: boolean\n    disabled?: boolean\n    class?: string\n  }>(),\n  { modelValue: false, disabled: false }\n)\n\nconst emit = defineEmits<{ 'update:modelValue': [value: boolean] }>()\n\nfunction toggle() {\n  if (!props.disabled) {\n    emit('update:modelValue', !props.modelValue)\n  }\n}\n\nconst trackClasses = computed(() =>\n  [\n    'peer inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full',\n    'border-2 border-transparent',\n    'transition-[background-color,box-shadow] duration-200',\n    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]',\n    'disabled:cursor-not-allowed disabled:opacity-40',\n    props.modelValue\n      ? 'bg-[var(--color-accent)] shadow-[0_0_10px_0px_oklch(78%_0.17_200_/_0.4)]'\n      : 'bg-[var(--color-surface-3)]',\n    props.class,\n  ]\n    .filter(Boolean)\n    .join(' ')\n)\n\nconst thumbClasses = computed(() =>\n  [\n    'pointer-events-none block h-4 w-4 rounded-full',\n    'bg-white shadow-sm',\n    'ring-0 transition-transform duration-200',\n    props.modelValue ? 'translate-x-4' : 'translate-x-0',\n  ].join(' ')\n)\n</script>\n\n<template>\n  <button\n    type=\"button\"\n    role=\"switch\"\n    :aria-checked=\"modelValue\"\n    :disabled=\"disabled\"\n    :class=\"trackClasses\"\n    @click=\"toggle\"\n  >\n    <span :class=\"thumbClasses\" />\n  </button>\n</template>\n",
       "type": "registry:ui"
     }

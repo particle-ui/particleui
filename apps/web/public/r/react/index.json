@@ -8,7 +8,8 @@
       "disclosure",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "ai-chat",
@@ -19,7 +20,8 @@
       "ai",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "alert",
@@ -30,7 +32,8 @@
       "feedback",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "alert-dialog",
@@ -41,18 +44,31 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "animated-beam",
+    "type": "registry:ui",
+    "title": "Animated Beam",
+    "description": "SVG curved beam that animates between two ref'd elements. Used to visualise data flow in hero sections. Configurable curvature, speed, gradient colors, and direction.",
+    "categories": [
+      "animations",
+      "pro"
+    ],
+    "tier": "pro"
   },
   {
     "name": "aurora-background",
     "type": "registry:ui",
     "title": "Aurora Background",
-    "description": "Slow-moving animated aurora gradient background with configurable colors.",
+    "description": "Slow-moving blurred blob aurora background with configurable palette, speed, and blur radius. Wraps any content.",
     "categories": [
-      "backgrounds",
+      "background",
       "animations",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "auth",
@@ -63,7 +79,20 @@
       "template",
       "auth",
       "free"
-    ]
+    ],
+    "tier": "templates"
+  },
+  {
+    "name": "auth-forgot-password",
+    "type": "registry:block",
+    "title": "Auth — Forgot Password",
+    "description": "Forgot password form with email input and reset link send confirmation.",
+    "categories": [
+      "auth",
+      "blocks",
+      "free"
+    ],
+    "tier": "blocks"
   },
   {
     "name": "auth-sign-in",
@@ -74,7 +103,8 @@
       "auth",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "auth-sign-up",
@@ -85,7 +115,20 @@
       "auth",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
+  },
+  {
+    "name": "auth-verify-email",
+    "type": "registry:block",
+    "title": "Auth — Verify Email",
+    "description": "Email verification screen with resend link and success state.",
+    "categories": [
+      "auth",
+      "blocks",
+      "free"
+    ],
+    "tier": "blocks"
   },
   {
     "name": "avatar",
@@ -96,7 +139,8 @@
       "display",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "badge",
@@ -107,7 +151,8 @@
       "badges",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "beam",
@@ -118,7 +163,8 @@
       "layout",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "bento-grid",
@@ -129,7 +175,8 @@
       "blocks",
       "layouts",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "blog",
@@ -140,7 +187,20 @@
       "template",
       "content",
       "free"
-    ]
+    ],
+    "tier": "templates"
+  },
+  {
+    "name": "border-beam",
+    "type": "registry:ui",
+    "title": "Border Beam",
+    "description": "Rotating conic-gradient border that sweeps around any container. Configurable colors, speed, and border width.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "breadcrumb",
@@ -151,7 +211,8 @@
       "navigation",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "button",
@@ -162,7 +223,8 @@
       "buttons",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "calendar",
@@ -173,7 +235,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "card",
@@ -184,7 +247,8 @@
       "layout",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "checkbox",
@@ -195,7 +259,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "combobox",
@@ -206,7 +271,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "command",
@@ -217,7 +283,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "confetti-button",
@@ -228,7 +295,8 @@
       "buttons",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "context-menu",
@@ -239,7 +307,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "counter",
@@ -250,7 +319,8 @@
       "text",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "cta-section",
@@ -261,18 +331,19 @@
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "cursor-trail",
     "type": "registry:ui",
     "title": "Cursor Trail",
-    "description": "Attaches a glowing particle trail that follows the cursor. Drop into any layout.",
+    "description": "Full-page canvas cursor trail that leaves a fading particle stream. Fixed overlay, zero layout impact. Configurable color, size, trail length, and fade duration.",
     "categories": [
-      "cursors",
       "animations",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "dashboard-analytics",
@@ -283,7 +354,8 @@
       "dashboard",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "data-table",
@@ -294,7 +366,8 @@
       "data",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "date-picker",
@@ -305,7 +378,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "dialog",
@@ -316,7 +390,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "docs-site",
@@ -327,7 +402,8 @@
       "template",
       "documentation",
       "free"
-    ]
+    ],
+    "tier": "templates"
   },
   {
     "name": "dropdown-menu",
@@ -338,7 +414,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "electric-badge",
@@ -348,18 +425,20 @@
     "categories": [
       "badges",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "faq",
     "type": "registry:block",
     "title": "FAQ Section",
-    "description": "Centered FAQ with Accordion, covering pricing, shadcn compatibility, frameworks, license, TypeScript, and Figma.",
+    "description": "Accordion-based FAQ section with configurable questions and answers.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "feature-alternating",
@@ -370,7 +449,8 @@
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "feature-grid",
@@ -381,7 +461,20 @@
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
+  },
+  {
+    "name": "flip-card",
+    "type": "registry:ui",
+    "title": "Flip Card",
+    "description": "3D CSS flip card with front and back slots. Supports horizontal/vertical flip and hover/click trigger.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "floating-dock",
@@ -392,7 +485,8 @@
       "navigation",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "footer",
@@ -403,7 +497,8 @@
       "layout",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "form",
@@ -414,7 +509,20 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "globe",
+    "type": "registry:ui",
+    "title": "Globe",
+    "description": "Canvas-rendered rotating dot globe with depth-based opacity. Zero external dependencies. Configurable size, dot color, spacing, and rotation speed.",
+    "categories": [
+      "background",
+      "animations",
+      "pro"
+    ],
+    "tier": "pro"
   },
   {
     "name": "glow-button",
@@ -424,7 +532,8 @@
     "categories": [
       "buttons",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "glow-card",
@@ -435,7 +544,8 @@
       "cards",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "glow-input",
@@ -446,7 +556,8 @@
       "forms",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "gradient-card",
@@ -456,7 +567,8 @@
     "categories": [
       "cards",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "gradient-text",
@@ -467,7 +579,8 @@
       "text",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "hero-centered",
@@ -478,7 +591,8 @@
       "hero",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "hero-split",
@@ -489,7 +603,8 @@
       "hero",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "hover-card",
@@ -500,18 +615,20 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "how-it-works",
     "type": "registry:block",
     "title": "How It Works",
-    "description": "Three-step horizontal flow with numbered circles, phosphor icons, dotted connector lines, and code snippets.",
+    "description": "Three-step process section with numbered steps, icons, and a code snippet preview.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "input",
@@ -522,7 +639,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "kbd",
@@ -532,7 +650,8 @@
     "categories": [
       "typography",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "label",
@@ -543,7 +662,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "landing",
@@ -554,29 +674,32 @@
       "template",
       "marketing",
       "free"
-    ]
+    ],
+    "tier": "templates"
   },
   {
     "name": "logo-cloud",
     "type": "registry:block",
     "title": "Logo Cloud",
-    "description": "Dual-row Marquee scrolling company name pills with fade edges. Top row scrolls left, bottom row scrolls right.",
+    "description": "Infinite-scroll marquee of brand logos. Two rows, mirrored direction.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "magnetic-button",
     "type": "registry:ui",
     "title": "Magnetic Button",
-    "description": "Button that physically tracks the cursor with spring physics and a glowing border.",
+    "description": "Button that elastically follows the cursor with a configurable magnetic strength. Snaps back on mouse leave.",
     "categories": [
       "buttons",
-      "animations",
-      "pro"
-    ]
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "marquee",
@@ -587,7 +710,8 @@
       "layout",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "meteors",
@@ -598,7 +722,8 @@
       "background",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "mono",
@@ -608,7 +733,8 @@
     "categories": [
       "themes",
       "free"
-    ]
+    ],
+    "tier": "themes"
   },
   {
     "name": "navigation-menu",
@@ -619,18 +745,20 @@
       "navigation",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "newsletter",
     "type": "registry:block",
     "title": "Newsletter Section",
-    "description": "Email newsletter signup inside a GlowCard with success state, inline submit, and no-spam disclaimer.",
+    "description": "Email signup section with glow card, input, and submit button.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "noise-texture",
@@ -640,17 +768,19 @@
     "categories": [
       "backgrounds",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "orbit-animation",
     "type": "registry:ui",
     "title": "Orbit Animation",
-    "description": "Elements orbit a central node at configurable speeds and radii. Great for tech stack icons.",
+    "description": "CSS orbital rings with configurable items, radii, speeds, and reverse direction. Accepts any ReactNode as orbiting or center content.",
     "categories": [
       "animations",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "pagination",
@@ -661,7 +791,8 @@
       "navigation",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "particle-hero",
@@ -673,7 +804,8 @@
       "hero",
       "animations",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "popover",
@@ -684,7 +816,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "pricing",
@@ -695,7 +828,8 @@
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "pricing-page",
@@ -706,7 +840,8 @@
       "template",
       "marketing",
       "free"
-    ]
+    ],
+    "tier": "templates"
   },
   {
     "name": "progress",
@@ -717,7 +852,8 @@
       "feedback",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "radio-group",
@@ -728,7 +864,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "resizable",
@@ -739,7 +876,20 @@
       "layout",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "ripple",
+    "type": "registry:ui",
+    "title": "Ripple Button",
+    "description": "Button that fires an expanding ripple at the click position. Configurable ripple color.",
+    "categories": [
+      "buttons",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "rose",
@@ -749,7 +899,8 @@
     "categories": [
       "themes",
       "free"
-    ]
+    ],
+    "tier": "themes"
   },
   {
     "name": "saas-dashboard",
@@ -760,7 +911,8 @@
       "template",
       "dashboard",
       "free"
-    ]
+    ],
+    "tier": "templates"
   },
   {
     "name": "scroll-area",
@@ -771,7 +923,20 @@
       "layout",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "scroll-reveal",
+    "type": "registry:ui",
+    "title": "Scroll Reveal",
+    "description": "IntersectionObserver-powered fade-in wrapper. Configurable direction (up/down/left/right), distance, duration, delay, and once/repeat mode.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "select",
@@ -782,7 +947,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "separator",
@@ -793,7 +959,8 @@
       "layout",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "settings-page",
@@ -804,7 +971,8 @@
       "dashboard",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "sheet",
@@ -815,7 +983,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "shimmer-button",
@@ -826,7 +995,8 @@
       "buttons",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "shimmer-text",
@@ -836,7 +1006,20 @@
     "categories": [
       "text",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "shine-border",
+    "type": "registry:ui",
+    "title": "Shine Border",
+    "description": "Animated conic-gradient border with a multi-stop color sweep. Uses @property for smooth angle interpolation.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "skeleton",
@@ -847,7 +1030,8 @@
       "feedback",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "slate",
@@ -857,7 +1041,8 @@
     "categories": [
       "themes",
       "free"
-    ]
+    ],
+    "tier": "themes"
   },
   {
     "name": "slider",
@@ -868,7 +1053,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "sonner",
@@ -879,7 +1065,20 @@
       "feedback",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "spotlight",
+    "type": "registry:ui",
+    "title": "Spotlight",
+    "description": "Card wrapper with a dual-layer radial spotlight that tracks the cursor. Drop-in replacement for GlowCard with a tighter, more intense beam.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "spotlight-hero",
@@ -891,18 +1090,20 @@
       "hero",
       "animations",
       "pro"
-    ]
+    ],
+    "tier": "pro"
   },
   {
     "name": "stats",
     "type": "registry:block",
     "title": "Stats Section",
-    "description": "Four animated stat counters in a GlowCard row with icons, labels, and a Beam separator.",
+    "description": "Animated metric counters on glow cards with a beam separator. Numbers animate on scroll.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "switch",
@@ -913,7 +1114,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "table",
@@ -924,7 +1126,8 @@
       "data",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "tabs",
@@ -935,18 +1138,20 @@
       "navigation",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "testimonials",
     "type": "registry:block",
     "title": "Testimonials Section",
-    "description": "Three-column testimonials grid with 5-star ratings, quote text, and avatar initials. Uses GlowCard for hover effects.",
+    "description": "Customer testimonial cards in a responsive grid with avatars and star ratings.",
     "categories": [
       "marketing",
       "blocks",
       "free"
-    ]
+    ],
+    "tier": "blocks"
   },
   {
     "name": "textarea",
@@ -957,7 +1162,8 @@
       "forms",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "tilt-card",
@@ -968,7 +1174,8 @@
       "cards",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
   },
   {
     "name": "tooltip",
@@ -979,7 +1186,8 @@
       "overlay",
       "core",
       "free"
-    ]
+    ],
+    "tier": "core"
   },
   {
     "name": "typewriter",
@@ -990,6 +1198,19 @@
       "text",
       "particles",
       "free"
-    ]
+    ],
+    "tier": "particles"
+  },
+  {
+    "name": "word-rotate",
+    "type": "registry:ui",
+    "title": "Word Rotate",
+    "description": "Cycles through an array of words with a fade + slide animation. Supports static prefix and suffix text.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   }
 ]
