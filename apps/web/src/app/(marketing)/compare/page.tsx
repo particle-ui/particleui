@@ -22,9 +22,9 @@ const ROWS: Row[] = [
   { feature: "TypeScript-first",            other: true,       particle: true },
   { feature: "MIT licensed",               other: true,       particle: true },
   { feature: "Free core primitives",        other: "build it", particle: true },
-  { feature: "Core UI primitives",          other: "build it", particle: "39" },
-  { feature: "Particle / animation layer",  other: false,      particle: "12 components" },
-  { feature: "Full-page blocks",            other: false,      particle: "15 blocks" },
+  { feature: "Core UI primitives",          other: "build it", particle: "55+" },
+  { feature: "Particle / animation layer",  other: false,      particle: "36 components" },
+  { feature: "Full-page blocks",            other: false,      particle: "20 blocks" },
   { feature: "Pro dashboard templates",     other: false,      particle: true },
   { feature: "React",                       other: true,       particle: true },
   { feature: "Vue 3",                       other: false,      particle: true,  note: "Native registry, not a port" },
@@ -156,7 +156,7 @@ export default function ComparePage() {
               Start with the free tier
             </h2>
             <p className="text-text-2 mb-8 max-w-md mx-auto leading-[1.7]">
-              39 core primitives + 12 particle effects + 15 full-page blocks. All MIT licensed.
+              55+ core primitives + 36 particle effects + 20 full-page blocks. All MIT licensed.
               One command, no account needed.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">

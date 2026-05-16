@@ -66,6 +66,22 @@ import { MagneticButton } from "@/components/ui/magnetic-button"
 import { RippleButton } from "@/components/ui/ripple"
 import { FlipCard } from "@/components/ui/flip-card"
 import { ShineBorder } from "@/components/ui/shine-border"
+import { BlurFade } from "@/components/ui/blur-fade"
+import { MorphingText } from "@/components/ui/morphing-text"
+import { RetroGrid } from "@/components/ui/retro-grid"
+import { TextShimmer } from "@/components/ui/text-shimmer"
+import { SparklesText } from "@/components/ui/sparkles-text"
+import { AnimatedList } from "@/components/ui/animated-list"
+import { NeonBorder } from "@/components/ui/neon-border"
+import { TextReveal } from "@/components/ui/text-reveal"
+import { GlitchText } from "@/components/ui/glitch-text"
+import { LetterSwap } from "@/components/ui/letter-swap"
+import { ScrollProgress } from "@/components/ui/scroll-progress"
+import { WaveText } from "@/components/ui/wave-text"
+import { LiquidButton } from "@/components/ui/liquid-button"
+import { NumberFlow } from "@/components/ui/number-flow"
+import { BadgeShine } from "@/components/ui/badge-shine"
+import { AnimateIn } from "@/components/ui/animate-in"
 import { Globe } from "@/components/ui/globe"
 import { AnimatedBeam } from "@/components/ui/animated-beam"
 import { CursorTrail } from "@/components/ui/cursor-trail"
@@ -1785,4 +1801,167 @@ export function PricingPageTemplatePreview() {
 
 export function SaasDashboardTemplatePreview() {
   return <TemplatePreview title="SaaS Dashboard Template" blocks={["Stats Section", "Dashboard Analytics"]} />
+}
+
+/* ── Phase 8: New particle previews ────────────────────────────────────── */
+
+export function BlurFadePreview() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 p-8">
+      <BlurFade delay={0}>
+        <p className="text-2xl font-bold text-[var(--color-text-1)]">Blur Fade In</p>
+      </BlurFade>
+      <BlurFade delay={200}>
+        <p className="text-sm text-[var(--color-text-3)]">Content reveals smoothly from blur</p>
+      </BlurFade>
+    </div>
+  )
+}
+
+export function MorphingTextPreview() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <MorphingText words={["Beautiful", "Animated", "Powerful", "ParticleUI"]} className="text-3xl font-bold text-[var(--color-text-1)]" />
+    </div>
+  )
+}
+
+export function RetroGridPreview() {
+  return (
+    <div className="relative h-40 w-full overflow-hidden rounded-xl bg-[var(--color-bg)]">
+      <RetroGrid opacity={0.5} />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-sm font-semibold text-[var(--color-text-2)]">Retro Grid</span>
+      </div>
+    </div>
+  )
+}
+
+export function TextShimmerPreview() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 p-8">
+      <TextShimmer text="Shimmering text effect" className="text-2xl font-bold" />
+      <TextShimmer text="particleui.dev" className="text-sm font-mono" duration={1500} />
+    </div>
+  )
+}
+
+export function SparklesTextPreview() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <SparklesText className="text-2xl font-bold text-[var(--color-text-1)]">Sparkle ✨</SparklesText>
+    </div>
+  )
+}
+
+export function AnimatedListPreview() {
+  const items = ["Design system tokens", "One-command install", "MIT licensed", "Zero runtime deps"]
+  return (
+    <div className="p-6 w-full max-w-xs mx-auto">
+      <AnimatedList delay={150}>
+        {items.map((item) => (
+          <div key={item} className="flex items-center gap-2.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-1)] px-4 py-3">
+            <div className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" />
+            <span className="text-sm text-[var(--color-text-2)]">{item}</span>
+          </div>
+        ))}
+      </AnimatedList>
+    </div>
+  )
+}
+
+export function NeonBorderPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4 p-8">
+      <NeonBorder color="cyan" className="p-6 w-36 h-24 flex items-center justify-center">
+        <span className="text-sm text-[var(--color-text-2)]">Cyan glow</span>
+      </NeonBorder>
+      <NeonBorder color="purple" className="p-6 w-36 h-24 flex items-center justify-center">
+        <span className="text-sm text-[var(--color-text-2)]">Purple glow</span>
+      </NeonBorder>
+    </div>
+  )
+}
+
+export function TextRevealPreview() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <TextReveal text="Revealed by a sliding mask →" className="text-2xl font-bold text-[var(--color-text-1)]" />
+    </div>
+  )
+}
+
+export function GlitchTextPreview() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-4 p-8">
+      <GlitchText text="GLITCH" className="text-4xl font-black tracking-widest" />
+    </div>
+  )
+}
+
+export function LetterSwapPreview() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <LetterSwap text="Hover me →" className="text-2xl font-bold text-[var(--color-text-1)] cursor-pointer" />
+    </div>
+  )
+}
+
+export function ScrollProgressPreview() {
+  return (
+    <div className="relative h-32 w-full overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)]">
+      <div className="absolute top-0 left-0 right-0 h-1 rounded-full" style={{ background: "var(--color-accent)", width: "60%" }} />
+      <div className="flex items-center justify-center h-full">
+        <span className="text-sm text-[var(--color-text-3)]">Scroll progress bar at top of page</span>
+      </div>
+    </div>
+  )
+}
+
+export function WaveTextPreview() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <WaveText text="Wave animation!" className="text-3xl font-bold text-[var(--color-text-1)]" />
+    </div>
+  )
+}
+
+export function LiquidButtonPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4 p-8">
+      <LiquidButton>Hover me</LiquidButton>
+      <LiquidButton variant="ghost">Ghost</LiquidButton>
+    </div>
+  )
+}
+
+export function NumberFlowPreview() {
+  return (
+    <div className="flex items-center justify-center gap-8 p-8">
+      <NumberFlow value={1234} prefix="$" className="text-4xl font-bold text-[var(--color-text-1)]" />
+      <NumberFlow value={99} suffix="%" className="text-4xl font-bold text-[var(--color-accent)]" />
+    </div>
+  )
+}
+
+export function BadgeShinePreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-3 p-8">
+      <BadgeShine variant="default">Default</BadgeShine>
+      <BadgeShine variant="pro">Pro</BadgeShine>
+      <BadgeShine variant="new">New</BadgeShine>
+    </div>
+  )
+}
+
+export function AnimateInPreview() {
+  return (
+    <div className="grid grid-cols-2 gap-3 p-6 w-full max-w-xs mx-auto">
+      {(["fade", "slide-up", "scale", "rotate"] as const).map((variant) => (
+        <AnimateIn key={variant} variant={variant} className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-1)] p-3 text-center">
+          <span className="text-xs text-[var(--color-text-3)]">{variant}</span>
+        </AnimateIn>
+      ))}
+    </div>
+  )
 }

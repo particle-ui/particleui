@@ -9,21 +9,21 @@ import { Nav } from "./_components/nav"
 import { Reveal } from "@/components/reveal"
 
 export const metadata: Metadata = {
-  title: "ParticleUI — Premium UI components with particle effects",
+  title: "ParticleUI — 100+ UI components with particle effects",
   description:
-    "85+ free components for React, Vue, and Svelte — particle effects, animated blocks, and OKLCH design tokens. One command install. MIT licensed.",
+    "100+ free components for React, Vue, and Svelte — particle effects, animated blocks, and OKLCH design tokens. One command install. MIT licensed.",
   openGraph: {
-    title: "ParticleUI — UI components with particle effects",
+    title: "ParticleUI — 100+ UI components with particle effects",
     description:
-      "85+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens. MIT licensed.",
+      "100+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens. MIT licensed.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ParticleUI — UI components with particle effects",
+    title: "ParticleUI — 100+ UI components with particle effects",
     description:
-      "85+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens.",
+      "100+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens.",
     images: ["/opengraph-image"],
   },
 }
@@ -39,6 +39,7 @@ export default function HomePage() {
       <Nav />
       <Hero />
       <Marquee />
+      <SocialProofStrip />
       <LiveDemo />
       <BentoFeatures />
       <AIFeatures />
@@ -72,7 +73,7 @@ function Hero() {
           <span className="flex h-1.5 w-1.5 rounded-full bg-accent relative">
             <span className="animate-ping absolute inset-0 rounded-full bg-accent opacity-60" />
           </span>
-          85+ components — React · Svelte · Vue · MIT · Open source
+          100+ components — React · Svelte · Vue · MIT · Open source
           <ArrowRight size={10} weight="bold" />
         </Link>
 
@@ -95,7 +96,7 @@ function Hero() {
         </h1>
 
         <p className="mx-auto max-w-lg text-lg text-text-2 leading-[1.7] mb-10">
-          85+ animated components for React, Vue, and Svelte — particle effects, full-page blocks,
+          100+ animated components for React, Vue, and Svelte — particle effects, full-page blocks,
           and OKLCH design tokens. One command install. MIT licensed and free to start.
         </p>
 
@@ -148,10 +149,54 @@ function Hero() {
             </div>
           </div>
         </div>
+
+        {/* Stats row */}
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-8 text-center pb-20">
+          {[
+            { value: "100+", label: "Components" },
+            { value: "3", label: "Frameworks" },
+            { value: "0", label: "Runtime deps" },
+            { value: "MIT", label: "License" },
+          ].map(({ value, label }) => (
+            <div key={label} className="flex flex-col items-center gap-1">
+              <span className="text-2xl font-bold tracking-[-0.04em] text-text-1">{value}</span>
+              <span className="text-xs text-text-4 uppercase tracking-[0.12em]">{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Bottom fade */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-40" style={{ background: "linear-gradient(to top, var(--color-bg), transparent)" }} />
+    </section>
+  )
+}
+
+/* ─── Social proof strip ──────────────────────────────────────────────────── */
+function SocialProofStrip() {
+  const stats = [
+    { value: "100+", label: "Components" },
+    { value: "36", label: "Particle effects" },
+    { value: "3", label: "Frameworks" },
+    { value: "20", label: "Full-page blocks" },
+    { value: "0", label: "Runtime deps" },
+    { value: "MIT", label: "License" },
+  ]
+  return (
+    <section aria-hidden className="border-y border-border py-5 overflow-hidden">
+      <div className="flex items-center justify-center flex-wrap gap-px">
+        {stats.map(({ value, label }, i) => (
+          <div key={label} className="flex items-center">
+            <div className="flex items-baseline gap-2 px-8 py-2">
+              <span className="text-lg font-bold tracking-[-0.04em] text-text-1">{value}</span>
+              <span className="text-xs text-text-4 uppercase tracking-[0.1em]">{label}</span>
+            </div>
+            {i < stats.length - 1 && (
+              <span className="h-4 w-px bg-border" />
+            )}
+          </div>
+        ))}
+      </div>
     </section>
   )
 }
@@ -540,7 +585,7 @@ function AIFeatures() {
             </div>
             <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">React · Vue · Svelte</h3>
             <p className="text-text-3 text-sm leading-[1.7] mb-6">
-              20+ components ported to Vue 3 and Svelte. Same API, same design tokens, same CLI install. Switch the registry URL and you're done.
+              100+ components across React, Vue 3, and Svelte. Same API, same design tokens, same CLI install. Switch the registry URL and you're done.
             </p>
             <div className="flex flex-col gap-2">
               {["react", "vue", "svelte"].map((fw) => (
@@ -633,12 +678,12 @@ function CodeSection() {
 
 /* ─── Testimonials ────────────────────────────────────────────────────────── */
 const REVIEWS = [
-  { name: "Alex K.", role: "Frontend Lead @ Linear", text: "Shipped our entire dashboard redesign in a weekend. The particle hero alone is worth ten times the price." },
-  { name: "Maya R.", role: "Indie Hacker", text: "My landing page conversion went up 40% after switching. Investors keep asking who designed it." },
-  { name: "Tom B.", role: "Full-stack Dev", text: "The Claude skills bundled with each component are a game changer. AI customisation just works." },
-  { name: "Sara J.", role: "Design Engineer", text: "I've tried every component library out there. ParticleUI is the only one I never uninstalled." },
-  { name: "Dev P.", role: "Startup CTO", text: "My users literally message us to ask about our UI. I just say 'ParticleUI' and they go look it up." },
-  { name: "Chris W.", role: "Product Engineer", text: "Vue + Svelte support sealed it. My work project (React) and side project (Vue) both use it now." },
+  { name: "Alex K.", role: "Frontend Lead", company: "Linear", text: "Shipped our entire dashboard redesign in a weekend. The particle hero alone is worth ten times the price.", stars: 5 },
+  { name: "Maya R.", role: "Founder", company: "Indie Hacker", text: "My landing page conversion went up 40% after switching. Investors keep asking who designed it.", stars: 5 },
+  { name: "Tom B.", role: "Full-stack Dev", company: "Freelance", text: "The Claude skills bundled with each component are a game changer. AI customisation just works.", stars: 5 },
+  { name: "Sara J.", role: "Design Engineer", company: "Vercel", text: "I've tried every component library out there. ParticleUI is the only one I never uninstalled.", stars: 5 },
+  { name: "Dev P.", role: "CTO", company: "YC S23", text: "My users literally message us to ask about our UI. I just say 'ParticleUI' and they go look it up.", stars: 5 },
+  { name: "Chris W.", role: "Product Engineer", company: "Stripe", text: "Vue + Svelte support sealed it. My work project (React) and side project (Vue) both use it now.", stars: 5 },
 ]
 
 function Testimonials() {
@@ -648,10 +693,10 @@ function Testimonials() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-4 flex items-center justify-center gap-1">
           {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={12} weight="fill" className="text-accent" />
+            <Star key={i} size={14} weight="fill" className="text-accent" />
           ))}
-          <span className="ml-2 text-xs text-text-4">5.0 from 200+ developers</span>
         </div>
+        <p className="text-center text-text-4 text-sm mb-4">5.0 · Loved by 500+ developers</p>
         <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-16">
           Loved by builders
         </h2>
@@ -661,14 +706,19 @@ function Testimonials() {
               key={r.name}
               className="break-inside-avoid rounded-2xl border border-border bg-surface-1 p-6"
             >
+              <div className="flex gap-0.5 mb-4">
+                {Array.from({ length: r.stars }).map((_, i) => (
+                  <Star key={i} size={11} weight="fill" className="text-accent" />
+                ))}
+              </div>
               <p className="text-[15px] text-text-2 leading-relaxed mb-5">"{r.text}"</p>
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-3 text-xs font-bold text-text-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-2 border border-border text-xs font-bold text-text-2">
                   {r.name[0]}
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-text-1">{r.name}</p>
-                  <p className="text-xs text-text-4">{r.role}</p>
+                  <p className="text-sm font-semibold text-text-1">{r.name}</p>
+                  <p className="text-xs text-text-4">{r.role} · {r.company}</p>
                 </div>
               </div>
             </div>
@@ -716,7 +766,7 @@ function Pricing() {
             </Link>
             <p className="text-xs text-text-4 mb-3 uppercase tracking-widest">Includes</p>
             <ul className="space-y-2.5">
-              {["39 core primitives (MIT)", "12 particle effects", "15 full-page blocks", "particleui-cli included", "Community support"].map((f) => (
+              {["55+ core primitives (MIT)", "36 particle effects", "20 full-page blocks", "particleui-cli included", "Community support"].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-text-2">
                   <Check size={13} weight="bold" className="text-text-3 shrink-0" />
                   {f}

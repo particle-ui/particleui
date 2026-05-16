@@ -54,7 +54,7 @@ export function Marquee() {
         <div className="flex items-center gap-2.5 rounded-full border border-white/[0.07] bg-white/[0.03] px-4 py-1.5">
           <Sparkle size={10} weight="fill" className="text-accent" />
           <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-text-3">
-            85+ components · React · Vue · Svelte
+            100+ components · React · Vue · Svelte
           </span>
         </div>
         <div className="h-px w-16 bg-gradient-to-l from-transparent to-white/[0.1]" />

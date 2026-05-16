@@ -104,6 +104,22 @@ import {
   AnimatedBeamPreview,
   CursorTrailPreview,
   ParticleHeroPreview,
+  BlurFadePreview,
+  MorphingTextPreview,
+  RetroGridPreview,
+  TextShimmerPreview,
+  SparklesTextPreview,
+  AnimatedListPreview,
+  NeonBorderPreview,
+  TextRevealPreview,
+  GlitchTextPreview,
+  LetterSwapPreview,
+  ScrollProgressPreview,
+  WaveTextPreview,
+  LiquidButtonPreview,
+  NumberFlowPreview,
+  BadgeShinePreview,
+  AnimateInPreview,
   LandingTemplatePreview,
   AuthTemplatePreview,
   BlogTemplatePreview,
@@ -201,6 +217,23 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "ripple": <RippleButtonPreview />,
   "flip-card": <FlipCardPreview />,
   "shine-border": <ShineBorderPreview />,
+  // Phase 8: New particles
+  "blur-fade": <BlurFadePreview />,
+  "morphing-text": <MorphingTextPreview />,
+  "retro-grid": <RetroGridPreview />,
+  "text-shimmer": <TextShimmerPreview />,
+  "sparkles-text": <SparklesTextPreview />,
+  "animated-list": <AnimatedListPreview />,
+  "neon-border": <NeonBorderPreview />,
+  "text-reveal": <TextRevealPreview />,
+  "glitch-text": <GlitchTextPreview />,
+  "letter-swap": <LetterSwapPreview />,
+  "scroll-progress": <ScrollProgressPreview />,
+  "wave-text": <WaveTextPreview />,
+  "liquid-button": <LiquidButtonPreview />,
+  "number-flow": <NumberFlowPreview />,
+  "badge-shine": <BadgeShinePreview />,
+  "animate-in": <AnimateInPreview />,
   // Phase 5: Blocks
   "hero-centered": <HeroCenteredPreview />,
   "hero-split": <HeroSplitPreview />,
@@ -1077,6 +1110,165 @@ export default function Example() {
     <ShineBorder className="w-64 p-6 flex items-center justify-center">
       <p className="font-semibold">Shine Border</p>
     </ShineBorder>
+  )
+}`,
+  "blur-fade": `import { BlurFade } from "@/components/ui/blur-fade"
+
+export default function Example() {
+  return (
+    <BlurFade delay={0}>
+      <h1 className="text-4xl font-bold">Blur Fade In</h1>
+    </BlurFade>
+  )
+}`,
+  "morphing-text": `import { MorphingText } from "@/components/ui/morphing-text"
+
+export default function Example() {
+  return (
+    <MorphingText
+      words={["Beautiful", "Animated", "Powerful", "Yours"]}
+      className="text-4xl font-bold"
+    />
+  )
+}`,
+  "retro-grid": `import { RetroGrid } from "@/components/ui/retro-grid"
+
+export default function Example() {
+  return (
+    <div className="relative h-64 overflow-hidden rounded-xl bg-bg">
+      <RetroGrid opacity={0.5} />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <h2 className="text-2xl font-bold">Your content here</h2>
+      </div>
+    </div>
+  )
+}`,
+  "text-shimmer": `import { TextShimmer } from "@/components/ui/text-shimmer"
+
+export default function Example() {
+  return (
+    <TextShimmer
+      text="Shimmering text effect"
+      className="text-3xl font-bold"
+      duration={2000}
+    />
+  )
+}`,
+  "sparkles-text": `import { SparklesText } from "@/components/ui/sparkles-text"
+
+export default function Example() {
+  return (
+    <SparklesText className="text-3xl font-bold" count={8}>
+      Magic Text ✨
+    </SparklesText>
+  )
+}`,
+  "animated-list": `import { AnimatedList } from "@/components/ui/animated-list"
+
+export default function Example() {
+  const items = ["First item", "Second item", "Third item"]
+  return (
+    <AnimatedList delay={150}>
+      {items.map((item) => (
+        <div key={item} className="rounded-lg border border-border bg-surface-1 px-4 py-3">
+          {item}
+        </div>
+      ))}
+    </AnimatedList>
+  )
+}`,
+  "neon-border": `import { NeonBorder } from "@/components/ui/neon-border"
+
+export default function Example() {
+  return (
+    <NeonBorder color="cyan" className="p-8 flex items-center justify-center">
+      <p className="font-semibold">Neon glow card</p>
+    </NeonBorder>
+  )
+}`,
+  "text-reveal": `import { TextReveal } from "@/components/ui/text-reveal"
+
+export default function Example() {
+  return (
+    <TextReveal
+      text="Revealed by a sliding mask"
+      className="text-3xl font-bold"
+    />
+  )
+}`,
+  "glitch-text": `import { GlitchText } from "@/components/ui/glitch-text"
+
+export default function Example() {
+  return (
+    <GlitchText text="GLITCH" className="text-5xl font-black tracking-widest" />
+  )
+}`,
+  "letter-swap": `import { LetterSwap } from "@/components/ui/letter-swap"
+
+export default function Example() {
+  return (
+    <LetterSwap text="Hover to scramble" className="text-2xl font-bold cursor-pointer" />
+  )
+}`,
+  "scroll-progress": `import { ScrollProgress } from "@/components/ui/scroll-progress"
+
+// Add to your root layout — renders a fixed progress bar at the top of the page
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <ScrollProgress color="var(--color-accent)" />
+      {children}
+    </>
+  )
+}`,
+  "wave-text": `import { WaveText } from "@/components/ui/wave-text"
+
+export default function Example() {
+  return (
+    <WaveText text="Wave animation!" className="text-4xl font-bold" />
+  )
+}`,
+  "liquid-button": `import { LiquidButton } from "@/components/ui/liquid-button"
+
+export default function Example() {
+  return (
+    <div className="flex gap-4">
+      <LiquidButton>Click me</LiquidButton>
+      <LiquidButton variant="outline">Outline</LiquidButton>
+    </div>
+  )
+}`,
+  "number-flow": `import { NumberFlow } from "@/components/ui/number-flow"
+
+export default function Example() {
+  return (
+    <div className="flex gap-8">
+      <NumberFlow value={1234} prefix="$" className="text-4xl font-bold" />
+      <NumberFlow value={99} suffix="%" className="text-4xl font-bold" />
+    </div>
+  )
+}`,
+  "badge-shine": `import { BadgeShine } from "@/components/ui/badge-shine"
+
+export default function Example() {
+  return (
+    <div className="flex gap-3">
+      <BadgeShine variant="default">Default</BadgeShine>
+      <BadgeShine variant="pro">Pro</BadgeShine>
+      <BadgeShine variant="new">New</BadgeShine>
+    </div>
+  )
+}`,
+  "animate-in": `import { AnimateIn } from "@/components/ui/animate-in"
+
+export default function Example() {
+  return (
+    <AnimateIn variant="slide-up" delay={200}>
+      <div className="rounded-xl border border-border bg-surface-1 p-8">
+        <h2 className="text-2xl font-bold">Animated entrance</h2>
+        <p className="text-text-2 mt-2">Slides up and fades in when it enters the viewport.</p>
+      </div>
+    </AnimateIn>
   )
 }`,
   "hero-centered": `import { HeroCentered } from "@/components/blocks/hero-centered"

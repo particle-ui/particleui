@@ -12,7 +12,7 @@ const PLANS = [
     period: "forever",
     description: "All free components. Great for prototyping.",
     features: [
-      "60+ free components, MIT licensed",
+      "75+ free components, MIT licensed",
       "Radix UI primitives under the hood",
       "particleui-cli included",
       "React · Vue · Svelte",
