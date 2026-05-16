@@ -2,16 +2,18 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Sparkle, SquaresFour, Key, Download, CreditCard, User } from "@phosphor-icons/react"
+import { Sparkle, SquaresFour, Key, Download, CreditCard, User, ChartBar, Users } from "@phosphor-icons/react"
 import { UserButton } from "@clerk/nextjs"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 const NAV = [
-  { label: "Overview",  href: "/dashboard",          icon: SquaresFour },
-  { label: "Tokens",    href: "/dashboard/tokens",    icon: Key         },
-  { label: "Installs",  href: "/dashboard/installs",  icon: Download    },
-  { label: "Plan",      href: "/dashboard/plan",      icon: CreditCard  },
-  { label: "Profile",   href: "/dashboard/profile",   icon: User        },
+  { label: "Overview",   href: "/dashboard",             icon: SquaresFour },
+  { label: "Analytics",  href: "/dashboard/analytics",   icon: ChartBar    },
+  { label: "Team",       href: "/dashboard/team",        icon: Users       },
+  { label: "Tokens",     href: "/dashboard/tokens",      icon: Key         },
+  { label: "Installs",   href: "/dashboard/installs",    icon: Download    },
+  { label: "Plan",       href: "/dashboard/plan",        icon: CreditCard  },
+  { label: "Profile",    href: "/dashboard/profile",     icon: User        },
 ]
 
 export function DashSidebar() {

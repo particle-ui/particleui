@@ -44,7 +44,9 @@ export async function POST(req: NextRequest) {
       plan,
       email: email ?? "",
     },
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?upgraded=1`,
+    success_url: plan === "team"
+      ? `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/team/setup?upgraded=1`
+      : `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?upgraded=1`,
     cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
     payment_intent_data: {
       metadata: { userId, plan },

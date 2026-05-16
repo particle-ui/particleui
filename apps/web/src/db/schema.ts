@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, uuid } from "drizzle-orm/pg-core"
+import { pgTable, text, timestamp, boolean, uuid, integer } from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(), // Clerk user ID
@@ -50,6 +50,44 @@ export const aiGenerations = pgTable("ai_generations", {
   userId: text("user_id").references(() => users.id, { onDelete: "set null" }),
   prompt: text("prompt").notNull(),
   outputJson: text("output_json").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export const teams = pgTable("teams", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  maxSeats: integer("max_seats").notNull().default(5),
+  stripeSessionId: text("stripe_session_id"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export const teamMembers = pgTable("team_members", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  teamId: uuid("team_id")
+    .notNull()
+    .references(() => teams.id, { onDelete: "cascade" }),
+  userId: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  role: text("role", { enum: ["owner", "member"] }).notNull().default("member"),
+  joinedAt: timestamp("joined_at").notNull().defaultNow(),
+})
+
+export const teamInvites = pgTable("team_invites", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  teamId: uuid("team_id")
+    .notNull()
+    .references(() => teams.id, { onDelete: "cascade" }),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(), // secure random token in the invite URL
+  invitedBy: text("invited_by")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  acceptedAt: timestamp("accepted_at"),
+  expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 

@@ -2,11 +2,13 @@
 
 import { useState, useTransition } from "react"
 import dynamic from "next/dynamic"
+import Link from "next/link"
 import {
   Sparkle,
   ArrowRight,
   Lightning,
   Clock,
+  ArrowLeft,
 } from "@phosphor-icons/react"
 import { generateLayoutAction } from "./actions"
 import type { GeneratedLayout } from "@/lib/ai/gateway"
@@ -95,7 +97,7 @@ function EmptyState() {
       <h2 className="text-xl font-semibold text-[var(--color-text-1)]">
         Describe your page →
       </h2>
-      <p className="text-[var(--color-text-2)] max-w-xs text-sm leading-relaxed">
+      <p className="text-[var(--color-text-2)] max-w-xs text-[15px] leading-relaxed">
         Type what you want to build and ParticleUI will select the right blocks and render a live preview — plus a one-command install snippet.
       </p>
       <div className="flex items-center gap-2 mt-2 text-xs text-[var(--color-text-3)]">
@@ -161,19 +163,31 @@ export default function GeneratePage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col min-h-screen bg-bg">
+      {/* Top bar */}
+      <header className="flex items-center justify-between px-5 py-3 border-b border-[var(--color-border)] bg-surface-1 shrink-0">
+        <Link href="/" className="flex items-center gap-2 text-sm font-bold text-text-1 hover:text-accent transition-colors">
+          <Sparkle size={14} weight="fill" className="text-accent" />
+          ParticleUI
+        </Link>
+        <Link href="/components" className="flex items-center gap-1.5 text-xs text-text-3 hover:text-text-1 transition-colors">
+          <ArrowLeft size={12} />
+          Back to components
+        </Link>
+      </header>
+
+      <div className="flex flex-col md:flex-row flex-1">
       {/* Left panel */}
       <aside
-        className="w-full md:w-[380px] md:min-w-[380px] flex flex-col border-b md:border-b-0 md:border-r border-[var(--color-border)]"
-        style={{ background: "var(--color-surface-1)" }}
+        className="w-full md:w-[380px] md:min-w-[380px] flex flex-col border-b md:border-b-0 md:border-r border-[var(--color-border)] bg-surface-1"
       >
         {/* Header */}
         <div className="p-6 border-b border-[var(--color-border)]">
-          <div className="flex items-center gap-2 mb-1">
-            <Sparkle size={20} weight="fill" className="text-[var(--color-accent)]" />
-            <h1 className="text-lg font-bold text-[var(--color-text-1)]">UI Generator</h1>
+          <div className="flex items-center gap-2 mb-2">
+            <Sparkle size={22} weight="fill" className="text-[var(--color-accent)]" />
+            <h1 className="text-xl font-bold text-[var(--color-text-1)]">UI Generator</h1>
           </div>
-          <p className="text-sm text-[var(--color-text-2)]">
+          <p className="text-[15px] text-[var(--color-text-2)]">
             Describe a page, get the components
           </p>
         </div>
@@ -193,7 +207,7 @@ export default function GeneratePage() {
           <button
             onClick={handleGenerate}
             disabled={!prompt.trim() || isPending}
-            className="flex items-center justify-center gap-2 rounded-xl py-2.5 px-5 font-semibold text-sm w-full transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-2 rounded-xl py-3.5 px-5 font-semibold text-sm w-full transition disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               background: "var(--color-accent)",
               color: "var(--color-bg)",
@@ -248,7 +262,7 @@ export default function GeneratePage() {
                 <button
                   key={ex}
                   onClick={() => setPrompt(ex)}
-                  className="text-xs px-3 py-1.5 rounded-lg border border-[var(--color-border)] text-[var(--color-text-2)] hover:text-[var(--color-text-1)] hover:border-[var(--color-accent)] transition"
+                  className="text-xs px-3 py-2.5 rounded-lg border border-[var(--color-border)] text-[var(--color-text-2)] hover:text-[var(--color-text-1)] hover:border-[var(--color-accent)] transition text-left"
                   style={{ background: "var(--color-surface-2)" }}
                 >
                   {ex}
@@ -285,8 +299,7 @@ export default function GeneratePage() {
 
       {/* Right panel */}
       <main
-        className="flex-1 overflow-y-auto"
-        style={{ background: "var(--color-bg)" }}
+        className="flex-1 overflow-y-auto bg-bg"
       >
         {isPending ? (
           <SkeletonLoader />
@@ -310,6 +323,7 @@ export default function GeneratePage() {
           <EmptyState />
         )}
       </main>
+      </div>
     </div>
   )
 }

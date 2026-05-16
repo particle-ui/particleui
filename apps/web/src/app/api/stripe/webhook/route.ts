@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server"
 import type Stripe from "stripe"
 import { stripe } from "@/lib/stripe"
 import { db } from "@/db"
-import { users, webhookEvents } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { users, webhookEvents, teams, teamMembers } from "@/db/schema"
+import { eq, isNotNull } from "drizzle-orm"
 import { createToken } from "@/lib/auth/token"
 import { sendProWelcomeEmail } from "@/lib/email"
 
@@ -80,6 +80,29 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       stripeSessionId: session.id,
     })
     .where(eq(users.id, userId))
+
+  // For team plan: create a team and add the buyer as owner (idempotent — guard on stripeSessionId)
+  if (plan === "team") {
+    const [existingTeam] = await db
+      .select({ id: teams.id })
+      .from(teams)
+      .where(eq(teams.stripeSessionId, session.id))
+      .limit(1)
+
+    if (!existingTeam) {
+      const [newTeam] = await db
+        .insert(teams)
+        .values({ name: "My Team", ownerId: userId, stripeSessionId: session.id })
+        .returning({ id: teams.id })
+
+      if (newTeam) {
+        await db
+          .insert(teamMembers)
+          .values({ teamId: newTeam.id, userId, role: "owner" })
+          .onConflictDoNothing()
+      }
+    }
+  }
 
   // Auto-issue an API token
   const label = plan === "team" ? "Team auto-issued token" : "Auto-issued on purchase"

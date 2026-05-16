@@ -2,10 +2,21 @@ import { neon } from "@neondatabase/serverless"
 import { drizzle } from "drizzle-orm/neon-http"
 import * as schema from "./schema"
 
+function sanitizeUrl(raw: string) {
+  try {
+    const u = new URL(raw)
+    // channel_binding is a libpq-only parameter; Neon HTTP driver rejects it
+    u.searchParams.delete("channel_binding")
+    return u.toString()
+  } catch {
+    return raw
+  }
+}
+
 function createDb() {
-  const url = process.env.DATABASE_URL
-  if (!url) throw new Error("DATABASE_URL is not set")
-  return drizzle(neon(url), { schema })
+  const raw = process.env.DATABASE_URL
+  if (!raw) throw new Error("DATABASE_URL is not set")
+  return drizzle(neon(sanitizeUrl(raw)), { schema })
 }
 
 let _db: ReturnType<typeof createDb> | undefined

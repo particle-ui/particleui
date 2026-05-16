@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useTransition, useMemo, Suspense } from "react"
+import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { Palette, Copy, Check, Share, FloppyDisk } from "@phosphor-icons/react"
+import { Palette, Copy, Check, Share, FloppyDisk, ArrowLeft } from "@phosphor-icons/react"
 import { ThemeToggle } from "@/components/theme-toggle"
 import {
   DEFAULT_TOKENS,
@@ -176,10 +177,11 @@ function TokenRow({
           border: "1px solid var(--color-border)",
         }}
       />
-      <label className="w-20 shrink-0 text-xs" style={{ color: "var(--color-text-3)" }}>
+      <label htmlFor={`token-${tokenKey}`} className="w-20 shrink-0 text-xs" style={{ color: "var(--color-text-2)" }}>
         {TOKEN_LABELS[tokenKey]}
       </label>
       <input
+        id={`token-${tokenKey}`}
         type="text"
         value={value}
         onChange={(e) => onChange(tokenKey, e.target.value)}
@@ -265,10 +267,11 @@ function PreviewPanel({ tokens, mode }: { tokens: ThemeTokens; mode: "dark" | "l
 
       {/* Input */}
       <div className="mb-4">
-        <label className="mb-1 block text-xs font-medium" style={{ color: t.text2 }}>
+        <label htmlFor="preview-input-field" className="mb-1 block text-xs font-medium" style={{ color: t.text2 }}>
           Input field
         </label>
         <input
+          id="preview-input-field"
           type="text"
           placeholder="Placeholder text..."
           className="w-full rounded-lg px-3 py-2 text-sm outline-none"
@@ -380,11 +383,22 @@ function ThemeStudioInner() {
         }}
       >
         {/* Left */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <Link
+            href="/themes"
+            className="flex items-center gap-1.5 text-xs transition-colors"
+            style={{ color: "var(--color-text-3)" }}
+            onMouseEnter={e => (e.currentTarget.style.color = "var(--color-text-1)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--color-text-3)")}
+          >
+            <ArrowLeft size={12} />
+            Themes
+          </Link>
+          <span style={{ color: "var(--color-border)", fontSize: 14 }}>|</span>
           <Palette size={18} style={{ color: "var(--color-accent)" }} />
-          <span className="text-sm font-semibold" style={{ color: "var(--color-text-1)" }}>
+          <h1 className="text-sm font-semibold" style={{ color: "var(--color-text-1)" }}>
             Theme Studio
-          </span>
+          </h1>
         </div>
 
         {/* Center — name input */}
@@ -393,6 +407,7 @@ function ThemeStudioInner() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            aria-label="Theme name"
             className="rounded-lg px-3 py-1.5 text-center text-sm font-medium outline-none focus:ring-1"
             style={{
               backgroundColor: "var(--color-surface-2)",
