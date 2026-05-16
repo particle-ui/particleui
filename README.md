@@ -75,7 +75,7 @@ particleui/
 **Prerequisites:** Node.js ≥ 20, pnpm ≥ 9
 
 ```bash
-git clone https://github.com/particleui/particleui.git
+git clone https://github.com/particle-ui/particleui.git
 cd particleui
 pnpm install
 ```
