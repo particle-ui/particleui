@@ -40,7 +40,7 @@ export function PrevNext() {
             className="shrink-0 text-text-3 group-hover:text-text-2 transition-colors"
           />
           <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-3 mb-0.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-2 mb-0.5">
               Previous
             </p>
             <p className="text-sm font-medium text-text-1 truncate">{prev.label}</p>
@@ -56,7 +56,7 @@ export function PrevNext() {
           className="group flex flex-1 items-center justify-end gap-3 rounded-xl border border-border bg-surface-1 px-4 py-3.5 hover:border-border-hover hover:bg-surface-2 transition-all duration-150 text-right"
         >
           <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-3 mb-0.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.12em] text-text-2 mb-0.5">
               Next
             </p>
             <p className="text-sm font-medium text-text-1 truncate">{next.label}</p>

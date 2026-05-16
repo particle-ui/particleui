@@ -14,7 +14,7 @@ const PLANS = [
     features: [
       "60+ free components, MIT licensed",
       "Radix UI primitives under the hood",
-      "shadcn CLI compatible",
+      "particleui-cli included",
       "React · Vue · Svelte",
       "OKLCH design tokens",
       "Community support",
@@ -67,7 +67,7 @@ const FAQ = [
   { q: "Can I use Pro on multiple projects?", a: "Yes. One Pro license covers unlimited personal and commercial projects. The Team license covers up to 5 developers at one company." },
   { q: "What's the refund policy?", a: "14-day no-questions-asked refund. Email us within 14 days of purchase and you'll get a full refund." },
   { q: "What happens if ParticleUI shuts down?", a: "You already have the code — components are copied into your project at install time. Even if we disappear tomorrow, your codebase keeps working." },
-  { q: "Do components work with an existing shadcn/ui project?", a: "Yes. ParticleUI is built on the same shadcn registry format. Install individual components alongside your existing ones — there's no conflict." },
+  { q: "Can I mix ParticleUI components with other libraries?", a: "Yes. Components install directly into your codebase as source files — no runtime package, no conflicts. Use them alongside anything else in your project." },
   { q: "Is TypeScript required?", a: "No, but all components are written in TypeScript and ship with full type definitions. They work in JavaScript projects too." },
 ]
 
@@ -75,21 +75,21 @@ export default function PricingPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-svh bg-bg text-text-1 pt-24 pb-20 px-6">
+      <main id="main-content" tabIndex={-1} className="min-h-svh bg-bg text-text-1 pt-24 pb-20 px-6 outline-none">
         <div className="mx-auto max-w-5xl">
           {/* Header */}
           <div className="text-center mb-16">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-3.5 py-1.5 text-xs text-text-3">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-3.5 py-1.5 text-xs text-text-2">
               <Sparkle weight="fill" size={12} className="text-accent" />
               No subscriptions · Lifetime updates
             </div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent mb-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent mb-3">
               Pricing
             </p>
             <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-[-0.05em] mb-4">
               Simple pricing
             </h1>
-            <p className="text-lg text-text-3">One-time purchase. Own it forever.</p>
+            <p className="text-lg text-text-2">One-time purchase. Own it forever.</p>
           </div>
 
           {/* Plans grid */}
@@ -122,27 +122,27 @@ export default function PricingPage() {
 
                 {/* Plan info */}
                 <div className="mb-6">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-text-4 mb-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.14em] text-text-2 mb-2">
                     {plan.name}
                   </p>
                   <div className="flex items-end gap-1.5 mb-1">
                     <span className="text-4xl font-bold text-text-1">{plan.price}</span>
-                    <span className="text-sm text-text-4 mb-1.5">{plan.period}</span>
+                    <span className="text-sm text-text-2 mb-1.5">{plan.period}</span>
                   </div>
                   {plan.note && (
-                    <p className="text-xs text-text-4 mt-1">{plan.note}</p>
+                    <p className="text-xs text-text-2 mt-1">{plan.note}</p>
                   )}
-                  <p className="text-sm text-text-3 mt-2">{plan.description}</p>
+                  <p className="text-[15px] text-text-2 mt-2">{plan.description}</p>
                 </div>
 
                 {/* Features */}
                 <ul className="space-y-2.5 mb-8 flex-1">
                   {plan.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-sm">
+                    <li key={f} className="flex items-start gap-2.5 text-[15px]">
                       <Check
                         size={14}
                         weight="bold"
-                        className={`mt-0.5 shrink-0 ${plan.highlight ? "text-accent" : "text-text-4"}`}
+                        className={`mt-0.5 shrink-0 ${plan.highlight ? "text-accent" : "text-text-3"}`}
                       />
                       <span className="text-text-2">{f}</span>
                     </li>
@@ -152,10 +152,10 @@ export default function PricingPage() {
                 {/* CTA */}
                 <Link
                   href={plan.href}
-                  className={`flex items-center justify-center gap-2 w-full rounded-xl py-3 text-sm font-medium transition-all ${
+                  className={`flex items-center justify-center gap-2 w-full rounded-xl py-3.5 text-sm font-medium transition-all ${
                     plan.highlight
                       ? "bg-accent text-bg hover:opacity-90"
-                      : "border border-border text-text-3 hover:text-text-1 hover:border-border-hover"
+                      : "border border-border text-text-2 hover:text-text-1 hover:border-border-hover"
                   }`}
                 >
                   {plan.cta}
@@ -165,7 +165,7 @@ export default function PricingPage() {
           </div>
 
           {/* Footer note */}
-          <p className="text-sm text-text-4 text-center mt-8">
+          <p className="text-sm text-text-2 text-center mt-8">
             All prices in USD. VAT may apply. 14-day refund policy.
           </p>
 
@@ -176,7 +176,7 @@ export default function PricingPage() {
               {FAQ.map(({q, a}) => (
                 <div key={q} className="py-6">
                   <p className="font-semibold text-text-1 mb-2">{q}</p>
-                  <p className="text-sm text-text-3 leading-[1.75]">{a}</p>
+                  <p className="text-[15px] text-text-2 leading-[1.75]">{a}</p>
                 </div>
               ))}
             </div>

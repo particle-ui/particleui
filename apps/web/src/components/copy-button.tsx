@@ -15,7 +15,7 @@ export function CopyButton({ code, className }: { code: string; className?: stri
   return (
     <button
       onClick={copy}
-      className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-medium text-text-4 hover:text-text-2 hover:bg-white/[0.06] transition-all ${className ?? ""}`}
+      className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[11px] font-medium text-text-2 hover:text-text-1 hover:bg-white/[0.06] transition-all ${className ?? ""}`}
     >
       {copied ? (
         <Check size={11} className="text-accent" />

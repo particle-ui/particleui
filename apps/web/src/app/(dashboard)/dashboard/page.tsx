@@ -4,7 +4,7 @@ import { auth, currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { users, apiTokens, componentInstalls } from "@/db/schema"
-import { eq, isNull, desc, gte, count, sql } from "drizzle-orm"
+import { eq, isNull, and, desc, gte, count, sql } from "drizzle-orm"
 import Link from "next/link"
 import { Key, Download, ArrowRight, Sparkle } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
@@ -46,57 +46,61 @@ export default async function DashboardPage({
   let topComponent: string | null = null
 
   if (dbReady) {
-    if (clerkUser) {
-      await db
-        .insert(users)
-        .values({
-          id: userId,
-          email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
-          plan: "free",
+    try {
+      if (clerkUser) {
+        await db
+          .insert(users)
+          .values({
+            id: userId,
+            email: clerkUser.emailAddresses[0]?.emailAddress ?? "",
+            plan: "free",
+          })
+          .onConflictDoNothing()
+      }
+
+      const [userRow] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
+      user = userRow
+
+      const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+
+      const [tokenCountRow] = await db
+        .select({ count: count() })
+        .from(apiTokens)
+        .where(and(eq(apiTokens.userId, userId), isNull(apiTokens.revokedAt)))
+      activeTokenCount = tokenCountRow?.count ?? 0
+
+      recentInstalls = await db
+        .select({
+          componentName: componentInstalls.componentName,
+          framework: componentInstalls.framework,
+          tier: componentInstalls.tier,
+          createdAt: componentInstalls.createdAt,
         })
-        .onConflictDoNothing()
+        .from(componentInstalls)
+        .where(eq(componentInstalls.userId, userId))
+        .orderBy(desc(componentInstalls.createdAt))
+        .limit(8)
+
+      const [installCount] = await db
+        .select({ count: count() })
+        .from(componentInstalls)
+        .where(and(eq(componentInstalls.userId, userId), gte(componentInstalls.createdAt, since30d)))
+      totalInstalls30d = installCount?.count ?? 0
+
+      const topRows = await db
+        .select({
+          componentName: componentInstalls.componentName,
+          installs: sql<number>`count(*)`,
+        })
+        .from(componentInstalls)
+        .where(and(eq(componentInstalls.userId, userId), gte(componentInstalls.createdAt, since30d)))
+        .groupBy(componentInstalls.componentName)
+        .orderBy(desc(sql`count(*)`))
+        .limit(1)
+      topComponent = topRows[0]?.componentName ?? null
+    } catch (e) {
+      console.error("[dashboard] DB error:", e)
     }
-
-    const [userRow] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
-    user = userRow
-
-    const since30d = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-
-    const [tokenCountRow] = await db
-      .select({ count: count() })
-      .from(apiTokens)
-      .where(eq(apiTokens.userId, userId) && isNull(apiTokens.revokedAt))
-    activeTokenCount = tokenCountRow?.count ?? 0
-
-    recentInstalls = await db
-      .select({
-        componentName: componentInstalls.componentName,
-        framework: componentInstalls.framework,
-        tier: componentInstalls.tier,
-        createdAt: componentInstalls.createdAt,
-      })
-      .from(componentInstalls)
-      .where(eq(componentInstalls.userId, userId))
-      .orderBy(desc(componentInstalls.createdAt))
-      .limit(8)
-
-    const [installCount] = await db
-      .select({ count: count() })
-      .from(componentInstalls)
-      .where(eq(componentInstalls.userId, userId) && gte(componentInstalls.createdAt, since30d))
-    totalInstalls30d = installCount?.count ?? 0
-
-    const topRows = await db
-      .select({
-        componentName: componentInstalls.componentName,
-        installs: sql<number>`count(*)`,
-      })
-      .from(componentInstalls)
-      .where(eq(componentInstalls.userId, userId) && gte(componentInstalls.createdAt, since30d))
-      .groupBy(componentInstalls.componentName)
-      .orderBy(desc(sql`count(*)`))
-      .limit(1)
-    topComponent = topRows[0]?.componentName ?? null
   }
 
   const isPro = user?.plan === "pro"

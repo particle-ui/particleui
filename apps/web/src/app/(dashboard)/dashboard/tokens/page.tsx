@@ -33,7 +33,7 @@ export default async function TokensPage() {
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-1)] mb-1">API Tokens</h1>
           <p className="text-sm text-[var(--color-text-3)]">
-            Use tokens to install Pro components via the shadcn CLI.
+            Use tokens to install Pro components via the ParticleUI CLI.
           </p>
         </div>
         <CreateTokenButton onCreate={create} />
@@ -103,7 +103,7 @@ PARTICLEUI_TOKEN=pui_...
 }
 
 # Install a component
-npx shadcn@latest add @particleui/particle-hero`}</pre>
+npx particleui-cli add particle-hero`}</pre>
       </div>
     </div>
   )

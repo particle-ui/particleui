@@ -12,21 +12,20 @@ export default function InstallationPage() {
       <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
-      <h1 id="installation" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+      <h1 id="installation" className="mb-5 text-[2.5rem] font-semibold tracking-[-0.02em] leading-[1.15] text-text-1">
         Installation
       </h1>
       <p className="mb-8 text-text-2 leading-[1.75] text-[0.9375rem]">
         ParticleUI ships its own CLI — <code>particleui-cli</code> — so you don&apos;t need the
-        shadcn CLI at all. One command installs any component directly into your project.
+        any other tool. One command installs any component directly into your project.
       </p>
 
       <Callout variant="note">
-        The ParticleUI CLI is a drop-in replacement for <code>npx shadcn add @particleui/…</code>.
-        Both work — but the dedicated CLI is faster, supports Vue &amp; Svelte natively, and adds
-        AI-powered layout generation.
+        The ParticleUI CLI auto-detects React, Vue, and Svelte projects. It writes components
+        directly into your codebase — no runtime package, no wrapper, no version lock-in.
       </Callout>
 
-      <h2 id="steps" className="mb-6 mt-10 text-xl font-semibold tracking-[-0.03em] text-text-1">
+      <h2 id="steps" className="mb-6 mt-10 text-xl font-semibold tracking-[-0.01em] text-text-1">
         Setup steps
       </h2>
 
@@ -81,7 +80,7 @@ export default function Page() {
       <hr className="border-border my-10" />
 
       <section className="mb-10">
-        <h2 id="pro-components" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="pro-components" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Pro components
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-4">
@@ -103,7 +102,7 @@ export default function Page() {
       </section>
 
       <section className="mb-10">
-        <h2 id="vue-svelte" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="vue-svelte" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Vue &amp; Svelte
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-3">

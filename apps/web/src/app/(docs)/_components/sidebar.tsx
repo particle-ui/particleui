@@ -35,7 +35,7 @@ export async function Sidebar() {
   const themes = components.filter((c: { tier?: string }) => c.tier === "themes")
 
   return (
-    <aside className="fixed top-0 left-0 h-svh w-64 border-r border-border bg-bg flex flex-col overflow-y-auto hidden lg:flex z-40">
+    <aside aria-label="Docs navigation" className="fixed top-0 left-0 h-svh w-64 border-r border-border bg-bg flex flex-col overflow-y-auto hidden lg:flex z-40">
       {/* Logo */}
       <div className="flex h-14 shrink-0 items-center border-b border-border px-5">
         <Link href="/" className="flex items-center gap-2 font-bold text-sm tracking-tight">
@@ -49,10 +49,10 @@ export async function Sidebar() {
         <SearchDialog items={components} />
       </div>
 
-      <nav className="flex-1 py-5 px-3 space-y-5 overflow-y-auto">
+      <nav aria-label="Docs sections" className="flex-1 py-5 px-3 space-y-5 overflow-y-auto">
         {/* Getting started */}
         <div>
-          <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+          <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
             Getting Started
           </p>
           <ul className="space-y-0.5">
@@ -67,7 +67,7 @@ export async function Sidebar() {
         {/* Themes */}
         {themes.length > 0 && (
           <div>
-            <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
               Themes
             </p>
             <ul className="space-y-0.5">
@@ -83,7 +83,7 @@ export async function Sidebar() {
         {/* Core components */}
         {core.length > 0 && (
           <div>
-            <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
               Core
             </p>
             <ul className="space-y-0.5">
@@ -99,7 +99,7 @@ export async function Sidebar() {
         {/* Particle / animation components */}
         {particles.length > 0 && (
           <div>
-            <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
               Particle Effects
             </p>
             <ul className="space-y-0.5">
@@ -115,7 +115,7 @@ export async function Sidebar() {
         {/* Blocks */}
         {blocks.length > 0 && (
           <div>
-            <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
               Blocks
             </p>
             <ul className="space-y-0.5">
@@ -130,7 +130,7 @@ export async function Sidebar() {
 
         {/* Templates */}
         <div>
-          <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+          <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
             Templates
           </p>
           <ul className="space-y-0.5">
@@ -152,7 +152,7 @@ export async function Sidebar() {
         {/* Pro components */}
         {pro.length > 0 && (
           <div>
-            <p className="mb-1.5 px-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-text-3">
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
               Pro
             </p>
             <ul className="space-y-0.5">
@@ -170,7 +170,7 @@ export async function Sidebar() {
 
       {/* Theme switcher */}
       <div className="shrink-0 border-t border-border px-4 py-3 flex items-center justify-between">
-        <span className="text-xs text-text-3">Theme</span>
+        <span className="text-xs text-text-2">Theme</span>
         <ThemeToggle />
       </div>
     </aside>

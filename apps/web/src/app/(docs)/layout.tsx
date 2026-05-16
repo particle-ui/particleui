@@ -9,10 +9,10 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       <MobileNav />
       <div className="flex-1 lg:pl-64 pt-14 lg:pt-0">
         <div className="flex">
-          <main className="flex-1 min-w-0">
+          <main id="main-content" tabIndex={-1} className="flex-1 min-w-0 outline-none">
             {children}
           </main>
-          <aside className="hidden xl:block w-56 shrink-0 sticky top-0 h-svh overflow-y-auto py-10 pr-6 border-l border-border">
+          <aside aria-label="On this page" className="hidden xl:block w-56 shrink-0 sticky top-0 h-svh overflow-y-auto py-10 px-6 border-l border-border">
             <OnThisPage />
           </aside>
         </div>

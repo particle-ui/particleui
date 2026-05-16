@@ -54,11 +54,11 @@ export function SearchDialog({ items }: SearchDialogProps) {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-1)] px-3 py-2 text-sm text-[var(--color-text-4)] hover:border-[var(--color-border-hover)] hover:text-[var(--color-text-3)] transition-colors"
+        className="flex items-center gap-2 w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-1)] px-3 py-2 text-sm text-[var(--color-text-2)] hover:border-[var(--color-border-hover)] hover:text-[var(--color-text-1)] transition-colors"
       >
         <Search size={13} />
         <span className="flex-1 text-left">Search components…</span>
-        <kbd className="hidden sm:inline-flex h-5 items-center gap-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-2)] px-1.5 text-[10px] font-mono text-[var(--color-text-4)]">
+        <kbd className="hidden sm:inline-flex h-5 items-center gap-0.5 rounded border border-[var(--color-border)] bg-[var(--color-surface-2)] px-1.5 text-[10px] font-mono text-[var(--color-text-2)]">
           ⌘K
         </kbd>
       </button>
@@ -76,7 +76,7 @@ export function SearchDialog({ items }: SearchDialogProps) {
             <Command className="[&>[cmdk-input-wrapper]]:border-b [&>[cmdk-input-wrapper]]:border-[var(--color-border)]">
               <CommandInput placeholder="Search components, blocks…" autoFocus />
               <CommandList className="max-h-80 overflow-y-auto p-1.5">
-                <CommandEmpty className="py-8 text-center text-sm text-[var(--color-text-4)]">
+                <CommandEmpty className="py-8 text-center text-sm text-[var(--color-text-2)]">
                   No components found.
                 </CommandEmpty>
 
@@ -111,7 +111,7 @@ export function SearchDialog({ items }: SearchDialogProps) {
                 )}
               </CommandList>
 
-              <div className="border-t border-[var(--color-border)] px-3 py-2 flex items-center gap-3 text-[10px] text-[var(--color-text-4)]">
+              <div className="border-t border-[var(--color-border)] px-3 py-2 flex items-center gap-3 text-[10px] text-[var(--color-text-2)]">
                 <span><kbd className="font-mono">↑↓</kbd> navigate</span>
                 <span><kbd className="font-mono">↵</kbd> select</span>
                 <span><kbd className="font-mono">esc</kbd> close</span>
@@ -127,7 +127,7 @@ export function SearchDialog({ items }: SearchDialogProps) {
 
 function GroupHeading({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <span className="flex items-center gap-1.5 text-[var(--color-text-4)]">
+    <span className="flex items-center gap-1.5 text-[var(--color-text-2)]">
       {icon}
       {label}
     </span>
@@ -143,7 +143,7 @@ function SearchItem({ item, onSelect }: { item: IndexItem; onSelect: (name: stri
     >
       <div className="flex flex-col gap-0.5 overflow-hidden">
         <span className="text-sm font-medium text-[var(--color-text-1)] truncate">{item.title}</span>
-        <span className="text-xs text-[var(--color-text-4)] truncate">{item.description}</span>
+        <span className="text-xs text-[var(--color-text-2)] truncate">{item.description}</span>
       </div>
     </CommandItem>
   )

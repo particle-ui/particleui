@@ -26,9 +26,9 @@ const defaultItems: FaqItem[] = [
       "Yes — the core library and all free-tier components are MIT licensed. You own every file you copy into your project. Pro components (animations, advanced blocks) require a Pro license, but the vast majority of ParticleUI is completely free.",
   },
   {
-    question: "Is ParticleUI compatible with shadcn/ui?",
+    question: "Can I use ParticleUI alongside other component libraries?",
     answer:
-      "Absolutely. ParticleUI shares the same Radix UI foundation and Tailwind CSS approach as shadcn. You can use both libraries in the same project — ParticleUI simply extends the design language with electric tokens, particle effects, and ready-to-go blocks.",
+      "Yes. ParticleUI components install directly into your codebase — no runtime dependency, no conflicts. You own every file and can mix them with any other Radix-based or Tailwind-based components in the same project.",
   },
   {
     question: "Which frameworks does ParticleUI support?",

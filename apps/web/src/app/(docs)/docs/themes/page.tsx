@@ -41,22 +41,23 @@ export default async function ThemesPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
-      <nav className="mb-6 flex items-center gap-2 text-xs text-[var(--color-text-4)]">
-        <span>Docs</span><span>/</span>
-        <span className="text-[var(--color-text-3)]">Themes</span>
+      <nav className="mb-6 flex items-center gap-2 text-xs text-text-2">
+        <Link href="/docs" className="hover:text-text-1 transition-colors">Docs</Link>
+        <span className="opacity-40">/</span>
+        <span className="text-text-2">Themes</span>
       </nav>
 
-      <h1 className="text-[2rem] font-bold tracking-[-0.04em] leading-[1.15] text-[var(--color-text-1)] mb-3">
+      <h1 className="text-[2rem] font-semibold tracking-[-0.02em] leading-[1.2] text-[var(--color-text-1)] mb-3">
         Themes
       </h1>
-      <p className="text-[var(--color-text-3)] text-[0.9375rem] leading-[1.75] mb-3">
+      <p className="text-text-2 text-[15px] leading-[1.75] mb-3">
         Starter themes for ParticleUI — each is a set of OKLCH token overrides for your{" "}
         <code className="text-[var(--color-text-2)] bg-[var(--color-surface-2)] rounded px-1.5 py-0.5 text-xs">
           globals.css
         </code>
-        . Install via the shadcn CLI or copy the CSS directly.
+        . Install via the CLI or copy the CSS directly.
       </p>
-      <p className="text-[var(--color-text-4)] text-sm leading-relaxed mb-10">
+      <p className="text-text-2 text-[15px] leading-relaxed mb-10">
         The default ParticleUI palette is warm espresso dark with cream accents. These themes
         swap out the accent hue and surface tint — all semantic tokens (success, error, warning, info)
         stay the same.
@@ -65,7 +66,7 @@ export default async function ThemesPage() {
       <div className="grid gap-4">
         {themes.map((theme) => {
           const preview = THEME_ACCENT_PREVIEW[theme.name]
-          const installCmd = `npx shadcn add https://particleui.dev/r/react/${theme.name}.json`
+          const installCmd = `npx particleui-cli add ${theme.name}`
           return (
             <Link
               key={theme.name}
@@ -90,13 +91,13 @@ export default async function ThemesPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
                   <span className="font-semibold text-[var(--color-text-1)]">{theme.title}</span>
-                  <span className="text-[10px] font-mono text-[var(--color-text-4)] bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded px-1.5 py-0.5">
+                  <span className="text-xs font-mono text-text-2 bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded px-1.5 py-0.5">
                     free
                   </span>
                 </div>
-                <p className="text-sm text-[var(--color-text-3)] truncate">{theme.description}</p>
+                <p className="text-[15px] text-text-2 truncate">{theme.description}</p>
               </div>
-              <code className="hidden sm:block text-[11px] font-mono text-[var(--color-text-4)] bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded px-2 py-1 shrink-0 max-w-[220px] truncate">
+              <code className="hidden sm:block text-xs font-mono text-text-2 bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded px-2 py-1 shrink-0 max-w-[220px] truncate">
                 {installCmd}
               </code>
             </Link>
@@ -105,19 +106,19 @@ export default async function ThemesPage() {
       </div>
 
       {themes.length === 0 && (
-        <p className="text-sm text-[var(--color-text-4)]">No themes found — run the registry builder first.</p>
+        <p className="text-[15px] text-text-3">No themes found — run the registry builder first.</p>
       )}
 
       {/* How it works */}
       <section className="mt-12 border-t border-[var(--color-border)] pt-10">
-        <h2 className="text-xl font-semibold tracking-[-0.03em] text-[var(--color-text-1)] mb-4">How themes work</h2>
+        <h2 className="text-xl font-semibold tracking-[-0.01em] text-[var(--color-text-1)] mb-4">How themes work</h2>
         <ol className="space-y-6">
           {[
             {
               n: 1,
               title: "Install via CLI",
-              body: "Run the shadcn CLI command shown on the theme page. It writes a CSS file to your project and optionally imports it.",
-              code: "npx shadcn add https://particleui.dev/r/react/slate.json",
+              body: "Run the install command shown on the theme page. It writes a CSS file to your project and optionally imports it.",
+              code: "npx particleui-cli add slate",
             },
             {
               n: 2,
@@ -133,14 +134,14 @@ export default async function ThemesPage() {
             },
           ].map(({ n, title, body, code }) => (
             <li key={n} className="flex gap-4">
-              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-[11px] font-bold text-[var(--color-text-3)]">
+              <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] text-xs font-bold text-text-3">
                 {n}
               </div>
               <div>
                 <h3 className="font-semibold text-[var(--color-text-1)] mb-1">{title}</h3>
-                <p className="text-sm text-[var(--color-text-3)]">{body}</p>
+                <p className="text-[15px] text-text-2">{body}</p>
                 {code && (
-                  <code className="mt-2 block text-[11px] font-mono text-[var(--color-text-3)] bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-lg px-3 py-2">
+                  <code className="mt-2 block text-xs font-mono text-text-2 bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-lg px-3 py-2">
                     {code}
                   </code>
                 )}

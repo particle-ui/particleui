@@ -68,7 +68,7 @@ export async function sendProWelcomeEmail({
 
   <p style="font-size: 13px; color: #71717a; margin: 0 0 8px; font-weight: 600;">3. Install a Pro component</p>
   <div style="background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 14px 18px; margin-bottom: 32px;">
-    <code style="font-family: monospace; font-size: 13px; color: #a1a1aa;">npx shadcn add @particleui/animated-beam</code>
+    <code style="font-family: monospace; font-size: 13px; color: #a1a1aa;">npx particleui-cli add animated-beam</code>
   </div>
 
   ${plan === "team" ? `<p style="font-size: 13px; color: #71717a; line-height: 1.7; margin: 0 0 32px;">
@@ -82,6 +82,58 @@ export async function sendProWelcomeEmail({
     Questions? Reply to this email or join our
     <a href="https://particleui.dev/discord" style="color: oklch(78% 0.17 200);">Discord</a>.
     14-day refund policy — no questions asked.
+  </p>
+</body>
+</html>`,
+  })
+}
+
+export async function sendTeamInviteEmail({
+  to,
+  teamName,
+  inviteUrl,
+}: {
+  to: string
+  teamName: string
+  inviteUrl: string
+}) {
+  await getResend().emails.send({
+    from: FROM,
+    to,
+    subject: `You've been invited to join ${teamName} on ParticleUI`,
+    html: `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #09090b; color: #fafafa; max-width: 560px; margin: 0 auto; padding: 40px 24px;">
+  <div style="margin-bottom: 32px;">
+    <span style="font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: oklch(78% 0.17 200); background: oklch(78% 0.17 200 / 0.12); border: 1px solid oklch(78% 0.17 200 / 0.3); border-radius: 999px; padding: 4px 12px;">
+      Team Invite
+    </span>
+  </div>
+
+  <h1 style="font-size: 28px; font-weight: 700; letter-spacing: -0.04em; margin: 0 0 12px; color: #fafafa;">
+    You're invited to join ${teamName}
+  </h1>
+  <p style="font-size: 15px; color: #a1a1aa; line-height: 1.7; margin: 0 0 32px;">
+    You've been invited to join the <strong style="color: #fafafa;">${teamName}</strong> team on ParticleUI.
+    Accepting gives you Pro access to all components — particle effects, full-page blocks, and more.
+  </p>
+
+  <a href="${inviteUrl}" style="display: inline-block; background: oklch(78% 0.17 200); color: #09090b; font-weight: 700; font-size: 14px; padding: 14px 28px; border-radius: 999px; text-decoration: none; margin-bottom: 32px;">
+    Accept invite →
+  </a>
+
+  <p style="font-size: 13px; color: #52525b; line-height: 1.7; margin: 0 0 12px;">
+    Or copy this link into your browser:
+  </p>
+  <div style="background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 12px 16px; margin-bottom: 32px;">
+    <code style="font-family: monospace; font-size: 12px; color: #a1a1aa; word-break: break-all;">${inviteUrl}</code>
+  </div>
+
+  <hr style="border: none; border-top: 1px solid #27272a; margin: 0 0 24px;">
+  <p style="font-size: 12px; color: #52525b; line-height: 1.7; margin: 0;">
+    This invite expires in 7 days. If you weren't expecting this, you can ignore this email.
   </p>
 </body>
 </html>`,

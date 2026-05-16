@@ -35,7 +35,7 @@ const defaultTiers: PricingTier[] = [
     features: [
       { text: "60+ open-source components", included: true },
       { text: "Particle animation layer", included: true },
-      { text: "shadcn CLI compatible", included: true },
+      { text: "particleui-cli included", included: true },
       { text: "MIT license", included: true },
       { text: "Pro blocks", included: false },
       { text: "Theme generator", included: false },

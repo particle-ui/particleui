@@ -17,7 +17,7 @@ const tools = [
   },
   {
     name: "install_component",
-    desc: "Runs the shadcn CLI install command for a component in your project directory.",
+    desc: "Runs the particleui-cli install command for a component in your project directory.",
   },
   {
     name: "search_components",
@@ -31,7 +31,7 @@ export default function McpPage() {
       <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
-      <h1 id="mcp-server" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+      <h1 id="mcp-server" className="mb-5 text-[2.5rem] font-semibold tracking-[-0.02em] leading-[1.15] text-text-1">
         MCP Server
       </h1>
       <p className="mb-8 text-text-2 leading-[1.75] text-[0.9375rem]">
@@ -49,7 +49,7 @@ export default function McpPage() {
       <hr className="border-border my-10" />
 
       <section className="mb-10">
-        <h2 id="setup" className="mb-6 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="setup" className="mb-6 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Setup
         </h2>
 
@@ -132,7 +132,7 @@ export default function McpPage() {
       <hr className="border-border mb-10" />
 
       <section className="mb-10">
-        <h2 id="available-tools" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="available-tools" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Available tools
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-4">
@@ -149,7 +149,7 @@ export default function McpPage() {
       </section>
 
       <section className="mb-10">
-        <h2 id="other-clients" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="other-clients" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Other MCP clients
         </h2>
         <p className="text-sm text-text-2 leading-[1.75]">

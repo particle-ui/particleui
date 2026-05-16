@@ -272,7 +272,7 @@ export default async function ComponentDocPage({
   const isPro = item.categories.includes("pro")
   const mainFile = item.files.find((f) => f.type !== "registry:file")
   const preview = PREVIEWS[name]
-  const installCmd = `npx shadcn add @particleui/${item.name}`
+  const installCmd = `npx particleui-cli add ${item.name}`
   const propDefs = mainFile?.content ? parseProps(mainFile.content) : []
 
   const usageCode = generateUsage(item)
@@ -285,7 +285,7 @@ export default async function ComponentDocPage({
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Breadcrumb */}
-      <nav className="mb-8 flex items-center gap-1.5 text-[11px] text-text-3">
+      <nav className="mb-8 flex items-center gap-1.5 text-xs text-text-3">
         <Link href="/docs" className="hover:text-text-2 transition-colors">Docs</Link>
         <span className="opacity-40">/</span>
         <Link href="/docs" className="hover:text-text-2 transition-colors">Components</Link>
@@ -295,10 +295,10 @@ export default async function ComponentDocPage({
 
       {/* Title */}
       <div className="mb-3 flex items-center gap-3">
-        <h1 className="text-[2rem] font-bold tracking-[-0.04em] leading-[1.15] text-text-1">{item.title}</h1>
+        <h1 className="text-[2rem] font-semibold tracking-[-0.02em] leading-[1.2] text-text-1">{item.title}</h1>
         {isPro && (
-          <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[9px] font-bold uppercase tracking-widest text-accent">
-            <Sparkle size={8} weight="fill" />Pro
+          <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
+            <Sparkle size={9} weight="fill" />Pro
           </span>
         )}
       </div>
@@ -308,7 +308,7 @@ export default async function ComponentDocPage({
       {isPro && (
         <div className="mb-8 rounded-xl border border-accent-border bg-accent-dim px-4 py-3 flex items-start gap-3">
           <Sparkle size={14} weight="fill" className="text-accent mt-0.5 shrink-0" />
-          <p className="text-sm text-text-3">
+          <p className="text-[15px] text-text-2">
             Pro component — requires an active license.{" "}
             <Link href="/pricing" className="text-accent hover:underline">
               Get access →
@@ -334,12 +334,12 @@ export default async function ComponentDocPage({
 
       {/* Installation */}
       <section className="mb-10">
-        <h2 id="installation" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Installation</h2>
+        <h2 id="installation" className="mb-5 text-xl font-semibold tracking-[-0.01em] text-text-1">Installation</h2>
 
         {isPro ? (
           <>
             <Step n={1} title="Add your token to .env">
-              <p className="text-sm text-text-3 mb-3">
+              <p className="text-[15px] text-text-2 mb-3">
                 Get a token from{" "}
                 <Link href="/dashboard/tokens" className="text-accent hover:underline">your dashboard</Link>, then add it to{" "}
                 <code className="text-text-2 bg-white/[0.05] rounded px-1.5 py-0.5 text-xs">.env</code>:
@@ -347,7 +347,7 @@ export default async function ComponentDocPage({
               <CodeBlock code={`PARTICLEUI_TOKEN=your-token-here`} />
             </Step>
             <Step n={2} title="Add the registry to components.json">
-              <p className="text-sm text-text-3 mb-3">
+              <p className="text-[15px] text-text-2 mb-3">
                 Wire up the authenticated registry so the CLI can resolve Pro components:
               </p>
               <CodeBlock
@@ -368,7 +368,7 @@ export default async function ComponentDocPage({
       {/* Usage */}
       {mainFile?.content && (
         <section className="mb-10">
-          <h2 id="usage" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Usage</h2>
+          <h2 id="usage" className="mb-5 text-xl font-semibold tracking-[-0.01em] text-text-1">Usage</h2>
           <CodeBlock code={generateUsage(item)} />
         </section>
       )}
@@ -378,7 +378,7 @@ export default async function ComponentDocPage({
 
       {/* Details */}
       <section className="mb-10">
-        <h2 id="details" className="mb-5 text-xl font-semibold tracking-[-0.03em] text-text-1">Details</h2>
+        <h2 id="details" className="mb-5 text-xl font-semibold tracking-[-0.01em] text-text-1">Details</h2>
         <div className="divide-y divide-border rounded-xl border border-border overflow-hidden">
           {[
             ["Source file", mainFile?.path ?? "—"],
@@ -390,7 +390,7 @@ export default async function ComponentDocPage({
           ].map(([label, value]) => (
             <div key={label as string} className="flex items-center gap-4 bg-surface-1 px-4 py-3">
               <span className="w-36 shrink-0 text-xs text-text-3">{label}</span>
-              <span className="font-mono text-xs text-text-3">{value}</span>
+              <span className="font-mono text-xs text-text-2">{value}</span>
             </div>
           ))}
         </div>
@@ -404,7 +404,7 @@ export default async function ComponentDocPage({
 function Step({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
   return (
     <div className="mb-6 flex gap-4">
-      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[11px] font-bold text-text-3">
+      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-bold text-text-3">
         {n}
       </div>
       <div className="flex-1">
@@ -466,7 +466,7 @@ export default function Example() {
 export default function Example() {
   return (
     <Avatar>
-      <AvatarImage src="https://github.com/shadcn.png" />
+      <AvatarImage src="https://avatar.vercel.sh/user" />
       <AvatarFallback>CN</AvatarFallback>
     </Avatar>
   )

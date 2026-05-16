@@ -21,7 +21,7 @@ const POSTS = [
   },
   {
     slug: "shadcn-registry-architecture",
-    title: "Building a shadcn-compatible registry in 2026",
+    title: "Building a multi-framework component registry in 2026",
     description:
       "The architecture behind ParticleUI's multi-framework registry: how one JSON schema powers React, Vue, and Svelte components from a single source of truth.",
     category: "Engineering",
@@ -54,16 +54,16 @@ export default function BlogPage() {
     <div className="min-h-svh bg-bg text-text-1">
       <Nav />
 
-      <main className="mx-auto max-w-5xl px-6 pt-32 pb-24">
+      <main id="main-content" tabIndex={-1} className="mx-auto max-w-5xl px-6 pt-32 pb-24 outline-none">
         {/* Header */}
         <div className="mb-16">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent mb-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-accent mb-3">
             Blog
           </p>
           <h1 className="text-[clamp(2.25rem,4vw,3.5rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
             Writing on design,<br />components, and craft.
           </h1>
-          <p className="text-text-3 text-lg leading-[1.7] max-w-xl">
+          <p className="text-text-2 text-lg leading-[1.7] max-w-xl">
             Thoughts on design systems, component engineering, and what it means
             to build UI that people actually love using.
           </p>
@@ -72,22 +72,22 @@ export default function BlogPage() {
         {/* Featured post */}
         <Link
           href={`/blog/${featured.slug}`}
-          className="group block mb-5 rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover hover:bg-surface-2 transition-all"
+          className="group block mb-5 rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover hover:bg-surface-2 hover:-translate-y-1 transition-all duration-200"
         >
           <div className="flex items-center gap-3 mb-5">
-            <span className={`text-[10px] font-semibold uppercase tracking-widest rounded-full border px-2.5 py-1 ${CATEGORY_COLORS[featured.category]}`}>
+            <span className={`text-xs font-semibold uppercase tracking-widest rounded-full border px-2.5 py-1 ${CATEGORY_COLORS[featured.category]}`}>
               {featured.category}
             </span>
-            <span className="text-xs text-text-4">{featured.date}</span>
-            <span className="text-xs text-text-4">·</span>
-            <span className="text-xs text-text-4">{featured.readTime}</span>
+            <span className="text-xs text-text-2">{featured.date}</span>
+            <span className="text-xs text-text-2">·</span>
+            <span className="text-xs text-text-2">{featured.readTime}</span>
           </div>
           <div className="flex items-start justify-between gap-6">
             <div>
               <h2 className="text-[1.375rem] font-bold tracking-[-0.03em] leading-[1.25] text-text-1 mb-3 group-hover:text-accent transition-colors">
                 {featured.title}
               </h2>
-              <p className="text-text-3 leading-[1.7] text-[0.9375rem]">
+              <p className="text-text-2 leading-[1.7] text-[15px]">
                 {featured.description}
               </p>
             </div>
@@ -104,21 +104,21 @@ export default function BlogPage() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group block rounded-2xl border border-border bg-surface-1 p-6 hover:border-border-hover hover:bg-surface-2 transition-all"
+              className="group block rounded-2xl border border-border bg-surface-1 p-6 hover:border-border-hover hover:bg-surface-2 hover:-translate-y-1 transition-all duration-200"
             >
               <div className="flex items-center gap-2 mb-4">
-                <span className={`text-[10px] font-semibold uppercase tracking-widest rounded-full border px-2.5 py-1 ${CATEGORY_COLORS[post.category]}`}>
+                <span className={`text-xs font-semibold uppercase tracking-widest rounded-full border px-2.5 py-1 ${CATEGORY_COLORS[post.category]}`}>
                   {post.category}
                 </span>
-                <span className="text-xs text-text-4">{post.readTime}</span>
+                <span className="text-xs text-text-2">{post.readTime}</span>
               </div>
               <h2 className="text-base font-semibold tracking-[-0.02em] leading-[1.35] text-text-1 mb-2 group-hover:text-accent transition-colors">
                 {post.title}
               </h2>
-              <p className="text-sm text-text-3 leading-[1.65] line-clamp-3">
+              <p className="text-[15px] text-text-2 leading-[1.65] line-clamp-3">
                 {post.description}
               </p>
-              <p className="mt-4 text-xs text-text-4">{post.date}</p>
+              <p className="mt-4 text-xs text-text-2">{post.date}</p>
             </Link>
           ))}
         </div>
@@ -127,8 +127,8 @@ export default function BlogPage() {
       {/* Footer */}
       <footer className="border-t border-border px-6 py-10">
         <div className="mx-auto max-w-5xl flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-text-4">© {new Date().getFullYear()} ParticleUI</p>
-          <nav className="flex items-center gap-6 text-xs text-text-4">
+          <p className="text-xs text-text-2">© {new Date().getFullYear()} ParticleUI</p>
+          <nav className="flex items-center gap-6 text-xs text-text-2">
             {["Components", "Docs", "Pricing"].map((l) => (
               <Link key={l} href={`/${l.toLowerCase()}`} className="hover:text-text-2 transition-colors">
                 {l}

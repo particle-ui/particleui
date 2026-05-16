@@ -11,28 +11,28 @@ export default function ComponentsJsonPage() {
       <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
-      <h1 id="components-json" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+      <h1 id="components-json" className="mb-5 text-[2.5rem] font-semibold tracking-[-0.02em] leading-[1.15] text-text-1">
         components.json
       </h1>
       <p className="mb-8 text-text-2 leading-[1.75] text-[0.9375rem]">
-        <code>components.json</code> is shadcn&apos;s project configuration file. It lives at
-        your project root and tells the CLI how to install components — which registries to use,
-        where to place files, and how to resolve aliases.
+        <code>components.json</code> is the project configuration file for the ParticleUI CLI.
+        It lives at your project root and tells the CLI how to install components — which
+        registries to use, where to place files, and how to resolve aliases.
       </p>
 
       <Callout variant="note">
-        This file already exists if you ran <code>npx shadcn init</code>. You only need to add
-        the <code>registries</code> key to enable ParticleUI.
+        Run <code>npx particleui-cli init</code> to generate this file automatically. If you
+        already have one from a previous setup, just add the <code>registries</code> key.
       </Callout>
 
       <hr className="border-border my-10" />
 
       <section className="mb-10">
-        <h2 id="overview" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="overview" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Overview
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-4">
-          A freshly initialised shadcn project produces a file like this:
+          A freshly initialised project produces a file like this:
         </p>
         <CodeBlock
           filename="components.json"
@@ -56,13 +56,13 @@ export default function ComponentsJsonPage() {
       </section>
 
       <section className="mb-10">
-        <h2 id="registry-configuration" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="registry-configuration" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Registry configuration
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-4">
           Add a <code>registries</code> key at the top level. Each key is a namespace prefix
           you&apos;ll use in the CLI command. The <code>url</code> field uses{" "}
-          <code>{"{name}"}</code> as a placeholder — the shadcn CLI fills it in automatically.
+          <code>{"{name}"}</code> as a placeholder — the CLI fills it in automatically.
         </p>
         <CodeBlock
           filename="components.json"
@@ -95,7 +95,7 @@ export default function ComponentsJsonPage() {
       </section>
 
       <section className="mb-10">
-        <h2 id="full-example" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="full-example" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Full example
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-4">
@@ -135,7 +135,7 @@ export default function ComponentsJsonPage() {
       </section>
 
       <section className="mb-10">
-        <h2 id="framework-urls" className="mb-4 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="framework-urls" className="mb-4 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Framework URLs
         </h2>
         <p className="text-sm text-text-2 leading-[1.75] mb-3">

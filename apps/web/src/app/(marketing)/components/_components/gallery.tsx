@@ -81,7 +81,7 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search components..."
-            className="w-full rounded-xl border border-border bg-surface-1 pl-9 pr-4 py-2.5 text-sm text-text-1 placeholder:text-text-4 outline-none focus:border-border-hover transition-colors"
+            className="w-full rounded-xl border border-border bg-surface-1 pl-9 pr-4 py-3 text-sm text-text-1 placeholder:text-text-3 outline-none focus:border-border-hover transition-colors"
           />
         </div>
 
@@ -94,14 +94,14 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
               <button
                 key={key}
                 onClick={() => setActiveFilter(key)}
-                className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
+                className={`rounded-full px-4 py-2.5 text-xs font-medium transition-all ${
                   isActive
                     ? "bg-accent text-bg"
-                    : "border border-border text-text-3 hover:text-text-1 hover:border-border-hover"
+                    : "border border-border text-text-2 hover:text-text-1 hover:border-border-hover"
                 }`}
               >
                 {label}{" "}
-                <span className={isActive ? "opacity-60" : "text-text-4"}>
+                <span className={isActive ? "opacity-60" : "text-text-2"}>
                   ({count})
                 </span>
               </button>
@@ -111,7 +111,7 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
       </div>
 
       {/* Results count */}
-      <p className="text-xs text-text-4 mb-6">
+      <p className="text-xs text-text-2 mb-6">
         {filtered.length} component{filtered.length !== 1 ? "s" : ""}
         {activeFilter !== "all" && ` in "${FILTERS.find((f) => f.key === activeFilter)?.label}"`}
         {q && ` matching "${q}"`}
@@ -120,8 +120,8 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
       {/* Grid or empty state */}
       {filtered.length === 0 ? (
         <div className="py-24 text-center">
-          <MagnifyingGlass size={32} className="mx-auto mb-4 text-text-4" />
-          <p className="text-text-4">No components match.</p>
+          <MagnifyingGlass size={32} className="mx-auto mb-4 text-text-3" />
+          <p className="text-text-3">No components match.</p>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -139,7 +139,7 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
                     Pro
                   </span>
                 ) : (
-                  <span className="inline-flex rounded-full border border-border text-text-4 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
+                  <span className="inline-flex rounded-full border border-border text-text-2 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
                     Free
                   </span>
                 )}
@@ -150,36 +150,36 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
               </div>
 
               {/* Title */}
-              <h3 className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-text-1 mt-3 mb-1">
+              <h2 className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-text-1 mt-3 mb-1">
                 {item.title}
-              </h3>
+              </h2>
 
               {/* Description */}
-              <p className="text-sm text-text-3 leading-[1.6] line-clamp-2">
+              <p className="text-[15px] text-text-2 leading-[1.6] line-clamp-2">
                 {item.description}
               </p>
 
               {/* Framework pills */}
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {item.frameworks.react && (
-                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
                     React
                   </span>
                 )}
                 {item.frameworks.vue && (
-                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
                     Vue
                   </span>
                 )}
                 {item.frameworks.svelte && (
-                  <span className="text-[10px] text-text-4 border border-border rounded-full px-2 py-0.5">
+                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
                     Svelte
                   </span>
                 )}
               </div>
 
               {/* Install slug */}
-              <div className="font-mono text-[10px] text-text-4 mt-3">
+              <div className="font-mono text-xs text-text-2 mt-3">
                 @particleui/{item.name}
               </div>
             </Link>

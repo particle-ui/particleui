@@ -37,13 +37,13 @@ const defaultFeatures: AlternatingFeature[] = [
     badge: "Installation",
     title: "One command.",
     titleGradient: "Zero friction.",
-    description: "Use the shadcn CLI to install any component directly into your project. You get the source — no black box, no version churn.",
+    description: "Run the ParticleUI CLI to install any component directly into your project. You get the source — no black box, no version churn.",
     visual: (
       <CodeBlock>{`# Add a single component
-npx shadcn@latest add https://particleui.dev/r/button
+npx particleui-cli add button
 
-# Or browse and add interactively
-npx shadcn@latest add`}</CodeBlock>
+# Or add multiple at once
+npx particleui-cli add glow-card marquee beam`}</CodeBlock>
     ),
   },
   {

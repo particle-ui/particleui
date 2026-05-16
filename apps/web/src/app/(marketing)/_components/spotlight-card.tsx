@@ -22,7 +22,7 @@ export function SpotlightCard({ children, className }: SpotlightCardProps) {
       ref={ref}
       onMouseMove={onMove}
       onMouseLeave={() => setPos((p) => ({ ...p, opacity: 0 }))}
-      className={cn("relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0a0a0a]", className)}
+      className={cn("relative overflow-hidden rounded-2xl border border-white/[0.07] bg-surface-1 transition-transform duration-200 ease-out hover:-translate-y-1", className)}
     >
       {/* Spotlight radial */}
       <div

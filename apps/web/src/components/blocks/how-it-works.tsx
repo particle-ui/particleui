@@ -23,7 +23,7 @@ const defaultSteps: Step[] = [
     icon: <TerminalWindow size={24} weight="duotone" />,
     title: "Install via CLI",
     description: "Add any component in seconds with a single command. No boilerplate, no configuration files.",
-    code: "npx shadcn add @particleui/button",
+    code: "npx particleui-cli add button",
   },
   {
     number: 2,

@@ -54,7 +54,7 @@ export default async function ComponentsPage() {
   const freeCount = items.length - proCount
 
   return (
-    <main className="min-h-svh bg-bg text-text-1 pt-24 pb-20 px-6">
+    <main id="main-content" tabIndex={-1} className="min-h-svh bg-bg text-text-1 pt-24 pb-20 px-6 outline-none">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">
@@ -65,7 +65,7 @@ export default async function ComponentsPage() {
             {items.length} components.<br />
             Built to impress.
           </h1>
-          <p className="text-sm text-text-4">
+          <p className="text-[15px] text-text-2">
             {freeCount} free · {proCount} pro · React · Vue · Svelte
           </p>
         </div>
@@ -74,10 +74,10 @@ export default async function ComponentsPage() {
         <div className="mb-12 rounded-2xl border border-border bg-surface-1 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="text-sm font-medium text-text-1 mb-1">Installing components</p>
-            <p className="text-xs text-text-3">
+            <p className="text-xs text-text-2">
               Free components work immediately. Pro requires{" "}
               <code className="text-accent font-mono">PARTICLEUI_TOKEN</code>{" "}
-              in your <code className="text-text-3 font-mono">.env</code>.
+              in your <code className="text-text-2 font-mono">.env</code>.
             </p>
           </div>
           <div className="font-mono text-xs rounded-xl border border-border bg-bg px-4 py-2.5 whitespace-nowrap text-accent shrink-0">

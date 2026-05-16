@@ -23,7 +23,7 @@ interface HeroSplitProps {
 const defaultBullets = [
   "60+ free, MIT-licensed components",
   "Radix UI primitives under the hood",
-  "One command install via shadcn CLI",
+  "One command install via particleui-cli",
 ]
 
 function HeroSplit({

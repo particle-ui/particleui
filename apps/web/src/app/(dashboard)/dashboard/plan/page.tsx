@@ -41,7 +41,13 @@ export default async function PlanPage() {
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
 
-  const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
+  let user: { plan: string; stripeCustomerId: string | null } | undefined
+  try {
+    const [row] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
+    user = row
+  } catch (e) {
+    console.error("[plan] DB error:", e)
+  }
   const plan = user?.plan ?? "free"
   const isPro = plan === "pro" || plan === "team"
   const isTeam = plan === "team"

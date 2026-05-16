@@ -577,11 +577,11 @@ export function AvatarPreview() {
   return (
     <div className="flex flex-wrap gap-4 justify-center items-end">
       <Avatar className="h-8 w-8">
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://avatar.vercel.sh/user" alt="@user" />
         <AvatarFallback>SC</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+        <AvatarImage src="https://avatar.vercel.sh/user" alt="@user" />
         <AvatarFallback>SC</AvatarFallback>
       </Avatar>
       <Avatar className="h-12 w-12" ring>

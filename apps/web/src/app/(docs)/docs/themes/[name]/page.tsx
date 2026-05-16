@@ -61,7 +61,7 @@ export default async function ThemeDetailPage({
 
   const cssFile = theme.files.find((f) => f.type === "registry:style")
   const cssContent = cssFile?.content ?? ""
-  const installCmd = `npx shadcn add https://particleui.dev/r/react/${theme.name}.json`
+  const installCmd = `npx particleui-cli add ${theme.name}`
 
   const darkVars = theme.cssVars?.dark ?? {}
   const lightVars = theme.cssVars?.light ?? {}
@@ -154,7 +154,7 @@ export default async function ThemeDetailPage({
           <div className="flex-1">
             <h3 className="text-[0.9375rem] font-semibold tracking-[-0.01em] mb-2 text-[var(--color-text-1)]">Via CLI</h3>
             <p className="text-sm text-[var(--color-text-3)] mb-3">
-              The shadcn CLI applies the theme tokens automatically:
+              The CLI applies the theme tokens automatically:
             </p>
             <CodeBlock code={installCmd} />
           </div>

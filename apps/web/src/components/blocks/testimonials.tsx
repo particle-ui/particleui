@@ -26,7 +26,7 @@ const defaultTestimonials: Testimonial[] = [
     initials: "AR",
   },
   {
-    quote: "Finally a component library that doesn't look like every other shadcn clone. The glow effects and dark-first tokens are exactly what we needed.",
+    quote: "Finally a component library that has genuine visual identity. The glow effects and dark-first tokens are exactly what we needed.",
     name: "Priya Nair",
     role: "Frontend Lead at Vercel",
     initials: "PN",

@@ -45,7 +45,7 @@ const defaultFeatures: Feature[] = [
   {
     icon: <Package size={24} />,
     title: "Copy-paste ready",
-    description: "Installs via the shadcn CLI. You own the code — no runtime dependency, no version lock-in.",
+    description: "Installs via the ParticleUI CLI. You own the code — no runtime dependency, no version lock-in.",
     gradient: "candy",
   },
   {

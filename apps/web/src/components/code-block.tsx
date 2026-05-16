@@ -59,12 +59,12 @@ export async function CodeBlock({
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
           {filename && (
-            <span className="ml-2 font-mono text-[11px] text-text-3">{filename}</span>
+            <span className="ml-2 font-mono text-[11px] text-text-2">{filename}</span>
           )}
         </div>
         <div className="flex items-center gap-2">
           {!filename && (
-            <span className="font-mono text-[10px] uppercase tracking-widest text-text-4">
+            <span className="font-mono text-[10px] uppercase tracking-widest text-text-2">
               {langLabel(language)}
             </span>
           )}

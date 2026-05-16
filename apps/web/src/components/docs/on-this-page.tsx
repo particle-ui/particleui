@@ -44,7 +44,7 @@ export function OnThisPage() {
 
   return (
     <div>
-      <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-text-3">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-text-2">
         On this page
       </p>
       <ul className="space-y-1">
@@ -55,7 +55,7 @@ export function OnThisPage() {
               className={`block text-[0.8125rem] leading-[1.5] transition-colors ${
                 activeId === h.id
                   ? "text-accent font-medium"
-                  : "text-text-3 hover:text-text-2"
+                  : "text-text-2 hover:text-text-1"
               }`}
             >
               {h.text}

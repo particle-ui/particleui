@@ -31,14 +31,14 @@ export function ComponentTabs({
   return (
     <div className="overflow-hidden rounded-xl border border-border">
       {/* Tab bar */}
-      <div className="flex items-center justify-between border-b border-border bg-surface-2 px-1 py-1">
+      <div className="flex items-center justify-between border-b border-border bg-surface-1 px-1 py-1">
         <div className="flex">
           {(["preview", "code"] as const).map((t) => (
             <button
               key={t}
               onClick={() => { setTab(t); setCopied(false) }}
               className={`rounded-md px-4 py-1.5 text-xs font-medium capitalize transition-all ${
-                tab === t ? "bg-surface-2 text-text-1" : "text-text-3 hover:text-text-2"
+                tab === t ? "bg-surface-2 text-text-1 shadow-sm" : "text-text-2 hover:text-text-1 hover:bg-surface-2/50"
               }`}
             >
               {t === "code" ? "Code" : "Preview"}
@@ -48,7 +48,7 @@ export function ComponentTabs({
             <button
               onClick={() => { setTab("ai"); setCopied(false) }}
               className={`flex items-center gap-1.5 rounded-md px-4 py-1.5 text-xs font-medium transition-all ${
-                tab === "ai" ? "bg-surface-2 text-text-1" : "text-text-3 hover:text-text-2"
+                tab === "ai" ? "bg-surface-2 text-text-1 shadow-sm" : "text-text-2 hover:text-text-1 hover:bg-surface-2/50"
               }`}
             >
               <Sparkle size={10} weight={tab === "ai" ? "fill" : "regular"} className={tab === "ai" ? "text-accent" : ""} />
@@ -59,7 +59,7 @@ export function ComponentTabs({
         {tab !== "preview" && (
           <button
             onClick={copy}
-            className="mr-2 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[11px] font-medium text-text-3 hover:text-text-2 hover:bg-surface-2 transition-all"
+            className="mr-2 flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-[11px] font-medium text-text-2 hover:text-text-1 hover:bg-surface-2 transition-all"
           >
             {copied ? <Check size={11} className="text-accent" /> : <Copy size={11} />}
             {copied ? "Copied!" : "Copy"}
@@ -94,7 +94,7 @@ export function ComponentTabs({
       {tab === "ai" && (
         <div className="bg-surface-1 p-5">
           <div className="mb-3 flex items-center justify-between">
-            <p className="text-[11px] font-medium text-text-4 uppercase tracking-widest">
+            <p className="text-[11px] font-medium text-text-2 uppercase tracking-widest">
               Copy this prompt into Claude, ChatGPT, or any AI assistant
             </p>
             {componentName && (

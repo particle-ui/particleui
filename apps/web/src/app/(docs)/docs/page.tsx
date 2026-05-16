@@ -17,33 +17,25 @@ import { PrevNext } from "@/components/docs/prev-next"
 
 export const metadata: Metadata = {
   title: "Introduction",
-  description: "Get started with ParticleUI — 100+ components built on shadcn/ui.",
+  description: "Get started with ParticleUI — 100+ components for React, Vue, and Svelte.",
 }
 
 export default function DocsIndexPage() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
       {/* Eyebrow */}
-      <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+      <div className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
         Getting Started
       </div>
 
       {/* Hero */}
-      <h1 id="introduction" className="mb-5 text-[2.5rem] font-bold tracking-[-0.04em] leading-[1.1] text-text-1">
+      <h1 id="introduction" className="mb-5 text-[2.5rem] font-semibold tracking-[-0.02em] leading-[1.15] text-text-1">
         Build faster with ParticleUI
       </h1>
       <p className="mb-8 text-text-2 leading-[1.75] text-[1.0625rem]">
-        A premium component registry for{" "}
-        <a
-          href="https://ui.shadcn.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-accent hover:underline"
-        >
-          shadcn/ui
-        </a>{" "}
-        projects. 100+ components install directly into your codebase via the shadcn CLI — you
-        own the source, style it however you want, ship it to production.
+        A premium component registry for React, Vue, and Svelte. 100+ components install
+        directly into your codebase via the ParticleUI CLI — you own the source, style it
+        however you want, ship it to production.
       </p>
 
       {/* Install command */}
@@ -55,24 +47,23 @@ export default function DocsIndexPage() {
 
       {/* Quick start steps */}
       <section className="mb-12">
-        <h2 id="quick-start" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="quick-start" className="mb-2 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Quick start
         </h2>
-        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+        <p className="mb-6 text-[15px] text-text-2 leading-[1.75]">
           Up and running in under two minutes.
         </p>
 
         <Steps>
-          <Step title="Install shadcn (if you haven't already)">
+          <Step title="Set up your project">
             <p className="mb-3">
-              ParticleUI works with any project that already uses shadcn/ui. If you're starting
-              fresh:
+              Run the interactive init — it detects your framework and sets up your config:
             </p>
             <CodeBlock code="npx particleui-cli init" />
           </Step>
-          <Step title="Add the ParticleUI registry">
+          <Step title="Configure the registry">
             <p className="mb-3">
-              Open <code>components.json</code> and add{" "}
+              Open <code>particleui.json</code> (or <code>components.json</code>) and add{" "}
               <code>@particleui</code> under <code>registries</code>:
             </p>
             <CodeBlock
@@ -91,7 +82,7 @@ export default function DocsIndexPage() {
           </Step>
           <Step title="Install your first component">
             <p className="mb-3">
-              Use the standard shadcn CLI with the <code>@particleui</code> namespace:
+              Run the CLI with any component name:
             </p>
             <CodeBlock code="npx particleui-cli add glow-button" />
             <p className="mt-3">
@@ -106,10 +97,10 @@ export default function DocsIndexPage() {
 
       {/* What you get */}
       <section className="mb-12">
-        <h2 id="what-you-get" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="what-you-get" className="mb-2 text-xl font-semibold tracking-[-0.01em] text-text-1">
           What&apos;s included
         </h2>
-        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+        <p className="mb-6 text-[15px] text-text-2 leading-[1.75]">
           Three tiers of components, from foundational primitives to full-page blocks.
         </p>
 
@@ -149,10 +140,10 @@ export default function DocsIndexPage() {
                 </span>
               </div>
               <div>
-                <p className="font-semibold text-sm mb-1 text-text-1 group-hover:text-accent transition-colors">
+                <p className="font-semibold text-[15px] mb-1 text-text-1 group-hover:text-accent transition-colors">
                   {label}
                 </p>
-                <p className="text-xs text-text-3 leading-[1.55]">{desc}</p>
+                <p className="text-xs text-text-2 leading-[1.55]">{desc}</p>
               </div>
             </Link>
           ))}
@@ -163,10 +154,10 @@ export default function DocsIndexPage() {
 
       {/* Feature highlights */}
       <section className="mb-12">
-        <h2 id="features" className="mb-2 text-xl font-semibold tracking-[-0.03em] text-text-1">
+        <h2 id="features" className="mb-2 text-xl font-semibold tracking-[-0.01em] text-text-1">
           Why ParticleUI
         </h2>
-        <p className="mb-6 text-sm text-text-2 leading-[1.75]">
+        <p className="mb-6 text-[15px] text-text-2 leading-[1.75]">
           Everything you need, nothing you don&apos;t.
         </p>
 
@@ -174,8 +165,8 @@ export default function DocsIndexPage() {
           {[
             {
               icon: Code,
-              title: "Own CLI · shadcn compatible",
-              desc: "npx particleui-cli add button. Works standalone or alongside shadcn. No extra config.",
+              title: "Own CLI",
+              desc: "npx particleui-cli add button. Auto-detects React, Vue, and Svelte. No extra config.",
             },
             {
               icon: Palette,
@@ -211,8 +202,8 @@ export default function DocsIndexPage() {
                 <Icon size={14} className="text-accent" />
               </div>
               <div>
-                <p className="font-semibold text-sm mb-1 text-text-1">{title}</p>
-                <p className="text-xs text-text-3 leading-[1.6]">{desc}</p>
+                <p className="font-semibold text-[15px] mb-1 text-text-1">{title}</p>
+                <p className="text-xs text-text-2 leading-[1.6]">{desc}</p>
               </div>
             </div>
           ))}

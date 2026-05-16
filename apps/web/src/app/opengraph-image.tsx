@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og"
 
 export const runtime = "edge"
-export const alt = "ParticleUI — Premium shadcn components"
+export const alt = "ParticleUI — Premium UI components"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -63,7 +63,7 @@ export default async function Image() {
           <span>·</span>
           <span>MIT License</span>
           <span>·</span>
-          <span>shadcn compatible</span>
+          <span>One command install</span>
         </div>
       </div>
     ),

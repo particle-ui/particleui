@@ -48,7 +48,7 @@ export default async function InstallsPage() {
       <div className="mb-8">
         <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-1)] mb-1">Installs</h1>
         <p className="text-sm text-[var(--color-text-3)]">
-          Every component you've installed via the shadcn CLI.
+          Every component you've installed via the ParticleUI CLI.
         </p>
       </div>
 
@@ -58,7 +58,7 @@ export default async function InstallsPage() {
           <p className="text-sm font-medium text-[var(--color-text-2)] mb-1">No installs yet</p>
           <p className="text-xs text-[var(--color-text-4)] max-w-xs">
             When you install a component with{" "}
-            <code className="text-[var(--color-text-3)]">npx shadcn add @particleui/...</code>,
+            <code className="text-[var(--color-text-3)]">npx particleui-cli add ...</code>,
             it'll show up here.
           </p>
         </div>

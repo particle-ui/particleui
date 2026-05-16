@@ -16,7 +16,7 @@ const POSTS: Record<
     readTime: "6 min read",
   },
   "shadcn-registry-architecture": {
-    title: "Building a shadcn-compatible registry in 2026",
+    title: "Building a multi-framework component registry in 2026",
     description:
       "The architecture behind ParticleUI's multi-framework registry: how one JSON schema powers React, Vue, and Svelte components from a single source of truth.",
     category: "Engineering",
