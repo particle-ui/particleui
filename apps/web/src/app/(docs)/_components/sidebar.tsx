@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Sparkle } from "@phosphor-icons/react/dist/ssr"
 import { promises as fs } from "fs"
 import path from "path"
+import { cn } from "@/lib/utils"
 import { NavLink } from "./nav-link"
 import { SearchDialog } from "./search-dialog"
 import { ThemeToggle } from "@/components/theme-toggle"
@@ -49,7 +50,7 @@ export async function Sidebar() {
         <SearchDialog items={components} />
       </div>
 
-      <nav aria-label="Docs sections" className="flex-1 py-5 px-3 space-y-5 overflow-y-auto">
+      <nav aria-label="Docs sections" className={cn("flex-1 py-5 px-3 space-y-5 overflow-y-auto")}>
         {/* Getting started */}
         <div>
           <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
