@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react"
 import Link from "next/link"
-import { MagnifyingGlass, ArrowUpRight, Sparkle } from "@phosphor-icons/react"
+import { MagnifyingGlass, ArrowUpRight, Sparkle, SquaresFour } from "@phosphor-icons/react"
 
 interface RegistryItem {
   name: string
@@ -13,13 +13,12 @@ interface RegistryItem {
   frameworks: { react: boolean; vue: boolean; svelte: boolean }
 }
 
-type FilterKey = "all" | "core" | "particles" | "blocks" | "pro" | "free"
+type FilterKey = "all" | "core" | "particles" | "pro" | "free"
 
 const FILTERS: { key: FilterKey; label: string }[] = [
   { key: "all", label: "All" },
   { key: "core", label: "Core" },
   { key: "particles", label: "Particles" },
-  { key: "blocks", label: "Blocks" },
   { key: "pro", label: "Pro" },
   { key: "free", label: "Free" },
 ]
@@ -31,12 +30,7 @@ function matchesFilter(item: RegistryItem, filter: FilterKey): boolean {
     case "core":
       return item.categories.includes("core")
     case "particles":
-      return (
-        item.categories.includes("animations") ||
-        item.categories.includes("backgrounds")
-      )
-    case "blocks":
-      return item.categories.includes("blocks")
+      return item.categories.includes("particles")
     case "pro":
       return item.categories.includes("pro")
     case "free":
@@ -52,8 +46,14 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
   const [q, setQ] = useState("")
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all")
 
+  // Exclude blocks — they have their own /blocks page
+  const componentItems = useMemo(
+    () => items.filter((i) => !i.categories.includes("blocks") && !i.categories.includes("templates")),
+    [items]
+  )
+
   const filtered = useMemo(() => {
-    return items.filter((item) => {
+    return componentItems.filter((item) => {
       const lq = q.toLowerCase()
       const matchesQ =
         !q ||
@@ -63,7 +63,7 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
 
       return matchesQ && matchesFilter(item, activeFilter)
     })
-  }, [items, q, activeFilter])
+  }, [componentItems, q, activeFilter])
 
   const isPro = (item: RegistryItem) => item.categories.includes("pro")
 
@@ -88,7 +88,7 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
         {/* Filter pills */}
         <div className="flex items-center gap-1.5 flex-wrap">
           {FILTERS.map(({ key, label }) => {
-            const count = getFilterCount(items, key)
+            const count = getFilterCount(componentItems, key)
             const isActive = activeFilter === key
             return (
               <button
@@ -109,6 +109,25 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
           })}
         </div>
       </div>
+
+      {/* Blocks callout */}
+      <Link
+        href="/blocks"
+        className="group mb-8 flex items-center justify-between rounded-2xl border border-border bg-surface-1 px-5 py-4 hover:border-border-hover hover:bg-surface-2 transition-all"
+      >
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-bg">
+            <SquaresFour size={16} className="text-accent" weight="duotone" />
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-text-1">Looking for full-page blocks?</p>
+            <p className="text-xs text-text-3">20+ section blocks — hero, auth, dashboard, marketing and more.</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs text-accent group-hover:gap-2.5 transition-all">
+          Browse blocks <ArrowUpRight size={12} weight="bold" />
+        </div>
+      </Link>
 
       {/* Results count */}
       <p className="text-xs text-text-2 mb-6">

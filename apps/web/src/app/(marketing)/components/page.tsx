@@ -49,7 +49,9 @@ async function getEnrichedItems(): Promise<EnrichedItem[]> {
 }
 
 export default async function ComponentsPage() {
-  const items = await getEnrichedItems()
+  const allItems = await getEnrichedItems()
+  // Blocks live at /blocks — exclude them from this page
+  const items = allItems.filter((i) => !i.categories.includes("blocks") && !i.categories.includes("templates"))
   const proCount = items.filter((i) => i.categories.includes("pro")).length
   const freeCount = items.length - proCount
 
