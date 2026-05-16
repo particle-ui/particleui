@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>ParticleUI</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #0c0a09;
+    --surface:   #141210;
+    --surface-2: #1c1916;
+    --border:    rgba(255,255,255,0.07);
+    --border-h:  rgba(255,255,255,0.13);
+    --accent:    #f0ebe4;
+    --accent-dim: rgba(240,235,228,0.08);
+    --accent-border: rgba(240,235,228,0.18);
+    --text-1:    #f7f4f0;
+    --text-2:    #b8b0a8;
+    --text-3:    #7a7068;
+    --text-4:    #4a443e;
+    --success:   #4ade80;
+    --pro-dim:   rgba(240,235,228,0.06);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
+    background: var(--bg);
+    color: var(--text-1);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Header ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    color: var(--text-1);
+  }
+  .logo-spark {
+    width: 14px;
+    height: 14px;
+    color: var(--accent);
+  }
+  .header-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-3);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+
+  /* ── Scroll area ── */
+  .scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 16px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) transparent;
+  }
+
+  /* ── States ── */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 48px 24px;
+    gap: 10px;
+  }
+  .empty-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+  }
+  .empty-title { font-size: 13px; font-weight: 600; color: var(--text-2); }
+  .empty-body  { font-size: 12px; color: var(--text-3); line-height: 1.6; max-width: 200px; }
+
+  /* ── Selection info bar ── */
+  .selection-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+  .selection-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+    flex-shrink: 0;
+  }
+  .selection-label {
+    font-size: 11px;
+    color: var(--text-3);
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .selection-type {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-4);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 6px;
+    flex-shrink: 0;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--text-4);
+    margin-bottom: 8px;
+    margin-top: 16px;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  /* ── Match card ── */
+  .match-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    transition: border-color 0.12s;
+    cursor: default;
+  }
+  .match-card:hover { border-color: var(--border-h); }
+  .match-card.pro   { background: var(--pro-dim); border-color: var(--accent-border); }
+
+  .match-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .match-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-particle { background: var(--accent); }
+  .dot-core     { background: var(--text-3); }
+  .dot-block    { background: #4ade80; }
+
+  .match-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-1);
+    flex: 1;
+  }
+  .match-score {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-4);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 2px 7px;
+  }
+  .pro-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid var(--accent-border);
+    border-radius: 999px;
+    padding: 1px 6px;
+  }
+
+  .match-cmd {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 7px 10px;
+    font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
+    font-size: 11px;
+    color: var(--text-2);
+  }
+  .match-cmd-text { flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .match-cmd-text span { color: var(--accent); }
+
+  .copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 3px 5px;
+    border-radius: 5px;
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    transition: background 0.1s, color 0.1s;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { background: var(--surface-2); color: var(--text-1); }
+  .copy-btn.copied { color: var(--success); }
+
+  .match-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 9px;
+  }
+  .cat-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text-3);
+    background: var(--surface-2);
+  }
+  .docs-link {
+    font-size: 11px;
+    color: var(--text-4);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    transition: color 0.1s;
+  }
+  .docs-link:hover { color: var(--accent); }
+
+  /* ── Footer ── */
+  .footer {
+    padding: 10px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .footer-text { font-size: 11px; color: var(--text-4); }
+  .footer-link {
+    font-size: 11px;
+    color: var(--text-3);
+    text-decoration: none;
+    transition: color 0.1s;
+  }
+  .footer-link:hover { color: var(--accent); }
+
+  /* ── No matches ── */
+  .no-matches {
+    text-align: center;
+    padding: 24px;
+    color: var(--text-3);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="logo">
+    <svg class="logo-spark" viewBox="0 0 16 16" fill="none">
+      <path d="M8 1L9.5 6.5H15L10.5 9.5L12 15L8 12L4 15L5.5 9.5L1 6.5H6.5L8 1Z" fill="currentColor"/>
+    </svg>
+    ParticleUI
+  </div>
+  <div class="header-badge">Component Matcher</div>
+</div>
+
+<!-- Scroll area -->
+<div class="scroll" id="content">
+  <!-- Filled by JS -->
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <span class="footer-text">particleui.dev</span>
+  <a class="footer-link" href="https://particleui.dev/docs" target="_blank">Browse all →</a>
+</div>
+
+<script>
+const COMPONENTS = [
+  // Particles
+  { name:"particle-hero",    label:"Particle Hero",    cat:"particle", tier:"pro",  keywords:["hero","landing","header","full","page","above","fold","jumbotron"] },
+  { name:"aurora-background",label:"Aurora Background",cat:"particle", tier:"pro",  keywords:["aurora","background","gradient","glow","bg","atmosphere","ambient"] },
+  { name:"border-beam",      label:"Border Beam",      cat:"particle", tier:"free", keywords:["border","beam","outline","glow","card","highlight","frame"] },
+  { name:"spotlight",        label:"Spotlight",        cat:"particle", tier:"free", keywords:["spotlight","light","hero","gradient","radial","focus"] },
+  { name:"shimmer-button",   label:"Shimmer Button",   cat:"particle", tier:"free", keywords:["button","shimmer","cta","action","primary","btn","click"] },
+  { name:"magnetic-button",  label:"Magnetic Button",  cat:"particle", tier:"free", keywords:["button","magnetic","cta","action","primary","btn","interactive"] },
+  { name:"cursor-trail",     label:"Cursor Trail",     cat:"particle", tier:"pro",  keywords:["cursor","trail","mouse","interactive","pointer","track"] },
+  { name:"orbit-animation",  label:"Orbit Animation",  cat:"particle", tier:"pro",  keywords:["orbit","circle","rotation","animation","ring","revolve","planet"] },
+  { name:"meteors",          label:"Meteors",          cat:"particle", tier:"free", keywords:["meteor","particle","star","rain","falling","streak","sky"] },
+  { name:"ripple",           label:"Ripple",           cat:"particle", tier:"free", keywords:["ripple","wave","circle","pulse","ring","expand"] },
+  { name:"marquee",          label:"Marquee",          cat:"particle", tier:"free", keywords:["marquee","scroll","ticker","carousel","loop","strip","infinite"] },
+  { name:"beam",             label:"Beam",             cat:"particle", tier:"free", keywords:["beam","line","light","ray","laser","streak","separator"] },
+  { name:"globe",            label:"Globe",            cat:"particle", tier:"pro",  keywords:["globe","world","sphere","3d","earth","map","planet","geo"] },
+  { name:"word-rotate",      label:"Word Rotate",      cat:"particle", tier:"free", keywords:["word","rotate","text","animate","type","cycle","switch","change"] },
+  { name:"floating-dock",    label:"Floating Dock",    cat:"core",     tier:"free", keywords:["dock","nav","navigation","float","bar","toolbar","tab","menu"] },
+  // Core
+  { name:"glow-button",      label:"Glow Button",      cat:"core",     tier:"free", keywords:["button","glow","cta","action","primary","btn","call"] },
+  { name:"tilt-card",        label:"Tilt Card",        cat:"core",     tier:"free", keywords:["card","tilt","3d","hover","interactive","perspective","depth"] },
+  { name:"glow-card",        label:"Glow Card",        cat:"core",     tier:"free", keywords:["card","glow","content","feature","highlight","container","box"] },
+  { name:"gradient-text",    label:"Gradient Text",    cat:"core",     tier:"free", keywords:["text","gradient","heading","title","color","type","headline"] },
+  // Blocks
+  { name:"hero-centered",    label:"Hero Section",     cat:"block",    tier:"free", keywords:["hero","landing","header","title","section","page","above","main"] },
+  { name:"bento-grid",       label:"Bento Grid",       cat:"block",    tier:"pro",  keywords:["bento","grid","feature","layout","tiles","mosaic","dashboard"] },
+  { name:"pricing",          label:"Pricing Section",  cat:"block",    tier:"free", keywords:["pricing","plan","cost","pay","tier","subscribe","price","package"] },
+  { name:"spotlight-hero",   label:"Spotlight Hero",   cat:"block",    tier:"pro",  keywords:["spotlight","hero","landing","dramatic","entrance","header"] },
+  { name:"auth-sign-in",     label:"Auth Flow",        cat:"block",    tier:"free", keywords:["auth","sign","login","form","email","password","input","account"] },
+]
+
+function score(comp, node) {
+  const text = (node.name + " " + node.textContent).toLowerCase()
+  const words = text.split(/[\s\-_/]+/).filter(Boolean)
+  let pts = 0
+
+  // Keyword matches
+  for (const kw of comp.keywords) {
+    if (text.includes(kw)) pts += 2
+  }
+
+  // Exact component name in node name
+  if (node.name.toLowerCase().includes(comp.name.replace(/-/g, " "))) pts += 6
+  if (node.name.toLowerCase().includes(comp.name)) pts += 4
+
+  // Size-based scoring
+  const w = node.width, h = node.height
+  const area = w * h
+  const isButton  = (w < 300 && h < 80) || text.match(/btn|button|cta/)
+  const isCard    = area > 10000 && area < 300000 && w < 600
+  const isSection = w > 600 || h > 400
+  const isHero    = w > 800 || (h > 400 && node.childCount > 2)
+
+  if (isButton  && ["shimmer-button","magnetic-button","glow-button"].includes(comp.name)) pts += 3
+  if (isCard    && ["tilt-card","glow-card","border-beam","bento-grid"].includes(comp.name)) pts += 3
+  if (isSection && comp.cat === "block") pts += 2
+  if (isHero    && ["hero-centered","particle-hero","spotlight-hero","aurora-background"].includes(comp.name)) pts += 4
+
+  return pts
+}
+
+function getMatches(nodes) {
+  if (!nodes.length) return []
+  const node = nodes[0] // Score against primary selection
+  return COMPONENTS
+    .map(c => ({ ...c, pts: score(c, node) }))
+    .filter(c => c.pts > 0)
+    .sort((a, b) => b.pts - a.pts)
+    .slice(0, 5)
+}
+
+function catLabel(cat) {
+  return { particle: "Particle", core: "Core", block: "Block" }[cat] ?? cat
+}
+function dotClass(cat) {
+  return { particle: "dot-particle", core: "dot-core", block: "dot-block" }[cat] ?? "dot-core"
+}
+
+const copiedTimers = {}
+function copyCmd(name, btn) {
+  const cmd = `npx particleui-cli add ${name}`
+  navigator.clipboard.writeText(cmd).catch(() => {
+    const el = document.createElement("textarea")
+    el.value = cmd; document.body.appendChild(el); el.select()
+    document.execCommand("copy"); document.body.removeChild(el)
+  })
+  btn.classList.add("copied")
+  btn.innerHTML = checkIcon()
+  clearTimeout(copiedTimers[name])
+  copiedTimers[name] = setTimeout(() => {
+    btn.classList.remove("copied")
+    btn.innerHTML = copyIcon()
+  }, 2000)
+}
+
+function copyIcon() {
+  return `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1" stroke="currentColor" stroke-width="1.5"/></svg>`
+}
+function checkIcon() {
+  return `<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8l4 4 6-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+}
+function sparkIcon() {
+  return `<svg width="8" height="8" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1L9.5 6.5H15L10.5 9.5L12 15L8 12L4 15L5.5 9.5L1 6.5H6.5L8 1Z"/></svg>`
+}
+function arrowIcon() {
+  return `<svg width="9" height="9" viewBox="0 0 16 16" fill="none"><path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`
+}
+function cursorIcon() {
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4l7 18 3-7 7-3L4 4z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>`
+}
+
+function render(nodes) {
+  const content = document.getElementById("content")
+  const matches = getMatches(nodes)
+
+  if (!nodes.length) {
+    content.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">${cursorIcon()}</div>
+        <div class="empty-title">Select a layer</div>
+        <div class="empty-body">Select any frame, component, or group in Figma to find matching ParticleUI components.</div>
+      </div>`
+    return
+  }
+
+  const node = nodes[0]
+  let html = `
+    <div class="selection-bar">
+      <div class="selection-dot"></div>
+      <div class="selection-label">${escHtml(node.name)}</div>
+      <div class="selection-type">${escHtml(node.type)}</div>
+    </div>`
+
+  if (!matches.length) {
+    html += `<div class="no-matches">No close matches found.<br>Try selecting a more specific layer, or <a class="footer-link" href="https://particleui.dev/components" target="_blank">browse all components →</a></div>`
+    content.innerHTML = html
+    return
+  }
+
+  // Group by confidence
+  const strong = matches.filter(m => m.pts >= 6)
+  const others = matches.filter(m => m.pts < 6)
+
+  if (strong.length) {
+    html += `<div class="section-label">Best matches</div>`
+    html += strong.map(m => matchCard(m)).join("")
+  }
+  if (others.length) {
+    html += `<div class="section-label">Also consider</div>`
+    html += others.map(m => matchCard(m)).join("")
+  }
+
+  content.innerHTML = html
+
+  // Wire up copy buttons
+  content.querySelectorAll("[data-copy]").forEach(btn => {
+    btn.addEventListener("click", () => copyCmd(btn.dataset.copy, btn))
+  })
+}
+
+function matchCard(m) {
+  const cmd = `npx particleui-cli add ${m.name}`
+  return `
+    <div class="match-card ${m.tier === 'pro' ? 'pro' : ''}">
+      <div class="match-header">
+        <div class="match-dot ${dotClass(m.cat)}"></div>
+        <div class="match-name">${escHtml(m.label)}</div>
+        ${m.tier === 'pro' ? `<div class="pro-badge">${sparkIcon()} Pro</div>` : ''}
+      </div>
+      <div class="match-cmd">
+        <div class="match-cmd-text"><span>npx particleui-cli</span> add ${escHtml(m.name)}</div>
+        <button class="copy-btn" data-copy="${escHtml(m.name)}" title="Copy install command">${copyIcon()}</button>
+      </div>
+      <div class="match-footer">
+        <span class="cat-badge">${catLabel(m.cat)}</span>
+        <a class="docs-link" href="https://particleui.dev/docs/components/${escHtml(m.name)}" target="_blank">
+          Docs ${arrowIcon()}
+        </a>
+      </div>
+    </div>`
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")
+}
+
+// Handle messages from plugin code
+window.onmessage = (event) => {
+  const msg = event.data.pluginMessage
+  if (!msg) return
+  if (msg.type === "selection") render(msg.nodes)
+}
+
+// Initial render
+render([])
+</script>
+</body>
+</html>
