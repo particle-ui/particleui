@@ -1,14 +1,24 @@
 "use server"
 
-import { db } from "@/db"
-import { apiTokens } from "@/db/schema"
-import { eq } from "drizzle-orm"
+import { auth } from "@clerk/nextjs/server"
+import { createToken, revokeTokenForUser, requireAuthenticatedUserId } from "@/lib/auth/token-lifecycle"
 import { revalidatePath } from "next/cache"
 
-export async function revokeToken(tokenId: string) {
-  await db
-    .update(apiTokens)
-    .set({ revokedAt: new Date() })
-    .where(eq(apiTokens.id, tokenId))
+export async function createDashboardToken(): Promise<string> {
+  const { userId } = await auth()
+  const authenticatedUserId = requireAuthenticatedUserId(userId)
+
+  const plaintext = await createToken(authenticatedUserId, "Default")
   revalidatePath("/dashboard")
+  revalidatePath("/dashboard/tokens")
+  return plaintext
+}
+
+export async function revokeToken(tokenId: string): Promise<void> {
+  const { userId } = await auth()
+  const authenticatedUserId = requireAuthenticatedUserId(userId)
+
+  await revokeTokenForUser(tokenId, authenticatedUserId)
+  revalidatePath("/dashboard")
+  revalidatePath("/dashboard/tokens")
 }

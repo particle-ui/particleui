@@ -2,7 +2,9 @@ export const dynamic = "force-dynamic"
 
 import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
-import { listTokens, createToken, revokeToken } from "@/lib/auth/token"
+import { listTokens } from "@/lib/auth/token"
+import { getUserEntitlement } from "@/lib/auth/entitlement"
+import { createDashboardToken, revokeToken } from "../token-actions"
 import { CreateTokenButton } from "./token-create-modal"
 import { Key, Trash, Clock } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
@@ -15,16 +17,7 @@ export default async function TokensPage() {
   if (!userId) redirect("/sign-in")
 
   const tokens = await listTokens(userId)
-
-  async function create(): Promise<string> {
-    "use server"
-    const { auth: getAuth } = await import("@clerk/nextjs/server")
-    const { userId } = await getAuth()
-    if (!userId) throw new Error("Unauthenticated")
-    const plaintext = await createToken(userId, "Default")
-    revalidatePath("/dashboard/tokens")
-    return plaintext
-  }
+  const entitlement = await getUserEntitlement(userId)
 
   return (
     <div>
@@ -36,8 +29,19 @@ export default async function TokensPage() {
             Use tokens to install Pro components via the ParticleUI CLI.
           </p>
         </div>
-        <CreateTokenButton onCreate={create} />
+        {entitlement.active ? (
+          <CreateTokenButton onCreate={createDashboardToken} />
+        ) : null}
       </div>
+
+      {!entitlement.active && (
+        <div className="mb-6 rounded-xl border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)] px-4 py-3">
+          <p className="text-sm font-medium text-[var(--color-text-1)] mb-0.5">Pro license required</p>
+          <p className="text-xs text-[var(--color-text-3)]">
+            Upgrade to Pro or join a Team plan before creating API tokens for Pro components.
+          </p>
+        </div>
+      )}
 
       {/* Token list */}
       {tokens.length === 0 ? (
