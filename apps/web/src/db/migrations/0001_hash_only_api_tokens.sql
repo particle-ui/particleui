@@ -1,0 +1,1 @@
+ALTER TABLE "api_tokens" ALTER COLUMN "token" DROP NOT NULL;

@@ -8,6 +8,13 @@
       "when": 1778967152732,
       "tag": "0000_add_teams",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1779017250000,
+      "tag": "0001_hash_only_api_tokens",
+      "breakpoints": true
     }
   ]
 }

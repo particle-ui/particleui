@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "crypto"
-import { and, eq, isNull, or } from "drizzle-orm"
+import { and, eq, isNull } from "drizzle-orm"
 import { db } from "@/db"
 import { apiTokens, users } from "@/db/schema"
 import {
@@ -31,8 +31,39 @@ export interface TokenRevocationStore {
   revokeTokenForOwner(tokenId: string, userId: string): Promise<boolean>
 }
 
-function hashToken(plaintext: string) {
+export interface TokenCreationStore {
+  createTokenRecord(record: {
+    userId: string
+    tokenHash: string
+    tokenPrefix: string
+    label: string
+  }): Promise<void>
+}
+
+export interface TokenValidationRecord {
+  id: string
+  userId: string
+  revokedAt: Date | null
+  plan: UserPlan
+}
+
+export interface TokenValidationStore {
+  findByHash(tokenHash: string): Promise<TokenValidationRecord | null>
+  findLegacyByPlaintext(token: string): Promise<TokenValidationRecord | null>
+  recordLastUsed(tokenId: string, usedAt: Date): Promise<void>
+}
+
+export interface TokenDevBypassEnv {
+  NODE_ENV?: string
+  PARTICLEUI_DEV_TOKEN?: string
+}
+
+export function hashToken(plaintext: string) {
   return createHash("sha256").update(plaintext).digest("hex")
+}
+
+export function isDevelopmentTokenBypass(token: string, env: TokenDevBypassEnv): boolean {
+  return env.NODE_ENV !== "production" && !!env.PARTICLEUI_DEV_TOKEN && token === env.PARTICLEUI_DEV_TOKEN
 }
 
 function generateTokenPlaintext() {
@@ -57,53 +88,92 @@ export async function assertCanCreateToken(
 export async function validateToken(
   token: string
 ): Promise<{ valid: boolean; userId?: string; tokenId?: string; plan?: UserPlan }> {
-  const devToken = process.env.PARTICLEUI_DEV_TOKEN
-  if (process.env.NODE_ENV !== "production" && devToken && token === devToken) {
+  if (isDevelopmentTokenBypass(token, process.env)) {
     return { valid: true, userId: "dev", plan: "pro" }
   }
 
-  const hash = hashToken(token)
+  return validateStoredToken(dbTokenValidationStore, token)
+}
 
-  const rows = await db
-    .select({
-      id: apiTokens.id,
-      userId: apiTokens.userId,
-      revokedAt: apiTokens.revokedAt,
-      plan: users.plan,
-    })
-    .from(apiTokens)
-    .innerJoin(users, eq(apiTokens.userId, users.id))
-    .where(or(eq(apiTokens.tokenHash, hash), eq(apiTokens.token, token)))
-    .limit(1)
+export async function validateStoredToken(
+  store: TokenValidationStore,
+  token: string
+): Promise<{ valid: boolean; userId?: string; tokenId?: string; plan?: UserPlan }> {
+  const row =
+    (await store.findByHash(hashToken(token))) ??
+    // Legacy fallback for pre-PR-2 rows. Remove after old plaintext tokens are migrated/rotated.
+    (await store.findLegacyByPlaintext(token))
 
-  if (rows.length === 0) return { valid: false }
-
-  const row = rows[0]
+  if (!row) return { valid: false }
   if (row.revokedAt !== null || !planHasProAccess(row.plan)) return { valid: false }
 
-  db.update(apiTokens)
-    .set({ lastUsedAt: new Date() })
-    .where(eq(apiTokens.id, row.id))
-    .execute()
-    .catch(() => {})
+  store.recordLastUsed(row.id, new Date()).catch(() => {})
 
   return { valid: true, userId: row.userId, tokenId: row.id, plan: row.plan }
 }
 
+const tokenValidationSelect = {
+  id: apiTokens.id,
+  userId: apiTokens.userId,
+  revokedAt: apiTokens.revokedAt,
+  plan: users.plan,
+}
+
+const dbTokenValidationStore: TokenValidationStore = {
+  async findByHash(tokenHash) {
+    const [row] = await db
+      .select(tokenValidationSelect)
+      .from(apiTokens)
+      .innerJoin(users, eq(apiTokens.userId, users.id))
+      .where(eq(apiTokens.tokenHash, tokenHash))
+      .limit(1)
+
+    return row ?? null
+  },
+  async findLegacyByPlaintext(token) {
+    const [row] = await db
+      .select(tokenValidationSelect)
+      .from(apiTokens)
+      .innerJoin(users, eq(apiTokens.userId, users.id))
+      .where(eq(apiTokens.token, token))
+      .limit(1)
+
+    return row ?? null
+  },
+  async recordLastUsed(tokenId, usedAt) {
+    await db.update(apiTokens).set({ lastUsedAt: usedAt }).where(eq(apiTokens.id, tokenId)).execute()
+  },
+}
+
 export async function createToken(userId: string, label = "Default"): Promise<string> {
-  await assertCanCreateToken(userId)
+  return createTokenWithStore({ createTokenRecord: createTokenRecordInDb }, userId, label)
+}
+
+export async function createTokenWithStore(
+  store: TokenCreationStore,
+  userId: string,
+  label = "Default",
+  reader?: EntitlementReader
+): Promise<string> {
+  await assertCanCreateToken(userId, reader)
 
   const plaintext = generateTokenPlaintext()
-  const hash = hashToken(plaintext)
-  const prefix = plaintext.slice(0, 12)
-  await db.insert(apiTokens).values({
+  await store.createTokenRecord({
     userId,
-    token: plaintext, // kept for legacy backcompat; PR 2 will remove plaintext storage
-    tokenHash: hash,
-    tokenPrefix: prefix,
+    tokenHash: hashToken(plaintext),
+    tokenPrefix: plaintext.slice(0, 12),
     label,
   })
   return plaintext
+}
+
+async function createTokenRecordInDb(record: {
+  userId: string
+  tokenHash: string
+  tokenPrefix: string
+  label: string
+}) {
+  await db.insert(apiTokens).values(record)
 }
 
 export async function revokeTokenForUser(tokenId: string, userId: string): Promise<void> {

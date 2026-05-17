@@ -17,7 +17,7 @@ export const apiTokens = pgTable("api_tokens", {
   userId: text("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  token: text("token").notNull().unique(),   // legacy plaintext — kept for backcompat
+  token: text("token").unique(),             // legacy plaintext only; new tokens store null
   tokenHash: text("token_hash").unique(),    // SHA-256 of plaintext — new tokens only
   tokenPrefix: text("token_prefix"),         // first 12 chars for display (e.g. pui_a3f2b1c0)
   label: text("label").notNull().default("Default"),
