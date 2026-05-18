@@ -48,6 +48,18 @@
     "tier": "core"
   },
   {
+    "name": "animate-in",
+    "type": "registry:ui",
+    "title": "Animate In",
+    "description": "Versatile viewport-triggered entrance animation wrapper. 7 variants: fade, slide-up/down/left/right, scale, rotate.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "animated-beam",
     "type": "registry:ui",
     "title": "Animated Beam",
@@ -57,6 +69,18 @@
       "pro"
     ],
     "tier": "pro"
+  },
+  {
+    "name": "animated-list",
+    "type": "registry:ui",
+    "title": "Animated List",
+    "description": "Staggered slide-up + fade-in entrance for list children. Configurable delay between items.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "aurora-background",
@@ -155,6 +179,18 @@
     "tier": "core"
   },
   {
+    "name": "badge-shine",
+    "type": "registry:ui",
+    "title": "Badge Shine",
+    "description": "Status badge with an automatic shining light sweep. Three variants: default, pro, and new. Pure CSS.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "beam",
     "type": "registry:ui",
     "title": "Beam",
@@ -189,6 +225,18 @@
       "free"
     ],
     "tier": "templates"
+  },
+  {
+    "name": "blur-fade",
+    "type": "registry:ui",
+    "title": "Blur Fade",
+    "description": "Viewport-triggered entrance animation: blurs out then fades in smoothly. Zero dependencies, respects prefers-reduced-motion.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "border-beam",
@@ -513,6 +561,18 @@
     "tier": "core"
   },
   {
+    "name": "glitch-text",
+    "type": "registry:ui",
+    "title": "Glitch Text",
+    "description": "Cyberpunk-style glitch effect with layered text-shadow offsets and random jitter keyframes.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "globe",
     "type": "registry:ui",
     "title": "Globe",
@@ -678,6 +738,30 @@
     "tier": "templates"
   },
   {
+    "name": "letter-swap",
+    "type": "registry:ui",
+    "title": "Letter Swap",
+    "description": "On hover, each letter scrambles through random characters before revealing the real letter. Configurable speed.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
+    "name": "liquid-button",
+    "type": "registry:ui",
+    "title": "Liquid Button",
+    "description": "Button with a liquid blob that follows the cursor using a radial gradient fill effect. Smooth mousemove tracking.",
+    "categories": [
+      "buttons",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "logo-cloud",
     "type": "registry:block",
     "title": "Logo Cloud",
@@ -688,6 +772,17 @@
       "free"
     ],
     "tier": "blocks"
+  },
+  {
+    "name": "map",
+    "type": "registry:ui",
+    "title": "Map",
+    "description": "Dark-themed interactive map built on react-leaflet with CartoDB Dark Matter tiles, custom SVG cream markers, and popup labels.",
+    "categories": [
+      "layout",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "magnetic-button",
@@ -737,6 +832,18 @@
     "tier": "themes"
   },
   {
+    "name": "morphing-text",
+    "type": "registry:ui",
+    "title": "Morphing Text",
+    "description": "Cycles through an array of words with a smooth blur-morph transition. Configurable interval and CSS-only animation.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "navigation-menu",
     "type": "registry:ui",
     "title": "Navigation Menu",
@@ -747,6 +854,18 @@
       "free"
     ],
     "tier": "core"
+  },
+  {
+    "name": "neon-border",
+    "type": "registry:ui",
+    "title": "Neon Border",
+    "description": "Card with a pulsing neon glow border. Configurable color. CSS box-shadow animation, no canvas required.",
+    "categories": [
+      "cards",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "newsletter",
@@ -770,6 +889,18 @@
       "free"
     ],
     "tier": "core"
+  },
+  {
+    "name": "number-flow",
+    "type": "registry:ui",
+    "title": "Number Flow",
+    "description": "Smoothly animates between numeric values with digit-by-digit rolling animation. Supports prefix and suffix.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "orbit-animation",
@@ -880,6 +1011,18 @@
     "tier": "core"
   },
   {
+    "name": "retro-grid",
+    "type": "registry:ui",
+    "title": "Retro Grid",
+    "description": "Animated perspective grid floor background with scrolling lines. Pure CSS, zero JS. Drop into any relative container.",
+    "categories": [
+      "background",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "ripple",
     "type": "registry:ui",
     "title": "Ripple Button",
@@ -925,6 +1068,18 @@
       "free"
     ],
     "tier": "core"
+  },
+  {
+    "name": "scroll-progress",
+    "type": "registry:ui",
+    "title": "Scroll Progress",
+    "description": "Fixed-position thin progress bar showing how far the user has scrolled down the page. Configurable color and height.",
+    "categories": [
+      "layout",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
   },
   {
     "name": "scroll-reveal",
@@ -1069,6 +1224,18 @@
     "tier": "core"
   },
   {
+    "name": "sparkles-text",
+    "type": "registry:ui",
+    "title": "Sparkles Text",
+    "description": "Random sparkle SVG stars that appear and fade around your text. Configurable count, color, and speed.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "spotlight",
     "type": "registry:ui",
     "title": "Spotlight",
@@ -1154,6 +1321,30 @@
     "tier": "blocks"
   },
   {
+    "name": "text-reveal",
+    "type": "registry:ui",
+    "title": "Text Reveal",
+    "description": "Text revealed by a sliding mask on scroll entry. Clean clip-path animation, viewport-triggered.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
+    "name": "text-shimmer",
+    "type": "registry:ui",
+    "title": "Text Shimmer",
+    "description": "Light shimmer that sweeps across text. Configurable speed, color, and background. Pure CSS animation.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
     "name": "textarea",
     "type": "registry:ui",
     "title": "Textarea",
@@ -1194,6 +1385,18 @@
     "type": "registry:ui",
     "title": "Typewriter",
     "description": "Animated typewriter with configurable typing/deleting speed, pause, and loop. Electric cursor blink.",
+    "categories": [
+      "text",
+      "particles",
+      "free"
+    ],
+    "tier": "particles"
+  },
+  {
+    "name": "wave-text",
+    "type": "registry:ui",
+    "title": "Wave Text",
+    "description": "Each character gets a staggered vertical wave animation. Configurable duration and amplitude. Pure CSS.",
     "categories": [
       "text",
       "particles",

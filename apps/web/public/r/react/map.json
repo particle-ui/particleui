@@ -1,0 +1,31 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "map",
+  "type": "registry:ui",
+  "title": "Map",
+  "description": "Dark-themed interactive map built on react-leaflet with CartoDB Dark Matter tiles, custom SVG cream markers, and popup labels.",
+  "author": "ParticleUI",
+  "dependencies": [
+    "react-leaflet",
+    "leaflet"
+  ],
+  "devDependencies": [
+    "@types/leaflet"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/map.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { MapContainer, TileLayer, Marker, Popup, useMap } from \"react-leaflet\"\nimport L from \"leaflet\"\nimport \"leaflet/dist/leaflet.css\"\n\nconst CREAM = \"#f5f0e8\"\n\nconst svgMarkerIcon = `<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"8\" fill=\"${CREAM}\" fill-opacity=\"0.95\" stroke=\"${CREAM}\" stroke-width=\"2\"/><circle cx=\"12\" cy=\"12\" r=\"3\" fill=\"#1a1a1a\"/></svg>`\n\nconst markerIcon = L.divIcon({\n  html: svgMarkerIcon,\n  className: \"\",\n  iconSize: [24, 24],\n  iconAnchor: [12, 12],\n  popupAnchor: [0, -14],\n})\n\ninterface MapMarkerProps {\n  position: [number, number]\n  label?: string\n}\n\nfunction MapMarker({ position, label }: MapMarkerProps) {\n  return (\n    <Marker position={position} icon={markerIcon}>\n      {label && (\n        <Popup\n          className=\"particle-map-popup\"\n          closeButton={false}\n        >\n          <span style={{ color: CREAM, fontSize: 13 }}>{label}</span>\n        </Popup>\n      )}\n    </Marker>\n  )\n}\n\nfunction RecenterView({ center, zoom }: { center: [number, number]; zoom: number }) {\n  const map = useMap()\n  React.useEffect(() => {\n    map.setView(center, zoom)\n  }, [map, center, zoom])\n  return null\n}\n\ninterface MapProps {\n  center?: [number, number]\n  zoom?: number\n  height?: string | number\n  markers?: { position: [number, number]; label?: string }[]\n  className?: string\n}\n\nfunction Map({\n  center = [48.8566, 2.3522],\n  zoom = 13,\n  height = 400,\n  markers = [],\n  className,\n}: MapProps) {\n  const h = typeof height === \"number\" ? `${height}px` : height\n\n  return (\n    <>\n      <style>{`\n        .particle-map-popup .leaflet-popup-content-wrapper {\n          background: #18181b;\n          border: 1px solid #27272a;\n          border-radius: 8px;\n          box-shadow: 0 4px 24px rgba(0,0,0,0.5);\n          padding: 0;\n        }\n        .particle-map-popup .leaflet-popup-content {\n          margin: 8px 12px;\n        }\n        .particle-map-popup .leaflet-popup-tip {\n          background: #18181b;\n        }\n        .leaflet-control-attribution {\n          background: rgba(0,0,0,0.5) !important;\n          color: rgba(255,255,255,0.35) !important;\n          font-size: 10px !important;\n        }\n        .leaflet-control-attribution a {\n          color: rgba(255,255,255,0.45) !important;\n        }\n        .leaflet-control-zoom a {\n          background: #18181b !important;\n          color: ${CREAM} !important;\n          border-color: #27272a !important;\n        }\n        .leaflet-control-zoom a:hover {\n          background: #27272a !important;\n        }\n      `}</style>\n      <div\n        className={[\"overflow-hidden rounded-xl border border-border\", className]\n          .filter(Boolean)\n          .join(\" \")}\n        style={{ height: h }}\n      >\n        <MapContainer\n          center={center}\n          zoom={zoom}\n          style={{ width: \"100%\", height: \"100%\" }}\n          attributionControl\n          zoomControl\n        >\n          <RecenterView center={center} zoom={zoom} />\n          <TileLayer\n            url=\"https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png\"\n            attribution='&copy; <a href=\"https://www.openstreetmap.org/copyright\">OSM</a> &copy; <a href=\"https://carto.com/\">CARTO</a>'\n            subdomains=\"abcd\"\n            maxZoom={19}\n          />\n          {markers.map((m, i) => (\n            <MapMarker key={i} position={m.position} label={m.label} />\n          ))}\n        </MapContainer>\n      </div>\n    </>\n  )\n}\n\nexport { Map, MapMarker }\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "free"
+  ]
+}
