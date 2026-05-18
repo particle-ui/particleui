@@ -108,8 +108,11 @@ pnpm registry:svelte     # Svelte ports
 | `DATABASE_URL` | Neon Postgres connection string |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk auth public key |
 | `CLERK_SECRET_KEY` | Clerk auth secret key |
-| `ANTHROPIC_API_KEY` | Anthropic API key (for `/generate`) |
-| `PARTICLEUI_TOKEN` | Pro license token (optional) |
+| `GROQ_API_KEY` | Groq API key for `/generate` — free at console.groq.com |
+| `RESEND_API_KEY` | Resend API key for transactional email |
+| `RESEND_AUDIENCE_ID` | Resend audience ID for PH notify list |
+| `STRIPE_SECRET_KEY` | Stripe secret key for payments |
+| `PARTICLEUI_TOKEN` | Pro license token (optional, local dev) |
 
 ## CLI reference
 
