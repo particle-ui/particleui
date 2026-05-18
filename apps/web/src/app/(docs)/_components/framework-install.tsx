@@ -15,17 +15,10 @@ const PORTED_SVELTE = new Set([
 
 type Framework = "react" | "vue" | "svelte"
 
-function installUrl(name: string, fw: Framework, isPro: boolean): string {
-  if (isPro || fw === "react") return `https://particleui.dev/r/${fw}/${name}.json`
-  return `https://particleui.dev/r/${fw}/${name}.json`
-}
-
 export function FrameworkInstall({
   name,
-  isPro,
 }: {
   name: string
-  isPro: boolean
 }) {
   const [fw, setFw] = useState<Framework>("react")
 
