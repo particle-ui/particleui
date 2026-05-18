@@ -120,6 +120,11 @@ import {
   NumberFlowPreview,
   BadgeShinePreview,
   AnimateInPreview,
+  ChartsPreview,
+  MapPreview,
+  KanbanPreview,
+  EventCalendarPreview,
+  FileUploaderPreview,
   LandingTemplatePreview,
   AuthTemplatePreview,
   BlogTemplatePreview,
@@ -255,6 +260,12 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "logo-cloud": <LogoCloudPreview />,
   "how-it-works": <HowItWorksPreview />,
   "newsletter": <NewsletterSectionPreview />,
+  // New components
+  "charts": <ChartsPreview />,
+  "map": <MapPreview />,
+  "kanban": <KanbanPreview />,
+  "event-calendar": <EventCalendarPreview />,
+  "file-uploader": <FileUploaderPreview />,
   // Templates
   "landing": <LandingTemplatePreview />,
   "auth": <AuthTemplatePreview />,
@@ -393,7 +404,7 @@ export default async function ComponentDocPage({
           </>
         ) : (
           <Step n={1} title="Run the CLI">
-            <FrameworkInstall name={item.name} isPro={isPro} />
+            <FrameworkInstall name={item.name} />
           </Step>
         )}
       </section>

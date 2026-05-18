@@ -62,7 +62,6 @@ import { Spotlight } from "@/components/ui/spotlight"
 import { BorderBeam } from "@/components/ui/border-beam"
 import { WordRotate } from "@/components/ui/word-rotate"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
-import { MagneticButton } from "@/components/ui/magnetic-button"
 import { RippleButton } from "@/components/ui/ripple"
 import { FlipCard } from "@/components/ui/flip-card"
 import { ShineBorder } from "@/components/ui/shine-border"
@@ -76,7 +75,6 @@ import { NeonBorder } from "@/components/ui/neon-border"
 import { TextReveal } from "@/components/ui/text-reveal"
 import { GlitchText } from "@/components/ui/glitch-text"
 import { LetterSwap } from "@/components/ui/letter-swap"
-import { ScrollProgress } from "@/components/ui/scroll-progress"
 import { WaveText } from "@/components/ui/wave-text"
 import { LiquidButton } from "@/components/ui/liquid-button"
 import { NumberFlow } from "@/components/ui/number-flow"
@@ -84,10 +82,9 @@ import { BadgeShine } from "@/components/ui/badge-shine"
 import { AnimateIn } from "@/components/ui/animate-in"
 import { Globe } from "@/components/ui/globe"
 import { AnimatedBeam } from "@/components/ui/animated-beam"
-import { CursorTrail } from "@/components/ui/cursor-trail"
 import { AuroraBackground } from "@/components/ui/aurora-background"
 import { OrbitAnimation } from "@/components/ui/orbit-animation"
-import { Home, Search, Bell, Star, Heart, Music, Video, Camera } from "lucide-react"
+import { Home, Search, Bell, Star, Heart, Music } from "lucide-react"
 import { HeroCentered } from "@/components/blocks/hero-centered"
 import { HeroSplit } from "@/components/blocks/hero-split"
 import { PricingSection } from "@/components/blocks/pricing"
@@ -423,7 +420,6 @@ export function SpotlightHeroPreview() {
 
 /* ── Bento Grid Preview ──────────────────────────────────────────────────── */
 export function BentoGridPreview() {
-  const ref = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState({ x: 0, y: 0, opacity: 0 })
 
   return (
@@ -1162,11 +1158,6 @@ export function SliderPreview() {
 }
 
 export function ProgressPreview() {
-  const [p, setP] = useState(0)
-  useRef(() => {
-    const t = setInterval(() => setP((v) => (v >= 100 ? 0 : v + 2)), 80)
-    return () => clearInterval(t)
-  })
   return (
     <div className="flex flex-col gap-5 w-full max-w-sm mx-auto">
       {[33, 66, 100].map((v) => (
@@ -1962,6 +1953,82 @@ export function AnimateInPreview() {
           <span className="text-xs text-[var(--color-text-3)]">{variant}</span>
         </AnimateIn>
       ))}
+    </div>
+  )
+}
+
+/* ── Charts Preview ──────────────────────────────────────────────────────── */
+import { BarChart, LineChart, AreaChart, PieChart, ChartContainer } from "@/components/ui/charts"
+
+export function ChartsPreview() {
+  const data = [
+    { name: "Jan", revenue: 4000, users: 240 },
+    { name: "Feb", revenue: 3000, users: 139 },
+    { name: "Mar", revenue: 6000, users: 380 },
+    { name: "Apr", revenue: 5000, users: 290 },
+    { name: "May", revenue: 7000, users: 430 },
+    { name: "Jun", revenue: 8000, users: 510 },
+  ]
+  return (
+    <div className="w-full p-4 space-y-4">
+      <ChartContainer title="Monthly Revenue" description="Bar chart with OKLCH colors">
+        <BarChart data={data} dataKeys={["revenue", "users"]} height={200} />
+      </ChartContainer>
+    </div>
+  )
+}
+
+/* ── Map Preview ─────────────────────────────────────────────────────────── */
+import { Map } from "@/components/ui/map"
+
+export function MapPreview() {
+  return (
+    <div className="w-full p-4">
+      <Map
+        center={[48.8566, 2.3522]}
+        zoom={12}
+        height={280}
+        markers={[
+          { position: [48.8566, 2.3522], label: "Paris" },
+          { position: [48.8606, 2.3376], label: "Louvre" },
+        ]}
+      />
+    </div>
+  )
+}
+
+/* ── Kanban Preview ──────────────────────────────────────────────────────── */
+import { KanbanBoard } from "@/components/ui/kanban"
+
+export function KanbanPreview() {
+  return (
+    <div className="w-full p-4 overflow-x-auto">
+      <KanbanBoard />
+    </div>
+  )
+}
+
+/* ── Event Calendar Preview ──────────────────────────────────────────────── */
+import { EventCalendar } from "@/components/ui/event-calendar"
+
+export function EventCalendarPreview() {
+  return (
+    <div className="w-full p-4">
+      <EventCalendar defaultView="month" />
+    </div>
+  )
+}
+
+/* ── File Uploader Preview ───────────────────────────────────────────────── */
+import { FileUploader } from "@/components/ui/file-uploader"
+
+export function FileUploaderPreview() {
+  return (
+    <div className="w-full p-6 max-w-lg mx-auto">
+      <FileUploader
+        accept={{ "image/*": [".png", ".jpg", ".jpeg", ".gif"], "application/pdf": [".pdf"] }}
+        maxSize={5 * 1024 * 1024}
+      />
     </div>
   )
 }
