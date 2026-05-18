@@ -56,7 +56,7 @@ Rules:
 
 export async function generateLayout(prompt: string): Promise<GeneratedLayout> {
   const { object } = await generateObject({
-    model: groq("llama-3.1-8b-instant"),
+    model: groq("llama-3.3-70b-versatile"),
     schema: LayoutSchema,
     system: SYSTEM_PROMPT,
     prompt,
