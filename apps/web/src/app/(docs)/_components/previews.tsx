@@ -1979,12 +1979,14 @@ export function ChartsPreview() {
 }
 
 /* ── Map Preview ─────────────────────────────────────────────────────────── */
-import { Map } from "@/components/ui/map"
+import dynamic from "next/dynamic"
+
+const MapNoSSR = dynamic(() => import("@/components/ui/map").then((m) => m.Map), { ssr: false, loading: () => <div className="h-72 rounded-xl border border-border bg-surface-1 animate-pulse" /> })
 
 export function MapPreview() {
   return (
     <div className="w-full p-4">
-      <Map
+      <MapNoSSR
         center={[48.8566, 2.3522]}
         zoom={12}
         height={280}
@@ -2009,12 +2011,12 @@ export function KanbanPreview() {
 }
 
 /* ── Event Calendar Preview ──────────────────────────────────────────────── */
-import { EventCalendar } from "@/components/ui/event-calendar"
+const EventCalendarNoSSR = dynamic(() => import("@/components/ui/event-calendar").then((m) => m.EventCalendar), { ssr: false, loading: () => <div className="h-96 rounded-xl border border-border bg-surface-1 animate-pulse" /> })
 
 export function EventCalendarPreview() {
   return (
     <div className="w-full p-4">
-      <EventCalendar defaultView="month" />
+      <EventCalendarNoSSR defaultView="month" />
     </div>
   )
 }
