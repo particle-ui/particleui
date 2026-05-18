@@ -12,7 +12,7 @@ interface BlockItem {
   registryDependencies?: string[]
 }
 
-type Category = "all" | "hero" | "marketing" | "auth" | "dashboard" | "layout" | "ai"
+type Category = "all" | "hero" | "marketing" | "auth" | "dashboard" | "layout" | "ai" | "data" | "forms" | "productivity"
 
 const CATEGORIES: { key: Category; label: string }[] = [
   { key: "all", label: "All" },
@@ -20,6 +20,8 @@ const CATEGORIES: { key: Category; label: string }[] = [
   { key: "marketing", label: "Marketing" },
   { key: "auth", label: "Auth" },
   { key: "dashboard", label: "Dashboard" },
+  { key: "data", label: "Data" },
+  { key: "forms", label: "Forms" },
   { key: "layout", label: "Layout" },
   { key: "ai", label: "AI" },
 ]
@@ -29,13 +31,17 @@ function getCategory(item: BlockItem): Category {
   if (item.categories.includes("auth")) return "auth"
   if (item.categories.includes("dashboard")) return "dashboard"
   if (item.categories.includes("ai")) return "ai"
+  if (item.categories.includes("data")) return "data"
+  if (item.name === "charts" || item.name === "map") return "data"
+  if (item.name === "kanban") return "productivity"
+  if (item.name === "event-calendar" || item.name === "file-uploader") return "forms"
+  if (item.categories.includes("forms")) return "forms"
   if (item.categories.includes("layout")) return "layout"
   return "marketing"
 }
 
 function BlockPreview({ item }: { item: BlockItem }) {
   const cat = getCategory(item)
-  const isPro = item.categories.includes("pro")
 
   if (cat === "hero") {
     return (
@@ -125,6 +131,128 @@ function BlockPreview({ item }: { item: BlockItem }) {
               <div key={i} className="h-2 w-8 rounded" style={{ background: "var(--color-text-4)", opacity: 0.3 }} />
             ))}
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (item.name === "charts") {
+    return (
+      <div className="h-full w-full p-4 flex flex-col gap-2" style={{ background: "var(--color-bg)" }}>
+        <div className="flex items-end gap-1.5 flex-1 px-2">
+          {[0.4, 0.7, 0.5, 0.9, 0.6, 0.8, 0.5, 0.7, 0.95, 0.6].map((h, i) => (
+            <div key={i} className="flex-1 rounded-t-sm" style={{ background: `oklch(72% 0.18 ${250 + i * 5})`, opacity: 0.8, height: `${h * 100}%` }} />
+          ))}
+        </div>
+        <div className="flex gap-2">
+          {["Bar", "Line", "Area", "Pie"].map((t) => (
+            <div key={t} className="flex-1 h-5 rounded text-center text-[9px] flex items-center justify-center" style={{ background: "var(--color-surface-1)", color: "var(--color-text-4)", border: "1px solid var(--color-border)" }}>{t}</div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (item.name === "map") {
+    return (
+      <div className="h-full w-full relative overflow-hidden" style={{ background: "oklch(12% 0.005 220)" }}>
+        {/* Fake dark map grid */}
+        <svg className="absolute inset-0 w-full h-full opacity-20" xmlns="http://www.w3.org/2000/svg">
+          <defs><pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="0.5"/></pattern></defs>
+          <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+        {/* Fake roads */}
+        <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0,88 Q80,80 160,88 Q200,92 240,85" stroke="rgba(255,255,255,0.12)" strokeWidth="2" fill="none"/>
+          <path d="M60,0 Q55,50 60,88 Q62,110 65,176" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" fill="none"/>
+          <path d="M0,120 Q100,115 240,125" stroke="rgba(255,255,255,0.08)" strokeWidth="1" fill="none"/>
+        </svg>
+        {/* Marker */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="w-4 h-4 rounded-full border-2" style={{ background: "var(--color-accent)", borderColor: "var(--color-bg)", boxShadow: "0 0 12px oklch(96% 0.01 80 / 60%)" }} />
+          <div className="w-2 h-2 rounded-full mx-auto -mt-1" style={{ background: "oklch(96% 0.01 80 / 30%)", filter: "blur(4px)" }} />
+        </div>
+      </div>
+    )
+  }
+
+  if (item.name === "kanban") {
+    return (
+      <div className="h-full w-full p-3 flex gap-2" style={{ background: "var(--color-bg)" }}>
+        {[
+          { label: "To Do", cards: [0.7, 0.5] },
+          { label: "In Progress", cards: [0.9, 0.6, 0.4] },
+          { label: "Done", cards: [0.5] },
+        ].map(({ label, cards }) => (
+          <div key={label} className="flex-1 rounded-lg p-2 space-y-1.5" style={{ background: "var(--color-surface-1)", border: "1px solid var(--color-border)" }}>
+            <div className="h-2 w-12 rounded mb-2" style={{ background: "var(--color-text-4)", opacity: 0.5 }} />
+            {cards.map((w, i) => (
+              <div key={i} className="rounded p-1.5" style={{ background: "var(--color-bg)", border: "1px solid var(--color-border)" }}>
+                <div className="h-1.5 rounded mb-1" style={{ background: "var(--color-text-2)", opacity: 0.6, width: `${w * 100}%` }} />
+                <div className="h-1 rounded" style={{ background: "var(--color-text-4)", opacity: 0.3, width: "60%" }} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (item.name === "event-calendar") {
+    return (
+      <div className="h-full w-full p-3" style={{ background: "var(--color-bg)" }}>
+        <div className="flex items-center justify-between mb-2">
+          <div className="h-2.5 w-20 rounded" style={{ background: "var(--color-text-1)", opacity: 0.7 }} />
+          <div className="flex gap-1">
+            {["M","W","D","A"].map(v => (
+              <div key={v} className="h-5 w-5 rounded text-[8px] flex items-center justify-center" style={{ background: "var(--color-surface-1)", color: "var(--color-text-4)", border: "1px solid var(--color-border)" }}>{v}</div>
+            ))}
+          </div>
+        </div>
+        <div className="grid grid-cols-7 gap-px mb-1">
+          {["S","M","T","W","T","F","S"].map((d,i) => (
+            <div key={i} className="text-center text-[7px]" style={{ color: "var(--color-text-4)" }}>{d}</div>
+          ))}
+        </div>
+        <div className="grid grid-cols-7 gap-px">
+          {Array.from({length: 35}, (_, i) => {
+            const day = i - 2
+            const isEvent = [3, 10, 17, 22].includes(day)
+            const isToday = day === 15
+            return (
+              <div key={i} className="rounded text-[7px] flex items-center justify-center aspect-square" style={{
+                background: isToday ? "var(--color-accent)" : isEvent ? "oklch(72% 0.18 250 / 30%)" : "transparent",
+                color: isToday ? "var(--color-bg)" : day < 1 || day > 31 ? "var(--color-text-4)" : "var(--color-text-2)",
+                border: isEvent && !isToday ? "1px solid oklch(72% 0.18 250 / 50%)" : "none",
+                opacity: day < 1 || day > 31 ? 0.3 : 1,
+              }}>{day > 0 && day <= 31 ? day : ""}</div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  if (item.name === "file-uploader") {
+    return (
+      <div className="h-full w-full p-4 flex flex-col gap-3 justify-center" style={{ background: "var(--color-bg)" }}>
+        <div className="rounded-xl border-2 border-dashed flex flex-col items-center justify-center gap-2 py-5" style={{ borderColor: "var(--color-border)" }}>
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "var(--color-surface-1)", border: "1px solid var(--color-border)" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div className="h-1.5 w-24 rounded" style={{ background: "var(--color-text-3)", opacity: 0.4 }} />
+          <div className="h-1 w-16 rounded" style={{ background: "var(--color-text-4)", opacity: 0.3 }} />
+        </div>
+        <div className="space-y-1.5">
+          {["image.png", "document.pdf"].map((f) => (
+            <div key={f} className="flex items-center gap-2 rounded-lg px-3 py-2" style={{ background: "var(--color-surface-1)", border: "1px solid var(--color-border)" }}>
+              <div className="w-4 h-4 rounded" style={{ background: "oklch(72% 0.18 250 / 30%)" }} />
+              <div className="flex-1">
+                <div className="h-1.5 w-16 rounded mb-1" style={{ background: "var(--color-text-2)", opacity: 0.6 }} />
+                <div className="h-1 rounded" style={{ background: "var(--color-accent)", opacity: 0.7, width: f === "image.png" ? "100%" : "65%" }} />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )

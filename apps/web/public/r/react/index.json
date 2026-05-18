@@ -109,7 +109,7 @@
   {
     "name": "auth-forgot-password",
     "type": "registry:block",
-    "title": "Auth — Forgot Password",
+    "title": "Auth \u2014 Forgot Password",
     "description": "Forgot password form with email input and reset link send confirmation.",
     "categories": [
       "auth",
@@ -121,7 +121,7 @@
   {
     "name": "auth-sign-in",
     "type": "registry:block",
-    "title": "Auth — Sign In",
+    "title": "Auth \u2014 Sign In",
     "description": "Sign-in form with email/password, Google/GitHub social buttons, and forgot password link.",
     "categories": [
       "auth",
@@ -133,7 +133,7 @@
   {
     "name": "auth-sign-up",
     "type": "registry:block",
-    "title": "Auth — Sign Up",
+    "title": "Auth \u2014 Sign Up",
     "description": "Sign-up form with name, email, password, terms checkbox, and social login options.",
     "categories": [
       "auth",
@@ -145,7 +145,7 @@
   {
     "name": "auth-verify-email",
     "type": "registry:block",
-    "title": "Auth — Verify Email",
+    "title": "Auth \u2014 Verify Email",
     "description": "Email verification screen with resend link and success state.",
     "categories": [
       "auth",
@@ -326,7 +326,7 @@
     "name": "command",
     "type": "registry:ui",
     "title": "Command",
-    "description": "Command palette / ⌘K menu built on cmdk with fuzzy search.",
+    "description": "Command palette / \u2318K menu built on cmdk with fuzzy search.",
     "categories": [
       "overlay",
       "core",
@@ -396,7 +396,7 @@
   {
     "name": "dashboard-analytics",
     "type": "registry:block",
-    "title": "Dashboard — Analytics",
+    "title": "Dashboard \u2014 Analytics",
     "description": "Analytics dashboard with metric cards, recent orders table, and top pages with progress bars.",
     "categories": [
       "dashboard",
@@ -491,7 +491,7 @@
   {
     "name": "feature-alternating",
     "type": "registry:block",
-    "title": "Feature — Alternating",
+    "title": "Feature \u2014 Alternating",
     "description": "Three alternating feature rows with code previews. Left-right layout flips on odd rows.",
     "categories": [
       "marketing",
@@ -645,7 +645,7 @@
   {
     "name": "hero-centered",
     "type": "registry:block",
-    "title": "Hero — Centered",
+    "title": "Hero \u2014 Centered",
     "description": "Full-width centered hero with gradient headline, typewriter subtitle, CTA buttons, beam separator, and optional meteor shower.",
     "categories": [
       "hero",
@@ -657,7 +657,7 @@
   {
     "name": "hero-split",
     "type": "registry:block",
-    "title": "Hero — Split",
+    "title": "Hero \u2014 Split",
     "description": "Two-column hero with headline and feature bullets on the left, animated code preview card on the right.",
     "categories": [
       "hero",
@@ -780,7 +780,8 @@
     "description": "Dark-themed interactive map built on react-leaflet with CartoDB Dark Matter tiles, custom SVG cream markers, and popup labels.",
     "categories": [
       "layout",
-      "free"
+      "free",
+      "blocks"
     ],
     "tier": "particles"
   },
@@ -824,7 +825,7 @@
     "name": "mono",
     "type": "registry:theme",
     "title": "Mono",
-    "description": "Pure grayscale — zero chroma, maximum contrast. Timeless monochrome.",
+    "description": "Pure grayscale \u2014 zero chroma, maximum contrast. Timeless monochrome.",
     "categories": [
       "themes",
       "free"
@@ -1133,7 +1134,7 @@
     "name": "sheet",
     "type": "registry:ui",
     "title": "Sheet",
-    "description": "Slide-in panel from any edge — left, right, top, or bottom. Built on Radix Dialog.",
+    "description": "Slide-in panel from any edge \u2014 left, right, top, or bottom. Built on Radix Dialog.",
     "categories": [
       "overlay",
       "core",
@@ -1157,7 +1158,7 @@
     "name": "shimmer-text",
     "type": "registry:ui",
     "title": "Shimmer Text",
-    "description": "Text with a moving shimmer highlight — great for hero headlines and loading states.",
+    "description": "Text with a moving shimmer highlight \u2014 great for hero headlines and loading states.",
     "categories": [
       "text",
       "free"
@@ -1415,5 +1416,45 @@
       "free"
     ],
     "tier": "particles"
+  },
+  {
+    "name": "charts",
+    "title": "Charts",
+    "description": "Bar, line, area, and pie charts with OKLCH dark theme.",
+    "categories": [
+      "data",
+      "free",
+      "blocks"
+    ]
+  },
+  {
+    "name": "kanban",
+    "title": "Kanban Board",
+    "description": "Drag-and-drop kanban board with columns and cards.",
+    "categories": [
+      "layout",
+      "free",
+      "blocks"
+    ]
+  },
+  {
+    "name": "event-calendar",
+    "title": "Event Calendar",
+    "description": "Full calendar with month, week, day, and agenda views.",
+    "categories": [
+      "forms",
+      "free",
+      "blocks"
+    ]
+  },
+  {
+    "name": "file-uploader",
+    "title": "File Uploader",
+    "description": "Dropzone with file preview, progress, and validation.",
+    "categories": [
+      "forms",
+      "free",
+      "blocks"
+    ]
   }
 ]
