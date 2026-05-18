@@ -1,4 +1,4 @@
-import { anthropic } from "@ai-sdk/anthropic"
+import { groq } from "@ai-sdk/groq"
 import { generateObject } from "ai"
 import { z } from "zod"
 
@@ -56,7 +56,7 @@ Rules:
 
 export async function generateLayout(prompt: string): Promise<GeneratedLayout> {
   const { object } = await generateObject({
-    model: anthropic("claude-haiku-4-5-20251001"),
+    model: groq("llama-3.1-8b-instant"),
     schema: LayoutSchema,
     system: SYSTEM_PROMPT,
     prompt,

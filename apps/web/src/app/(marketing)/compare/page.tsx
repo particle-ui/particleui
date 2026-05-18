@@ -95,11 +95,13 @@ export default function ComparePage() {
             <div className="px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.13em] text-text-2">
               Feature
             </div>
-            <div className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.13em] text-text-2">
-              DIY / Radix
+            <div className="px-2 sm:px-4 py-3.5 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.04em] sm:tracking-[0.13em] text-text-2">
+              <span className="sm:hidden">DIY</span>
+              <span className="hidden sm:inline">DIY / Radix</span>
             </div>
-            <div className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.13em] text-accent">
-              ParticleUI
+            <div className="px-2 sm:px-4 py-3.5 text-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.04em] sm:tracking-[0.13em] text-accent">
+              <span className="sm:hidden">Particle</span>
+              <span className="hidden sm:inline">ParticleUI</span>
             </div>
           </div>
 
@@ -107,7 +109,7 @@ export default function ComparePage() {
           {ROWS.map((row, i) => (
             <div
               key={row.feature}
-              className={`grid grid-cols-[1fr_120px_140px] border-b border-border last:border-0 transition-colors hover:bg-surface-1 ${
+              className={`grid grid-cols-[1fr_80px_100px] sm:grid-cols-[1fr_120px_140px] border-b border-border last:border-0 transition-colors hover:bg-surface-1 ${
                 i % 2 === 0 ? "bg-bg" : "bg-surface-1/50"
               }`}
             >

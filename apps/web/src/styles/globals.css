@@ -396,6 +396,11 @@ code, kbd, pre {
   animation: page-enter 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* ── Component gallery preview dots ────────────────────────────────────── */
+@keyframes gallery-float-0 { to { transform: translate(5px, -8px); } }
+@keyframes gallery-float-1 { to { transform: translate(-6px, 7px); } }
+@keyframes gallery-float-2 { to { transform: translate(8px, 5px); } }
+
 /* ── Scroll reveal ──────────────────────────────────────────────────────── */
 @keyframes reveal-up {
   from { opacity: 0; transform: translateY(20px); }

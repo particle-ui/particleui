@@ -1,29 +1,30 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Sparkle, ArrowUpRight, Star, Check, Robot, Palette, SquaresFour, Lightning } from "@phosphor-icons/react/dist/ssr"
+import { ArrowRight, Sparkle, ArrowUpRight, Check, Robot, Palette, SquaresFour, Lightning } from "@phosphor-icons/react/dist/ssr"
 import { HeroCanvas } from "./_components/hero-canvas"
 import { SpotlightCard } from "./_components/spotlight-card"
 import { Marquee } from "./_components/marquee"
 import { MagneticDemo } from "./_components/magnetic-demo"
 import { Nav } from "./_components/nav"
+import { PhNotify } from "./_components/ph-notify"
 import { Reveal } from "@/components/reveal"
 
 export const metadata: Metadata = {
-  title: "ParticleUI — 100+ UI components with particle effects",
+  title: "ParticleUI — Beautiful shadcn-compatible UI you own",
   description:
-    "100+ free components for React, Vue, and Svelte — particle effects, animated blocks, and OKLCH design tokens. One command install. MIT licensed.",
+    "Install shadcn-compatible React components, blocks, templates, and themes into your app with one command. You own the source code.",
   openGraph: {
-    title: "ParticleUI — 100+ UI components with particle effects",
+    title: "ParticleUI — Beautiful shadcn-compatible UI you own",
     description:
-      "100+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens. MIT licensed.",
+      "Install premium React components, blocks, templates, and themes into your app with one command. Then customize everything like normal code.",
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ParticleUI — 100+ UI components with particle effects",
+    title: "ParticleUI — Beautiful shadcn-compatible UI you own",
     description:
-      "100+ free components for React, Vue, and Svelte. Particle effects, animated blocks, OKLCH tokens.",
+      "Install shadcn-compatible UI into your app with one command. You own the source code.",
     images: ["/opengraph-image"],
   },
 }
@@ -38,13 +39,16 @@ export default function HomePage() {
     >
       <Nav />
       <Hero />
+      <TryInSixtySeconds />
       <Marquee />
       <SocialProofStrip />
+      <WhoItsFor />
       <LiveDemo />
       <BentoFeatures />
+      <WorksWith />
       <AIFeatures />
       <CodeSection />
-      <Testimonials />
+      <LaunchChecklist />
       <Pricing />
       <FAQ />
       <BottomCTA />
@@ -65,21 +69,29 @@ function Hero() {
 
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center pt-20">
-        {/* Eyebrow pill */}
-        <Link
-          href="/components"
-          className="mb-8 inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-1/80 px-4 py-2 text-xs text-text-2 hover:text-text-1 transition-colors backdrop-blur-sm"
-        >
-          <span className="flex h-1.5 w-1.5 rounded-full bg-accent relative">
-            <span className="animate-ping absolute inset-0 rounded-full bg-accent opacity-60" />
+        {/* PH launch teaser pill */}
+        <div className="mb-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/components"
+            className="inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-1/80 px-4 py-2 text-xs text-text-2 hover:text-text-1 transition-colors backdrop-blur-sm"
+          >
+            <span className="flex h-1.5 w-1.5 rounded-full bg-accent relative">
+              <span className="animate-ping absolute inset-0 rounded-full bg-accent opacity-60" />
+            </span>
+            Free component install path — no sign-in required
+            <ArrowRight size={10} weight="bold" />
+          </Link>
+          <span className="inline-flex items-center gap-2 rounded-full border border-[#ff6154]/30 bg-[#ff6154]/10 px-3.5 py-2 text-xs font-medium text-[#ff9a94]">
+            <svg width="10" height="10" viewBox="0 0 40 40" fill="currentColor" aria-hidden="true">
+              <path d="M20 0C8.95 0 0 8.95 0 20s8.95 20 20 20 20-8.95 20-20S31.05 0 20 0zm0 5.88A14.12 14.12 0 1 1 20 34.12 14.12 14.12 0 0 1 20 5.88zm-2.35 5.29v17.66h4.7V11.17h-4.7z"/>
+            </svg>
+            Launching on Product Hunt — get notified
           </span>
-          100+ components — React · Svelte · Vue · MIT · Open source
-          <ArrowRight size={10} weight="bold" />
-        </Link>
+        </div>
 
         {/* Headline */}
         <h1 className="text-[clamp(3.2rem,7.5vw,6rem)] font-bold leading-[0.96] tracking-[-0.05em] mb-6">
-          Components so good
+          Beautiful shadcn-compatible UI
           <br />
           <span
             className="inline-block"
@@ -91,13 +103,13 @@ function Hero() {
               backgroundClip: "text",
             }}
           >
-            your users stop scrolling
+            you own as source code.
           </span>
         </h1>
 
         <p className="mx-auto max-w-lg text-lg text-text-2 leading-[1.7] mb-10">
-          100+ animated components for React, Vue, and Svelte — particle effects, full-page blocks,
-          and OKLCH design tokens. One command install. MIT licensed and free to start.
+          Install premium React components, blocks, templates, and themes into your app with one
+          command. Then customize every file like normal code.
         </p>
 
         {/* CTAs */}
@@ -106,23 +118,28 @@ function Hero() {
             href="/components"
             className="group flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-bg hover:brightness-95 hover:scale-[1.03] active:scale-[0.98] transition-all duration-150"
           >
-            Browse free components
+            Install a free component
             <ArrowRight size={13} weight="bold" className="group-hover:translate-x-1 transition-transform duration-150" />
           </Link>
           <Link
             href="/pricing"
             className="flex items-center gap-2 rounded-full border border-border bg-white/[0.04] px-7 py-3.5 text-sm font-medium text-text-2 hover:text-text-1 hover:border-border-hover transition-all backdrop-blur-sm"
           >
-            Get Pro — $149 →
+            Browse Pro components →
           </Link>
         </div>
 
-        {/* Social proof */}
-        <div className="flex items-center justify-center gap-1.5 mb-12 text-xs text-text-2">
-          <span className="flex items-center gap-0.5">
-            {["★","★","★","★","★"].map((s, i) => <span key={i} className="text-accent text-[10px]">{s}</span>)}
-          </span>
-          <span>5.0 · Loved by 200+ developers · MIT licensed</span>
+        {/* PH notify capture */}
+        <div className="mb-8">
+          <p className="text-xs text-text-4 mb-3">
+            Launching on Product Hunt soon — be the first to know.
+          </p>
+          <PhNotify />
+        </div>
+
+        <div className="mb-12 text-xs text-text-2">
+          Built for design engineers, founders, and product teams who want source-owned UI instead
+          of another black-box component dependency.
         </div>
 
         {/* Terminal */}
@@ -140,12 +157,12 @@ function Hero() {
             <div className="flex items-center gap-2 mb-1">
               <span className="text-text-4">$</span>
               <span className="text-accent">npx particleui-cli</span>
-              <span className="text-text-1">add glow-card</span>
+              <span className="text-text-1">add button</span>
             </div>
             <div className="text-success-text mt-2 text-xs pl-4">
-              ✓ glow-card<br />
-              ✓ Installing dependencies...<br />
-              ✓ Wrote src/components/ui/glow-card.tsx
+              ✓ Button<br />
+              ✓ Wrote src/components/ui/button.tsx<br />
+              ✓ Import {"<Button />"} in your app
             </div>
           </div>
         </div>
@@ -155,8 +172,8 @@ function Hero() {
           {[
             { value: "100+", label: "Components" },
             { value: "3", label: "Frameworks" },
-            { value: "0", label: "Runtime deps" },
-            { value: "MIT", label: "License" },
+            { value: "CLI", label: "One command" },
+            { value: "MIT", label: "Free components" },
           ].map(({ value, label }) => (
             <div key={label} className="flex flex-col items-center gap-1">
               <span className="text-2xl font-bold tracking-[-0.04em] text-text-1">{value}</span>
@@ -172,6 +189,109 @@ function Hero() {
   )
 }
 
+/* ─── Who it's for ───────────────────────────────────────────────────────── */
+function WhoItsFor() {
+  const personas = [
+    {
+      icon: <Lightning size={18} weight="fill" className="text-accent" />,
+      label: "Design engineer",
+      title: "You care about craft.",
+      body: "Pixel-perfect animations, OKLCH color tokens, and source code you actually own. Every file lands in your repo — inspect it, extend it, delete it.",
+      highlight: "36 particle effects · OKLCH tokens · source owned",
+    },
+    {
+      icon: <Palette size={18} weight="fill" className="text-accent" />,
+      label: "Designer who ships",
+      title: "You open Cursor more than Figma.",
+      body: "Full-page blocks and an AI layout generator get you from idea to deployed in an afternoon. Keep what works, delete what doesn't.",
+      highlight: "20 blocks · AI generator · 1-command install",
+    },
+    {
+      icon: <Robot size={18} weight="fill" className="text-accent" />,
+      label: "AI builder",
+      title: "Building at 2am with Claude.",
+      body: "Every Pro component ships a Claude skill and MCP server. Your AI knows the props, the variants, and how to customise each component without hallucinating.",
+      highlight: "MCP server · Claude skills · works in Cursor",
+    },
+  ]
+
+  return (
+    <Reveal>
+      <section aria-labelledby="who-title" className="py-24 px-6 border-t border-border">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-4 text-center">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Who it&apos;s for</span>
+          </div>
+          <h2 id="who-title" className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
+            Built for three kinds of builder
+          </h2>
+          <p className="text-center text-text-3 leading-[1.65] mb-16 max-w-md mx-auto">
+            Whether you care about pixel-perfect craft, shipping fast, or building with AI — ParticleUI has a path for you.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {personas.map(({ icon, label, title, body, highlight }) => (
+              <div key={label} className="group relative rounded-2xl border border-border bg-surface-1 p-8 hover:border-border-hover hover:bg-surface-2 transition-all duration-200">
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, var(--color-accent-dim), transparent)" }} />
+                <div className="relative">
+                  <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-xl border border-accent-border bg-accent-dim">
+                    {icon}
+                  </div>
+                  <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-accent">{label}</p>
+                  <h3 className="mb-3 text-xl font-bold tracking-[-0.03em] leading-[1.2] text-text-1">{title}</h3>
+                  <p className="mb-6 text-[15px] leading-[1.7] text-text-3">{body}</p>
+                  <div className="rounded-lg border border-border bg-bg px-3 py-2 text-[11px] font-medium text-text-4 leading-relaxed">
+                    {highlight}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </Reveal>
+  )
+}
+
+/* ─── Works with ──────────────────────────────────────────────────────────── */
+function WorksWith() {
+  const tools = [
+    { name: "Cursor", note: "MCP + skills" },
+    { name: "Claude", note: "MCP server" },
+    { name: "v0", note: "paste ready" },
+    { name: "Windsurf", note: "MCP + skills" },
+    { name: "Copilot", note: "source context" },
+    { name: "Bolt", note: "drop-in blocks" },
+  ]
+
+  return (
+    <section aria-label="Integrations" className="border-y border-border py-10 px-6">
+      <div className="mx-auto max-w-6xl">
+        <div className="flex flex-col md:flex-row items-center gap-8">
+          <p className="shrink-0 text-[11px] font-semibold uppercase tracking-[0.16em] text-text-4 md:w-36 text-center md:text-left">
+            Works with
+          </p>
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-3">
+            {tools.map(({ name, note }) => (
+              <div key={name} className="flex items-center gap-2 rounded-full border border-border bg-surface-1 px-4 py-2 hover:border-border-hover transition-colors">
+                <span className="text-sm font-semibold text-text-1">{name}</span>
+                <span className="text-[10px] text-text-4">{note}</span>
+              </div>
+            ))}
+          </div>
+          <div className="hidden md:block ml-auto shrink-0">
+            <Link
+              href="/docs/getting-started/installation"
+              className="flex items-center gap-1.5 text-xs text-accent hover:text-text-1 transition-colors"
+            >
+              Setup guide <ArrowRight size={11} weight="bold" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── Social proof strip ──────────────────────────────────────────────────── */
 function SocialProofStrip() {
   const stats = [
@@ -179,23 +299,111 @@ function SocialProofStrip() {
     { value: "36", label: "Particle effects" },
     { value: "3", label: "Frameworks" },
     { value: "20", label: "Full-page blocks" },
-    { value: "0", label: "Runtime deps" },
-    { value: "MIT", label: "License" },
+    { value: "CLI", label: "Install path" },
+    { value: "MIT", label: "Free components" },
   ]
   return (
     <section aria-hidden className="border-y border-border py-5 overflow-hidden">
-      <div className="flex items-center justify-center flex-wrap gap-px">
+      {/* Mobile: 3-column grid. md+: single centred row with dividers */}
+      <div className="grid grid-cols-3 gap-px md:hidden">
+        {stats.map(({ value, label }) => (
+          <div key={label} className="flex flex-col items-center justify-center px-4 py-3">
+            <span className="text-base font-bold tracking-[-0.04em] text-text-1">{value}</span>
+            <span className="text-[10px] text-text-4 uppercase tracking-[0.1em] mt-0.5">{label}</span>
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex items-center justify-center">
         {stats.map(({ value, label }, i) => (
           <div key={label} className="flex items-center">
             <div className="flex items-baseline gap-2 px-8 py-2">
               <span className="text-lg font-bold tracking-[-0.04em] text-text-1">{value}</span>
               <span className="text-xs text-text-4 uppercase tracking-[0.1em]">{label}</span>
             </div>
-            {i < stats.length - 1 && (
-              <span className="h-4 w-px bg-border" />
-            )}
+            {i < stats.length - 1 && <span className="h-4 w-px bg-border" />}
           </div>
         ))}
+      </div>
+    </section>
+  )
+}
+
+/* ─── 60 second install path ─────────────────────────────────────────────── */
+function TryInSixtySeconds() {
+  return (
+    <section id="try" aria-labelledby="try-title" className="border-y border-border bg-surface-1/40 px-6 py-16">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent-border bg-accent-dim px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">
+            <Sparkle size={11} weight="fill" />
+            Try it in 60 seconds
+          </span>
+          <h2 id="try-title" className="mb-4 text-[clamp(1.9rem,4vw,3rem)] font-bold leading-[1.1] tracking-[-0.04em] text-text-1">
+            Install a real component into any React app.
+          </h2>
+          <p className="mb-7 max-w-xl text-[15px] leading-[1.75] text-text-2">
+            Start with the free Button component. The CLI writes source into your repo, so you can
+            inspect it, edit it, and ship it without signing in.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/docs/components/button"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-bg transition-all hover:brightness-95"
+            >
+              Install a free component
+              <ArrowRight size={13} weight="bold" />
+            </Link>
+            <Link
+              href="/components"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-5 py-2.5 text-sm font-medium text-text-2 transition-colors hover:border-border-hover hover:text-text-1"
+            >
+              Browse components
+            </Link>
+          </div>
+        </div>
+
+        <div className="overflow-hidden rounded-xl border border-border bg-bg">
+          <div className="border-b border-border px-4 py-3 font-mono text-xs text-text-4">
+            Fresh React project
+          </div>
+          <div className="grid gap-px bg-border sm:grid-cols-2">
+            <div className="min-w-0 bg-surface-1 p-5">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-text-4">
+                Run
+              </p>
+              <code className="block overflow-x-auto rounded-lg border border-border bg-bg px-4 py-3 font-mono text-sm text-accent">
+                npx particleui-cli add button
+              </code>
+            </div>
+            <div className="min-w-0 bg-surface-1 p-5">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.12em] text-text-4">
+                Use
+              </p>
+              <pre className="overflow-x-auto rounded-lg border border-border bg-bg px-4 py-3 text-xs leading-6 text-text-2">
+{`import { Button } from "@/components/ui/button"
+
+export function Demo() {
+  return <Button>Ship it</Button>
+}`}
+              </pre>
+            </div>
+          </div>
+          <div className="grid gap-3 p-5 sm:grid-cols-4">
+            {[
+              "Start with any React app",
+              "Run the command",
+              "Import <Button />",
+              "Customize the source",
+            ].map((step, index) => (
+              <div key={step} className="rounded-lg border border-border bg-surface-1 p-3">
+                <div className="mb-2 flex h-6 w-6 items-center justify-center rounded-full bg-accent-dim text-xs font-bold text-accent">
+                  {index + 1}
+                </div>
+                <p className="text-xs leading-[1.55] text-text-2">{step}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
@@ -585,7 +793,8 @@ function AIFeatures() {
             </div>
             <h3 className="text-xl font-bold tracking-[-0.03em] mb-3">React · Vue · Svelte</h3>
             <p className="text-text-3 text-sm leading-[1.7] mb-6">
-              100+ components across React, Vue 3, and Svelte. Same API, same design tokens, same CLI install. Switch the registry URL and you're done.
+              React, Vue 3, and Svelte registries share the same source-owned install model.
+              Use the CLI path for the framework you already work in.
             </p>
             <div className="flex flex-col gap-2">
               {["react", "vue", "svelte"].map((fw) => (
@@ -618,15 +827,15 @@ function CodeSection() {
             <span className="text-text-3">Customise forever.</span>
           </h2>
           <p className="text-text-2 leading-[1.7] mb-8">
-            Add the registry to your <code className="text-text-2 bg-white/[0.05] px-1.5 py-0.5 rounded text-xs">components.json</code>.
-            Run the install. The source is yours — edit every line, every prop, every style.
+            Run one command, get real source files in your repo, and keep working in your existing
+            React project. Free components do not require sign-in.
           </p>
           <ul className="space-y-3">
             {[
               "You own every line of source code",
               "MIT licensed — use in any project",
               "TypeScript-first, full type safety",
-              "No runtime deps you don't already have",
+              "Works alongside your existing shadcn setup",
             ].map((f) => (
               <li key={f} className="flex items-center gap-3 text-[15px] text-text-2">
                 <Check size={14} weight="bold" className="text-accent shrink-0" />
@@ -676,53 +885,80 @@ function CodeSection() {
   )
 }
 
-/* ─── Testimonials ────────────────────────────────────────────────────────── */
-const REVIEWS = [
-  { name: "Alex K.", role: "Frontend Lead", company: "Linear", text: "Shipped our entire dashboard redesign in a weekend. The particle hero alone is worth ten times the price.", stars: 5 },
-  { name: "Maya R.", role: "Founder", company: "Indie Hacker", text: "My landing page conversion went up 40% after switching. Investors keep asking who designed it.", stars: 5 },
-  { name: "Tom B.", role: "Full-stack Dev", company: "Freelance", text: "The Claude skills bundled with each component are a game changer. AI customisation just works.", stars: 5 },
-  { name: "Sara J.", role: "Design Engineer", company: "Vercel", text: "I've tried every component library out there. ParticleUI is the only one I never uninstalled.", stars: 5 },
-  { name: "Dev P.", role: "CTO", company: "YC S23", text: "My users literally message us to ask about our UI. I just say 'ParticleUI' and they go look it up.", stars: 5 },
-  { name: "Chris W.", role: "Product Engineer", company: "Stripe", text: "Vue + Svelte support sealed it. My work project (React) and side project (Vue) both use it now.", stars: 5 },
-]
+/* ─── Launch checklist ───────────────────────────────────────────────────── */
+function LaunchChecklist() {
+  const items = [
+    {
+      title: "Install a free component",
+      body: "Start with Button and see the source file land in your repo.",
+      href: "/docs/components/button",
+      cta: "Install Button",
+    },
+    {
+      title: "Browse production-ready blocks",
+      body: "Preview full sections for marketing pages, auth screens, dashboards, and docs.",
+      href: "/blocks",
+      cta: "Browse blocks",
+    },
+    {
+      title: "Try Theme Studio",
+      body: "Adjust OKLCH tokens and export a theme you can keep in your app.",
+      href: "/theme-studio",
+      cta: "Open Theme Studio",
+    },
+    {
+      title: "Generate a starting layout",
+      body: "Use the AI generator when you want a fast first pass, then install the blocks you like.",
+      href: "/generate",
+      cta: "Try generator",
+    },
+  ]
 
-function Testimonials() {
   return (
     <Reveal>
-    <section aria-label="Testimonials" className="py-24 px-6 border-t border-border overflow-hidden">
+    <section aria-labelledby="demo-checklist-title" className="py-24 px-6 border-t border-border">
       <div className="mx-auto max-w-6xl">
-        <div className="mb-4 flex items-center justify-center gap-1">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={14} weight="fill" className="text-accent" />
+        <div className="mb-4 text-center">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent">Demo path</span>
+        </div>
+        <h2 id="demo-checklist-title" className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-4">
+          Four ways to evaluate ParticleUI fast
+        </h2>
+        <p className="mx-auto mb-12 max-w-xl text-center text-sm leading-[1.7] text-text-3">
+          No account needed to try the free install path. Use these links to go from install to
+          customization in under a minute.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {items.map(({ title, body, href, cta }, index) => (
+            <Link
+              key={title}
+              href={href}
+              className="group flex min-h-[220px] flex-col rounded-xl border border-border bg-surface-1 p-6 transition-colors hover:border-border-hover hover:bg-surface-2"
+            >
+              <div className="mb-5 flex h-8 w-8 items-center justify-center rounded-full border border-accent-border bg-accent-dim text-sm font-bold text-accent">
+                {index + 1}
+              </div>
+              <h3 className="mb-2 text-base font-semibold tracking-[-0.02em] text-text-1">{title}</h3>
+              <p className="mb-6 text-sm leading-[1.65] text-text-3">{body}</p>
+              <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                {cta}
+                <ArrowRight size={12} weight="bold" className="transition-transform group-hover:translate-x-1" />
+              </span>
+            </Link>
           ))}
         </div>
-        <p className="text-center text-text-4 text-sm mb-4">5.0 · Loved by 500+ developers</p>
-        <h2 className="text-center text-[clamp(2rem,4vw,3.25rem)] font-bold tracking-[-0.04em] leading-[1.1] mb-16">
-          Loved by builders
-        </h2>
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 space-y-4">
-          {REVIEWS.map((r) => (
-            <div
-              key={r.name}
-              className="break-inside-avoid rounded-2xl border border-border bg-surface-1 p-6"
-            >
-              <div className="flex gap-0.5 mb-4">
-                {Array.from({ length: r.stars }).map((_, i) => (
-                  <Star key={i} size={11} weight="fill" className="text-accent" />
-                ))}
-              </div>
-              <p className="text-[15px] text-text-2 leading-relaxed mb-5">"{r.text}"</p>
-              <div className="flex items-center gap-3">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-2 border border-border text-xs font-bold text-text-2">
-                  {r.name[0]}
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-text-1">{r.name}</p>
-                  <p className="text-xs text-text-4">{r.role} · {r.company}</p>
-                </div>
-              </div>
+        <div className="mt-6 rounded-xl border border-border bg-surface-1 p-5">
+          <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="text-sm font-semibold text-text-1">Fastest demo path</p>
+              <p className="mt-1 text-sm text-text-3">
+                Run the Button install command, open the generated file, then browse blocks or themes.
+              </p>
             </div>
-          ))}
+            <code className="overflow-x-auto rounded-lg border border-border bg-bg px-4 py-3 font-mono text-sm text-accent">
+              npx particleui-cli add button
+            </code>
+          </div>
         </div>
       </div>
     </section>
@@ -766,7 +1002,7 @@ function Pricing() {
             </Link>
             <p className="text-xs text-text-4 mb-3 uppercase tracking-widest">Includes</p>
             <ul className="space-y-2.5">
-              {["55+ core primitives (MIT)", "36 particle effects", "20 full-page blocks", "particleui-cli included", "Community support"].map((f) => (
+              {["87 free components (MIT)", "36 particle effects included", "20 full-page blocks", "particleui-cli included", "Community support"].map((f) => (
                 <li key={f} className="flex items-center gap-2.5 text-sm text-text-2">
                   <Check size={13} weight="bold" className="text-text-3 shrink-0" />
                   {f}

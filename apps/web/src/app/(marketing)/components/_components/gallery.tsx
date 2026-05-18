@@ -144,65 +144,113 @@ export function Gallery({ items }: { items: RegistryItem[] }) {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {filtered.map((item) => (
+          {filtered.map((item) => {
+            const pro = isPro(item)
+            const isParticle = item.categories.includes("particles")
+            const isBlock = item.categories.includes("blocks")
+            return (
             <Link
               key={item.name}
               href={`/docs/components/${item.name}`}
-              className="group relative bg-surface-1 border border-border rounded-2xl p-5 hover:border-border-hover hover:bg-surface-2 transition-all"
+              className="group relative bg-surface-1 border border-border rounded-2xl overflow-hidden hover:border-border-hover hover:bg-surface-2 transition-all"
             >
-              {/* Top row: badge + arrow */}
-              <div className="flex items-start justify-between">
-                {isPro(item) ? (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim text-accent text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
-                    <Sparkle size={8} weight="fill" />
-                    Pro
-                  </span>
-                ) : (
-                  <span className="inline-flex rounded-full border border-border text-text-2 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
-                    Free
-                  </span>
-                )}
+              {/* Visual preview strip */}
+              <div className={`relative h-24 w-full overflow-hidden flex items-center justify-center ${pro ? "bg-accent/[0.04]" : "bg-white/[0.02]"}`}>
+                {/* Background glow */}
+                <div
+                  className="absolute inset-0 opacity-40"
+                  style={{
+                    background: pro
+                      ? "radial-gradient(ellipse 80% 60% at 50% 100%, oklch(96% 0.01 80 / 0.12), transparent)"
+                      : isParticle
+                      ? "radial-gradient(ellipse 80% 60% at 50% 100%, oklch(60% 0.12 230 / 0.10), transparent)"
+                      : "radial-gradient(ellipse 80% 60% at 50% 100%, oklch(72% 0.003 80 / 0.06), transparent)",
+                  }}
+                />
+                {/* Animated particle dots — particle components get 6, others get 3 */}
+                {(isParticle ? [0,1,2,3,4,5] : [0,1,2]).map((i) => (
+                  <span
+                    key={i}
+                    className="absolute rounded-full"
+                    style={{
+                      width: i % 2 === 0 ? 3 : 2,
+                      height: i % 2 === 0 ? 3 : 2,
+                      left: `${15 + i * 14}%`,
+                      top: `${25 + (i % 3) * 22}%`,
+                      background: isParticle ? "var(--color-accent)" : isBlock ? "oklch(72% 0.18 145)" : "var(--color-text-4)",
+                      opacity: 0.25 + (i % 3) * 0.12,
+                      animation: `gallery-float-${i % 3} ${3 + i * 0.7}s ease-in-out ${i * 0.4}s infinite alternate`,
+                    }}
+                  />
+                ))}
+                {/* Category pill */}
+                <span
+                  className={`relative z-10 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest border ${
+                    isParticle
+                      ? "border-accent/20 bg-accent/[0.06] text-accent"
+                      : isBlock
+                      ? "border-green-500/20 bg-green-500/[0.06] text-green-400"
+                      : "border-border bg-white/[0.04] text-text-3"
+                  }`}
+                >
+                  <span className={`h-1 w-1 rounded-full ${isParticle ? "bg-accent" : isBlock ? "bg-green-400" : "bg-text-4"}`} />
+                  {isParticle ? "Particle" : isBlock ? "Block" : "Core"}
+                </span>
+                {/* Hover arrow */}
                 <ArrowUpRight
                   size={14}
-                  className="text-text-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-3 right-3 text-text-4 opacity-0 group-hover:opacity-100 transition-opacity"
                 />
               </div>
 
-              {/* Title */}
-              <h2 className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-text-1 mt-3 mb-1">
-                {item.title}
-              </h2>
+              {/* Card body */}
+              <div className="p-5">
+                {/* Top row: badge */}
+                <div className="flex items-start justify-between mb-3">
+                  {pro ? (
+                    <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim text-accent text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
+                      <Sparkle size={8} weight="fill" />
+                      Pro
+                    </span>
+                  ) : (
+                    <span className="inline-flex rounded-full border border-border text-text-2 text-[9px] font-bold uppercase tracking-widest px-2.5 py-1">
+                      Free
+                    </span>
+                  )}
+                </div>
 
-              {/* Description */}
-              <p className="text-[15px] text-text-2 leading-[1.6] line-clamp-2">
-                {item.description}
-              </p>
+                {/* Title */}
+                <h2 className="text-[0.9375rem] font-semibold tracking-[-0.01em] text-text-1 mb-1">
+                  {item.title}
+                </h2>
 
-              {/* Framework pills */}
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {item.frameworks.react && (
-                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
-                    React
-                  </span>
-                )}
-                {item.frameworks.vue && (
-                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
-                    Vue
-                  </span>
-                )}
-                {item.frameworks.svelte && (
-                  <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
-                    Svelte
-                  </span>
-                )}
-              </div>
+                {/* Description */}
+                <p className="text-[14px] text-text-2 leading-[1.6] line-clamp-2">
+                  {item.description}
+                </p>
 
-              {/* Install slug */}
-              <div className="font-mono text-xs text-text-2 mt-3">
-                @particleui/{item.name}
+                {/* Framework pills */}
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {item.frameworks.react && (
+                    <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
+                      React
+                    </span>
+                  )}
+                  {item.frameworks.vue && (
+                    <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
+                      Vue
+                    </span>
+                  )}
+                  {item.frameworks.svelte && (
+                    <span className="text-xs text-text-2 border border-border rounded-full px-2 py-0.5">
+                      Svelte
+                    </span>
+                  )}
+                </div>
               </div>
             </Link>
-          ))}
+          )})}
+
         </div>
       )}
     </div>
