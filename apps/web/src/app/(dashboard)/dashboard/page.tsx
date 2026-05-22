@@ -103,7 +103,6 @@ export default async function DashboardPage({
     }
   }
 
-  const isPro = user?.plan === "pro"
   const memberSince = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString("en-US", { month: "long", year: "numeric" })
     : "—"
@@ -128,7 +127,7 @@ export default async function DashboardPage({
             <p className="text-sm font-semibold text-[var(--color-text-1)] mb-0.5">Welcome to ParticleUI!</p>
             <p className="text-xs text-[var(--color-text-3)]">
               All components are free and MIT licensed. Go to{" "}
-              <a href="/components" className="text-[var(--color-accent)] hover:underline font-medium">Components</a>{" "}
+              <Link href="/components" className="text-[var(--color-accent)] hover:underline font-medium">Components</Link>{" "}
               to browse and install anything you need.
             </p>
           </div>

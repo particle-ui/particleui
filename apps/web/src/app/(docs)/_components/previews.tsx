@@ -1958,7 +1958,7 @@ export function AnimateInPreview() {
 }
 
 /* ── Charts Preview ──────────────────────────────────────────────────────── */
-import { BarChart, LineChart, AreaChart, PieChart, ChartContainer } from "@/components/ui/charts"
+import { BarChart, ChartContainer } from "@/components/ui/charts"
 
 export function ChartsPreview() {
   const data = [
