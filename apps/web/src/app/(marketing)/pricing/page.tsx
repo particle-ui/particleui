@@ -76,7 +76,7 @@ export default function PricingPage() {
                 Browse components →
               </Link>
               <Link
-                href="https://github.com/dawit-io/particleui"
+                href="https://github.com/particleui/particleui"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1 px-6 py-3 text-sm font-medium text-text-2 hover:text-text-1 hover:border-border-hover transition-colors"
@@ -124,7 +124,7 @@ export default function PricingPage() {
 
           <p className="text-center text-sm text-text-4 mb-20">
             MIT license ·{" "}
-            <Link href="https://github.com/dawit-io/particleui" target="_blank" rel="noreferrer" className="hover:text-text-2 transition-colors">
+            <Link href="https://github.com/particleui/particleui" target="_blank" rel="noreferrer" className="hover:text-text-2 transition-colors">
               View on GitHub
             </Link>{" "}
             · No sign-in required

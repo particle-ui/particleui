@@ -73,7 +73,7 @@ export default async function PlanPage() {
           <p className="text-sm text-[var(--color-text-3)]">
             All components are MIT licensed and free forever. Contribute, fork, or star us on{" "}
             <Link
-              href="https://github.com/dawit-io/particleui"
+              href="https://github.com/particleui/particleui"
               target="_blank"
               rel="noreferrer"
               className="text-[var(--color-accent)] hover:underline font-medium"

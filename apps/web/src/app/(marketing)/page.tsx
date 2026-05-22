@@ -94,7 +94,7 @@ function Hero() {
             <ArrowRightIcon size={13} weight="bold" className="transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
-            href="https://github.com/dawit-io/particleui"
+            href="https://github.com/particleui/particleui"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1/60 px-7 py-3.5 text-sm font-medium text-text-2 transition-all hover:text-text-1 hover:border-border-hover backdrop-blur-sm"
@@ -395,7 +395,7 @@ const FOOTER_LINKS = [
   { label: "Blocks", href: "/blocks" },
   { label: "Themes", href: "/themes" },
   { label: "Docs", href: "/docs" },
-  { label: "GitHub", href: "https://github.com/dawit-io/particleui", external: true },
+  { label: "GitHub", href: "https://github.com/particleui/particleui", external: true },
 ]
 
 function Footer() {
