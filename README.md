@@ -1,39 +1,58 @@
 # ParticleUI
 
-A premium component registry for [shadcn/ui](https://ui.shadcn.com) projects — 85+ free components that install directly into your codebase via the ParticleUI CLI. You own the source, style it however you want, ship it to production.
+<p align="center">
+  <a href="https://particleui.dev">Website</a> ·
+  <a href="https://particleui.dev/docs">Docs</a> ·
+  <a href="https://particleui.dev/components">Components</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/particleui/particleui/blob/main/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
+  </a>
+  <a href="https://www.npmjs.com/package/particleui-cli">
+    <img src="https://img.shields.io/npm/v/particleui-cli?label=cli" alt="CLI version" />
+  </a>
+  <a href="https://github.com/particleui/particleui/stargazers">
+    <img src="https://img.shields.io/github/stars/particleui/particleui?style=flat" alt="GitHub stars" />
+  </a>
+  <a href="https://github.com/particleui/particleui/commits/main">
+    <img src="https://img.shields.io/github/last-commit/particleui/particleui" alt="Last commit" />
+  </a>
+</p>
+
+<br />
+
+**85+ free, open-source UI components for React** — install directly into your codebase via the CLI. You own the source, style it however you want, ship to production.
 
 ```bash
-npx particleui-cli@latest
+npx particleui-cli add button card badge glow-button
 ```
 
 ## What's included
 
-| Tier | Count | Description |
-|------|-------|-------------|
-| Core Primitives | 40+ | Buttons, inputs, modals, tables, every building block |
-| Particle Effects | 12 | Glows, beams, meteors, tilt, marquee, shimmer |
-| Full-page Blocks | 19 | Hero, pricing, auth, dashboards, FAQ, testimonials |
-| Templates | 6 | Complete multi-section page compositions |
+| Category | Count | Examples |
+|----------|-------|---------|
+| Core Primitives | 40+ | Button, Input, Dialog, Table, Select, Tabs |
+| Particle Effects | 20+ | Glow card, Meteors, Tilt, Marquee, Dot Matrix |
+| Full-page Blocks | 19 | Hero, Pricing, Auth, Dashboard, FAQ, Testimonials |
+| Templates | 6 | Landing, Blog, Docs, SaaS Dashboard, Auth, Pricing |
 
 ## Features
 
-- **Own CLI** — `npx particleui-cli add button`. Works standalone or alongside shadcn.
-- **OKLCH design tokens** — Perceptual color scales with semantic tokens. Dark mode first class.
-- **React · Vue · Svelte** — Same components, three frameworks.
-- **MCP Server** — Claude can search and install components in any conversation.
-- **AI Generator** — Describe a UI in plain English, get a live preview + install command.
-- **Theme Studio** — Design your own OKLCH theme in-browser, export as CSS or a registry URL.
-- **WCAG AA accessible** — All color pairs checked. Focus rings, ARIA roles, keyboard nav.
-- **MIT licensed** — Free components are MIT. You always own the source.
+- **Own CLI** — `npx particleui-cli add button`. Works standalone or alongside shadcn/ui
+- **OKLCH design tokens** — Perceptual color scales, semantic tokens, dark mode first-class
+- **React · Vue · Svelte** — Same components, three frameworks
+- **MCP Server** — Claude can search and install components in any conversation
+- **AI Generator** — Describe a UI in plain English, get a live preview + install command
+- **WCAG AA accessible** — All color pairs checked, focus rings, ARIA roles, keyboard nav
+- **MIT licensed** — 100% free and open source, forever
 
 ## Quick start
 
 ```bash
-# Bootstrap a new project
-npx particleui-cli@latest
-
-# Add components to an existing project
-npx particleui-cli add button card badge
+# Add components to any project
+npx particleui-cli add button
 
 # Add multiple at once
 npx particleui-cli add glow-card tilt-card marquee beam
@@ -42,8 +61,8 @@ npx particleui-cli add glow-card tilt-card marquee beam
 npx particleui-cli add button --framework vue
 npx particleui-cli add button --framework svelte
 
-# Generate a layout from a prompt
-npx particleui-cli generate "SaaS landing page for a fintech startup"
+# Browse all components
+npx particleui-cli list
 ```
 
 ## Monorepo structure
@@ -59,15 +78,10 @@ particleui/
 │   ├── registry-builder/     # Builds registry JSON from source files
 │   └── tokens/               # Shared OKLCH design token definitions
 ├── registry/
-│   ├── react/                # React component registry JSON
-│   ├── vue/                  # Vue 3 component registry JSON
-│   └── svelte/               # Svelte component registry JSON
-└── scripts/
-    ├── components/           # Core component source files
-    ├── blocks/               # Full-page block source files
-    ├── particles/            # Particle effect source files
-    ├── vue/                  # Vue SFC source files
-    └── svelte/               # Svelte SFC source files
+│   ├── react/                # React component source registry
+│   ├── vue/                  # Vue 3 component source registry
+│   └── svelte/               # Svelte component source registry
+└── scripts/                  # Component source files
 ```
 
 ## Development setup
@@ -75,33 +89,13 @@ particleui/
 **Prerequisites:** Node.js ≥ 20, pnpm ≥ 9
 
 ```bash
-git clone https://github.com/particle-ui/particleui.git
+git clone https://github.com/particleui/particleui.git
 cd particleui
 pnpm install
-```
-
-**Run the docs site:**
-
-```bash
 pnpm dev
 ```
 
-**Regenerate the registry:**
-
-```bash
-# All frameworks + build index
-pnpm registry:all
-
-# Specific tiers
-pnpm registry:gen        # core components
-pnpm registry:blocks     # full-page blocks
-pnpm registry:particles  # particle effects
-pnpm registry:templates  # page templates
-pnpm registry:vue        # Vue 3 ports
-pnpm registry:svelte     # Svelte ports
-```
-
-**Environment variables** (copy `apps/web/.env.example` to `apps/web/.env.local`):
+**Environment variables** — copy `apps/web/.env.example` to `apps/web/.env.local`:
 
 | Variable | Description |
 |----------|-------------|
@@ -109,25 +103,11 @@ pnpm registry:svelte     # Svelte ports
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk auth public key |
 | `CLERK_SECRET_KEY` | Clerk auth secret key |
 | `GROQ_API_KEY` | Groq API key for `/generate` — free at console.groq.com |
-| `RESEND_API_KEY` | Resend API key for transactional email |
-| `RESEND_AUDIENCE_ID` | Resend audience ID for PH notify list |
-| `STRIPE_SECRET_KEY` | Stripe secret key for payments |
-| `PARTICLEUI_TOKEN` | Pro license token (optional, local dev) |
+| `RESEND_API_KEY` | Resend for transactional email |
 
-## CLI reference
+## MCP server (Claude Code)
 
-| Command | Description |
-|---------|-------------|
-| `particleui` | Bootstrap a new project (interactive) |
-| `particleui create [name]` | Scaffold a new Next.js + ParticleUI project |
-| `particleui add <components...>` | Add one or more components |
-| `particleui list [query]` | Browse available components |
-| `particleui init` | Set up config in an existing project |
-| `particleui generate <prompt>` | AI layout generation |
-
-## MCP server
-
-Add to your Claude Code config (`~/.claude/claude.json`):
+Add to `~/.claude/claude.json`:
 
 ```json
 {
@@ -144,8 +124,10 @@ Claude can then search, preview, and install components directly in any conversa
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). All contributions welcome — bug fixes, new components, framework ports, docs improvements.
+All contributions welcome — bug fixes, new components, framework ports, docs improvements.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
 ## License
 
-MIT — see [LICENSE](LICENSE). Free components are MIT licensed. Pro components require a license available at [particleui.dev](https://particleui.dev).
+[MIT](LICENSE) — free forever.
