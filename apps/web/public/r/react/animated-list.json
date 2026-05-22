@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "animated-list",
+  "type": "registry:ui",
+  "title": "Animated List",
+  "description": "Staggered slide-up + fade-in entrance for list children. Configurable delay between items.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/animated-list.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface AnimatedListProps {\n  children: React.ReactNode\n  delay?: number\n  className?: string\n}\n\nfunction AnimatedList({\n  children,\n  delay = 100,\n  className,\n}: AnimatedListProps) {\n  const items = React.Children.toArray(children)\n\n  return (\n    <>\n      <style>{`\n        @keyframes animated-list-in {\n          from { opacity: 0; transform: translateY(16px); }\n          to { opacity: 1; transform: translateY(0); }\n        }\n        .animated-list-item {\n          animation: animated-list-in 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;\n        }\n      `}</style>\n      <div className={className}>\n        {items.map((child, i) => (\n          <div\n            key={i}\n            className=\"animated-list-item\"\n            style={{ animationDelay: `${i * delay}ms` }}\n          >\n            {child}\n          </div>\n        ))}\n      </div>\n    </>\n  )\n}\n\nexport { AnimatedList }\nexport default AnimatedList\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ]
+}

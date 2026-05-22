@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "wave-text",
+  "type": "registry:ui",
+  "title": "Wave Text",
+  "description": "Each character gets a staggered vertical wave animation. Configurable duration and amplitude. Pure CSS.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/wave-text.tsx",
+      "content": "import * as React from \"react\"\n\ninterface WaveTextProps {\n  text: string\n  className?: string\n  duration?: number\n}\n\nfunction WaveText({ text, className, duration = 1.2 }: WaveTextProps) {\n  const chars = text.split(\"\")\n\n  return (\n    <>\n      <style>{`\n        @keyframes wave-bounce {\n          0%, 100% { transform: translateY(0); }\n          40% { transform: translateY(-0.35em); }\n          60% { transform: translateY(-0.2em); }\n        }\n        .wave-char {\n          display: inline-block;\n          animation: wave-bounce var(--wave-duration, 1.2s) ease-in-out infinite;\n          animation-delay: var(--wave-delay, 0ms);\n        }\n      `}</style>\n      <span\n        className={[\"inline-block text-[var(--color-text-1)]\", className]\n          .filter(Boolean)\n          .join(\" \")}\n        aria-label={text}\n      >\n        {chars.map((char, i) => (\n          <span\n            key={i}\n            className=\"wave-char\"\n            aria-hidden={char !== \" \"}\n            style={{\n              [\"--wave-duration\" as string]: `${duration}s`,\n              [\"--wave-delay\" as string]: `${(i / chars.length) * duration * 0.6}s`,\n              minWidth: char === \" \" ? \"0.35em\" : undefined,\n            }}\n          >\n            {char === \" \" ? \" \" : char}\n          </span>\n        ))}\n      </span>\n    </>\n  )\n}\n\nexport { WaveText }\nexport default WaveText\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "sparkles-text",
+  "type": "registry:ui",
+  "title": "Sparkles Text",
+  "description": "Random sparkle SVG stars that appear and fade around your text. Configurable count, color, and speed.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/sparkles-text.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface Sparkle {\n  id: number\n  x: number\n  y: number\n  size: number\n  delay: number\n  color: string\n}\n\ninterface SparklesTextProps {\n  children: React.ReactNode\n  className?: string\n  count?: number\n}\n\nconst SPARKLE_COLORS = [\n  \"var(--color-accent)\",\n  \"#fff\",\n  \"oklch(90% 0.15 85)\",\n  \"oklch(85% 0.18 200)\",\n]\n\nfunction generateSparkle(id: number): Sparkle {\n  return {\n    id,\n    x: Math.random() * 100,\n    y: Math.random() * 100,\n    size: 10 + Math.random() * 14,\n    delay: Math.random() * 600,\n    color: SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)],\n  }\n}\n\nfunction SparkleIcon({ size, color }: { size: number; color: string }) {\n  return (\n    <svg\n      width={size}\n      height={size}\n      viewBox=\"0 0 24 24\"\n      fill={color}\n      aria-hidden\n    >\n      <path d=\"M12 0 L13.5 10.5 L24 12 L13.5 13.5 L12 24 L10.5 13.5 L0 12 L10.5 10.5 Z\" />\n    </svg>\n  )\n}\n\nfunction SparklesText({\n  children,\n  className,\n  count = 6,\n}: SparklesTextProps) {\n  const [sparkles, setSparkles] = React.useState<Sparkle[]>(() =>\n    Array.from({ length: count }, (_, i) => generateSparkle(i))\n  )\n  const counterRef = React.useRef(count)\n\n  React.useEffect(() => {\n    const interval = setInterval(() => {\n      const idx = Math.floor(Math.random() * count)\n      counterRef.current += 1\n      setSparkles((prev) => {\n        const next = [...prev]\n        next[idx] = generateSparkle(counterRef.current)\n        return next\n      })\n    }, 400)\n    return () => clearInterval(interval)\n  }, [count])\n\n  return (\n    <>\n      <style>{`\n        @keyframes sparkle-scale {\n          0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }\n          30% { transform: scale(1) rotate(20deg); opacity: 1; }\n          70% { transform: scale(0.8) rotate(-10deg); opacity: 0.7; }\n        }\n        .sparkle-star {\n          animation: sparkle-scale 0.8s ease-in-out forwards;\n          animation-delay: var(--sparkle-delay, 0ms);\n        }\n      `}</style>\n      <span\n        className={[\"relative inline-block\", className].filter(Boolean).join(\" \")}\n      >\n        {sparkles.map((s) => (\n          <span\n            key={s.id}\n            className=\"sparkle-star pointer-events-none absolute\"\n            style={{\n              left: `${s.x}%`,\n              top: `${s.y}%`,\n              transform: \"translate(-50%, -50%)\",\n              [\"--sparkle-delay\" as string]: `${s.delay}ms`,\n              zIndex: 1,\n            }}\n          >\n            <SparkleIcon size={s.size} color={s.color} />\n          </span>\n        ))}\n        <span style={{ position: \"relative\", zIndex: 2 }}>{children}</span>\n      </span>\n    </>\n  )\n}\n\nexport { SparklesText }\nexport default SparklesText\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

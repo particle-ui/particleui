@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "liquid-button",
+  "type": "registry:ui",
+  "title": "Liquid Button",
+  "description": "Button with a liquid blob that follows the cursor using a radial gradient fill effect. Smooth mousemove tracking.",
+  "author": "ParticleUI",
+  "categories": [
+    "buttons",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/liquid-button.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface LiquidButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  children: React.ReactNode\n  className?: string\n  variant?: \"default\" | \"accent\" | \"ghost\"\n}\n\nfunction LiquidButton({\n  children,\n  className,\n  variant = \"default\",\n  style,\n  ...props\n}: LiquidButtonProps) {\n  const ref = React.useRef<HTMLButtonElement>(null)\n  const [pos, setPos] = React.useState<{ x: number; y: number } | null>(null)\n  const [hovered, setHovered] = React.useState(false)\n\n  const handleMouseMove = React.useCallback(\n    (e: React.MouseEvent<HTMLButtonElement>) => {\n      const el = ref.current\n      if (!el) return\n      const rect = el.getBoundingClientRect()\n      setPos({\n        x: ((e.clientX - rect.left) / rect.width) * 100,\n        y: ((e.clientY - rect.top) / rect.height) * 100,\n      })\n    },\n    []\n  )\n\n  const variantStyles: Record<string, { base: string; blob: string }> = {\n    default: {\n      base: \"bg-[var(--color-surface-1)] border border-[var(--color-border)] text-[var(--color-text-1)]\",\n      blob: \"oklch(100% 0 0 / 0.08)\",\n    },\n    accent: {\n      base: \"bg-[var(--color-accent)] text-[var(--color-bg)]\",\n      blob: \"oklch(100% 0 0 / 0.25)\",\n    },\n    ghost: {\n      base: \"bg-transparent border border-[var(--color-border)] text-[var(--color-text-1)]\",\n      blob: \"var(--color-accent)\",\n    },\n  }\n\n  const v = variantStyles[variant] ?? variantStyles.default\n\n  return (\n    <button\n      ref={ref}\n      onMouseMove={handleMouseMove}\n      onMouseEnter={() => setHovered(true)}\n      onMouseLeave={() => {\n        setHovered(false)\n        setPos(null)\n      }}\n      className={[\n        \"relative overflow-hidden rounded-xl px-5 py-2.5 text-sm font-medium\",\n        \"transition-transform duration-150 active:scale-[0.97]\",\n        v.base,\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      style={style}\n      {...props}\n    >\n      {hovered && pos && (\n        <span\n          aria-hidden\n          style={{\n            position: \"absolute\",\n            width: \"250%\",\n            aspectRatio: \"1\",\n            left: `${pos.x}%`,\n            top: `${pos.y}%`,\n            transform: \"translate(-50%, -50%)\",\n            background: `radial-gradient(circle closest-side, ${v.blob}, transparent)`,\n            pointerEvents: \"none\",\n            transition: \"left 0.08s ease-out, top 0.08s ease-out\",\n          }}\n        />\n      )}\n      <span style={{ position: \"relative\", zIndex: 1 }}>{children}</span>\n    </button>\n  )\n}\n\nexport { LiquidButton }\nexport default LiquidButton\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

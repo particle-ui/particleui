@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "glitch-text",
+  "type": "registry:ui",
+  "title": "Glitch Text",
+  "description": "Cyberpunk-style glitch effect with layered text-shadow offsets and random jitter keyframes.",
+  "author": "ParticleUI",
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/glitch-text.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface GlitchTextProps {\n  text: string\n  className?: string\n  intensity?: number\n}\n\nfunction GlitchText({ text, className, intensity = 1 }: GlitchTextProps) {\n  const px = (n: number) => `${n * intensity}px`\n\n  return (\n    <>\n      <style>{`\n        @keyframes glitch-clip-1 {\n          0%, 100% { clip-path: inset(0 0 90% 0); transform: translate(${px(2)}, ${px(-1)}); }\n          20% { clip-path: inset(30% 0 50% 0); transform: translate(${px(-3)}, ${px(2)}); }\n          40% { clip-path: inset(60% 0 20% 0); transform: translate(${px(3)}, ${px(-2)}); }\n          60% { clip-path: inset(80% 0 5% 0); transform: translate(${px(-2)}, ${px(1)}); }\n          80% { clip-path: inset(10% 0 75% 0); transform: translate(${px(1)}, ${px(3)}); }\n        }\n        @keyframes glitch-clip-2 {\n          0%, 100% { clip-path: inset(70% 0 0 0); transform: translate(${px(-2)}, ${px(1)}); }\n          25% { clip-path: inset(40% 0 40% 0); transform: translate(${px(3)}, ${px(-3)}); }\n          50% { clip-path: inset(5% 0 80% 0); transform: translate(${px(-1)}, ${px(2)}); }\n          75% { clip-path: inset(55% 0 25% 0); transform: translate(${px(2)}, ${px(-1)}); }\n        }\n        @keyframes glitch-jitter {\n          0%, 90%, 100% { transform: none; }\n          92% { transform: translate(${px(1)}, 0); }\n          94% { transform: translate(${px(-1)}, ${px(1)}); }\n          96% { transform: translate(${px(2)}, 0); }\n          98% { transform: translate(0, ${px(-1)}); }\n        }\n        .glitch-layer-1 {\n          animation: glitch-clip-1 2.5s infinite linear, glitch-jitter 4s infinite;\n          color: oklch(65% 0.25 25);\n        }\n        .glitch-layer-2 {\n          animation: glitch-clip-2 3.1s infinite linear, glitch-jitter 5s infinite 0.3s;\n          color: oklch(80% 0.2 195);\n        }\n      `}</style>\n      <span\n        className={[\"relative inline-block text-[var(--color-text-1)]\", className]\n          .filter(Boolean)\n          .join(\" \")}\n        aria-label={text}\n      >\n        <span>{text}</span>\n        <span\n          className=\"glitch-layer-1 pointer-events-none select-none\"\n          aria-hidden\n          style={{ position: \"absolute\", inset: 0, overflow: \"hidden\", mixBlendMode: \"screen\" }}\n        >\n          {text}\n        </span>\n        <span\n          className=\"glitch-layer-2 pointer-events-none select-none\"\n          aria-hidden\n          style={{ position: \"absolute\", inset: 0, overflow: \"hidden\", mixBlendMode: \"screen\" }}\n        >\n          {text}\n        </span>\n      </span>\n    </>\n  )\n}\n\nexport { GlitchText }\nexport default GlitchText\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

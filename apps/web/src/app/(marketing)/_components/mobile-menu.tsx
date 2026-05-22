@@ -7,7 +7,7 @@ const LINKS = [
   { label: "Components", href: "/components" },
   { label: "Blocks", href: "/blocks" },
   { label: "Docs", href: "/docs" },
-  { label: "Pricing", href: "/pricing" },
+  { label: "GitHub", href: "https://github.com/dawit-io/particleui" },
 ]
 
 export function MobileMenu() {

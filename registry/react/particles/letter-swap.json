@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "letter-swap",
+  "type": "registry:ui",
+  "title": "Letter Swap",
+  "description": "On hover, each letter scrambles through random characters before revealing the real letter. Configurable speed.",
+  "author": "ParticleUI",
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/letter-swap.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface LetterSwapProps {\n  text: string\n  className?: string\n  speed?: number\n}\n\nconst CHARS = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*\"\n\nfunction LetterSwap({ text, className, speed = 50 }: LetterSwapProps) {\n  const [displayed, setDisplayed] = React.useState(text.split(\"\"))\n  const timers = React.useRef<ReturnType<typeof setTimeout>[]>([])\n\n  const scramble = React.useCallback(() => {\n    timers.current.forEach(clearTimeout)\n    timers.current = []\n\n    const letters = text.split(\"\")\n    const iterations = 8\n\n    letters.forEach((char, i) => {\n      if (char === \" \") return\n      for (let iter = 0; iter < iterations; iter++) {\n        const t = setTimeout(\n          () => {\n            setDisplayed((prev) => {\n              const next = [...prev]\n              if (iter < iterations - 1) {\n                next[i] = CHARS[Math.floor(Math.random() * CHARS.length)]\n              } else {\n                next[i] = char\n              }\n              return next\n            })\n          },\n          i * speed + iter * (speed * 0.6)\n        )\n        timers.current.push(t)\n      }\n    })\n  }, [text, speed])\n\n  const reset = React.useCallback(() => {\n    timers.current.forEach(clearTimeout)\n    timers.current = []\n    setDisplayed(text.split(\"\"))\n  }, [text])\n\n  React.useEffect(() => {\n    return () => timers.current.forEach(clearTimeout)\n  }, [])\n\n  return (\n    <span\n      className={[\n        \"inline-block cursor-default select-none font-mono text-[var(--color-text-1)]\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      onMouseEnter={scramble}\n      onMouseLeave={reset}\n      aria-label={text}\n    >\n      {displayed.map((char, i) => (\n        <span key={i} style={{ display: \"inline-block\", minWidth: char === \" \" ? \"0.35em\" : undefined }}>\n          {char}\n        </span>\n      ))}\n    </span>\n  )\n}\n\nexport { LetterSwap }\nexport default LetterSwap\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

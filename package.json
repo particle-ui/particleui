@@ -25,8 +25,10 @@
     "registry:vue": "node scripts/gen-vue.mjs && pnpm registry:build",
     "registry:templates": "node scripts/gen-templates.mjs && pnpm registry:build",
     "registry:all": "node scripts/gen-registry.mjs && node scripts/gen-particles.mjs && node scripts/gen-blocks.mjs && node scripts/gen-pro.mjs && node scripts/gen-templates.mjs && node scripts/gen-svelte.mjs && node scripts/gen-vue.mjs && pnpm registry:build",
+    "registry:check": "node scripts/check-registry-clean.mjs",
     "test": "turbo test && node --test scripts/__tests__/*.test.mjs",
     "check": "pnpm --filter web typecheck && pnpm --filter particleui-cli build && pnpm registry:all",
+    "verify": "pnpm typecheck && pnpm test && pnpm lint && pnpm build && pnpm registry:check",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {

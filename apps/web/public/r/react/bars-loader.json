@@ -1,0 +1,19 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "bars-loader",
+  "type": "registry:ui",
+  "title": "Bars Loader",
+  "description": "Vertical bars that animate in a wave pattern — great for audio/data loading states.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/bars-loader.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\ninterface BarsLoaderProps {\n  size?: \"sm\" | \"md\" | \"lg\"\n  bars?: number\n  className?: string\n}\n\nconst heights = {\n  sm: \"h-5\",\n  md: \"h-8\",\n  lg: \"h-12\",\n}\n\nconst widths = {\n  sm: \"w-[2px] gap-[3px]\",\n  md: \"w-[3px] gap-1\",\n  lg: \"w-1 gap-1.5\",\n}\n\nexport function BarsLoader({ size = \"md\", bars = 5, className }: BarsLoaderProps) {\n  return (\n    <div\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"flex items-end\", widths[size], className)}\n    >\n      {Array.from({ length: bars }).map((_, i) => (\n        <span\n          key={i}\n          className={cn(\"rounded-full bg-[var(--color-accent)]\", heights[size])}\n          style={{\n            animation: \"bars-wave 1s ease-in-out infinite\",\n            animationDelay: `${(i / bars) * 0.6}s`,\n          }}\n        />\n      ))}\n      <style>{`\n        @keyframes bars-wave {\n          0%, 100% { transform: scaleY(0.3); opacity: 0.5; }\n          50%       { transform: scaleY(1);   opacity: 1; }\n        }\n      `}</style>\n    </div>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": { "light": {}, "dark": {} },
+  "categories": ["loaders", "core", "free"]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "text-reveal",
+  "type": "registry:ui",
+  "title": "Text Reveal",
+  "description": "Text revealed by a sliding mask on scroll entry. Clean clip-path animation, viewport-triggered.",
+  "author": "ParticleUI",
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/text-reveal.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface TextRevealProps {\n  text: string\n  className?: string\n  delay?: number\n}\n\nfunction TextReveal({ text, className, delay = 0 }: TextRevealProps) {\n  const ref = React.useRef<HTMLSpanElement>(null)\n  const maskRef = React.useRef<HTMLSpanElement>(null)\n  const [revealed, setRevealed] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setRevealed(true)\n          observer.disconnect()\n        }\n      },\n      { threshold: 0.2 }\n    )\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <>\n      <style>{`\n        @keyframes text-reveal-slide {\n          from { clip-path: inset(0 100% 0 0); }\n          to { clip-path: inset(0 0% 0 0); }\n        }\n        .text-reveal-animate {\n          animation: text-reveal-slide 0.7s cubic-bezier(0.77, 0, 0.18, 1) forwards;\n        }\n      `}</style>\n      <span\n        ref={ref}\n        className={[\"relative inline-block overflow-hidden\", className]\n          .filter(Boolean)\n          .join(\" \")}\n      >\n        <span\n          aria-hidden\n          style={{ visibility: \"hidden\", whiteSpace: \"pre\" }}\n        >\n          {text}\n        </span>\n        <span\n          ref={maskRef}\n          aria-label={text}\n          className={revealed ? \"text-reveal-animate\" : \"\"}\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            clipPath: \"inset(0 100% 0 0)\",\n            animationDelay: revealed ? `${delay}ms` : \"0ms\",\n            whiteSpace: \"pre\",\n          }}\n        >\n          {text}\n        </span>\n      </span>\n    </>\n  )\n}\n\nexport { TextReveal }\nexport default TextReveal\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

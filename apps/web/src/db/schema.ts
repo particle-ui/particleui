@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, boolean, uuid, integer } from "drizzle-orm/pg-core"
+import { pgTable, text, timestamp, boolean, uuid, integer, uniqueIndex } from "drizzle-orm/pg-core"
 
 export const users = pgTable("users", {
   id: text("id").primaryKey(), // Clerk user ID
@@ -64,17 +64,23 @@ export const teams = pgTable("teams", {
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
-export const teamMembers = pgTable("team_members", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  teamId: uuid("team_id")
-    .notNull()
-    .references(() => teams.id, { onDelete: "cascade" }),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  role: text("role", { enum: ["owner", "member"] }).notNull().default("member"),
-  joinedAt: timestamp("joined_at").notNull().defaultNow(),
-})
+export const teamMembers = pgTable(
+  "team_members",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    teamId: uuid("team_id")
+      .notNull()
+      .references(() => teams.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    role: text("role", { enum: ["owner", "member"] }).notNull().default("member"),
+    joinedAt: timestamp("joined_at").notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("team_members_team_id_user_id_unique").on(table.teamId, table.userId),
+  ]
+)
 
 export const teamInvites = pgTable("team_invites", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -89,6 +95,13 @@ export const teamInvites = pgTable("team_invites", {
   acceptedAt: timestamp("accepted_at"),
   expiresAt: timestamp("expires_at").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export const rateLimitBuckets = pgTable("rate_limit_buckets", {
+  key: text("key").primaryKey(),
+  count: integer("count").notNull().default(0),
+  resetAt: timestamp("reset_at").notNull(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
 
 export const themes = pgTable("themes", {

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "number-flow",
+  "type": "registry:ui",
+  "title": "Number Flow",
+  "description": "Smoothly animates between numeric values with digit-by-digit rolling animation. Supports prefix and suffix.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/number-flow.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface NumberFlowProps {\n  value: number\n  prefix?: string\n  suffix?: string\n  className?: string\n}\n\nfunction useAnimatedDigits(value: number) {\n  const [displayValue, setDisplayValue] = React.useState(value)\n  const [prevValue, setPrevValue] = React.useState(value)\n  const [animating, setAnimating] = React.useState(false)\n\n  React.useEffect(() => {\n    if (value === displayValue) return\n    setPrevValue(displayValue)\n    setAnimating(true)\n    const raf = requestAnimationFrame(() => {\n      const duration = 500\n      const start = performance.now()\n      const from = displayValue\n\n      const step = (now: number) => {\n        const elapsed = now - start\n        const t = Math.min(elapsed / duration, 1)\n        const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t\n        const current = Math.round(from + (value - from) * eased)\n        setDisplayValue(current)\n        if (t < 1) {\n          requestAnimationFrame(step)\n        } else {\n          setDisplayValue(value)\n          setAnimating(false)\n        }\n      }\n      requestAnimationFrame(step)\n    })\n    return () => cancelAnimationFrame(raf)\n  }, [value]) // eslint-disable-line react-hooks/exhaustive-deps\n\n  return { displayValue, animating }\n}\n\nfunction DigitColumn({ digit, direction }: { digit: string; direction: \"up\" | \"down\" | \"none\" }) {\n  return (\n    <>\n      <style>{`\n        @keyframes digit-roll-up {\n          from { transform: translateY(100%); opacity: 0; }\n          to { transform: translateY(0); opacity: 1; }\n        }\n        @keyframes digit-roll-down {\n          from { transform: translateY(-100%); opacity: 0; }\n          to { transform: translateY(0); opacity: 1; }\n        }\n        .digit-roll-up { animation: digit-roll-up 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }\n        .digit-roll-down { animation: digit-roll-down 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }\n      `}</style>\n      <span\n        style={{ display: \"inline-block\", overflow: \"hidden\", height: \"1.2em\", verticalAlign: \"text-top\" }}\n      >\n        <span\n          key={digit}\n          className={\n            direction === \"up\"\n              ? \"digit-roll-up\"\n              : direction === \"down\"\n              ? \"digit-roll-down\"\n              : \"\"\n          }\n          style={{ display: \"inline-block\" }}\n        >\n          {digit}\n        </span>\n      </span>\n    </>\n  )\n}\n\nfunction NumberFlow({ value, prefix, suffix, className }: NumberFlowProps) {\n  const { displayValue, animating } = useAnimatedDigits(value)\n  const [prevDisplayed, setPrevDisplayed] = React.useState(displayValue)\n\n  const direction: \"up\" | \"down\" | \"none\" = animating\n    ? value > prevDisplayed\n      ? \"up\"\n      : \"down\"\n    : \"none\"\n\n  React.useEffect(() => {\n    if (!animating) setPrevDisplayed(displayValue)\n  }, [animating, displayValue])\n\n  const formatted = Math.abs(displayValue).toLocaleString()\n  const isNegative = displayValue < 0\n\n  return (\n    <span\n      className={[\n        \"inline-flex items-baseline tabular-nums text-[var(--color-text-1)]\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      aria-live=\"polite\"\n      aria-atomic\n    >\n      {prefix && <span>{prefix}</span>}\n      {isNegative && <span>-</span>}\n      {formatted.split(\"\").map((char, i) => (\n        <DigitColumn key={i} digit={char} direction={/\\d/.test(char) ? direction : \"none\"} />\n      ))}\n      {suffix && <span>{suffix}</span>}\n    </span>\n  )\n}\n\nexport { NumberFlow }\nexport default NumberFlow\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

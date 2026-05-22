@@ -1,13 +1,18 @@
 export const dynamic = "force-dynamic"
 
 import { db } from "@/db"
-import { teamInvites, teams, users, teamMembers } from "@/db/schema"
-import { eq, and, isNull, gt } from "drizzle-orm"
-import { auth } from "@clerk/nextjs/server"
+import { teamInvites, teams, teamMembers } from "@/db/schema"
+import { eq, and } from "drizzle-orm"
+import { auth, currentUser } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { Users, Check, X } from "@phosphor-icons/react/dist/ssr"
 import { AcceptButton } from "./_components/accept-button"
+import {
+  getVerifiedEmailAddresses,
+  requireInviteEmailMatch,
+  TeamInviteAcceptanceError,
+} from "@/lib/team/invite-acceptance"
 
 export default async function InviteAcceptPage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params
@@ -15,6 +20,16 @@ export default async function InviteAcceptPage({ params }: { params: Promise<{ t
 
   if (!process.env.DATABASE_URL) {
     return <ErrorCard message="Database not configured." />
+  }
+
+  // If not signed in, redirect before loading invite details.
+  if (!userId) {
+    redirect(`/sign-up?redirect_url=/dashboard/team/invite/${token}`)
+  }
+
+  const clerkUser = await currentUser()
+  if (!clerkUser) {
+    redirect(`/sign-up?redirect_url=/dashboard/team/invite/${token}`)
   }
 
   // Look up the invite
@@ -36,9 +51,14 @@ export default async function InviteAcceptPage({ params }: { params: Promise<{ t
   if (invite.acceptedAt) return <ErrorCard message="This invite has already been accepted." />
   if (new Date(invite.expiresAt) < new Date()) return <ErrorCard message="This invite has expired. Ask your team owner to send a new one." />
 
-  // If not signed in, redirect to sign-up with return URL
-  if (!userId) {
-    redirect(`/sign-up?redirect_url=/dashboard/team/invite/${token}`)
+  try {
+    requireInviteEmailMatch(invite.email, getVerifiedEmailAddresses(clerkUser.emailAddresses))
+  } catch (error) {
+    if (error instanceof TeamInviteAcceptanceError && error.code === "email_mismatch") {
+      return <ErrorCard message="This invite is for a different email address." />
+    }
+
+    throw error
   }
 
   // Check if user is already a member

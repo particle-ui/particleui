@@ -1,0 +1,19 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "dots-loader",
+  "type": "registry:ui",
+  "title": "Dots Loader",
+  "description": "Three dots that bounce in sequence — the classic loading indicator.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/dots-loader.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\ninterface DotsLoaderProps {\n  size?: \"sm\" | \"md\" | \"lg\"\n  className?: string\n}\n\nconst dotSizes = {\n  sm: \"h-1.5 w-1.5\",\n  md: \"h-2 w-2\",\n  lg: \"h-3 w-3\",\n}\n\nconst gaps = {\n  sm: \"gap-1\",\n  md: \"gap-1.5\",\n  lg: \"gap-2\",\n}\n\nexport function DotsLoader({ size = \"md\", className }: DotsLoaderProps) {\n  return (\n    <div\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"flex items-center\", gaps[size], className)}\n    >\n      {[0, 1, 2].map((i) => (\n        <div\n          key={i}\n          className={cn(\"rounded-full bg-[var(--color-accent)]\", dotSizes[size])}\n          style={{\n            animation: \"dots-bounce 1s ease-in-out infinite\",\n            animationDelay: `${i * 0.16}s`,\n          }}\n        />\n      ))}\n      <style>{`\n        @keyframes dots-bounce {\n          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }\n          40%           { transform: translateY(-40%); opacity: 1; }\n        }\n      `}</style>\n    </div>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": { "light": {}, "dark": {} },
+  "categories": ["loaders", "core", "free"]
+}

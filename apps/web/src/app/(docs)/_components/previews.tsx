@@ -2034,3 +2034,150 @@ export function FileUploaderPreview() {
     </div>
   )
 }
+
+/* ── Loaders ─────────────────────────────────────────────────────────────── */
+import { Spinner } from "@/components/ui/spinner"
+import { DotsLoader } from "@/components/ui/dots-loader"
+import { PulseLoader } from "@/components/ui/pulse-loader"
+import { BarsLoader } from "@/components/ui/bars-loader"
+import { RingLoader } from "@/components/ui/ring-loader"
+import { DotMatrix, type DotMatrixType } from "@/components/ui/dot-matrix-loaders"
+
+export function SpinnerPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-8 p-8">
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="xs" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">xs</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="sm" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">sm</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="md" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">md</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="lg" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">lg</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <Spinner size="xl" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">xl</span>
+      </div>
+    </div>
+  )
+}
+
+export function DotsLoaderPreview() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-8 p-8">
+      <div className="flex flex-col items-center gap-3">
+        <DotsLoader size="sm" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">sm</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <DotsLoader size="md" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">md</span>
+      </div>
+      <div className="flex flex-col items-center gap-3">
+        <DotsLoader size="lg" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">lg</span>
+      </div>
+    </div>
+  )
+}
+
+export function PulseLoaderPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-10 p-8">
+      <PulseLoader size="sm" />
+      <PulseLoader size="md" />
+      <PulseLoader size="lg" />
+    </div>
+  )
+}
+
+export function BarsLoaderPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-10 p-8">
+      <div className="flex flex-col items-center gap-4">
+        <BarsLoader size="sm" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">sm</span>
+      </div>
+      <div className="flex flex-col items-center gap-4">
+        <BarsLoader size="md" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">md</span>
+      </div>
+      <div className="flex flex-col items-center gap-4">
+        <BarsLoader size="lg" />
+        <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">lg</span>
+      </div>
+    </div>
+  )
+}
+
+export function RingLoaderPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-10 p-8">
+      <RingLoader size="sm" />
+      <RingLoader size="md" />
+      <RingLoader size="lg" />
+    </div>
+  )
+}
+
+function DotMatrixVariantPreview({ type }: { type: DotMatrixType }) {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-12 p-8">
+      {(["sm", "md", "lg"] as const).map((s) => (
+        <div key={s} className="flex flex-col items-center gap-4">
+          <DotMatrix type={type} size={s} />
+          <span className="text-[10px] text-[var(--color-text-4)] uppercase tracking-widest">{s}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+export function NeonDriftPreview() { return <DotMatrixVariantPreview type="neon-drift" /> }
+export function CascadePreview() { return <DotMatrixVariantPreview type="cascade" /> }
+export function PulseLadderPreview() { return <DotMatrixVariantPreview type="pulse-ladder" /> }
+export function PrismSweepPreview() { return <DotMatrixVariantPreview type="prism-sweep" /> }
+export function RipplePreview() { return <DotMatrixVariantPreview type="ripple" /> }
+export function CoreSpiralPreview() { return <DotMatrixVariantPreview type="core-spiral" /> }
+export function TwinOrbitPreview() { return <DotMatrixVariantPreview type="twin-orbit" /> }
+export function SnakePreview() { return <DotMatrixVariantPreview type="snake" /> }
+export function MatrixRainPreview() { return <DotMatrixVariantPreview type="matrix-rain" /> }
+export function VortexPreview() { return <DotMatrixVariantPreview type="vortex" /> }
+export function BloomPreview() { return <DotMatrixVariantPreview type="bloom" /> }
+export function StaggerRowsPreview() { return <DotMatrixVariantPreview type="stagger-rows" /> }
+export function GridPulsePreview() { return <DotMatrixVariantPreview type="grid-pulse" /> }
+export function WavePreview() { return <DotMatrixVariantPreview type="wave" /> }
+export function HeartbeatPreview() { return <DotMatrixVariantPreview type="heartbeat" /> }
+export function CrossHatchPreview() { return <DotMatrixVariantPreview type="cross-hatch" /> }
+export function ClockwisePreview() { return <DotMatrixVariantPreview type="clockwise" /> }
+export function ZipperPreview() { return <DotMatrixVariantPreview type="zipper" /> }
+export function SunrisePreview() { return <DotMatrixVariantPreview type="sunrise" /> }
+export function TwinSweepPreview() { return <DotMatrixVariantPreview type="twin-sweep" /> }
+
+const DOT_MATRIX_TYPES: DotMatrixType[] = [
+  "neon-drift", "cascade", "pulse-ladder", "prism-sweep", "ripple",
+  "core-spiral", "twin-orbit", "snake", "matrix-rain", "vortex",
+  "bloom", "stagger-rows", "grid-pulse", "wave", "heartbeat",
+  "cross-hatch", "clockwise", "zipper", "sunrise", "twin-sweep",
+]
+
+export function DotMatrixPreview() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-8 p-8">
+      {DOT_MATRIX_TYPES.map((t) => (
+        <div key={t} className="flex flex-col items-center gap-3">
+          <DotMatrix type={t} size="sm" />
+          <span className="text-[9px] text-[var(--color-text-4)] uppercase tracking-widest">{t}</span>
+        </div>
+      ))}
+    </div>
+  )
+}

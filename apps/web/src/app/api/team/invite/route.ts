@@ -4,9 +4,11 @@ import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 import { db } from "@/db"
 import { teams, teamMembers, teamInvites, users } from "@/db/schema"
-import { eq, and, isNull, count } from "drizzle-orm"
+import { eq, and, isNull, count, sql } from "drizzle-orm"
 import { randomBytes } from "crypto"
 import { sendTeamInviteEmail } from "@/lib/email"
+import { normalizeEmail } from "@/lib/team/invite-acceptance"
+import { consumeRateLimit, rateLimitPolicies, rateLimitResponse } from "@/lib/rate-limit/rate-limit"
 
 export async function POST(req: NextRequest) {
   const { userId } = await auth()
@@ -18,6 +20,7 @@ export async function POST(req: NextRequest) {
   if (!teamId || !email) {
     return NextResponse.json({ error: "teamId and email are required" }, { status: 400 })
   }
+  const inviteEmail = normalizeEmail(email)
 
   // Verify caller is the team owner
   const [team] = await db
@@ -29,6 +32,12 @@ export async function POST(req: NextRequest) {
   if (!team) {
     return NextResponse.json({ error: "Team not found or you are not the owner" }, { status: 403 })
   }
+
+  const inviteLimit = await consumeRateLimit({
+    policy: rateLimitPolicies.teamInviteCreate,
+    identity: { type: "team", id: team.id },
+  })
+  if (!inviteLimit.allowed) return rateLimitResponse(inviteLimit)
 
   // Count current members + pending invites
   const [{ memberCount }] = await db
@@ -50,7 +59,7 @@ export async function POST(req: NextRequest) {
     .select({ id: users.id })
     .from(users)
     .innerJoin(teamMembers, eq(teamMembers.userId, users.id))
-    .where(and(eq(teamMembers.teamId, teamId), eq(users.email, email)))
+    .where(and(eq(teamMembers.teamId, teamId), eq(sql`lower(trim(${users.email}))`, inviteEmail)))
     .limit(1)
 
   if (existingMember) {
@@ -63,7 +72,7 @@ export async function POST(req: NextRequest) {
 
   await db.insert(teamInvites).values({
     teamId,
-    email,
+    email: inviteEmail,
     token,
     invitedBy: userId,
     expiresAt,
@@ -74,7 +83,7 @@ export async function POST(req: NextRequest) {
   const inviteUrl = `${appUrl}/dashboard/team/invite/${token}`
 
   try {
-    await sendTeamInviteEmail({ to: email, teamName: team.name, inviteUrl })
+    await sendTeamInviteEmail({ to: inviteEmail, teamName: team.name, inviteUrl })
   } catch (err) {
     console.error("[team/invite] Failed to send email:", err)
     // Don't fail the request — invite is created, email is best-effort

@@ -1,10 +1,10 @@
 export const dynamic = "force-dynamic"
 
-import { auth, currentUser } from "@clerk/nextjs/server"
+import { auth } from "@clerk/nextjs/server"
 import { redirect } from "next/navigation"
 import { db } from "@/db"
 import { users, teams, teamMembers, teamInvites } from "@/db/schema"
-import { eq, and, isNull, count } from "drizzle-orm"
+import { eq, and, isNull } from "drizzle-orm"
 import type { Metadata } from "next"
 import { Users, Sparkle, EnvelopeSimple, Crown } from "@phosphor-icons/react/dist/ssr"
 import { InviteForm } from "./_components/invite-form"
@@ -15,7 +15,6 @@ export default async function TeamPage() {
   const { userId } = await auth()
   if (!userId) redirect("/sign-in")
 
-  const clerkUser = await currentUser()
   const dbReady = !!process.env.DATABASE_URL
 
   if (!dbReady) {
@@ -117,8 +116,6 @@ export default async function TeamPage() {
 
   const maxSeats = team?.maxSeats ?? 5
   const seatsFree = Math.max(maxSeats - memberCount - pendingInvites.length, 0)
-  const ownerEmail = clerkUser?.emailAddresses[0]?.emailAddress ?? ""
-
   return (
     <div>
       <div className="mb-8">
@@ -216,7 +213,7 @@ export default async function TeamPage() {
             They'll get an email with a link to join your team. {seatsFree} seat{seatsFree !== 1 ? "s" : ""} remaining.
           </p>
           {seatsFree > 0 ? (
-            <InviteForm teamId={teamId!} ownerEmail={ownerEmail} />
+            <InviteForm teamId={teamId!} />
           ) : (
             <p className="text-xs text-[var(--color-text-4)] italic">All seats are filled.</p>
           )}

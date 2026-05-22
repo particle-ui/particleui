@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "morphing-text",
+  "type": "registry:ui",
+  "title": "Morphing Text",
+  "description": "Cycles through an array of words with a smooth blur-morph transition. Configurable interval and CSS-only animation.",
+  "author": "ParticleUI",
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/morphing-text.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface MorphingTextProps {\n  words: string[]\n  className?: string\n}\n\nfunction MorphingText({ words, className }: MorphingTextProps) {\n  const [index, setIndex] = React.useState(0)\n  const [morphing, setMorphing] = React.useState(false)\n\n  React.useEffect(() => {\n    if (words.length < 2) return\n    const interval = setInterval(() => {\n      setMorphing(true)\n      setTimeout(() => {\n        setIndex((i) => (i + 1) % words.length)\n        setTimeout(() => setMorphing(false), 400)\n      }, 400)\n    }, 2800)\n    return () => clearInterval(interval)\n  }, [words])\n\n  return (\n    <>\n      <style>{`\n        @keyframes morph-blur-in {\n          0% { filter: blur(12px); opacity: 0; transform: scaleX(0.92); }\n          100% { filter: blur(0px); opacity: 1; transform: scaleX(1); }\n        }\n        @keyframes morph-blur-out {\n          0% { filter: blur(0px); opacity: 1; transform: scaleX(1); }\n          100% { filter: blur(12px); opacity: 0; transform: scaleX(0.92); }\n        }\n        .morphing-text-in {\n          animation: morph-blur-in 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;\n        }\n        .morphing-text-out {\n          animation: morph-blur-out 0.4s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;\n        }\n      `}</style>\n      <span\n        className={[\n          \"inline-block text-[var(--color-text-1)]\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        style={{ minWidth: \"4ch\", textAlign: \"center\" }}\n      >\n        <span\n          key={`${index}-${morphing ? \"out\" : \"in\"}`}\n          className={morphing ? \"morphing-text-out\" : \"morphing-text-in\"}\n          style={{ display: \"inline-block\" }}\n        >\n          {words[index]}\n        </span>\n      </span>\n    </>\n  )\n}\n\nexport { MorphingText }\nexport default MorphingText\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

@@ -3,11 +3,14 @@
 import { auth } from "@clerk/nextjs/server"
 import { generateLayout } from "@/lib/ai/gateway"
 import { db } from "@/db"
-import { aiGenerations, users } from "@/db/schema"
-import { eq, count } from "drizzle-orm"
+import { aiGenerations } from "@/db/schema"
 import type { GeneratedLayout } from "@/lib/ai/gateway"
-
-const FREE_LIMIT = 5
+import {
+  aiPolicyForUser,
+  consumeRateLimit,
+  getServerActionClientIp,
+  identityForUserOrIp,
+} from "@/lib/rate-limit/rate-limit"
 
 type GenerateResult =
   | { layout: GeneratedLayout; error?: never; used?: never; limit?: never }
@@ -15,26 +18,23 @@ type GenerateResult =
 
 export async function generateLayoutAction(prompt: string): Promise<GenerateResult> {
   const { userId } = await auth()
+  const policy = await aiPolicyForUser(userId)
+  const decision = await consumeRateLimit({
+    policy,
+    identity: identityForUserOrIp(userId, await getServerActionClientIp()),
+  })
 
-  // Rate limiting for signed-in users
-  if (userId) {
-    // Check plan
-    const [user] = await db.select().from(users).where(eq(users.id, userId)).limit(1)
-    if (user?.plan !== "pro") {
-      const [result] = await db
-        .select({ cnt: count() })
-        .from(aiGenerations)
-        .where(eq(aiGenerations.userId, userId))
-      const usedToday = Number(result?.cnt ?? 0)
-      if (usedToday >= FREE_LIMIT) {
-        return { error: "rate_limited", used: usedToday, limit: FREE_LIMIT }
-      }
+  if (!decision.allowed) {
+    return {
+      error: "rate_limited",
+      used: decision.limit,
+      limit: decision.limit,
     }
   }
 
   const layout = await generateLayout(prompt)
 
-  // Persist
+  // Persist signed-in generations for product analytics and future abuse review.
   if (userId) {
     await db.insert(aiGenerations).values({
       userId,

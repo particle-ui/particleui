@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "badge-shine",
+  "type": "registry:ui",
+  "title": "Badge Shine",
+  "description": "Status badge with an automatic shining light sweep. Three variants: default, pro, and new. Pure CSS.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/badge-shine.tsx",
+      "type": "registry:ui",
+      "content": "import * as React from \"react\"\n\ninterface BadgeShineProps {\n  children: React.ReactNode\n  className?: string\n  variant?: \"default\" | \"pro\" | \"new\"\n}\n\nfunction BadgeShine({\n  children,\n  className,\n  variant = \"default\",\n}: BadgeShineProps) {\n  const variantClasses: Record<string, string> = {\n    default:\n      \"bg-[var(--color-surface-1)] text-[var(--color-text-2)] border border-[var(--color-border)]\",\n    pro:\n      \"bg-[var(--color-accent)] text-[var(--color-bg)] border border-transparent\",\n    new:\n      \"bg-[oklch(30%_0.08_250)] text-[oklch(85%_0.18_250)] border border-[oklch(50%_0.15_250)]\",\n  }\n\n  return (\n    <>\n      <style>{`\n        @keyframes badge-shine-sweep {\n          0% { left: -60%; opacity: 0; }\n          10% { opacity: 1; }\n          50% { left: 120%; opacity: 1; }\n          51%, 100% { left: 120%; opacity: 0; }\n        }\n        .badge-shine-light {\n          animation: badge-shine-sweep 3.5s ease-in-out infinite;\n        }\n      `}</style>\n      <span\n        className={[\n          \"relative inline-flex items-center gap-1 overflow-hidden rounded-full px-2.5 py-0.5 text-xs font-medium\",\n          variantClasses[variant] ?? variantClasses.default,\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n      >\n        <span\n          className=\"badge-shine-light pointer-events-none absolute top-0 h-full w-1/3\"\n          aria-hidden\n          style={{\n            background:\n              \"linear-gradient(90deg, transparent 0%, oklch(100% 0 0 / 0.4) 50%, transparent 100%)\",\n            transform: \"skewX(-20deg)\",\n          }}\n        />\n        {children}\n      </span>\n    </>\n  )\n}\n\nexport { BadgeShine }\nexport default BadgeShine\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

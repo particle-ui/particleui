@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "blur-fade",
+  "type": "registry:ui",
+  "title": "Blur Fade",
+  "description": "Viewport-triggered entrance animation: blurs out then fades in smoothly. Zero dependencies, respects prefers-reduced-motion.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/blur-fade.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface BlurFadeProps {\n  children: React.ReactNode\n  delay?: number\n  duration?: number\n  className?: string\n}\n\nfunction BlurFade({\n  children,\n  delay = 0,\n  duration = 600,\n  className,\n}: BlurFadeProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [visible, setVisible] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setVisible(true)\n          observer.disconnect()\n        }\n      },\n      { threshold: 0.1 }\n    )\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [])\n\n  return (\n    <div\n      ref={ref}\n      className={className}\n      style={{\n        filter: visible ? \"blur(0px)\" : \"blur(8px)\",\n        opacity: visible ? 1 : 0,\n        transition: `filter ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}ms, opacity ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}ms`,\n        willChange: \"filter, opacity\",\n      }}\n    >\n      {children}\n    </div>\n  )\n}\n\nexport { BlurFade }\nexport default BlurFade\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ]
+}

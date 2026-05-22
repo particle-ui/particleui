@@ -52,24 +52,12 @@ export async function CodeBlock({
 
   return (
     <div className="my-5 overflow-hidden rounded-xl border border-border">
-      {/* Title bar */}
+      {/* Header bar — clean shadcn style, no traffic lights */}
       <div className="flex items-center justify-between border-b border-border bg-surface-2 px-4 py-2.5">
-        <div className="flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-          {filename && (
-            <span className="ml-2 font-mono text-[11px] text-text-2">{filename}</span>
-          )}
-        </div>
-        <div className="flex items-center gap-2">
-          {!filename && (
-            <span className="font-mono text-[10px] uppercase tracking-widest text-text-2">
-              {langLabel(language)}
-            </span>
-          )}
-          <CopyButton code={trimmed} />
-        </div>
+        <span className="font-mono text-[11px] text-text-3">
+          {filename ?? langLabel(language)}
+        </span>
+        <CopyButton code={trimmed} />
       </div>
 
       {/* Highlighted code — override shiki's bg to match our surface */}

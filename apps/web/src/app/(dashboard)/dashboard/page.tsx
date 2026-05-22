@@ -120,16 +120,16 @@ export default async function DashboardPage({
         </p>
       </div>
 
-      {/* Post-purchase success banner */}
+      {/* Welcome banner */}
       {upgraded === "1" && (
         <div className="mb-6 rounded-xl border border-[var(--color-accent-border)] bg-[var(--color-accent-dim)] px-5 py-4 flex items-start gap-3">
           <Sparkle size={16} weight="fill" className="text-[var(--color-accent)] mt-0.5 shrink-0" />
           <div>
-            <p className="text-sm font-semibold text-[var(--color-text-1)] mb-0.5">Welcome to ParticleUI Pro! 🎉</p>
+            <p className="text-sm font-semibold text-[var(--color-text-1)] mb-0.5">Welcome to ParticleUI!</p>
             <p className="text-xs text-[var(--color-text-3)]">
-              Your license is active. An API token has been auto-generated — check your email or go to{" "}
-              <a href="/dashboard/tokens" className="text-[var(--color-accent)] hover:underline font-medium">Tokens</a>{" "}
-              to copy it. You can now install any Pro component.
+              All components are free and MIT licensed. Go to{" "}
+              <a href="/components" className="text-[var(--color-accent)] hover:underline font-medium">Components</a>{" "}
+              to browse and install anything you need.
             </p>
           </div>
         </div>
@@ -152,26 +152,14 @@ export default async function DashboardPage({
         <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-1)] p-5">
           <div className="flex items-start justify-between mb-3">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-text-4)] mb-1">Current Plan</p>
-              <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${
-                isPro
-                  ? "bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] text-[var(--color-accent-text)]"
-                  : "bg-[var(--color-surface-2)] border border-[var(--color-border)] text-[var(--color-text-3)]"
-              }`}>
-                {isPro && <Sparkle size={10} weight="fill" />}
-                {isPro ? "Pro" : "Free"}
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-[var(--color-text-4)] mb-1">Plan</p>
+              <span className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-accent-dim)] border border-[var(--color-accent-border)] text-[var(--color-accent-text)]">
+                Free forever
               </span>
             </div>
             <p className="text-[10px] text-[var(--color-text-4)]">since {memberSince}</p>
           </div>
-          {!isPro && (
-            <Link
-              href="/dashboard/plan"
-              className="flex items-center gap-1 text-xs text-[var(--color-accent-text)] hover:underline mt-2"
-            >
-              Upgrade to Pro <ArrowRight size={11} />
-            </Link>
-          )}
+          <p className="text-xs text-[var(--color-text-4)] mt-2">MIT licensed · all components included</p>
         </div>
 
         {/* Stats card */}

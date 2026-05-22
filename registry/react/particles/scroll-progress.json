@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "scroll-progress",
+  "type": "registry:ui",
+  "title": "Scroll Progress",
+  "description": "Fixed-position thin progress bar showing how far the user has scrolled down the page. Configurable color and height.",
+  "author": "ParticleUI",
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ],
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/scroll-progress.tsx",
+      "type": "registry:ui",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface ScrollProgressProps {\n  className?: string\n  color?: string\n}\n\nfunction ScrollProgress({\n  className,\n  color = \"var(--color-accent)\",\n}: ScrollProgressProps) {\n  const [progress, setProgress] = React.useState(0)\n\n  React.useEffect(() => {\n    const update = () => {\n      const scrollTop = window.scrollY || document.documentElement.scrollTop\n      const docHeight =\n        document.documentElement.scrollHeight - document.documentElement.clientHeight\n      setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0)\n    }\n    update()\n    window.addEventListener(\"scroll\", update, { passive: true })\n    return () => window.removeEventListener(\"scroll\", update)\n  }, [])\n\n  return (\n    <div\n      role=\"progressbar\"\n      aria-valuenow={Math.round(progress)}\n      aria-valuemin={0}\n      aria-valuemax={100}\n      aria-label=\"Page scroll progress\"\n      className={[\n        \"fixed top-0 left-0 right-0 z-[9999] h-[3px]\",\n        className,\n      ]\n        .filter(Boolean)\n        .join(\" \")}\n      style={{ background: \"transparent\" }}\n    >\n      <div\n        style={{\n          height: \"100%\",\n          width: `${progress}%`,\n          background: color,\n          boxShadow: `0 0 8px ${color}`,\n          transition: \"width 0.05s linear\",\n          borderRadius: \"0 2px 2px 0\",\n        }}\n      />\n    </div>\n  )\n}\n\nexport { ScrollProgress }\nexport default ScrollProgress\n"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  }
+}

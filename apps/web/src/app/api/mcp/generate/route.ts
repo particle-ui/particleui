@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server"
 import { generateLayout } from "@/lib/ai/gateway"
 import { validateToken } from "@/lib/auth/token"
+import {
+  consumeRateLimit,
+  getClientIpFromHeaders,
+  rateLimitPolicies,
+  rateLimitResponse,
+} from "@/lib/rate-limit/rate-limit"
 
 export async function POST(req: NextRequest) {
   const authHeader = req.headers.get("authorization")
@@ -11,9 +17,17 @@ export async function POST(req: NextRequest) {
   }
 
   const tokenRecord = await validateToken(token)
-  if (!tokenRecord.valid) {
+  if (!tokenRecord.valid || !tokenRecord.userId) {
     return NextResponse.json({ error: "Invalid or revoked token" }, { status: 401 })
   }
+
+  const decision = await consumeRateLimit({
+    policy: rateLimitPolicies.mcpGenerate,
+    identity: tokenRecord.tokenId
+      ? { type: "token", id: tokenRecord.tokenId }
+      : { type: "ip", id: getClientIpFromHeaders(req.headers) },
+  })
+  if (!decision.allowed) return rateLimitResponse(decision)
 
   const body = await req.json().catch(() => ({}))
   const prompt = typeof body.prompt === "string" ? body.prompt.slice(0, 500) : ""

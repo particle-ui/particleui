@@ -1456,5 +1456,77 @@
       "free",
       "blocks"
     ]
+  },
+  {
+    "name": "spinner",
+    "type": "registry:ui",
+    "title": "Spinner",
+    "description": "Minimal rotating ring spinner with size variants.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "dots-loader",
+    "type": "registry:ui",
+    "title": "Dots Loader",
+    "description": "Three dots that bounce in sequence \u2014 the classic loading indicator.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "pulse-loader",
+    "type": "registry:ui",
+    "title": "Pulse Loader",
+    "description": "Concentric ripple rings radiating outward from a center dot.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "bars-loader",
+    "type": "registry:ui",
+    "title": "Bars Loader",
+    "description": "Vertical bars animating in a wave pattern.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "ring-loader",
+    "type": "registry:ui",
+    "title": "Ring Loader",
+    "description": "Two concentric rings rotating in opposite directions.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
+  },
+  {
+    "name": "dot-matrix",
+    "type": "registry:ui",
+    "title": "Dot Matrix",
+    "description": "5\u00d75 grid loader with 20 animation variants \u2014 sweep, spiral, ripple, vortex, and more.",
+    "categories": [
+      "loaders",
+      "core",
+      "free"
+    ],
+    "tier": "core"
   }
 ]

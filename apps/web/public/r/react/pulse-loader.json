@@ -1,0 +1,19 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "pulse-loader",
+  "type": "registry:ui",
+  "title": "Pulse Loader",
+  "description": "Concentric ripple rings radiating outward from a center dot.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/pulse-loader.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\ninterface PulseLoaderProps {\n  size?: \"sm\" | \"md\" | \"lg\"\n  className?: string\n}\n\nconst sizes = {\n  sm: { outer: \"h-6 w-6\", inner: \"h-3 w-3\" },\n  md: { outer: \"h-10 w-10\", inner: \"h-5 w-5\" },\n  lg: { outer: \"h-14 w-14\", inner: \"h-7 w-7\" },\n}\n\nexport function PulseLoader({ size = \"md\", className }: PulseLoaderProps) {\n  const s = sizes[size]\n  return (\n    <div\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"relative flex items-center justify-center\", s.outer, className)}\n    >\n      <span\n        className=\"absolute inset-0 rounded-full bg-[var(--color-accent)]\"\n        style={{ animation: \"pulse-ring 1.4s cubic-bezier(0.24, 0, 0.38, 1) infinite\" }}\n      />\n      <span\n        className=\"absolute inset-0 rounded-full bg-[var(--color-accent)]\"\n        style={{ animation: \"pulse-ring 1.4s cubic-bezier(0.24, 0, 0.38, 1) 0.7s infinite\" }}\n      />\n      <span className={cn(\"relative z-10 rounded-full bg-[var(--color-accent)]\", s.inner)} />\n      <style>{`\n        @keyframes pulse-ring {\n          0%   { transform: scale(0.33); opacity: 0.8; }\n          80%,\n          100% { transform: scale(1);    opacity: 0; }\n        }\n      `}</style>\n    </div>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": { "light": {}, "dark": {} },
+  "categories": ["loaders", "core", "free"]
+}

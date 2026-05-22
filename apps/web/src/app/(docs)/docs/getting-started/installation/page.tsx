@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { CodeBlock } from "@/components/code-block"
 import { Callout } from "@/components/docs/callout"
 import { Steps, Step } from "@/components/docs/steps"
@@ -16,8 +17,8 @@ export default function InstallationPage() {
         Installation
       </h1>
       <p className="mb-8 text-text-2 leading-[1.75] text-[0.9375rem]">
-        ParticleUI ships its own CLI — <code>particleui-cli</code> — so you don&apos;t need the
-        any other tool. One command installs any component directly into your project.
+        ParticleUI ships its own CLI — <code>particleui-cli</code> — so you don&apos;t need any
+        other tool. One command installs source-owned UI directly into your project.
       </p>
 
       <Callout variant="note">
@@ -37,7 +38,11 @@ export default function InstallationPage() {
           </p>
           <CodeBlock code="npx particleui-cli add button" />
           <p className="mt-3 text-text-3 text-sm">
-            Install multiple at once:
+            Expected result: <code>src/components/ui/button.tsx</code> is created in your app.
+            See the <Link href="/docs/components/button" className="text-accent hover:underline">Button docs</Link>.
+          </p>
+          <p className="mt-5 text-text-3 text-sm">
+            Install multiple components at once:
           </p>
           <div className="mt-2">
             <CodeBlock code="npx particleui-cli add glow-card tilt-card marquee" />

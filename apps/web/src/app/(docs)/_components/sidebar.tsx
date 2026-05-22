@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Sparkle } from "@phosphor-icons/react/dist/ssr"
+import { SparkleIcon } from "@phosphor-icons/react/dist/ssr"
 import { promises as fs } from "fs"
 import path from "path"
 import { cn } from "@/lib/utils"
@@ -29,7 +29,8 @@ const GETTING_STARTED = [
 export async function Sidebar() {
   const components = await getComponents()
   const isFree = (c: { categories: string[]; tier?: string }) => !c.categories.includes("pro")
-  const core = components.filter((c: { categories: string[]; tier?: string }) => c.tier !== "themes" && c.categories.includes("core") && isFree(c))
+  const loaders = components.filter((c: { categories: string[]; tier?: string }) => c.categories.includes("loaders"))
+  const core = components.filter((c: { categories: string[]; tier?: string }) => c.tier !== "themes" && c.categories.includes("core") && isFree(c) && !c.categories.includes("loaders"))
   const particles = components.filter((c: { categories: string[]; tier?: string }) => c.tier !== "themes" && c.categories.includes("particles") && isFree(c))
   const blocks = components.filter((c: { categories: string[]; tier?: string }) => c.tier !== "themes" && c.categories.includes("blocks") && isFree(c))
   const pro = components.filter((c: { categories: string[]; tier?: string }) => c.tier !== "themes" && c.categories.includes("pro"))
@@ -40,7 +41,7 @@ export async function Sidebar() {
       {/* Logo */}
       <div className="flex h-14 shrink-0 items-center border-b border-border px-5">
         <Link href="/" className="flex items-center gap-2 font-bold text-sm tracking-tight">
-          <Sparkle weight="fill" size={15} className="text-accent" />
+          <SparkleIcon weight="fill" size={15} className="text-accent" />
           ParticleUI
         </Link>
       </div>
@@ -75,6 +76,22 @@ export async function Sidebar() {
               {themes.map((c: { name: string; title: string }) => (
                 <li key={c.name}>
                   <NavLink href={`/docs/themes/${c.name}`}>{c.title}</NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Loaders */}
+        {loaders.length > 0 && (
+          <div>
+            <p className="mb-1.5 px-2 text-xs font-semibold uppercase tracking-[0.15em] text-text-2">
+              Loaders
+            </p>
+            <ul className="space-y-0.5">
+              {loaders.map((c: { name: string; title: string }) => (
+                <li key={c.name}>
+                  <NavLink href={`/docs/components/${c.name}`}>{c.title}</NavLink>
                 </li>
               ))}
             </ul>

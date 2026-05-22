@@ -15,6 +15,20 @@
       "when": 1779017250000,
       "tag": "0001_hash_only_api_tokens",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1779028200000,
+      "tag": "0002_team_members_unique_membership",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779031800000,
+      "tag": "0003_rate_limit_buckets",
+      "breakpoints": true
     }
   ]
 }

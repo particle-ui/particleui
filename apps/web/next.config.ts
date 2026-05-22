@@ -1,3 +1,5 @@
+import path from "node:path"
+import { fileURLToPath } from "node:url"
 import type { NextConfig } from "next"
 
 const SECURITY_HEADERS = [
@@ -8,7 +10,10 @@ const SECURITY_HEADERS = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
 ]
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 const config: NextConfig = {
+  outputFileTracingRoot: path.join(__dirname, "../.."),
   transpilePackages: ["tokens"],
   images: {
     remotePatterns: [

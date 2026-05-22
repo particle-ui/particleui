@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-lexend), var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
 @theme {
   /* ── Fonts ──────────────────────────────────────────────────────────────── */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-lexend), var(--font-geist), ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono: var(--font-geist-mono), "Fira Code", ui-monospace, monospace;
 
   /* ── Neutral scale (OKLCH perceptual) ────────────────────────────────────
@@ -301,10 +305,23 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Headings ───────────────────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+/* ── Headings — robi style: ultra-thin, editorial ───────────────────────── */
+h1 {
+  font-weight: 200;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--color-text-1);
+}
+h2 {
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: var(--color-text-1);
+}
+h3, h4, h5, h6 {
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: var(--color-text-1);
 }
 

@@ -6,13 +6,25 @@ description: Get started with ParticleUI — premium animated components for sha
 # Introduction
 
 ParticleUI is a registry of premium animated components built on top of [shadcn/ui](https://ui.shadcn.com).
-You install components directly into your project using the **existing shadcn CLI** — no separate tool needed.
+You install components directly into your project using the **ParticleUI CLI**. The source lands in
+your repo, so you can customize it like normal code.
 
 ## Installation
 
-### 1. Configure your registry
+### 1. Install a free component
 
-Add the `@particleui` registry to your `components.json`:
+Start with Button. No sign-in or token is required:
+
+```bash
+npx particleui-cli add button
+```
+
+The component source lands in `src/components/ui/button.tsx`.
+
+### 2. Optional: configure your registry
+
+If you also use shadcn-compatible registries directly, add the `@particleui` registry to your
+`components.json`:
 
 ```json title="components.json"
 {
@@ -27,7 +39,7 @@ Add the `@particleui` registry to your `components.json`:
 }
 ```
 
-### 2. Add your token
+### 3. Add your token for Pro components
 
 ```bash title=".env"
 PARTICLEUI_TOKEN=your-token-here
@@ -35,10 +47,10 @@ PARTICLEUI_TOKEN=your-token-here
 
 Get a token from your [dashboard](/dashboard) after signing up.
 
-### 3. Install a component
+### 4. Install another component
 
 ```bash
-npx shadcn add @particleui/glow-button
+npx particleui-cli add glow-button
 ```
 
 Free components work without a token. Pro components require a valid `PARTICLEUI_TOKEN`.

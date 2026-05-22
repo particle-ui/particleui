@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "neon-border",
+  "type": "registry:ui",
+  "title": "Neon Border",
+  "description": "Card with a pulsing neon glow border. Configurable color. CSS box-shadow animation, no canvas required.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/neon-border.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface NeonBorderProps extends React.HTMLAttributes<HTMLDivElement> {\n  children: React.ReactNode\n  color?: string\n  className?: string\n}\n\nfunction NeonBorder({\n  children,\n  color = \"cyan\",\n  className,\n  style,\n  ...props\n}: NeonBorderProps) {\n  const colorMap: Record<string, { glow: string; border: string }> = {\n    cyan: {\n      glow: \"oklch(85% 0.2 200)\",\n      border: \"oklch(75% 0.22 200)\",\n    },\n    purple: {\n      glow: \"oklch(75% 0.25 295)\",\n      border: \"oklch(65% 0.27 295)\",\n    },\n    green: {\n      glow: \"oklch(80% 0.22 140)\",\n      border: \"oklch(70% 0.24 140)\",\n    },\n    pink: {\n      glow: \"oklch(78% 0.24 340)\",\n      border: \"oklch(68% 0.26 340)\",\n    },\n    accent: {\n      glow: \"var(--color-accent)\",\n      border: \"var(--color-accent)\",\n    },\n  }\n\n  const c = colorMap[color] ?? colorMap.cyan\n\n  return (\n    <>\n      <style>{`\n        @keyframes neon-pulse {\n          0%, 100% {\n            box-shadow:\n              0 0 4px 1px var(--neon-color),\n              0 0 12px 3px var(--neon-color),\n              inset 0 0 6px 0px var(--neon-color);\n            border-color: var(--neon-border);\n          }\n          50% {\n            box-shadow:\n              0 0 8px 2px var(--neon-color),\n              0 0 24px 6px var(--neon-color),\n              inset 0 0 10px 1px var(--neon-color);\n            border-color: var(--neon-border);\n          }\n        }\n        .neon-border-card {\n          animation: neon-pulse 2.4s ease-in-out infinite;\n        }\n      `}</style>\n      <div\n        className={[\n          \"neon-border-card rounded-xl border bg-[var(--color-surface-1)]\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        style={{\n          [\"--neon-color\" as string]: c.glow,\n          [\"--neon-border\" as string]: c.border,\n          ...style,\n        }}\n        {...props}\n      >\n        {children}\n      </div>\n    </>\n  )\n}\n\nexport { NeonBorder }\nexport default NeonBorder\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "cards",
+    "particles",
+    "free"
+  ]
+}

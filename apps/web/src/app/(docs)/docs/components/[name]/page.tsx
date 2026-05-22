@@ -2,14 +2,17 @@ import { promises as fs } from "fs"
 import path from "path"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { Sparkle } from "@phosphor-icons/react/dist/ssr"
+import { SparkleIcon } from "@phosphor-icons/react/dist/ssr"
 import type { Metadata } from "next"
 import { codeToHtml } from "shiki"
-import { ComponentTabs } from "../../../_components/component-tabs"
+import { ComponentPreview } from "../../../_components/component-preview"
 import { PropsTable, parseProps } from "../../../_components/props-table"
 import { CodeBlock } from "@/components/code-block"
+import { EXTRA_PROPS } from "../../../_data/extra-props"
+import { COMPONENT_EXAMPLES } from "../../../_data/component-examples"
 import { PrevNext } from "@/components/docs/prev-next"
-import { FrameworkInstall } from "../../../_components/framework-install"
+import { InstallSection } from "../../../_components/install-section"
+import { DocHeaderActions } from "../../../_components/doc-header-actions"
 import {
   GlowButtonPreview,
   ElectricBadgePreview,
@@ -131,6 +134,12 @@ import {
   DocsSiteTemplatePreview,
   PricingPageTemplatePreview,
   SaasDashboardTemplatePreview,
+  SpinnerPreview,
+  DotsLoaderPreview,
+  PulseLoaderPreview,
+  BarsLoaderPreview,
+  RingLoaderPreview,
+  DotMatrixPreview,
 } from "../../../_components/previews"
 
 interface RegistryItem {
@@ -266,6 +275,13 @@ const PREVIEWS: Record<string, React.ReactNode> = {
   "kanban": <KanbanPreview />,
   "event-calendar": <EventCalendarPreview />,
   "file-uploader": <FileUploaderPreview />,
+  // Loaders
+  "spinner": <SpinnerPreview />,
+  "dots-loader": <DotsLoaderPreview />,
+  "pulse-loader": <PulseLoaderPreview />,
+  "bars-loader": <BarsLoaderPreview />,
+  "ring-loader": <RingLoaderPreview />,
+  "dot-matrix": <DotMatrixPreview />,
   // Templates
   "landing": <LandingTemplatePreview />,
   "auth": <AuthTemplatePreview />,
@@ -317,7 +333,11 @@ export default async function ComponentDocPage({
   const mainFile = item.files.find((f) => f.type !== "registry:file")
   const preview = PREVIEWS[name]
   const installCmd = `npx particleui-cli add ${item.name}`
-  const propDefs = mainFile?.content ? parseProps(mainFile.content) : []
+  const parsedProps = mainFile?.content ? parseProps(mainFile.content) : []
+  const extraProps = EXTRA_PROPS[name] ?? []
+  // Merge: parsed props first, then extras for props not already present
+  const parsedNames = new Set(parsedProps.map((p) => p.name))
+  const propDefs = [...parsedProps, ...extraProps.filter((p) => !parsedNames.has(p.name))]
 
   const usageCode = generateUsage(item)
   const highlightedUsage = usageCode
@@ -325,6 +345,34 @@ export default async function ComponentDocPage({
     : undefined
 
   const aiPrompt = generateAiPrompt(item, usageCode)
+
+  // Compute prev/next from the ordered component index
+  const indexPath = path.join(process.cwd(), "public/r/react/index.json")
+  const allItems: { name: string; title: string; tier?: string }[] = JSON.parse(
+    await fs.readFile(indexPath, "utf-8")
+  )
+  const ordered = allItems.filter((i) => i.tier !== "themes")
+  const currentIdx = ordered.findIndex((i) => i.name === name)
+  const prevItem = currentIdx > 0 ? ordered[currentIdx - 1] : null
+  const nextItem = currentIdx < ordered.length - 1 ? ordered[currentIdx + 1] : null
+
+  // Server-rendered manual install content (passes ReactNode to client component)
+  const deps = item.dependencies ?? []
+  const manualContent = (
+    <>
+      {deps.length > 0 && (
+        <CodeBlock code={`npm install ${deps.join(" ")}`} />
+      )}
+      {mainFile?.content && (
+        <>
+          {deps.length > 0 && (
+            <p className="mb-2 text-sm text-text-2">Copy and paste into your project:</p>
+          )}
+          <CodeBlock code={mainFile.content} filename={mainFile.path} />
+        </>
+      )}
+    </>
+  )
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-12">
@@ -337,21 +385,30 @@ export default async function ComponentDocPage({
         <span className="text-text-3">{item.title}</span>
       </nav>
 
-      {/* Title */}
-      <div className="mb-3 flex items-center gap-3">
-        <h1 className="text-[2rem] font-semibold tracking-[-0.02em] leading-[1.2] text-text-1">{item.title}</h1>
-        {isPro && (
-          <span className="inline-flex items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
-            <Sparkle size={9} weight="fill" />Pro
-          </span>
-        )}
+      {/* Title + header actions row */}
+      <div className="mb-3 flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
+          <h1 className="text-[2rem] font-semibold tracking-[-0.02em] leading-[1.2] text-text-1">{item.title}</h1>
+          {isPro && (
+            <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-accent-border bg-accent-dim px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
+              <SparkleIcon size={9} weight="fill" />Pro
+            </span>
+          )}
+        </div>
+        <DocHeaderActions
+          markdown={aiPrompt}
+          prevHref={prevItem ? `/docs/components/${prevItem.name}` : undefined}
+          prevLabel={prevItem?.title}
+          nextHref={nextItem ? `/docs/components/${nextItem.name}` : undefined}
+          nextLabel={nextItem?.title}
+        />
       </div>
       <p className="mb-8 text-text-2 text-[0.9375rem] leading-[1.75]">{item.description}</p>
 
       {/* Pro notice */}
       {isPro && (
         <div className="mb-8 rounded-xl border border-accent-border bg-accent-dim px-4 py-3 flex items-start gap-3">
-          <Sparkle size={14} weight="fill" className="text-accent mt-0.5 shrink-0" />
+          <SparkleIcon size={14} weight="fill" className="text-accent mt-0.5 shrink-0" />
           <p className="text-[15px] text-text-2">
             Pro component — requires an active license.{" "}
             <Link href="/pricing" className="text-accent hover:underline">
@@ -361,10 +418,10 @@ export default async function ComponentDocPage({
         </div>
       )}
 
-      {/* Preview + Code tabs */}
+      {/* Preview + code peek (shadcn style) */}
       {mainFile?.content && (
         <div className="mb-10">
-          <ComponentTabs
+          <ComponentPreview
             preview={preview ?? (
               <p className="text-xs text-text-3">No preview available</p>
             )}
@@ -403,9 +460,11 @@ export default async function ComponentDocPage({
             </Step>
           </>
         ) : (
-          <Step n={1} title="Run the CLI">
-            <FrameworkInstall name={item.name} />
-          </Step>
+          <InstallSection
+            name={item.name}
+            dependencies={deps}
+            manualContent={manualContent}
+          />
         )}
       </section>
 
@@ -414,6 +473,24 @@ export default async function ComponentDocPage({
         <section className="mb-10">
           <h2 id="usage" className="mb-5 text-xl font-semibold tracking-[-0.01em] text-text-1">Usage</h2>
           <CodeBlock code={generateUsage(item)} />
+        </section>
+      )}
+
+      {/* Examples */}
+      {COMPONENT_EXAMPLES[name] && COMPONENT_EXAMPLES[name].length > 0 && (
+        <section className="mb-10">
+          <h2 id="examples" className="mb-5 text-xl font-semibold tracking-[-0.01em] text-text-1">Examples</h2>
+          <div className="space-y-8">
+            {COMPONENT_EXAMPLES[name].map((ex) => (
+              <div key={ex.title}>
+                <h3 id={`example-${ex.title.toLowerCase().replace(/\s+/g, "-")}`} className="mb-1 text-[0.9375rem] font-semibold text-text-1">{ex.title}</h3>
+                {ex.description && (
+                  <p className="mb-3 text-sm text-text-3">{ex.description}</p>
+                )}
+                <CodeBlock code={ex.code} lang="tsx" />
+              </div>
+            ))}
+          </div>
         </section>
       )}
 

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "retro-grid",
+  "type": "registry:ui",
+  "title": "Retro Grid",
+  "description": "Animated perspective grid floor background with scrolling lines. Pure CSS, zero JS. Drop into any relative container.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/retro-grid.tsx",
+      "content": "import * as React from \"react\"\n\ninterface RetroGridProps {\n  opacity?: number\n  color?: string\n  className?: string\n}\n\nfunction RetroGrid({\n  opacity = 0.4,\n  color = \"var(--color-border)\",\n  className,\n}: RetroGridProps) {\n  return (\n    <>\n      <style>{`\n        @keyframes retro-grid-scroll {\n          0% { transform: perspective(500px) rotateX(65deg) translateY(0); }\n          100% { transform: perspective(500px) rotateX(65deg) translateY(60px); }\n        }\n        .retro-grid-lines {\n          animation: retro-grid-scroll 3s linear infinite;\n        }\n      `}</style>\n      <div\n        className={[\n          \"pointer-events-none absolute inset-0 overflow-hidden\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        aria-hidden\n        style={{ opacity }}\n      >\n        <div\n          className=\"retro-grid-lines\"\n          style={{\n            position: \"absolute\",\n            inset: \"-100% -50%\",\n            backgroundImage: `\n              linear-gradient(${color} 1px, transparent 1px),\n              linear-gradient(90deg, ${color} 1px, transparent 1px)\n            `,\n            backgroundSize: \"60px 60px\",\n            transform: \"perspective(500px) rotateX(65deg) translateY(0)\",\n            transformOrigin: \"50% 0%\",\n          }}\n        />\n        <div\n          style={{\n            position: \"absolute\",\n            bottom: 0,\n            left: 0,\n            right: 0,\n            height: \"40%\",\n            background: \"linear-gradient(to top, var(--color-bg, #0a0a0a), transparent)\",\n          }}\n        />\n        <div\n          style={{\n            position: \"absolute\",\n            top: 0,\n            left: 0,\n            right: 0,\n            height: \"20%\",\n            background: \"linear-gradient(to bottom, var(--color-bg, #0a0a0a), transparent)\",\n          }}\n        />\n      </div>\n    </>\n  )\n}\n\nexport { RetroGrid }\nexport default RetroGrid\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "background",
+    "particles",
+    "free"
+  ]
+}

@@ -11,12 +11,10 @@ interface NumberFlowProps {
 
 function useAnimatedDigits(value: number) {
   const [displayValue, setDisplayValue] = React.useState(value)
-  const [prevValue, setPrevValue] = React.useState(value)
   const [animating, setAnimating] = React.useState(false)
 
   React.useEffect(() => {
     if (value === displayValue) return
-    setPrevValue(displayValue)
     setAnimating(true)
     const raf = requestAnimationFrame(() => {
       const duration = 500

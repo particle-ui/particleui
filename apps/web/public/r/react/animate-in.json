@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "animate-in",
+  "type": "registry:ui",
+  "title": "Animate In",
+  "description": "Versatile viewport-triggered entrance animation wrapper. 7 variants: fade, slide-up/down/left/right, scale, rotate.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/animate-in.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype AnimateInVariant =\n  | \"fade\"\n  | \"slide-up\"\n  | \"slide-down\"\n  | \"slide-left\"\n  | \"slide-right\"\n  | \"scale\"\n  | \"rotate\"\n\ninterface AnimateInProps {\n  children: React.ReactNode\n  variant?: AnimateInVariant\n  delay?: number\n  duration?: number\n  className?: string\n}\n\nconst KEYFRAMES: Record<AnimateInVariant, string> = {\n  fade: `\n    @keyframes anim-in-fade {\n      from { opacity: 0; }\n      to { opacity: 1; }\n    }\n  `,\n  \"slide-up\": `\n    @keyframes anim-in-slide-up {\n      from { opacity: 0; transform: translateY(28px); }\n      to { opacity: 1; transform: translateY(0); }\n    }\n  `,\n  \"slide-down\": `\n    @keyframes anim-in-slide-down {\n      from { opacity: 0; transform: translateY(-28px); }\n      to { opacity: 1; transform: translateY(0); }\n    }\n  `,\n  \"slide-left\": `\n    @keyframes anim-in-slide-left {\n      from { opacity: 0; transform: translateX(28px); }\n      to { opacity: 1; transform: translateX(0); }\n    }\n  `,\n  \"slide-right\": `\n    @keyframes anim-in-slide-right {\n      from { opacity: 0; transform: translateX(-28px); }\n      to { opacity: 1; transform: translateX(0); }\n    }\n  `,\n  scale: `\n    @keyframes anim-in-scale {\n      from { opacity: 0; transform: scale(0.88); }\n      to { opacity: 1; transform: scale(1); }\n    }\n  `,\n  rotate: `\n    @keyframes anim-in-rotate {\n      from { opacity: 0; transform: rotate(-8deg) scale(0.92); }\n      to { opacity: 1; transform: rotate(0deg) scale(1); }\n    }\n  `,\n}\n\nconst ANIMATION_NAME: Record<AnimateInVariant, string> = {\n  fade: \"anim-in-fade\",\n  \"slide-up\": \"anim-in-slide-up\",\n  \"slide-down\": \"anim-in-slide-down\",\n  \"slide-left\": \"anim-in-slide-left\",\n  \"slide-right\": \"anim-in-slide-right\",\n  scale: \"anim-in-scale\",\n  rotate: \"anim-in-rotate\",\n}\n\nfunction AnimateIn({\n  children,\n  variant = \"fade\",\n  delay = 0,\n  duration = 500,\n  className,\n}: AnimateInProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [triggered, setTriggered] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const observer = new IntersectionObserver(\n      ([entry]) => {\n        if (entry.isIntersecting) {\n          setTriggered(true)\n          observer.disconnect()\n        }\n      },\n      { threshold: 0.1 }\n    )\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [])\n\n  const animName = ANIMATION_NAME[variant]\n\n  return (\n    <>\n      <style>{Object.values(KEYFRAMES).join(\"\\n\")}</style>\n      <div\n        ref={ref}\n        className={className}\n        style={\n          triggered\n            ? {\n                animation: `${animName} ${duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}ms both`,\n              }\n            : { opacity: 0 }\n        }\n      >\n        {children}\n      </div>\n    </>\n  )\n}\n\nexport { AnimateIn }\nexport default AnimateIn\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "layout",
+    "particles",
+    "free"
+  ]
+}

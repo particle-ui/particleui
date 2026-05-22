@@ -1,0 +1,26 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "text-shimmer",
+  "type": "registry:ui",
+  "title": "Text Shimmer",
+  "description": "Light shimmer that sweeps across text. Configurable speed, color, and background. Pure CSS animation.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/text-shimmer.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ninterface TextShimmerProps {\n  text: string\n  className?: string\n  duration?: number\n}\n\nfunction TextShimmer({\n  text,\n  className,\n  duration = 2000,\n}: TextShimmerProps) {\n  return (\n    <>\n      <style>{`\n        @keyframes text-shimmer-sweep {\n          0% { background-position: -200% center; }\n          100% { background-position: 200% center; }\n        }\n        .text-shimmer-animate {\n          background-size: 200% auto;\n          -webkit-background-clip: text;\n          background-clip: text;\n          -webkit-text-fill-color: transparent;\n          animation: text-shimmer-sweep var(--shimmer-duration, 2000ms) linear infinite;\n        }\n      `}</style>\n      <span\n        className={[\n          \"text-shimmer-animate inline-block\",\n          className,\n        ]\n          .filter(Boolean)\n          .join(\" \")}\n        style={{\n          [\"--shimmer-duration\" as string]: `${duration}ms`,\n          backgroundImage:\n            \"linear-gradient(90deg, var(--color-text-2) 0%, var(--color-text-1) 20%, var(--color-accent) 40%, var(--color-text-1) 60%, var(--color-text-2) 80%, var(--color-text-2) 100%)\",\n        }}\n      >\n        {text}\n      </span>\n    </>\n  )\n}\n\nexport { TextShimmer }\nexport default TextShimmer\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": {
+    "light": {},
+    "dark": {}
+  },
+  "categories": [
+    "text",
+    "particles",
+    "free"
+  ]
+}

@@ -5,6 +5,12 @@ import { readRegistryItem } from "@/lib/registry/reader"
 import { validateToken } from "@/lib/auth/token"
 import { db } from "@/db"
 import { componentInstalls } from "@/db/schema"
+import {
+  consumeRateLimit,
+  getClientIpFromHeaders,
+  rateLimitPolicies,
+  rateLimitResponse,
+} from "@/lib/rate-limit/rate-limit"
 
 function isCLIRequest(req: NextRequest) {
   const ua = req.headers.get("user-agent") ?? ""
@@ -38,6 +44,12 @@ export async function GET(
     const token = authHeader?.replace(/^Bearer\s+/i, "")
 
     if (!token) {
+      const failureLimit = await consumeRateLimit({
+        policy: rateLimitPolicies.registryAuthFailure,
+        identity: { type: "ip", id: getClientIpFromHeaders(req.headers) },
+      })
+      if (!failureLimit.allowed) return rateLimitResponse(failureLimit)
+
       return NextResponse.json(
         {
           type: "https://particleui.dev/errors/unauthorized",
@@ -55,6 +67,12 @@ export async function GET(
 
     const result = await validateToken(token)
     if (!result.valid) {
+      const failureLimit = await consumeRateLimit({
+        policy: rateLimitPolicies.registryAuthFailure,
+        identity: { type: "ip", id: getClientIpFromHeaders(req.headers) },
+      })
+      if (!failureLimit.allowed) return rateLimitResponse(failureLimit)
+
       return NextResponse.json(
         {
           type: "https://particleui.dev/errors/forbidden",

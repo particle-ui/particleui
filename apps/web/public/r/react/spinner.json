@@ -1,0 +1,19 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "spinner",
+  "type": "registry:ui",
+  "title": "Spinner",
+  "description": "Minimal rotating ring spinner with size variants.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\ninterface SpinnerProps {\n  size?: \"xs\" | \"sm\" | \"md\" | \"lg\" | \"xl\"\n  className?: string\n}\n\nconst sizes = {\n  xs: \"h-3 w-3 border-[1.5px]\",\n  sm: \"h-4 w-4 border-2\",\n  md: \"h-6 w-6 border-2\",\n  lg: \"h-8 w-8 border-[2.5px]\",\n  xl: \"h-12 w-12 border-[3px]\",\n}\n\nexport function Spinner({ size = \"md\", className }: SpinnerProps) {\n  return (\n    <div\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\n        \"rounded-full border-current border-t-transparent animate-spin\",\n        \"text-[var(--color-accent)]\",\n        sizes[size],\n        className\n      )}\n    />\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": { "light": {}, "dark": {} },
+  "categories": ["loaders", "core", "free"]
+}

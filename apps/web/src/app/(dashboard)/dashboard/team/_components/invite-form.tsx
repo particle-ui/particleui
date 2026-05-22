@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { PaperPlaneTilt, Check, Warning } from "@phosphor-icons/react"
 
-export function InviteForm({ teamId, ownerEmail }: { teamId: string; ownerEmail: string }) {
+export function InviteForm({ teamId }: { teamId: string }) {
   const [email, setEmail] = useState("")
   const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle")
   const [errorMsg, setErrorMsg] = useState("")

@@ -52,9 +52,6 @@ export default async function ComponentsPage() {
   const allItems = await getEnrichedItems()
   // Blocks live at /blocks — exclude them from this page
   const items = allItems.filter((i) => !i.categories.includes("blocks") && !i.categories.includes("templates"))
-  const proCount = items.filter((i) => i.categories.includes("pro")).length
-  const freeCount = items.length - proCount
-
   return (
     <main id="main-content" tabIndex={-1} className="min-h-svh bg-bg text-text-1 pt-24 pb-20 px-6 outline-none">
       <div className="mx-auto max-w-6xl">
@@ -63,23 +60,21 @@ export default async function ComponentsPage() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-accent mb-3">
             Component Library
           </p>
-          <h1 className="text-[clamp(2.5rem,5vw,4rem)] font-bold tracking-[-0.05em] leading-[1.0] mb-5">
+          <h1 className="text-[clamp(2.5rem,5vw,4rem)] tracking-[-0.05em] leading-[1.0] mb-5" style={{ fontWeight: 200 }}>
             {items.length} components.<br />
-            Built to impress.
+            All free. MIT licensed.
           </h1>
           <p className="text-[15px] text-text-2">
-            {freeCount} free · {proCount} pro · React · Vue · Svelte
+            React · Vue · Svelte · no sign-in needed
           </p>
         </div>
 
         {/* Install banner */}
         <div className="mb-12 rounded-2xl border border-border bg-surface-1 px-6 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <p className="text-sm font-medium text-text-1 mb-1">Installing components</p>
+            <p className="text-sm font-medium text-text-1 mb-1">One command to install</p>
             <p className="text-xs text-text-2">
-              Free components work immediately. Pro requires{" "}
-              <code className="text-accent font-mono">PARTICLEUI_TOKEN</code>{" "}
-              in your <code className="text-text-2 font-mono">.env</code>.
+              Source lands directly in your repo. No account, no token, no runtime package.
             </p>
           </div>
           <div className="font-mono text-xs rounded-xl border border-border bg-bg px-4 py-2.5 whitespace-nowrap text-accent shrink-0">

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://particleui.dev/schema/registry-item.json",
+  "name": "ring-loader",
+  "type": "registry:ui",
+  "title": "Ring Loader",
+  "description": "Two concentric rings rotating in opposite directions for a dynamic loading effect.",
+  "author": "ParticleUI",
+  "dependencies": [],
+  "registryDependencies": ["cn"],
+  "files": [
+    {
+      "path": "components/ui/ring-loader.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\n\ninterface RingLoaderProps {\n  size?: \"sm\" | \"md\" | \"lg\"\n  className?: string\n}\n\nconst sizes = {\n  sm: \"h-8 w-8\",\n  md: \"h-12 w-12\",\n  lg: \"h-16 w-16\",\n}\n\nconst borders = {\n  sm: \"border-[1.5px]\",\n  md: \"border-2\",\n  lg: \"border-[2.5px]\",\n}\n\nexport function RingLoader({ size = \"md\", className }: RingLoaderProps) {\n  const s = sizes[size]\n  const b = borders[size]\n  return (\n    <div\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"relative\", s, className)}\n    >\n      <span\n        className={cn(\n          \"absolute inset-0 rounded-full border-[var(--color-accent)] border-t-transparent border-r-transparent\",\n          b\n        )}\n        style={{ animation: \"ring-cw 1s linear infinite\" }}\n      />\n      <span\n        className={cn(\n          \"absolute inset-[25%] rounded-full border-[var(--color-accent-text)] border-b-transparent border-l-transparent\",\n          b\n        )}\n        style={{ animation: \"ring-ccw 0.7s linear infinite\" }}\n      />\n      <style>{`\n        @keyframes ring-cw  { to { transform: rotate(360deg); } }\n        @keyframes ring-ccw { to { transform: rotate(-360deg); } }\n      `}</style>\n    </div>\n  )\n}\n",
+      "type": "registry:ui"
+    }
+  ],
+  "cssVars": { "light": {}, "dark": {} },
+  "categories": ["loaders", "core", "free"]
+}
